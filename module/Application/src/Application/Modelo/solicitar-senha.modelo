@@ -1,0 +1,28 @@
+<div>
+    <a href="{{BASE_URL}}" target="_blank">
+        <img src="{{BASE_URL}}/assets/img/logo/logo-menu.png" alt="MC Network">
+    </a>
+</div>
+<div>
+    <h2>Olá {{nomeUsuario}}</h2>
+</div>
+<div>
+    <br>
+    <p>Recentemente, você solicitou a redefinição de senha de sua conta de autenticação no MC Network ({{email}}).</p>
+    <br>
+    <p><b>Se você não solicitou a redefinição</b></p> 
+    <p>Não é necessário fazer nada. Sua senha atual será mantida.</p> 
+    <br>
+    <p><b>Se você solicitou a redefinição</b></p> 
+    <p>Ao clicar no link seguinte, você será direcionado para a tela de redefinição de senha do MC Network: <a href="{{BASE_URL}}/auth/redefinir-senha/{{txIdentificacao}}">{{BASE_URL}}/auth/redefinir-senha/{{txIdentificacao}}</a>.</p> 
+    <br>
+    <p>Atenciosamente,</p>
+    <p><a href="{{BASE_URL}}" target="_blank">Equipe MC Network</a></p>
+    <br>
+    <br>
+    <br>
+    <p>Não responda a este e-mail.</p>
+    <p>Se você enfrentar problemas com o link acima, copie e cole o link em seu navegador.</p>
+    <p>Este comunicado de serviço é obrigatório e foi enviado por e-mail para informar sobre alterações importantes em sua conta do MC Network.</p>
+
+</div>

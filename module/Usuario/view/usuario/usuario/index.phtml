@@ -1,0 +1,61 @@
+<?php
+  /** @var $form \Usuario\Form\Usuario */
+  /** @var $lista \Usuario\Service\Usuario[] */
+?>
+<div class="page-head">
+    <h2>Lista de Usuários do Sistema</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Inserir um novo usuário do sistema">Novo Usuário</a>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block-flat">
+                <div class="content">
+
+                    <table class="table table-bordered dataTable">
+                        <thead>
+                            <tr>
+                                <th>Usuário</th> 
+                                <th>Data de nascimento</th> 
+                                <th>RG</th> 
+                                <th>CPF</th> 
+                                <th>Profissão</th> 
+                                <th>Nacionalidade</th> 
+                                
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        <?php foreach($lista as $item){ ?>
+                            <tr>
+                                <td><?=$item->getNmUsuario()?></td> 
+                                <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item->getDtNascimento())?></td>
+                                <td><?=$item->getNuRg()?></td> 
+                                <td><?=$item->getNuCpf()?></td> 
+                                <td><?=$item->getNmProfissao()?></td> 
+                                <td><?=$item->getNmNacionalidade()?></td> 
+                                                                
+                                <td style="width: 150px;">
+                                    <?=\Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro','id'=>Estrutura\Helpers\Cript::enc($item->getId()))))?>
+                                    <?=\Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao',array('controller'=>$controller,'action'=>'excluir','id'=>Estrutura\Helpers\Cript::enc($item->getId()))))?>
+                                </td>
+                            </tr>
+                        <?php }; ?>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="<?=$this->url('navegacao', ['controller'=>'principal-principal'])?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>

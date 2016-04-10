@@ -1,0 +1,28 @@
+<div>
+    <a href="{{BASE_URL}}" target="_blank">
+        <img src="{{BASE_URL}}/assets/img/logo/logo-menu.png" alt="MC Network">
+    </a>
+</div>
+<div>
+    <h2>Olá {{nomeUsuario}}</h2>
+</div>
+<div>
+    <br>
+    <p>O ID "{{id}}" da empresa <b>{{empresa}}</b> que você cadastrou na sua conta do MC Network ({{email}}) <b>não</b> foi liberado.</p>
+    <br>
+    <p>Verifique:</p>
+    <p> - Se o ID informado está escrito corretamente;</p>
+    <p> - Se o ID informado é realmente seu;</p>
+    <p> - Se o ID informado pertence a uma rede onde seu patrocinador é pai;</p>    
+    <br>
+    <p>Após a verificação, envie novamente o ID de cadastro.</p> 
+    <br>
+    <p>Perguntas? Entre em contato conosco: <a href="mailto:contato@mcnetwork.com.br">contato@mcnetwork.com.br</a></p> 
+    <br>
+    <p>Atenciosamente,</p>
+    <p><a href="{{BASE_URL}}" target="_blank">Equipe MC Network</a></p>
+    <br>
+    <br>
+    <p>Não responda a este e-mail.</p>    
+    <p>Este comunicado de serviço é obrigatório e foi enviado por e-mail para informar sobre alterações importantes em sua conta do MC Network.</p>
+</div>

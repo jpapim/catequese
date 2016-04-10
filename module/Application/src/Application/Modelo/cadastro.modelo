@@ -1,0 +1,27 @@
+<div>
+    <a href="{{BASE_URL}}" target="_blank">
+        <img src="{{BASE_URL}}/assets/img/logo/logo-menu.png" alt="MC Network">
+    </a>
+</div>
+<div>
+    <h2>{{nomeUsuario}}, obrigado por se cadastrar no MC Network</h2>
+</div>
+<div>
+    <br>
+    <p>Confirme o seu cadastro no MC Network ({{email}}), clicando no seguinte link:</p> 
+    <p>
+        <a href="{{BASE_URL}}/auth/confirm-email/{{txIdentificacao}}">{{BASE_URL}}/auth/confirm-email/{{txIdentificacao}}</a>.
+    </p>
+    <br>
+    <p>Se você não se cadastrou no MC Network, ignore esta mensagem.</p>
+    <br>
+    <p>Atenciosamente,</p>
+    <p><a href="{{BASE_URL}}" target="_blank">Equipe MC Network</a></p>
+    <br>
+    <br>
+    <br>
+    <p>Não responda a este e-mail.</p>
+    <p>Se você enfrentar problemas com o link acima, copie e cole o link em seu navegador.</p>
+    <p>Este comunicado de serviço é obrigatório e foi enviado por e-mail para informar sobre alterações importantes em sua conta do MC Network.</p>
+
+</div>

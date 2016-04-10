@@ -1,0 +1,207 @@
+<input type="hidden" id="urlPagination" value="" />
+<?php if ($this->first != $this->current) { ?>
+    <button type="button" class="btn first">
+        <i class="icon-step-backward glyphicon glyphicon-step-backward" value="<?= $this->first ?>"></i>
+    </button>
+<?php } else { ?>
+    <button type="button" class="btn" disabled="disabled">
+        <i class="icon-step-backward glyphicon glyphicon-step-backward"></i>
+    </button>
+<?php } ?>
+<?php if (isset($this->previous)) { ?>
+    <button type="button" class="btn prev">
+        <i class="icon-arrow-left glyphicon glyphicon-backward" value="<?= $this->previous ?>"></i>
+    </button>
+<?php } else { ?>
+    <button type="button" class="btn" disabled="disabled">
+        <i class="icon-arrow-left glyphicon glyphicon-backward"></i>
+    </button>
+<?php } ?>
+<span class="pagedisplay">
+
+    <?= $this->firstItemNumber . ' - ' . $this->lastItemNumber . ' / ' . $this->totalItemCount; ?>
+
+</span> 
+
+<!-- this can be any element, including an input -->
+
+<?php if (isset($this->next)) { ?>
+    <button type="button" class="btn next">
+        <i class="icon-arrow-right glyphicon glyphicon-forward" value="<?= $this->next ?>"></i>
+    </button>
+<?php } else { ?>
+    <button type="button" class="btn">
+        <i class="icon-arrow-right glyphicon glyphicon-forward"></i>
+    </button>
+<?php } ?>
+
+<?php if ($this->last != $this->current) { ?>
+    <button type="button" class="btn last">
+        <i class="icon-step-forward glyphicon glyphicon-step-forward" value="<?= $this->last ?>"></i>
+    </button>
+<?php } else { ?>
+    <button type="button" class="btn">
+        <i class="icon-step-forward glyphicon glyphicon-step-forward"></i>
+    </button>
+<?php } ?>
+
+<select class="pagesize input-mini" title="Selecione o número de linhas">
+    <?php
+    $valuesReverse = \Estrutura\Helpers\Pagination::getCountPerPage($this->totalItemCount);
+    foreach ($valuesReverse as $value) {
+        ?>
+        <option value="<?= $value ?>" <?= $countPerPage == $value ? 'selected="selected"' : '' ?>><?= $value ?></option>    
+        <?php
+    }
+    ?>
+</select>
+<select class="pagenum input-mini" title="Selecione o número da página">
+    <?php
+    $qtdPaginas = (int) (($this->totalItemCount / $countPerPage)) + 1;
+
+    for ($index = 1; $index <= $qtdPaginas; $index++) {
+        ?>
+        <option value="<?= $index ?>" <?= $this->current == $index ? 'selected="selected"' : '' ?>><?= $index ?></option>
+        <?php
+    }
+    ?>
+</select>
+
+<script>
+    $(function () {
+
+        $("<?= $this->divData ?> button.btn.next,<?= $this->divData ?> button.btn.prev,<?= $this->divData ?> button.btn.last,<?= $this->divData ?> button.btn.first").off().on('click', function () {
+
+            var current_page = $(this).children('i').attr('value');
+            var count_per_page = $('<?= $this->divData ?> .pagesize option:selected').val();
+            var filter_page = {};
+            $('<?= $this->divData ?> .tablesorter-filter').each(function () {
+                filter_page[$(this).attr('data-column')] = $(this).val();
+            });
+
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                cache: false,
+                url: '<?= $this->urlPagination ?>',
+                async: true,
+                data: {
+                    count_per_page: count_per_page,
+                    filter_page: filter_page,
+                    current_page: current_page,
+                },
+                beforeSend: function () {
+
+                    $('<?= $this->divData ?>').html(
+                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                            );
+                },
+                success: function (data) {
+
+                    $('<?= $this->divData ?>').html(data);
+                }
+            });
+        });
+        $("<?= $this->divData ?> select.pagenum").off().on('change', function () {
+
+            var current_page = $(this).val();
+            var count_per_page = $('<?= $this->divData ?> .pagesize option:selected').val();
+            var filter_page = {};
+            $('<?= $this->divData ?> .tablesorter-filter').each(function () {
+                filter_page[$(this).attr('data-column')] = $(this).val();
+            });
+
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                cache: false,
+                url: '<?= $this->urlPagination ?>',
+                async: true,
+                data: {
+                    count_per_page: count_per_page,
+                    filter_page: filter_page,
+                    current_page: current_page,
+                },
+                beforeSend: function () {
+
+                    $('<?= $this->divData ?>').html(
+                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                            );
+                },
+                success: function (data) {
+
+                    $('<?= $this->divData ?>').html(data);
+                }
+            });
+        });
+
+        $("<?= $this->divData ?> .pagesize").off().on('change', function () {
+
+            var count_per_page = $('<?= $this->divData ?> .pagesize option:selected').val();
+            var filter_page = {};
+            $('<?= $this->divData ?> .tablesorter-filter').each(function () {
+                filter_page[$(this).attr('data-column')] = $(this).val();
+            });
+
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                cache: false,
+                url: '<?= $this->urlPagination ?>',
+                async: true,
+                data: {
+                    count_per_page: count_per_page,
+                    filter_page: filter_page,
+                },
+                beforeSend: function () {
+
+                    $('<?= $this->divData ?>').html(
+                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                            );
+                },
+                success: function (data) {
+
+                    $('<?= $this->divData ?>').html(data);
+                }
+            });
+        });
+
+        $("<?= $this->divData ?> .tablesorter-filter").off().on('keyup', function () {
+
+            clearTimeout($.data(this, 'timer'));
+            var wait = setTimeout(searchPagination, 1000);
+            $(this).data('timer', wait);
+        });
+
+        function searchPagination() {
+
+            var count_per_page = $('<?= $this->divData ?> .pagesize option:selected').val();
+            var filter_page = {};
+            $('<?= $this->divData ?> .tablesorter-filter').each(function () {
+                filter_page[$(this).attr('data-column')] = $(this).val();
+            });
+
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                cache: false,
+                url: '<?= $this->urlPagination ?>',
+                async: true,
+                data: {
+                    count_per_page: count_per_page,
+                    filter_page: filter_page,
+                },
+                beforeSend: function () {
+
+                    $('<?= $this->divData ?>').html(
+                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                            );
+                },
+                success: function (data) {
+
+                    $('<?= $this->divData ?>').html(data);
+                }
+            });
+        }
+    });
+</script>

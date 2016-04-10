@@ -1,0 +1,27 @@
+<div>
+    <a href="{{BASE_URL}}" target="_blank">
+        <img src="{{BASE_URL}}/assets/img/logo/logo-menu.png" alt="MC Network">
+    </a>
+</div>
+<div>
+    <h2>Olá {{nomeUsuario}}</h2>
+</div>
+<div>
+    <br>
+    <p>A senha da sua Conta do MC Network ({{email}}) foi alterada recentemente.
+        Se você mesmo realizou essa alteração, não é necessário fazer nada.</p>
+    <br>
+    <p>Se você não alterou sua senha, isso significa que sua conta pode ter sido invadida. 
+        Para voltar a ter acesso à sua conta, será necessário redefinir sua senha.</p> 
+    <p>Ao clicar no link seguinte, você será direcionado para a tela de redefinição de senha do MC Network: 
+        <a href="{{BASE_URL}}/auth/redefinir-senha/{{txIdentificacao}}">{{BASE_URL}}/auth/redefinir-senha/{{txIdentificacao}}</a>.</p> 
+    <br>
+    <p>Atenciosamente,</p>
+    <p><a href="{{BASE_URL}}" target="_blank">Equipe MC Network</a></p>
+    <br>
+    <br>
+    <br>
+    <p>Não responda a este e-mail.</p>
+    <p>Se você enfrentar problemas com o link acima, copie e cole o link em seu navegador.</p>
+    <p>Este comunicado de serviço é obrigatório e foi enviado por e-mail para informar sobre alterações importantes em sua conta do MC Network.</p>
+</div>

@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+<!--        <link rel="shortcut icon" href="/assets/img/ico/ico-32x32.ico" />-->
+        <link rel="shortcut icon" href="/assets/img/ico/ico-32x32.ico" />
+
+        <title><?= $this->Projeto() ?></title>
+<!--<?php echo $this->serverUrl();?>-->
+
+<!--        <script src="/assets/compact-js/jquery.min.js,bootstrap.min.js,ie-emulation-modes-warning.js,transition.js,collapse.js,jquery-ui.min.js,jquery.maskedinput.min.js"></script>-->
+        <script src="/assets/compact-js/jquery.min.js,bootstrap.min.js"></script>
+
+<!--        <script src="/assets/js/jquery.min.js"></script>-->
+<!--        <script src="/assets/js/bootstrap.min.js"></script>-->
+        <script src="/assets/js/ie-emulation-modes-warning.js"></script>
+        <script src="/assets/js/transition.js"></script>
+        <script src="/assets/js/collapse.js"></script>
+        <script src="/assets/js/jquery-ui.min.js"></script>
+        <script src="/assets/js/jquery.maskedinput.min.js"></script>
+
+
+<!--        <link href="/assets/compact-css/bootstrap.css,callout.css,offcanvas.css,customizado.css,jquery-ui.min.css,jquery-ui.structure.min.css,jquery-ui.theme.min.css" rel="stylesheet" />-->
+
+        <link href="/assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="/assets/css/callout.css" rel="stylesheet" />
+        <link href="/assets/css/offcanvas.css" rel="stylesheet" />
+        <link href="/assets/css/customizado.css" rel="stylesheet" />
+        <link href="/assets/css/jquery-ui.min.css" rel="stylesheet" />
+        <link href="/assets/css/jquery-ui.structure.min.css" rel="stylesheet" />
+        <link href="/assets/css/jquery-ui.theme.min.css" rel="stylesheet" />
+
+        <!--        <link href="/assets/compact-css/print.css" rel="stylesheet" media="print" />-->
+
+        <link href="/assets/css/print.css" rel="stylesheet" media="print" />
+
+
+
+
+        <!--[if lt IE 9]>
+                            <script src="../../assets/compact-js/ie8-responsive-file-warning.js"></script>
+                            <!--<script src="../../assets/js/ie8-responsive-file-warning.js"></script>-->
+        <![endif]-->
+    </head>
+    <body>
+
+        <div class="navbar navbar-fixed-top navbar-default" role="navigation">
+            <div class="container">          
+                <?= $this->render('layout/menu') ?>                    
+            </div>
+        </div>
+        <div class="container">
+
+            <?= $this->render('layout/mensagens') ?>
+
+            <?= $this->navigation('navigation')->breadcrumbs()->setMinDepth(0)->setPartial('partials/breadcrumb.phtml') ?>
+
+            <?= $this->content ?>
+
+            <hr />
+
+            <?= $this->render('layout/footer') ?>
+            <?= $this->render('layout/infraJs') ?>
+        </div>
+    </body>
+</html>

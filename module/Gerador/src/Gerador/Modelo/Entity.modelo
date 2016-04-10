@@ -1,0 +1,12 @@
+<?php
+
+namespace {{namespace}}\Entity;
+
+use Estrutura\Service\AbstractEstruturaService;
+
+class {{classe}}Entity extends AbstractEstruturaService{
+
+{{campos}}
+
+{{getAndSet}}
+}

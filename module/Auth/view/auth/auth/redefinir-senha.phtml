@@ -1,0 +1,57 @@
+<link rel="stylesheet" type="text/css" href="/assets/css/selectize.bootstrap2.css" />
+<div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-xs-12 col-sm-9">
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="light panel-title">Redefinição de senha</h3>
+            </div>
+            <div class="panel-body">
+
+                <?php
+                $form->setAttribute('action', $this->url('navegacao', array('controller' => 'auth', 'action' => 'salvar-redefinicao-senha')));
+                $form->setAttribute('method', 'post');
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('data-toggle', 'validator');
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                ?>
+
+                <input type="hidden" name="tx_identificacao" value="<?= base64_encode(\Estrutura\Helpers\Bcrypt::hash($esqueciSenhaEntity->getTxIdentificacao())) ?>" >
+                <input type="hidden" name="id_usuario" value="<?= \Estrutura\Helpers\Cript::enc($usuarioEntity->getId()) ?>" >
+                
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <?= $this->formRow($form->get('pw_nova_senha')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <?= $this->formRow($form->get('pw_nova_senha_confirm')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <?= $this->formRow($form->get('captcha')); ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary">Redefinir senha</button>                        
+                        <a href="<?= $this->url('navegacao', ['controller' => 'auth', 'action' => 'login']) ?>" class="btn btn-default">Voltar</a>                    
+                    </div>
+                </div>
+
+                <?php
+                echo $this->form()->closeTag();
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/assets/compact-js/validator.min.js,jquery.mask.min.js,jquery.complexify.js,auth|auth|redefinir-senha.js"></script>

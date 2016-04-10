@@ -1,0 +1,33 @@
+<ul class="nav navbar-nav">
+<?php
+$i = 1;
+foreach ($this->container as $page) {
+    
+    $liClasses = array();
+    $liClass = '';
+    
+    if ($page->isActive()) {
+        
+        $liClasses[] = 'active'; 
+    }
+    if ($i == 1) {
+        
+        $liClasses[] = 'first';      
+    } elseif ($i == count($this->container)) {
+        
+        $liClasses[] = 'last';
+    }
+    if (0 < count($liClasses)) {
+        
+        $liClass = ' class="' . implode(' ', $liClasses) . '"';
+    }
+      
+    if($this->navigation('navigation')->accept($page)) {
+    
+        echo '<li' . $liClass . '>' . $this->navigation('navigation')->menu()->htmlify($page) . '</li>', PHP_EOL;
+    }
+    $i++;
+}
+
+?>
+</ul>

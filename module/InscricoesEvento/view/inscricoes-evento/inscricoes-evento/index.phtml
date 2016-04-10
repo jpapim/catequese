@@ -1,0 +1,67 @@
+<?php
+  /** @var $form \InscricoesEvento\Form\InscricoesEvento */
+  /** @var $lista \InscricoesEvento\Service\InscricoesEvento[] */
+?>
+<div class="page-head">
+    <h2>Realizar Inscrição em Eventos(s)</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Realizar Inscrição de Atletas">Nova Inscrição</a>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block-flat">
+                <div class="content">
+
+                    <table class="table table-bordered dataTable">
+                        <thead>
+                            <tr>
+                                <th>Nome do Evento</th>
+                                <th>Nome do Atleta</th>
+                                <th>Data da Inscrição</th>
+
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php $evento = new \Evento\Service\EventoService(); ?>
+                        <?php $atleta = new \Atleta\Service\AtletaService(); ?>
+                        <?php $academia = new \Academia\Service\AcademiaService(); ?>
+                        <?php $cidade = new \Cidade\Service\CidadeService(); ?>
+                        <?php $estado = new \Estado\Service\EstadoService(); ?>
+                        <?php foreach($lista as $item){ ?>
+                            <?php $arrEvento = $evento->getEventoToArray($item->getIdEvento()); ?>
+                            <?php $arrAtleta = $atleta->getAtletaToArray($item->getIdAtleta()); ?>
+                            <?php $arrAcademia = $academia->getAcademiaToArray($arrAtleta['id_academia']); ?>
+                            <?php $arrCidade = $cidade->getCidadeToArray($arrAcademia['id_cidade']); ?>
+                            <?php $obCidadeEvento = $cidade->buscar($arrEvento['id_cidade']); ?>
+                            <?php $arrEstado = $estado->getEstadoToArray($arrCidade['id_estado']); ?>
+                            <?php $obEstadoEvento = $estado->buscar($obCidadeEvento->getIdEstado()); ?>
+                            <tr>
+                                <td><?=$arrEvento['nm_evento'] . ' - ' . $obCidadeEvento->getNmCidade() . ', ' . $obEstadoEvento->getSgEstado()?></td>
+                                <td><?=$arrAtleta['nm_atleta'] . ' ('. $arrAcademia['nm_academia'] . ' - '. $arrCidade['nm_cidade'] .', ' . $arrEstado['sg_estado'] . ')'?></td>
+                                <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item->getDtInscricao())?></td>
+
+                                <td style="width: 150px;">
+                                    <?=\Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro','id'=>Estrutura\Helpers\Cript::enc($item->getId()))))?>
+                                    <?=\Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao',array('controller'=>$controller,'action'=>'excluir','id'=>Estrutura\Helpers\Cript::enc($item->getId()))))?>
+                                </td>
+                            </tr>
+                        <?php }; ?>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="<?=$this->url('navegacao', ['controller'=>'principal-principal'])?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Realizar Inscrição de Atletas">Nova Inscrição</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>

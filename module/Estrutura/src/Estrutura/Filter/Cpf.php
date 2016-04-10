@@ -1,0 +1,1 @@
+<?phpnamespace Estrutura\Filter;use Zend\Filter\AbstractFilter;class Cpf extends AbstractFilter{    public function filter($value)    {        return str_replace(['-', '.'], '', $value);    }}

@@ -1,0 +1,47 @@
+<?php
+  /** @var $form \ContaBancaria\Form\ContaBancaria */
+  /** @var $lista \ContaBancaria\Service\ContaBancaria[] */
+?>
+<div class="page-head">
+    <h2>Lista</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>">Novo</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block-flat">
+                <div class="content">
+
+                    <table class="table table-bordered dataTable">
+                        <thead>
+                            <tr>
+                                <th>Agência</th> 
+                                <th>Conta</th> 
+                                
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        <?php foreach($lista as $item){ ?>
+                            <tr>
+                                <td><?=$item->getNrAgencia()?></td> 
+                                <td><?=$item->getNrConta()?></td> 
+                                                                
+                                <td style="width: 150px;">
+                                    <?=\Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro','id'=>Estrutura\Helpers\Cript::enc($item->getId()))))?>
+                                    <?=\Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao',array('controller'=>$controller,'action'=>'excluir','id'=>Estrutura\Helpers\Cript::enc($item->getId()))))?>
+                                </td>
+                            </tr>
+                        <?php }; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>

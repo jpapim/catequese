@@ -1,0 +1,63 @@
+<link rel="stylesheet" type="text/css" href="/assets/css/selectize.bootstrap2.css" />
+<div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-xs-12 col-sm-9">
+        <div class="well">
+            <div class="page-head">
+                <h2>Alterar senha</h2>
+            </div>
+            <?php
+            $form->setAttribute('action', $this->url('navegacao', array('controller' => 'usuario-usuario', 'action' => 'salvar-redefinicao-senha')));
+            $form->setAttribute('method', 'post');
+            $form->setAttribute('class', 'form-horizontal');
+            $form->setAttribute('data-toggle', 'validator');
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            ?>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <?= $this->formRow($form->get('pw_senha')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <?= $this->formRow($form->get('pw_nova_senha')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <?= $this->formRow($form->get('pw_nova_senha_confirm')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-4">
+                    <?= $this->formRow($form->get('captcha')); ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Redefinir senha</button>                        
+                    <a href="<?= $this->url('navegacao', ['controller' => 'usuario-usuario', 'action' => 'atualizar-dados']) ?>" class="btn btn-default">Voltar</a>                    
+                </div>
+            </div>
+
+            <?php
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    </div>
+    <?=
+    $this->partial('partials/menu-left', [
+        'auth' => $auth,
+        'contratoEntity' => $contratoEntity,
+        'configList' => $configList,
+        'meusGanhosList' => $meusGanhosList,
+    ]);
+    ?>
+</div>
+<script type="text/javascript" src="/assets/compact-js/validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|alterar-senha.js"></script>

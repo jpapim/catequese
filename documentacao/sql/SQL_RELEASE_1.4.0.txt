@@ -1,0 +1,2 @@
+ALTER TABLE `competicoestkd`.`eventos` 
+CHANGE COLUMN `bo_inativo` `bo_inativo` CHAR(1) NULL DEFAULT '0' ;

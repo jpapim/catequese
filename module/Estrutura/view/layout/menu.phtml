@@ -1,0 +1,93 @@
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    
+<!--    <a class="navbar-brand" href="/mcnetwork-index" style="padding-top: 0px;">-->
+    <a class="navbar-brand" href="/principal-principal" style="padding-top: 0px;">
+        <img src="/assets/img/logo/logo-menu.png" height="50" width="180" />
+    </a>
+</div>
+
+<div class="collapse navbar-collapse">
+    
+    <?= $this->navigation('navigation')
+            ->setAcl($this->acl)
+            ->setRole($this->role)
+            ->menu()            
+            ->setPartial(array('partials/menu.phtml', 'default'))
+            ->render(); ?>
+    
+    <?php if ($this->Auth()) { ?>
+
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="/principal-principal">Home</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Cadastros
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/atleta-atleta">Atletas - Modelo</a></li>
+                <li><a href="/academia-academia">Academias - Modelo</a></li>
+                <li><a href="/evento-evento">Competições - Modelo</a></li>
+                <li><a href="/inscricoes_evento-inscricoesevento">Realizar Inscriçoes - Modelo</a></li>
+            </ul>
+        </li>
+        <li><a href="/chaves_luta-chavesluta">Exemplo Permissao</a></li>
+        <li><a href="#">Relatórios</a></li>
+		
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Configurações
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/categoria_peso-categoriapeso">Categorias Peso - Modelo</a></li>
+                <li><a href="/categoria_idade-categoriaidade">Categorias Idade - Modelo</a></li>
+                <li><a href="/regras_lutas-regraslutas">Regras de Luta - Modelo</a></li>
+                <li><a href="/detalhes_regras_luta-detalhesregrasluta">Configuração das Regras de Luta - Modelo</a></li>
+            </ul>
+        </li>
+		
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Básicos
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/arte_marcial-artemarcial">Arte Marcial - Modelo</a></li>
+                <li><a href="/estilo-estilo">Estilo da Arte - Modelo</a></li>
+                <li><a href="/graduacao-graduacao">Graduações - Modelo</a></li>
+                <li><a href="/tipo_evento-tipoevento">Tipos de Evento - Modelo</a></li>
+                <li class="divider"></li>
+                <li><a href="/usuario-usuario">Usuários - Modelo</a></li>
+                <li><a href="/perfil-perfil">Perfis - Modelo</a></li>
+                <li class="divider"></li>
+                <li><a href="/cidade-cidade">Cidades - Padrao</a></li>
+                <li><a href="/estado-estado">UF - Padrao</a></li>
+            </ul>
+        </li>
+
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+<!--            <a href="/mcnetwork-index">-->
+            <a href="/usuario-usuario">
+                <?= ucwords($this->Auth()->nm_usuario); ?>
+            </a>
+        </li>
+        <li class="dropdown">
+            <a href="<?= $this->url('logoff')?>">
+                <span class="glyphicon glyphicon-log-out"></span> Sair
+            </a>
+        </li>
+    </ul>
+    
+    <?php } ?>
+</div>
+
+<!-- /.nav-collapse -->

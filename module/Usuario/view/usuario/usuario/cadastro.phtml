@@ -1,0 +1,103 @@
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css" >           
+<div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-xs-12 col-sm-9">
+        <div class="well">
+            <div class="page-head">
+                <h2>Cadastro</h2>
+            </div>
+
+            <?php
+            $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')));
+            $form->setAttribute('method', 'post');
+            $form->setAttribute('class', 'form-horizontal');
+            $form->setAttribute('data-toggle', 'validator');
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            ?>
+            <div class="bs-callout bs-callout-info">
+                <h3>Patrocinador: <?= $atributos['usuario']['nm_usuario']; ?> - Código: <?= $atributos['id_usuario']; ?></h3>
+            </div>
+            <br />
+
+            <input type="hidden" name="id_usuario_pai" value="<?= $atributos['id_usuario'] ?>" />
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('nm_usuario')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('em_email')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('em_email_confirm')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('pw_senha')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('pw_senha_confirm')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('nu_cpf')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formLabel($form->get('dt_nascimento')) ?>
+                    <div class="input-group" id="datetimepicker">
+                        <?= $this->formInput($form->get('dt_nascimento')) ?>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>                            
+                    </div>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>                
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('nr_telefone')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('captcha')); ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-7">
+                    <label>
+                        <input type="checkbox" required="required" value="1">
+                        Li e concordo com o <a href="#" target="_blank">Termo de Utilização do serviço</a>
+                    </label>                            
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a href="<?= $this->url('navegacao', ['controller' => 'auth', 'action' => 'login']) ?>" class="btn btn-default">Voltar</a>                    
+                </div>
+            </div>
+            <?= $this->form()->closeTag(); ?>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>

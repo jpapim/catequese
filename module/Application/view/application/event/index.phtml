@@ -1,0 +1,31 @@
+<div class="page-head">
+    <h2>Bem vindo ao Sistema</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block-flat">
+                <div class="content">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Código</th>
+                            <th>Titulo</th>
+                            <th>Descricao</th>
+                            <th>Urgencia</th>
+                            <th>Ações</th>
+                        </tr>
+                        <?php foreach($lista as $item):?>
+                            <tr>
+                                <td><?=$item->getCode()?></td>
+                                <td><?=$item->getTitulo()?></td>
+                                <td><?=$item->getDescricao()?></td>
+                                <td><?=$item->getLabelNivel($item->getUrgencia())?></td>
+                                <td><a href="<?=$this->url('navegacao',['controller'=>'event','action'=>'cadastro','id'=>$item->getCode()])?>">Editar</a></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

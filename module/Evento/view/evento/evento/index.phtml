@@ -1,0 +1,237 @@
+<?php
+  /** @var $form \Evento\Form\Evento */
+  /** @var $lista \Evento\Service\Evento[] */
+?>
+<style>
+    .vertical .carousel-inner {
+        height: 330px;
+    }
+
+    #myCarousel{
+        width: 500px;
+    }
+    .row-fluid{
+        width: 530px;
+    }
+    #conteudo-carrossel{
+        width: 530px;
+    }
+
+    .carousel-inner {
+        overflow: hidden;
+        position: relative;
+        width: 530px;
+    }
+
+    .carousel.vertical .item {
+        -webkit-transition: 0.6s ease-in-out top;
+        -moz-transition: 0.6s ease-in-out top;
+        -ms-transition: 0.6s ease-in-out top;
+        -o-transition: 0.6s ease-in-out top;
+        transition: 0.6s ease-in-out top;
+    }
+
+    .carousel.vertical .active {
+        top: 0;
+    }
+
+    .carousel.vertical .next {
+        top: 400px;
+    }
+
+    .carousel.vertical .prev {
+        top: -400px;
+    }
+
+    .carousel.vertical .next.left,
+    .carousel.vertical .prev.right {
+        top: 0;
+    }
+
+    .carousel.vertical .active.left {
+        top: -400px;
+    }
+
+    .carousel.vertical .active.right {
+        top: 400px;
+    }
+
+    .carousel.vertical .item {
+        left: 0;
+    }
+
+    .carousel-control {
+        background: #222222 none repeat scroll 0 0;
+        border: 3px solid #ffffff;
+        border-radius: 23px;
+        color: #ffffff;
+        font-size: 60px;
+        font-weight: 100;
+        height: 40px;
+        left: 15px;
+        line-height: 30px;
+        margin-top: -20px;
+        opacity: 0.5;
+        position: absolute;
+        text-align: center;
+        top: 40%;
+        width: 40px;
+    }
+
+
+</style>
+<div class="page-head">
+    <h2>Lista de Competições Ativas</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Inserir nova Competição">Nova Competição</a>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block-flat">
+                <div class="content">
+
+                    <table class="table table-bordered dataTable">
+                        <thead>
+                            <tr>
+                                <th>Evento</th>
+                                <th>Cidade (UF)</th>
+                                <th>Tipo de Regra</th>
+                                <th>Data</th>
+                                <th>Colorida(R$)</th>
+                                <th>Faixa Preta(R$)</th>
+
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php $arrayRegrasPreenchidas = array(); ?>
+                        <?php $tipoEventoService = new \TipoEvento\Service\TipoEventoService(); ?>
+                        <?php $regraLutaService = new \RegrasLutas\Service\RegrasLutasService(); ?>
+                        <?php $cidadeService = new \Cidade\Service\CidadeService(); ?>
+                        <?php $estadoService = new \Estado\Service\EstadoService(); ?>
+                        <?php foreach($lista as $item){ ?>
+                            <?php $arCidade = $cidadeService->getCidadeToArray($item['id_cidade']); ?>
+                            <?php $arEstado = $estadoService->getEstadoToArray($arCidade['id_estado']); ?>
+                            <?php $arTipoEvento = $tipoEventoService->getTipoEventoToArray($item['id_tipo_evento']); ?>
+                            <?php $arRegraLuta = $regraLutaService->getRegrasLutasToArray($item['id_regra_luta']); ?>
+                            <?php $arrayRegrasPreenchidas[] =  $arRegraLuta['id_regra_luta'];?>
+                            <tr>
+                                <td><?=$item['nm_evento']?></td>
+                                <td><?=$arCidade['nm_cidade'] . ' (' . $arEstado['sg_estado'] . ')'    ?></td>
+                                <td>
+                                    <a href="#" data-toggle="modal" data-target="#myModalRegras" >
+                                        <?=$arRegraLuta['nm_regra_luta']?>
+                                    </a>
+                                </td>
+
+                                <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_evento'])?></td>
+                                <td>R$ <?=$item['vl_inscricao_colorida']?></td>
+                                <td>R$ <?=$item['vl_inscricao_preta']?></td>
+
+                                <td style="width: 200px;">
+                                    <?=\Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao',array('controller'=>$controller,'action'=>'realizarinscricoes','id'=>Estrutura\Helpers\Cript::enc($item['id_evento']))),'Realizar Inscrições')?>
+                                    <?=\Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro','id'=>Estrutura\Helpers\Cript::enc($item['id_evento']))))?>
+                                    <?=\Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao',array('controller'=>$controller,'action'=>'excluir','id'=>Estrutura\Helpers\Cript::enc($item['id_evento']))))?>
+                                </td>
+                            </tr>
+                        <?php }; ?>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="<?=$this->url('navegacao', ['controller'=>'principal-principal'])?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Inserir nova Competição">Nova Competição</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModalRegras" tabindex="-1" role="dialog" aria-labelledby="myModalRegrasLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalRegrasLabel">Configuraçao da Regra de Luta</h4>
+            </div>
+            <div class="modal-body">
+
+
+
+
+
+                <div id="conteudo-carrossel" class="container">
+                    <div class="row-fluid">
+<!--                        <div class="span6 offset3">-->
+                            <div id="myCarousel" class="carousel slide vertical">
+                                <!-- Carousel items -->
+                                <div class="carousel-inner">
+                                    <?php $graduacao = new \Graduacao\Service\GraduacaoService(); ?>
+                                    <?php $detalhesRegraLutaService = new \DetalhesRegrasLuta\Service\DetalhesRegrasLutaService(); ?>
+                                    <?php $arrRegraLuta = $regraLutaService->fetchAll(); ?>
+                                    <?php $linha = 0; ?>
+                                    <?php foreach($arrRegraLuta as $valor){ ?>
+                                        <?php if(in_array($valor->getId(), $arrayRegrasPreenchidas)) { ?>
+                                        <div class="item<?= $linha == 0 ? ' active' : ''?>">
+                                            <table class="table table-bordered dataTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nome da Regra</th>
+                                                        <th>Graduaçao Inicial</th>
+                                                        <th>Graduaçao Final</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                        <?php $linha++; ?>
+                                                        <?php $arrDetalhesRegrasLuta = $detalhesRegraLutaService->pegarRegrasDeGraduacaoModalToArray($valor->getId()); ?>
+                                                        <td rowspan="<?= count($arrDetalhesRegrasLuta) + 1 ?>" valign="center"><?= $valor->getNmRegraLuta(); ?></td>
+                                                        <?php foreach($arrDetalhesRegrasLuta as $regra) { ?>
+                                                        <tr>
+                                                            <td align="center"><img alt="<?=$regra['nm_graduacao_inicial']?>" height="30" width="30" src="/assets/img/graduacoes/<?=$regra['nm_graduacao_inicial']?>.jpeg" /><br /><?=$regra['nm_graduacao_inicial']?></td>
+                                                            <td align="center"><img alt="<?=$regra['nm_graduacao_final']?>" height="30" width="30" src="/assets/img/graduacoes/<?=$regra['nm_graduacao_final']?>.jpeg" /><br /><?=$regra['nm_graduacao_final']?></td>
+                                                        </tr>
+                                                        <?php } ?>
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </div>
+                                <!-- Carousel nav -->
+                                <a class="carousel-control left" href="#myCarousel" data-slide="prev"> ‹ </a>
+                                <a class="carousel-control right" href="#myCarousel" data-slide="next"> › </a>
+<!--                            </div>-->
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+
+
+    });
+</script>

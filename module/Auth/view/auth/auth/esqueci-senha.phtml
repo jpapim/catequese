@@ -1,0 +1,49 @@
+<link rel="stylesheet" type="text/css" href="/assets/css/selectize.bootstrap2.css" />
+<div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-xs-12 col-sm-9">
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="light panel-title">Não consigo acessar minha conta</h3>
+            </div>
+            <div class="panel-body">
+
+                <?php
+                $form->setAttribute('action', $this->url('navegacao', array('controller' => 'auth', 'action' => 'solicitar-senha')));
+                $form->setAttribute('method', 'post');
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('data-toggle', 'validator');
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                ?>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <p>Para redefinir sua senha, digite o endereço de e-mail que você usa para autenticar no MC Network.</p>
+                        <?= $this->formRow($form->get('email')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <?= $this->formRow($form->get('captcha')); ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary">Enviar</button>                        
+                        <a href="<?= $this->url('navegacao', ['controller' => 'auth', 'action' => 'login']) ?>" class="btn btn-default">Voltar</a>                    
+                    </div>
+                </div>
+
+                <?php
+                echo $this->form()->closeTag();
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/assets/compact-js/validator.min.js,jquery.mask.min.js"></script>

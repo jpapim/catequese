@@ -1,0 +1,20 @@
+Release 1.4.0
+  * Novo: Adicionando um Campo para Informar se o Evento esta ativo ou não, para que seja feito o controle se ele deverá sumir ou não da listagem.
+
+Release 1.3.0
+  * Novo: Adicionando na tela de login um controle que informa em qual Branch e revisão está o código sendo executado no momento
+
+Release 1.2.2
+  * Fix: Atualizando arquivo de configuração para habilitar os modulos de compressão de Classes e de Assets
+
+Release 1.2.1
+  * Fix: Corrigindo a Criação da TAG para incluir o arquivo do CHANGELOG
+  
+Release 1.2.0
+  * Novo: [Cadastro de Atletas] Adicionando Paginação na Listagem de Atletas utilizando o componente do Zend_Paginator
+
+Release 1.1.1
+  * Fix: Correção no cadastro de atletas.
+
+Release 1.0.0
+  * Novo: Inicialização do projeto contendo script de banco de dados.

@@ -1,0 +1,84 @@
+<?php
+/** @var $form \Academia\Form\Academia */
+/** @var $dados_academia \Academia\Service\Academia[] */
+/** @var $lista_atletas \Atleta\Service\Atleta[] */
+?>
+<div class="page-head">
+    <h2>Cadastro de Academias</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="block-flat">
+            <div class="content">
+                <fieldset>
+                    <legend>Dados da Academia</legend>
+                        <?php if(isset($dados_academia) && $dados_academia){ ?>
+                            <?php
+                                $cidade = new \Cidade\Service\CidadeService();
+                                $arrCidade = $cidade->getCidadeToArray($dados_academia['id_cidade']);
+                                $estadoService = new \Estado\Service\EstadoService();
+                                $arrEstado = $estadoService->getEstadoToArray($arrCidade['id_estado']);
+                            ?>
+                            <div class="bs-callout bs-callout-primary">
+                                <ul class="primary">
+                                    <li><b>Quantidade de Alunos:</b> <?=count($lista_atletas)?></li>
+                                    <li><b>Academia:</b> <?=$dados_academia['nm_academia']?></li>
+                                    <li><b>Endereço:</b> <?=isset($dados_academia['tx_endereco']) && $dados_academia['tx_endereco']?$dados_academia['tx_endereco']:'Nao informado'?></li>
+                                    <li><b>Cidade:</b> <?=$arrCidade['nm_cidade']?></li>
+                                    <li><b>Estado:</b> <?=$arrEstado['nm_estado']?></li>
+                                </ul>
+                            </div>
+                        <?php } ?>
+                </fieldset>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>'atleta-atleta','action'=>'cadastroviaacademia', 'id'=>$dados_academia['id_academia']))?>">Novo Atleta</a>
+                    </div>
+                </div>
+                <br />
+                <table class="table table-bordered dataTable">
+                    <thead>
+                    <tr>
+                        <th>Atleta</th>
+                        <th>Sexo</th>
+                        <th>Peso</th>
+                        <th>Idade</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php $sexo = new \Sexo\Service\SexoService(); ?>
+                    <?php foreach($lista_atletas as $item){ ?>
+                        <?php $arrSexo = $sexo->getSexoToArray($item->getIdSexo()); ?>
+                        <tr>
+                            <td><?=$item->getNmAtleta()?></td>
+                            <td><?=$arrSexo['nm_sexo']?></td>
+                            <td><?=$item->getNrPeso().' Kg'?></td>
+                            <td><?=(\Estrutura\Helpers\Data::calcularIdadeDoAtleta($item->getDtNascimento()) - 1) .' Anos'?></td>
+
+                            <td style="width: 180px;">
+                                <?=\Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao',array('controller'=>'atleta-atleta','action'=>'alterarviaacademia','id'=>$item->getId() )))?>
+                                <?=\Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao',array('controller'=>'atleta-atleta','action'=>'excluirviaacademia','id'=>$item->getId() )))?>
+                            </td>
+                        </tr>
+                    <?php }; ?>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Realizar Inscrição de Atletas">Nova Inscrição</a>
+                            <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+
+    });
+</script>
