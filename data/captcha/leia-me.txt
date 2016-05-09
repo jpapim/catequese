@@ -1,0 +1,1 @@
+Esta tem que existir para que o Componente de Captcha passe a funcionar.
