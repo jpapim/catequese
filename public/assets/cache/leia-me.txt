@@ -1,0 +1,1 @@
+Esta tem que existir para que o Cache do sistema passe a funcionar.
