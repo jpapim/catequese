@@ -3,7 +3,7 @@
 return array(
     'db' => array(
 		'username' => 'root',
-        'password' => '',
+        'password' => 'magatti123',
         'dsn' => 'mysql:dbname=bdcatequese;host=localhost',
     ),
     'service_manager' => array(
