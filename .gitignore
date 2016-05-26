@@ -2,3 +2,7 @@
 .idea/encodings.xml
 .idea/workspace.xml
 .idea/*
+/nbproject/private/
+config/autoload/development.php
+nbproject/*
+
