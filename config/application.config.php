@@ -44,6 +44,7 @@ return array(
         #'Telefone',
         #'TipoConta',
         #'TipoTelefone',
+        'DataFrequencia',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
