@@ -44,6 +44,8 @@ return array(
         #'Telefone',
         #'TipoConta',
         #'TipoTelefone',
+        'Sacramento',
+        'MovimentoPastoral'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
