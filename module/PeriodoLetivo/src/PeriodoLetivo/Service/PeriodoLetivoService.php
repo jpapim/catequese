@@ -30,7 +30,7 @@ class PeriodoLetivoService extends Entity {
     public function buscarPeriodoLetivo($params){
         $resultSet = null;
         if(isset($params['id_periodo_letivo']) && $params['id_periodo_letivo']){
-            $resultSet = $this->select(['periodo_letivo.id_periodod_letivo = ?'
+            $resultSet = $this->select(['periodo_letivo.id_periodo_letivo = ?'
             =>$params['id_periodo_letivo']]);
         }
         return $resultSet;
