@@ -11,9 +11,10 @@ namespace PeriodoLetivo\Controller;
 
 
 use Estrutura\Controller\AbstractCrudController;
+use Estrutura\Helpers\Data;
 use Estrutura\Helpers\Pagination;
 use Zend\View\Model\ViewModel;
-
+use Zend\Form\Element;
 
 
 class PeriodoLetivoController extends AbstractCrudController {
@@ -84,6 +85,9 @@ class PeriodoLetivoController extends AbstractCrudController {
         $form = new \PeriodoLetivo\Form\PeriodoLetivoForm();
         $service =  new \PeriodoLetivo\Service\PeriodoLetivoService();
 
+        $_POST['dt_inicio']= Data::converterDataHoraBrazil2BancoMySQL($_POST['dt_inicio']);
+        $_POST['dt_fim']= Data::converterDataHoraBrazil2BancoMySQL($_POST['dt_fim']);
+
         $controller = $this->params('controller');
         $this->addSuccessMessage('Registro Alterado com sucesso!');
         $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'index'));
@@ -97,6 +101,7 @@ class PeriodoLetivoController extends AbstractCrudController {
     public function cadastroAction(){
         return parent::cadastro($this->service,$this->form);
     }
+
 
 
 } 

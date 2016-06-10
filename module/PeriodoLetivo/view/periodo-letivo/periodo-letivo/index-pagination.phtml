@@ -65,8 +65,8 @@
                     ?>
                     <tr>
                         <td><?= $item['id_periodo_letivo']?></td>
-                        <td><?= $item['dt_inicio']?></td>
-                        <td><?= $item['dt_fim']?></td>
+                        <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_inicio'])?></td>
+                        <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_fim'])?></td>
                         <td><?= $item['dt_ano_letivo']?></td>
 
                         <td style="width: 150px;">

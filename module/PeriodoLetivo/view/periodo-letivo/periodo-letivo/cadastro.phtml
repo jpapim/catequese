@@ -6,7 +6,7 @@
         <div class="block-flat">
             <div class="content">
                 <?php
-                $element  = new \Zend\Form\Element\DateTime();
+
 
                 $form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
                 $form->setAttribute('class', 'form-horizontal');
@@ -16,6 +16,9 @@
                 $form->prepare();
                 echo $this->form()->openTag($form);
                 $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
+                $form->get('dt_inicio')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_inicio')->getValue()));
+                $form->get('dt_fim')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_fim')->getValue()));
+
                 echo $this->formHidden($form->get('id'));
                 ?>
 
@@ -23,7 +26,7 @@
                     <div class="col-md-7">
 
                         <div class="input-group" id="datetimepicker">
-                            <?= $this->formRow($form->get('dt_inicio')) ?>
+                            <?= $this->formRow($form->get('dt_inicio')); ?>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                         <div class="help-block with-errors"></div>
