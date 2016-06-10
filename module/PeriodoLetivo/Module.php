@@ -8,6 +8,7 @@
 
 namespace PeriodoLetivo;
 
+use PeriodoLetivo\Service\PeriodoLetivoService;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
@@ -53,9 +54,9 @@ class Module
     {
         return array(
             'factories' => array(
-                'Estado\Service\EstadoService' => function($sm) {
+                'PeriodoLetivo\Service\PeriodoLetivoService' => function($sm) {
 
-                    return new \Estado\Service\EstadoService();
+                    return new PeriodoLetivoService();
                 },
             )
         );

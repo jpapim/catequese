@@ -22,7 +22,7 @@ class PeriodoLetivoService extends Entity {
 
             $select =  $sql->select('periodo_letivo')
                 ->where([
-                    'periodo_letivo-periodoletivo.id = ?'=>$id,
+                    'periodo_letivo.id_periodo_letivo= ?'=>$id,
                 ]);
             return $sql->prepareStatementForSqlObject($select)->execute()->current();
         }
@@ -99,6 +99,7 @@ class PeriodoLetivoService extends Entity {
         $sql = new Sql($this->getAdapter());
 
         $select = $sql->select('periodo_letivo')->columns([
+            'id_periodo_letivo',
             'dt_inicio',
             'dt_fim',
             'dt_ano_letivo',

@@ -12,20 +12,18 @@ namespace PeriodoLetivo\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Pagination;
-use Estrutura\Helpers\Cript;
-use Estrutura\Helpers\Data;
 use Zend\View\Model\ViewModel;
-use Zend\View\Model\JsonModel;
+
 
 
 class PeriodoLetivoController extends AbstractCrudController {
 
     /**
-     * @var \PeriodoLetivo\Service\PeriodoLetivoService
+     * @var \PeriodoLetivo\Service\PeriodoLetivo
      */
     protected  $service;
     /**
-     * @var \PeriodoLetivo\Form\PeriodoLetivoForm
+     * @var \PeriodoLetivo\Form\PeriodoLetivo
      */
     protected $form;
 
@@ -42,13 +40,23 @@ class PeriodoLetivoController extends AbstractCrudController {
 
         $filter = $this->getFilterPage();
 
-        $campos_filter = [
+        $camposFilter = [
             '0'=>[
-                'filter' => "categoria_peso.nm_categoria_peso LIKE ?"
+                'filter' => "periodo_letivo.id_periodo_letivo  LIKE ?"
+            ],
+            '1'=>[
+                'filter' => "periodo_letivo.dt_inicio  LIKE ?"
+            ],
+            '2'=>[
+                'filter'=> "periodo_letivo.dt_fim  LIKE ?"
+            ],
+            '3'=>[
+                'filter'=> "periodo_letivo.dt_ano_letivo  LIKE ?"
             ]
+
         ];
 
-        $paginator = $this->service->getPeriodoLetivoPaginator($filter, $campos_filter);
+        $paginator = $this->service->getPeriodoLetivoPaginator($filter, $camposFilter);
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
         $countPerPage = $this->getCountPerPage(
             current(Pagination::getCountPerPage($paginator->getTotalItemCount()))
@@ -58,7 +66,36 @@ class PeriodoLetivoController extends AbstractCrudController {
            current(Pagination::getCountPerPage($paginator->getTotalItemCount()))
         ))->setCurrentPageNumber($this->getCurrentPage());
 
-        $viewModel = new ViewModel();
+        $viewModel = new ViewModel([
+            'service'=>$this->service,
+            'form'=>$this->form,
+            'paginator'=>$paginator,
+            'filter'=>$filter,
+            'countPerPage'=>$countPerPage,
+            'camposFilter'=>$camposFilter,
+            'controller'=>$this->params('controller'),
+            'atributos'=>array(),
+        ]);
+
+        return $viewModel->setTerminal(true);
+    }
+
+    public function gravarAction(){
+        $form = new \PeriodoLetivo\Form\PeriodoLetivoForm();
+        $service =  new \PeriodoLetivo\Service\PeriodoLetivoService();
+
+        $controller = $this->params('controller');
+        $this->addSuccessMessage('Registro Alterado com sucesso!');
+        $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'index'));
+
+        return parent::gravar($service,$form);
+    }
+
+    public function excluirAction(){
+        return parent::excluir($this->service,$this->form);
+    }
+    public function cadastroAction(){
+        return parent::cadastro($this->service,$this->form);
     }
 
 

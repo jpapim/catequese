@@ -8,12 +8,12 @@
 return array(
     'router' => array(
         'routes' => array(
-            'album' => array(
+            'periodo_letivo' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/periodo_letivo-periodoletivo',
+                    'route'    => '/periodo_letivo',
                     'defaults' => array(
-                        'controller' => 'periodo_letivo-periodoletivo',
+                        'controller' => 'periodo_letivo',
                         'action'     => 'index',
                     ),
                 ),
@@ -23,6 +23,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
+            'periodo_letivo' => 'PeriodoLetivo\Controller\PeriodoLetivoController',
             'periodo_letivo-periodoletivo' => 'PeriodoLetivo\Controller\PeriodoLetivoController',
         ),
     ),

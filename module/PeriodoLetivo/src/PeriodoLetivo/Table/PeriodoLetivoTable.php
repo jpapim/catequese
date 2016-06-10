@@ -16,9 +16,9 @@ class PeriodoLetivoTable extends AbstractEstruturaTable{
         public $table='periodo_letivo';
         public $campos= [
             'id_periodo_letivo'=>'id',
-            'dt_inicio'=>'inicio',
-            'dt_fim'=>'fim',
-            'dt_ano_letivo'=>'ano_letivo',
+            'dt_inicio'=>'dt_inicio',
+            'dt_fim'=>'dt_fim',
+            'dt_ano_letivo'=>'dt_ano_letivo',
         ];
 
 } 

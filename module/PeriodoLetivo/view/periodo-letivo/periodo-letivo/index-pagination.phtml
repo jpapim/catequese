@@ -1,15 +1,21 @@
 <div class="col-md-10 col-md-push-1">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterCatPeso" >
+        <table class="table table-striped" id="tablesorterPeriodoLetivo" >
             <thead>
             <tr>
-                <th class="text-center">Categoria Peso</th>
+                <th class="text-center">ID Periodo Letivo</th>
+                <th class="text-center">Data Inicio</th>
+                <th class="text-center">Data Termino</th>
+                <th class="text-center">Ano Letivo</th>
                 <th class="text-center">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">Categoria Peso</th>
+                <th class="text-center">ID Periodo Letivo</th>
+                <th class="text-center">Data Inicio</th>
+                <th class="text-center">Data Termino</th>
+                <th class="text-center">Ano Letivo</th>
                 <th class="text-center">Ações</th>
             </tr>
             <tr>
@@ -19,7 +25,7 @@
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
                             'urlPagination' => '/periodo_letivo-periodoletivo/index-pagination',
                             'countPerPage' => $countPerPage,
-                            'divData' => '#categoria-peso',
+                            'divData' => '#periodo-letivo',
                         ]
                     );
                     ?>
@@ -37,7 +43,7 @@
                     <?php
                     foreach ($camposFilter as $key => $campoFilter) {
                         ?>
-                        <td>
+                        <td style="background-color: #e3e3e3;">
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
@@ -58,11 +64,14 @@
                 foreach ($paginator as $item) {
                     ?>
                     <tr>
-                        <td><?= $item['nm_categoria_peso']?></td>
+                        <td><?= $item['id_periodo_letivo']?></td>
+                        <td><?= $item['dt_inicio']?></td>
+                        <td><?= $item['dt_fim']?></td>
+                        <td><?= $item['dt_ano_letivo']?></td>
 
                         <td style="width: 150px;">
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_categoria_peso'])))) ?>
-                            <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_categoria_peso'])))) ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_periodo_letivo'])))) ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_periodo_letivo'])))) ?>
                         </td>
                     </tr>
                 <?php
@@ -108,7 +117,7 @@
         };
 
         // call the tablesorter plugin and apply the uitheme widget
-        $("#tablesorterCatPeso").tablesorter({
+        $("#tablesorterPeriodoLetivo").tablesorter({
             // this will apply the bootstrap theme if "uitheme" widget is included
             // the widgetOptions.uitheme is no longer required to be set
             theme: "bootstrap",
