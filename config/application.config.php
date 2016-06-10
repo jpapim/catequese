@@ -45,6 +45,7 @@ return array(
         #'TipoConta',
         #'TipoTelefone',
         'PeriodoLetivo',
+        'DetalhePeriodoLetivo',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

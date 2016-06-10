@@ -1,5 +1,5 @@
 <div class="page-head">
-    <h2>Cadastro Periodo Letivo</h2>
+    <h2>Cadastro Detalhe Periodo Letivo</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
@@ -16,37 +16,30 @@
                 $form->prepare();
                 echo $this->form()->openTag($form);
                 $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
-                $form->get('dt_inicio')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_inicio')->getValue()));
-                $form->get('dt_fim')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_fim')->getValue()));
+                $form->get('dt_encontro')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_encontro')->getValue()));
 
                 echo $this->formHidden($form->get('id'));
                 ?>
+                <div class="form-group">
+                    <div class="col-md-7">
+
+                        <div class="input-group" id="datetimepicker">
+                            <?=$this->formRow($form->get('id_periodo_letivo'))?>
+                        </div>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <div class="col-md-7">
 
                         <div class="input-group" id="datetimepicker">
-                            <?= $this->formRow($form->get('dt_inicio')); ?>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            <?= $this->formRow($form->get('dt_encontro')); ?>
                         </div>
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-7">
 
-                        <div class="input-group" id="datetimepicker">
-                            <?= $this->formRow($form->get('dt_fim')) ?>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?=$this->formRow($form->get('dt_ano_letivo'))?>
-                    </div>
-                </div>
                 <div class="form-group">
                     <div class="col-md-10">
                         <button type="submit" class="btn btn-primary">Salvar</button>
@@ -59,3 +52,4 @@
     </div>
 </div>
 <script type="text/javascript" src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
+

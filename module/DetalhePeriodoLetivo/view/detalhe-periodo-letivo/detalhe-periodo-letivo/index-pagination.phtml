@@ -3,19 +3,17 @@
         <table class="table table-striped" id="tablesorterPeriodoLetivo" >
             <thead>
             <tr>
+                <th class="text-center">ID Detalhe Periodo Letivo</th>
                 <th class="text-center">ID Periodo Letivo</th>
-                <th class="text-center">Data Inicio</th>
-                <th class="text-center">Data Termino</th>
-                <th class="text-center">Ano Letivo</th>
+                <th class="text-center">Data Encontro</th>
                 <th class="text-center">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
+                <th class="text-center">ID Detalhe Periodo Letivo</th>
                 <th class="text-center">ID Periodo Letivo</th>
-                <th class="text-center">Data Inicio</th>
-                <th class="text-center">Data Termino</th>
-                <th class="text-center">Ano Letivo</th>
+                <th class="text-center">Data Encontro</th>
                 <th class="text-center">Ações</th>
             </tr>
             <tr>
@@ -23,9 +21,9 @@
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/periodo_letivo-periodoletivo/index-pagination',
+                            'urlPagination' => '/detalhe_periodo_letivo-detalheperiodoletivo/index-pagination',
                             'countPerPage' => $countPerPage,
-                            'divData' => '#periodo-letivo',
+                            'divData' => '#detalhe-periodo',
                         ]
                     );
                     ?>
@@ -64,14 +62,13 @@
                 foreach ($paginator as $item) {
                     ?>
                     <tr>
+                        <td><?= $item['id_detalhe_periodo_letivo']?></td>
                         <td><?= $item['id_periodo_letivo']?></td>
-                        <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_inicio'])?></td>
-                        <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_fim'])?></td>
-                        <td><?= $item['dt_ano_letivo']?></td>
+                        <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_encontro'])?></td>
 
                         <td style="width: 150px;">
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_periodo_letivo'])))) ?>
-                            <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_periodo_letivo'])))) ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_detalhe_periodo_letivo'])))) ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_detalhe_periodo_letivo'])))) ?>
                         </td>
                     </tr>
                 <?php
