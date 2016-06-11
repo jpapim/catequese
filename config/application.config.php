@@ -45,12 +45,17 @@ return array(
         #'TipoConta',
         #'TipoTelefone',
 <<<<<<< HEAD
+<<<<<<< HEAD
         'Sacramento',
         'MovimentoPastoral'
 =======
         'PeriodoLetivo',
         'DetalhePeriodoLetivo',
 >>>>>>> dev-igor
+=======
+        'PeriodoLetivo',
+        'DetalhePeriodoLetivo',
+>>>>>>> master
     ),
     'module_listener_options' => array(
         'module_paths' => array(

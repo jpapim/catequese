@@ -2,6 +2,7 @@ AUTORIZAï¿½ï¿½O CATEGORIA PESO
 INSERT INTO perfil_controller_action(id_controller,id_action,id_perfil) VALUES('18','51','1');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 AUTORIZAÇÃO PERFIL
 INSERT INTO perfil_controller_action(id_controller,id_action,id_perfil) VALUES('12','51','1');
 
@@ -12,6 +13,8 @@ insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(2
 AUTORIZAÇÃO MOVIMENTO_PASTORAL index,gravar,index-pagination,cadastro,excluir
 insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(26,1,1),(26,6,1),(26,51,1),(26,7,1),(26,8,1);
 =======
+=======
+>>>>>>> master
 AUTORIZAï¿½ï¿½O PERFIL
 INSERT INTO perfil_controller_action(id_controller,id_action,id_perfil) VALUES('12','51','1');
 
@@ -30,5 +33,9 @@ insert into perfil_controller_action(id_controller,id_action,id_perfil) values('
 insert into perfil_controller_action(id_controller,id_action,id_perfil) values('25','6','1');
 insert into perfil_controller_action(id_controller,id_action,id_perfil) values('25','7','1');
 insert into perfil_controller_action(id_controller,id_action,id_perfil) values('25','8','1');
+<<<<<<< HEAD
 insert into perfil_controller_action(id_controller,id_action, id_perfil) values('25','51','1');
 >>>>>>> dev-igor
+=======
+insert into perfil_controller_action(id_controller,id_action, id_perfil) values('25','51','1');
+>>>>>>> master
