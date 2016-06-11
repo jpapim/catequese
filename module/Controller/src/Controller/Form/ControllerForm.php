@@ -13,7 +13,11 @@ class ControllerForm extends AbstractForm{
         $this->inputFilter = new InputFilter();
         $objForm = new FormObject('controllerform',$this,$this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");  
-        $objForm->text("nm_controller")->required(false)->label("Controller");  
+        $objForm->text("nm_controller")->required(false)->label("Controller");
+
+        $objForm->text("nm_modulo")->required(false)->label("Módulo");
+
+        $objForm->checkbox('cs_exibir_combo', array(), true)->required(false)->label("Exibir Módulos nos Combos?");
 
         $this->formObject = $objForm;
     }

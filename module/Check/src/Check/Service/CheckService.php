@@ -1,32 +1,33 @@
 <?php
 
-namespace Controller\Service;
+namespace Check\Service;
 
-use \Controller\Entity\ControllerEntity as Entity;
+use \Check\Entity\CheckEntity as Entity;
 
-class ControllerService extends Entity {
+class CheckService extends Entity {
 
-    public function getEstadoToArray($id) {
+    public function getCheckToArray($id) {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
         #die($id);
-        $select = $sql->select('controller')
+        $select = $sql->select('estado')
             ->where([
-                'controller.id_controller = ?' => $id,
+                'estado.id_estado = ?' => $id,
             ]);
         #print_r($sql->prepareStatementForSqlObject($select)->execute());exit;
 
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
-    public function getControllerPaginator($filter = NULL, $camposFilter = NULL) {
+    public function getChecksPaginator($filter = NULL, $camposFilter = NULL) {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
-        $select = $sql->select('controller')->columns([
-            'id_controller',
-            'nm_controller',
+        $select = $sql->select('estado')->columns([
+            'id_estado',
+            'nm_estado',
+            'sg_estado',
         ]);
 
         $where = [
@@ -43,8 +44,18 @@ class ControllerService extends Entity {
             }
         }
 
-        $select->where($where)->order(['nm_controller ASC']);
+        $select->where($where)->order(['nm_estado ASC']);
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
+
+
+    public function preSave() {
+
+    }
+
+    public function posSave() {
+
+    }
+
 
 }

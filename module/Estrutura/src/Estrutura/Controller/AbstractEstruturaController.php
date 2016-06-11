@@ -36,8 +36,8 @@ abstract class AbstractEstruturaController extends AbstractActionController {
     public function getConfigList() {
         if (!$this->configList) {
             $this->configList = $this->getServiceLocator()
-                    ->get('Config\Service\ConfigService')
-                    ->getConfigList();
+                ->get('Config\Service\ConfigService')
+                ->getConfigList();
         }
         return $this->configList;
     }
@@ -55,13 +55,16 @@ abstract class AbstractEstruturaController extends AbstractActionController {
 
             $obj = str_replace(['Controller', 'IndexService'], ['Service', $namespace], $classe);
 
-            // Se nao ele seta da controller
-        } else {
+        } else if($controller == 'ControllerController'){ // Alysson - Corrigindo caso for acessar o cadastro de Controller
+
+            $obj = "\\" . $namespace . '\Service\\' .  'ControllerService';
+        } else { // Se nao ele seta da controller
 
             $objeto = str_replace('Controller', '', $controller);
             $obj = "\\" . $namespace . '\Service\\' . $objeto . 'Service';
         }
 
+        #xd($obj);
         $service = new $obj;
         return $service;
     }
@@ -80,6 +83,9 @@ abstract class AbstractEstruturaController extends AbstractActionController {
             $obj = str_replace(['Controller', 'IndexForm'], ['Form', $namespace], $classe);
 
             // Se nao ele seta da controller
+        } else if($controller == 'ControllerController'){ // Alysson - Corrigindo caso for acessar o cadastro de Controller
+            $obj = "\\" . $namespace . '\Form\\' .  'ControllerForm';
+
         } else {
 
             $objeto = str_replace('Controller', '', $controller);
@@ -165,7 +171,7 @@ abstract class AbstractEstruturaController extends AbstractActionController {
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getCurrentPage() {
@@ -175,7 +181,7 @@ abstract class AbstractEstruturaController extends AbstractActionController {
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getCountPerPage($countPerPageAttr = 100) {
@@ -185,7 +191,7 @@ abstract class AbstractEstruturaController extends AbstractActionController {
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getFilterPage() {

@@ -4,20 +4,21 @@
 <!--<link rel="stylesheet" href="/assets/css/jquery.tablesorter.pager.css">-->
 
 <?php
-  /** @var $form \Controller\Form\Controller */
-  /** @var $lista \Controller\Service\Controller[] */
+  /** @var $form \Check\Form\Check */
+  /** @var $lista \Check\Service\Check[] */
 ?>
 <div class="page-head">
-    <h2>Lista de Controllers</h2>
+    <h2>Lista de Checks</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
         <div class="col-md-12">
-            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Adicionar um novo controller">Novo Controller</a>
+            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Adicionar um novo estado">Novo Check</a>
+            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Carregar lista de Controllers">Carregar Checkbox</a>
         </div>
     </div>
     <br />
-    <div class="row" id="controller-pagination"></div>
+    <div class="row" id="check-pagination"></div>
 </div>
 <script>
     $(function () {
@@ -25,18 +26,18 @@
             type: "post",
             dataType: "text",
             cache: false,
-            url: '/controller-controller/index-pagination',
+            url: '/check-check/index-pagination',
             async: true,
             data: {
             },
             beforeSend: function () {
-                $('#controller-pagination').html(
+                $('#check-pagination').html(
                     '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
                 );
             },
             success: function (data) {
 
-                $('#controller-pagination').html(data);
+                $('#check-pagination').html(data);
             }
         });
 

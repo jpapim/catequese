@@ -48,10 +48,8 @@ return array(
         'DetalhePeriodoLetivo',
         'Sacramento',
         'MovimentoPastoral',
-        'PeriodoLetivo',
-        'DetalhePeriodoLetivo',
-        'PeriodoLetivo',
-        'DetalhePeriodoLetivo',
+        'Controller',
+        'Action',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

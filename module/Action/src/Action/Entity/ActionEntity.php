@@ -7,7 +7,7 @@ use Estrutura\Service\AbstractEstruturaService;
 class ActionEntity extends AbstractEstruturaService{
 
         protected $id; 
-        protected $nm_action; 
+        protected $nm_action;
 
 
 

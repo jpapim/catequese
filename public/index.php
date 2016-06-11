@@ -25,6 +25,10 @@ if (APPLICATION_ENV == 'development') {
     ini_set("display_errors", 1);
 }
 
+// Alysson - Importando arquivo de Constantes
+require 'infra/constantes.php';
+require 'infra/debug.php';
+
 // Setup autoloading
 require 'init_autoloader.php';
 
