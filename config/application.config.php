@@ -44,23 +44,14 @@ return array(
         #'Telefone',
         #'TipoConta',
         #'TipoTelefone',
-<<<<<<< HEAD
         'PeriodoLetivo',
         'DetalhePeriodoLetivo',
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
         'Sacramento',
-        'MovimentoPastoral'
-=======
+        'MovimentoPastoral',
         'PeriodoLetivo',
         'DetalhePeriodoLetivo',
->>>>>>> dev-igor
-=======
         'PeriodoLetivo',
         'DetalhePeriodoLetivo',
->>>>>>> master
->>>>>>> dev-raimundo
     ),
     'module_listener_options' => array(
         'module_paths' => array(
