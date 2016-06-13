@@ -14,50 +14,58 @@ use \Zend\Paginator\Paginator;
 use \Zend\Paginator\Adapter\DbSelect;
 
 
-class PeriodoLetivoService extends Entity {
+class PeriodoLetivoService extends Entity
+{
 
     // Obtendo o Periodo  Letivo pelo id
-        public function getPeriodoLetivoToArray($id){
-            $sql = new Sql($this->getAdapter());
+    public function getPeriodoLetivoToArray($id)
+    {
+        $sql = new Sql($this->getAdapter());
 
-            $select =  $sql->select('periodo_letivo')
-                ->where([
-                    'periodo_letivo.id_periodo_letivo= ?'=>$id,
-                ]);
-            return $sql->prepareStatementForSqlObject($select)->execute()->current();
-        }
+        $select = $sql->select('periodo_letivo')
+            ->where([
+                'periodo_letivo.id_periodo_letivo= ?' => $id,
+            ]);
+        return $sql->prepareStatementForSqlObject($select)->execute()->current();
+    }
+
     // Buscar o periodo Letivo de acordo com os parametros passados
-    public function buscarPeriodoLetivo($params){
+    public function buscarPeriodoLetivo($params)
+    {
         $resultSet = null;
-        if(isset($params['id_periodo_letivo']) && $params['id_periodo_letivo']){
+        if (isset($params['id_periodo_letivo']) && $params['id_periodo_letivo']) {
             $resultSet = $this->select(['periodo_letivo.id_periodo_letivo = ?'
-            =>$params['id_periodo_letivo']]);
+            => $params['id_periodo_letivo']]);
         }
         return $resultSet;
     }
 
     // faz uma busca baseada na data de  inicio
-   public function getFilterPeriodoPorDataInicio($dt_inicio){
-       $sql = new Sql($this->getAdapter());
-
-       $select = $sql->select('periodo_letivo')
-           ->columns(array('dt_inicio'))
-           ->where(['periodo_letivo.dt_inicio LIKE ?'=>'%'.$dt_inicio.'%']);
-
-       return $sql->prepareStatementForSqlObject($select)->execute();
-   }
-    //faz uma busca baseada na data final
-    public function getFilterPeriodoPorDataFim($dt_fim){
+    public function getFilterPeriodoPorDataInicio($dt_inicio)
+    {
         $sql = new Sql($this->getAdapter());
 
         $select = $sql->select('periodo_letivo')
-            ->columns(array('dt_fim'))
-            ->where(['periodo_letivo.dt_fim LIKE ?'=>'%'.$dt_fim.'%']);
+            ->columns(array('dt_inicio'))
+            ->where(['periodo_letivo.dt_inicio LIKE ?' => '%' . $dt_inicio . '%']);
 
         return $sql->prepareStatementForSqlObject($select)->execute();
     }
 
-    public function buscaPaginator($pagina = 1, $itensPagina =5, $ordem = 'dt_inicio ASC', $like = null, $itensPaginacao = 10) {
+    //faz uma busca baseada na data final
+    public function getFilterPeriodoPorDataFim($dt_fim)
+    {
+        $sql = new Sql($this->getAdapter());
+
+        $select = $sql->select('periodo_letivo')
+            ->columns(array('dt_fim'))
+            ->where(['periodo_letivo.dt_fim LIKE ?' => '%' . $dt_fim . '%']);
+
+        return $sql->prepareStatementForSqlObject($select)->execute();
+    }
+
+    public function buscaPaginator($pagina = 1, $itensPagina = 5, $ordem = 'dt_inicio ASC', $like = null, $itensPaginacao = 10)
+    {
         //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
         // preparar um select para tabela contato com uma ordem
         $sql = new Sql($this->getAdapter());
@@ -66,8 +74,7 @@ class PeriodoLetivoService extends Entity {
         if (isset($like)) {
             $select
                 ->where
-                ->like('id_periodo_letivo', "%{$like}%")
-            ;
+                ->like('id_periodo_letivo', "%{$like}%");
         }
 
         // criar um objeto com a estrutura desejada para armazenar valores
@@ -88,13 +95,14 @@ class PeriodoLetivoService extends Entity {
         // resultado da pagina��o
         return (new Paginator($paginatorAdapter))
             // pagina a ser buscada
-            ->setCurrentPageNumber((int) $pagina)
+            ->setCurrentPageNumber((int)$pagina)
             // quantidade de itens na p�gina
-            ->setItemCountPerPage((int) $itensPagina)
-            ->setPageRange((int) $itensPaginacao);
+            ->setItemCountPerPage((int)$itensPagina)
+            ->setPageRange((int)$itensPaginacao);
     }
 
-    public function getPeriodoLetivoPaginator($filter = NULL, $camposFilter = NULL) {
+    public function getPeriodoLetivoPaginator($filter = NULL, $camposFilter = NULL)
+    {
 
         $sql = new Sql($this->getAdapter());
 
@@ -122,7 +130,8 @@ class PeriodoLetivoService extends Entity {
         return new Paginator(new DbSelect($select, $this->getAdapter()));
     }
 
-    public function getPeriodoLetivoDetalhePaginator($filter = NULL, $camposFilter = NULL) {
+    public function getPeriodoLetivoDetalhePaginator($id_periodo_letivo, $filter = NULL, $camposFilter = NULL)
+    {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
@@ -132,6 +141,7 @@ class PeriodoLetivoService extends Entity {
         ]);
 
         $where = [
+            'id_periodo_letivo'=>$id_periodo_letivo,
         ];
 
         if (!empty($filter)) {
@@ -156,5 +166,4 @@ class PeriodoLetivoService extends Entity {
     }
 
 
-
-} 
+}

@@ -70,7 +70,8 @@
                         <td><?= $item['dt_ano_letivo']?></td>
 
                         <td style="width: 150px;">
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_periodo_letivo'])))) ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_periodo_letivo'])))) ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastroperiodoletivodetalhe', 'id' => $item['id_periodo_letivo']))) ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_periodo_letivo'])))) ?>
                         </td>
                     </tr>

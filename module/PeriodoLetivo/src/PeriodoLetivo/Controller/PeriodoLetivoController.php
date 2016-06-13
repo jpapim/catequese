@@ -15,6 +15,8 @@ use Estrutura\Helpers\Data;
 use Estrutura\Helpers\Pagination;
 use Zend\View\Model\ViewModel;
 use Zend\Form\Element;
+use Zend\View\Model\JsonModel;
+use Estrutura\Helpers\Cript;
 
 
 class PeriodoLetivoController extends AbstractCrudController {
@@ -57,6 +59,8 @@ class PeriodoLetivoController extends AbstractCrudController {
 
         ];
 
+        #xd($id_periodo_letivo = $this->params('id'));
+
         $paginator = $this->service->getPeriodoLetivoPaginator($filter, $camposFilter);
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
         $countPerPage = $this->getCountPerPage(
@@ -81,21 +85,63 @@ class PeriodoLetivoController extends AbstractCrudController {
         return $viewModel->setTerminal(true);
     }
 
-    public function gravarAction(){
-        $form = new \PeriodoLetivo\Form\PeriodoLetivoForm();
-        $service =  new \PeriodoLetivo\Service\PeriodoLetivoService();
+    public function gravarAction()
+    {
+        try {
+            $controller = $this->params('controller');
+            $request = $this->getRequest();
+            $service = $this->service;
+            $form = $this->form;
 
-        $_POST['dt_inicio']= Data::converterDataHoraBrazil2BancoMySQL($_POST['dt_inicio']);
-        $_POST['dt_fim']= Data::converterDataHoraBrazil2BancoMySQL($_POST['dt_fim']);
+            if (!$request->isPost()) {
+                throw new \Exception('Dados Inválidos');
+            }
 
-        #xd($_POST['dt_inicio']);
-        $controller = $this->params('controller');
-        $id_periodo_letivo = parent::gravar($service,$form);
-        #xd($id_periodo_letivo);
-        #$this->addSuccessMessage('Registro Alterado com sucesso!');
-        $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'cadastroperiodoletivodetalhe','id'=>$id_periodo_letivo));
+            $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
 
-        return $id_periodo_letivo;
+            $files = $request->getFiles();
+            $upload = $this->uploadFile($files);
+
+            $post = array_merge($post, $upload);
+
+            if (isset($post['id']) && $post['id']) {
+                $post['id'] = Cript::dec($post['id']);
+            }
+            #################################################################
+            # Inicio da Customizaçao dos Valores antes de gravar no banco
+            $post['dt_inicio'] = Data::converterDataHoraBrazil2BancoMySQL($post['dt_inicio']);
+            $post['dt_fim'] = Data::converterDataHoraBrazil2BancoMySQL($post['dt_fim']);
+            # Fim da Customizaçao dos Valores antes de gravar no banco
+            #################################################################
+
+            $form->setData($post);
+
+            if (!$form->isValid()) {
+                $this->addValidateMessages($form);
+                $this->setPost($post);
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+                return false;
+            }
+            $service->exchangeArray($form->getData());
+            $this->addSuccessMessage('Registro Alterado com sucesso');
+            $id_periodo_letivo = $service->salvar();
+
+            //Define o redirecionamento
+            if (isset($post['id']) && $post['id']) {
+                $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'index'));
+            } else {
+                $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'cadastroperiodoletivodetalhe','id'=>$id_periodo_letivo));
+            }
+
+            return $id_periodo_letivo;
+
+        } catch (\Exception $e) {
+
+            $this->setPost($post);
+            $this->addErrorMessage($e->getMessage());
+            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+            return false;
+        }
     }
 
     public function excluirAction(){
@@ -130,23 +176,13 @@ class PeriodoLetivoController extends AbstractCrudController {
     {
         //Se for a chamada Ajax
         if ($this->getRequest()->isPost()) {
-            $id_detalhe_periodo_letivo = $this->params()->fromPost('id_detalhe_periodo_letivo');
-            $id_periodo_letivo = $this->params()->fromPost('id_periodo_letivo');
+            $id_periodo_letivo = $this->params()->fromPost('id');
             $dt_encontro = $this->params()->fromPost('dt_encontro');
 
-            xd($dt_encontro);
+            $detalhe_periodo_letivo = new \DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService();
 
-            $atleta = new \Atleta\Service\AtletaService();
-            $arrAtleta = $atleta->getIdAtletaPorNomeToArray($this->params()->fromPost('nm_atleta'));
-            $realizar_inscricao = new \InscricoesEvento\Service\InscricoesEventoService();
-
-            //TODO - Implementar Validador para certificar que o Atleta ainda nao esta na base.
-            if($realizar_inscricao->checarSeAtletaEstaInscritoNoEvento($arrAtleta['id_atleta'],$id_evento)){
-                $valuesJson = new JsonModel( array('sucesso'=>false, 'nm_atleta'=>$nm_atleta) );
-            }else{
-                $id_inserido = $realizar_inscricao->getTable()->salvar(array('id_evento'=>$id_evento, 'id_atleta'=>$arrAtleta['id_atleta']), null);
-                $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'nm_atleta'=>$nm_atleta) );
-            }
+                $id_inserido = $detalhe_periodo_letivo->getTable()->salvar(array('id_periodo_letivo'=>$id_periodo_letivo, 'dt_encontro'=>$dt_encontro), null);
+                $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'dt_encontro'=>$dt_encontro) );
 
             return $valuesJson;
         }
@@ -156,6 +192,7 @@ class PeriodoLetivoController extends AbstractCrudController {
     {
         $filter = $this->getFilterPage();
 
+        $id_periodo_letivo = $this->params()->fromPost('id_periodo_letivo');
         $camposFilter = [
             '0' => [
                 //'filter' => "periodoletivodetalhe.nm_sacramento LIKE ?",
@@ -163,7 +200,9 @@ class PeriodoLetivoController extends AbstractCrudController {
 
         ];
 
-        $paginator = $this->service->getPeriodoLetivoDetalhePaginator($filter, $camposFilter);
+        #$id_periodo_letivo = $this->params('id');
+        #xd($id_periodo_letivo = $this->params('id'));
+        $paginator = $this->service->getPeriodoLetivoDetalhePaginator($id_periodo_letivo, $filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 

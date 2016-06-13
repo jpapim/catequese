@@ -26,10 +26,8 @@
 
                 $form->prepare();
                 echo $this->form()->openTag($form);
-                $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
+                $form->get('id')->setValue($dadosPeriodoLetivo->getId());
                 $form->get('dt_encontro')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_encontro')->getValue()));
-
-                #xd($form->get('id_periodo_letivo'));
                 echo $this->formHidden($form->get('id'));
                 ?>
 
@@ -62,28 +60,28 @@
             { dateFormat: 'dd/mm/yy' }
         );
 
-        <?php // funcao ajax para buscar a paginacao?>
-        $(function () {
-            $.ajax({
-                type: "post",
-                dataType: "text",
-                cache: false,
-                url: '/periodo_letivo-periodoletivo/detalhe-pagination',
-                async: true,
-                data: {
-                },
-                beforeSend: function () {
-                    $('#periodoletivodetalhe-pagination').html(
-                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                    );
-                },
-                success: function (data) {
-                    $('#periodoletivodetalhe-pagination').html(data);
-                }
-            });
-        })
+        //Função que faz a listagem ser paginada.
+        function carregarGridPaginadaAjax(){
+                $.ajax({
+                    type: "post",
+                    dataType: "text",
+                    cache: false,
+                    url: '/periodo_letivo-periodoletivo/detalhe-pagination',
+                    async: true,
+                    data: { id_periodo_letivo : <?=$dadosPeriodoLetivo->getId()?>},
+                    beforeSend: function () {
+                        $('#periodoletivodetalhe-pagination').html(
+                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                        );
+                    },
+                    success: function (data) {
+                        $('#periodoletivodetalhe-pagination').html(data);
+                    }
+                });
+        }
+        carregarGridPaginadaAjax(); //Chama a Paginação da listagem
 
-
+        /*Função Ajax que adiciona os encontros ao Banco de dados*/
         $('#adicionar').click(function() {
             var dados = $('#detalheperiodoletivoform').serialize();
             $.ajax({
@@ -93,14 +91,10 @@
                 async: true,
                 data: dados,
                 success: function(response) {
-                    $("#nm_atleta").val("");
-                    $("#nm_atleta").focus();
+                    $("#dt_encontro").val("");
                     if(response.sucesso == true){
-                        $('#msg').html( "<p>O Atleta " + response.nm_atleta + " foi <em>Inscrito(a) com sucesso!</em></p>" );
-                    } else{
-                        $('#msg').html( "<p>O Atleta " + response.nm_atleta + " j� <em> Consta na Base de Dados!</em></p>" );
+                        carregarGridPaginadaAjax();
                     }
-
                 }
             });
 
