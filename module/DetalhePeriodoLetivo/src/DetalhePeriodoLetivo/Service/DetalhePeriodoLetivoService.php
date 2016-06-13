@@ -113,4 +113,5 @@ class DetalhePeriodoLetivoService extends  Entity {
         $select->where($where)->order(['dt_encontro  DESC']);
         return new Paginator(new DbSelect($select, $this->getAdapter()));
     }
-} 
+}
+

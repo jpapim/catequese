@@ -122,39 +122,4 @@ class PeriodoLetivoService extends Entity {
         return new Paginator(new DbSelect($select, $this->getAdapter()));
     }
 
-    public function getPeriodoLetivoDetalhePaginator($filter = NULL, $camposFilter = NULL) {
-
-        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
-
-        $select = $sql->select('detalhe_periodo_letivo')->columns([
-            'id_detalhe_periodo_letivo',
-            'dt_encontro',
-        ]);
-
-        $where = [
-        ];
-
-        if (!empty($filter)) {
-
-            foreach ($filter as $key => $value) {
-
-                if ($value) {
-
-                    if (isset($camposFilter[$key]['mascara'])) {
-
-                        eval("\$value = " . $camposFilter[$key]['mascara'] . ";");
-                    }
-
-                    $where[$camposFilter[$key]['filter']] = '%' . $value . '%';
-                }
-            }
-        }
-
-        $select->where($where)->order(['dt_encontro DESC']);
-
-        return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
-    }
-
-
-
 } 

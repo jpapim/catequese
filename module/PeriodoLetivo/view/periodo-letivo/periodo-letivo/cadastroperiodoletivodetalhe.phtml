@@ -1,0 +1,111 @@
+<div class="page-head">
+    <h2>Cadastro Periodo Letivo</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="block-flat">
+            <div class="content">
+                <fieldset>
+                    <legend>Dados do Periodo Letivo</legend>
+                    <?php if(isset($dadosPeriodoLetivo) && $dadosPeriodoLetivo){ ?>
+                        <div class="bs-callout bs-callout-primary">
+                            <ul class="primary">
+                                <li><b>Codigo Periodo:</b> <?=$dadosPeriodoLetivo->getId()?></li>
+                                <li><b>Periodo Letivo:</b> <?=$dadosPeriodoLetivo->getDtAnoLetivo()?></li>
+                                <li><b>Data de Inicio:</b> <?=$dadosPeriodoLetivo->getDtInicio()?></li>
+                                <li><b>Data de termino:</b> <?=$dadosPeriodoLetivo->getDtFim()?></li>
+                            </ul>
+                        </div>
+                    <?php } ?>
+                </fieldset>
+                <?php
+                $form->setAttribute('action', '#');
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('method', 'post');
+                $form->setAttribute('data-role', 'form');
+
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
+                $form->get('dt_encontro')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_encontro')->getValue()));
+
+                #xd($form->get('id_periodo_letivo'));
+                echo $this->formHidden($form->get('id'));
+                ?>
+
+                <div class="form-group">
+                    <div class="col-md-7">
+                        <div class="input-group" id="datetimepicker">
+                            <?= $this->formRow($form->get('dt_encontro')); ?>
+                        </div>
+                        <a id="adicionar" class="btn btn-default" href="#" title="Adicionar data do encontro">Adicionar Encontro</a>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+<!--                        <button type="submit" class="btn btn-primary">Salvar</button>-->
+                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+                    </div>
+                </div>
+                <?= $this->form()->closeTag(); ?>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="periodoletivodetalhe-pagination"></div>
+</div>
+<script type="text/javascript" src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+        $( "#dt_encontro" ).datepicker(
+            { dateFormat: 'dd/mm/yy' }
+        );
+
+        <?php // funcao ajax para buscar a paginacao?>
+        $(function () {
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                cache: false,
+                url: '/periodo_letivo-periodoletivo/detalhe-pagination',
+                async: true,
+                data: {
+                },
+                beforeSend: function () {
+                    $('#periodoletivodetalhe-pagination').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
+                },
+                success: function (data) {
+                    $('#periodoletivodetalhe-pagination').html(data);
+                }
+            });
+        })
+
+
+        $('#adicionar').click(function() {
+            var dados = $('#detalheperiodoletivoform').serialize();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/periodo_letivo-periodoletivo/adicionarperiodoletivodetalhe',
+                async: true,
+                data: dados,
+                success: function(response) {
+                    $("#nm_atleta").val("");
+                    $("#nm_atleta").focus();
+                    if(response.sucesso == true){
+                        $('#msg').html( "<p>O Atleta " + response.nm_atleta + " foi <em>Inscrito(a) com sucesso!</em></p>" );
+                    } else{
+                        $('#msg').html( "<p>O Atleta " + response.nm_atleta + " já <em> Consta na Base de Dados!</em></p>" );
+                    }
+
+                }
+            });
+
+            return false;
+        });
+
+    });
+</script>

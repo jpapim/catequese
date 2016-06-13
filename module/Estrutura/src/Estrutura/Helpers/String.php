@@ -166,4 +166,21 @@ class String {
         return str_replace(" Da ", " da ", str_replace(" Do ", " do ", str_replace(" De ", " de ", str_replace(" Uma ", " uma ", ucwords(strtolower($string))))));
     }
 
+    /**
+     * @param $string
+     * @return string Maiuscula
+     */
+    public static function nomeTudoMaiusculo($string) {
+
+        return strtoupper($string);
+    }
+
+    /**
+     * @param $string
+     * @return string Minuscula
+     */
+    public static function nomeTudoMinusculo($string) {
+
+        return strtolower($string);
+    }
 }
