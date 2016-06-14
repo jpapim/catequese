@@ -34,9 +34,9 @@
                 <div class="form-group">
                     <div class="col-md-7">
                         <div class="input-group" id="datetimepicker">
-                            <?= $this->formRow($form->get('dt_encontro')); ?>
+                            <?= $this->formRow($form->get('dt_encontro')); ?></br>
+                            <a id="adicionar" class="btn btn-default" href="#" title="Adicionar data do encontro">Adicionar Encontro</a>
                         </div>
-                        <a id="adicionar" class="btn btn-default" href="#" title="Adicionar data do encontro">Adicionar Encontro</a>
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
@@ -44,7 +44,8 @@
                 <div class="form-group">
                     <div class="col-md-10">
 <!--                        <button type="submit" class="btn btn-primary">Salvar</button>-->
-                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+                        <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro', 'id'=>Estrutura\Helpers\Cript::enc($dadosPeriodoLetivo->getId())))?>" title="Voltar">Voltar</a>
+                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Lista de Periodo Letivo</a>
                     </div>
                 </div>
                 <?= $this->form()->closeTag(); ?>

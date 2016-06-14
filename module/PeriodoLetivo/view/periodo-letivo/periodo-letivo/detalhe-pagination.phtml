@@ -57,16 +57,14 @@
                         ?>                            
                     </tr>
                     <?php
-                    foreach ($paginator as $key => $sacramento) {
+                    foreach ($paginator as $key => $detalhe_periodo_letivo) {
                         ?>
                         <tr>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramento['dt_encontro']) ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_periodo_letivo['dt_encontro']) ?></td>
                          </td>
                             <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-
-                                    <?//= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($sacramento['id_detalhe_periodo_letivo'])))) ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($sacramento['id_detalhe_periodo_letivo'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => 'detalhe_periodo_letivo-detalheperiodoletivo', 'action' => 'excluirvialistagemperiodoletivo', 'id' => Estrutura\Helpers\Cript::enc($detalhe_periodo_letivo['id_detalhe_periodo_letivo']) ))) ?>
                                 </span>
                             </td>
                         </tr>                    

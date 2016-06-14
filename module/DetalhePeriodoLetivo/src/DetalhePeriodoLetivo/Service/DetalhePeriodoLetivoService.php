@@ -49,7 +49,7 @@ class DetalhePeriodoLetivoService extends  Entity {
         return $sql->prepareStatementForSqlObject($select)->execute();
     }
 
-    public function buscaPaginator($pagina = 1, $itensPagina =5, $ordem = 'dt_encontro DESC', $like = null, $itensPaginacao = 10) {
+    public function buscaPaginator($pagina = 1, $itensPagina = 5, $ordem = 'dt_encontro DESC', $like = null, $itensPaginacao = 10) {
         //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
         // preparar um select para tabela contato com uma ordem
         $sql = new Sql($this->getAdapter());

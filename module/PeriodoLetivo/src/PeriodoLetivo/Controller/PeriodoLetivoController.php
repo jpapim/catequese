@@ -147,6 +147,7 @@ class PeriodoLetivoController extends AbstractCrudController {
     public function excluirAction(){
         return parent::excluir($this->service,$this->form);
     }
+
     public function cadastroAction(){
         return parent::cadastro($this->service,$this->form);
     }
@@ -154,7 +155,7 @@ class PeriodoLetivoController extends AbstractCrudController {
     public function cadastroperiodoletivodetalheAction()
     {
         //recuperar o id do Periodo Letivo
-        $id_periodo_letivo = $this->params('id');
+        $id_periodo_letivo = Cript::dec($this->params('id') );
 
         $periodo_letivo = new \PeriodoLetivo\Service\PeriodoLetivoService();
         $dadosPeriodoLetivo = $periodo_letivo->buscar($id_periodo_letivo);
@@ -179,6 +180,7 @@ class PeriodoLetivoController extends AbstractCrudController {
             $id_periodo_letivo = $this->params()->fromPost('id');
             $dt_encontro = $this->params()->fromPost('dt_encontro');
 
+            $dt_encontro = Data::converterDataHoraBrazil2BancoMySQL($dt_encontro);
             $detalhe_periodo_letivo = new \DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService();
 
                 $id_inserido = $detalhe_periodo_letivo->getTable()->salvar(array('id_periodo_letivo'=>$id_periodo_letivo, 'dt_encontro'=>$dt_encontro), null);
@@ -200,8 +202,6 @@ class PeriodoLetivoController extends AbstractCrudController {
 
         ];
 
-        #$id_periodo_letivo = $this->params('id');
-        #xd($id_periodo_letivo = $this->params('id'));
         $paginator = $this->service->getPeriodoLetivoDetalhePaginator($id_periodo_letivo, $filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());

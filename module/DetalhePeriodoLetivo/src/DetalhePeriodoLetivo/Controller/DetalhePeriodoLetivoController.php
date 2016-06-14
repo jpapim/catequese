@@ -14,7 +14,7 @@ use Estrutura\Helpers\Data;
 use Estrutura\Helpers\Pagination;
 use Zend\View\Model\ViewModel;
 use Zend\Form\Element;
-
+use Estrutura\Helpers\Cript;
 
 class DetalhePeriodoLetivoController extends AbstractCrudController {
 
@@ -92,6 +92,43 @@ class DetalhePeriodoLetivoController extends AbstractCrudController {
     public function excluirAction(){
         return parent::excluir($this->service,$this->form);
     }
+
+    public function excluirvialistagemperiodoletivoAction(){
+        try {
+            $request = $this->getRequest();
+
+            if ($request->isPost()) {
+                return new JsonModel();
+            }
+
+            $controller = $this->params('controller');
+
+            #xd($this->params('id2'));
+            xd($this->params('id'));
+            $id = Cript::dec($this->params('id'));
+            $this->service->setId($id);
+
+            $dados = $this->service->filtrarObjeto()->current();
+            if (!$dados) {
+                throw new \Exception('Registro não encontrado');
+            }
+
+            $this->service->excluir();
+            $this->addSuccessMessage('Registro excluido com sucesso');
+            return $this->redirect()->toRoute('navegacao',array('controller'=>'periodo_letivo-periodoletivo','action'=>'index'));
+        } catch (\Exception $e) {
+            if( strstr($e->getMessage(), '1451') ) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
+                $this->addErrorMessage('Para excluir a academia voce deve excluir todos os atletas da academia. Verifique!');
+            }else {
+                $this->addErrorMessage($e->getMessage());
+            }
+
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
+        }
+
+        return parent::excluir($this->service,$this->form);
+    }
+
     public function cadastroAction(){
         return parent::cadastro($this->service,$this->form);
     }
