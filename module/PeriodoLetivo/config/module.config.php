@@ -11,7 +11,7 @@ return array(
             'periodo_letivo' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/periodo_letivo',
+                    'route'    => '/periodo_letivo/:action[/:id][/:aux]',
                     'defaults' => array(
                         'controller' => 'periodo_letivo',
                         'action'     => 'index',

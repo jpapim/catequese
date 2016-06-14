@@ -12,7 +12,7 @@ return array(
             'detalhe_periodo_letivo' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/detalhe_periodo_letivo',
+                    'route'    => '/detalhe_periodo_letivo/:action[/:id][/:aux]',
                     'defaults' => array(
                         'controller' => 'detalhe_periodo_letivo',
                         'action'     => 'index',
@@ -24,7 +24,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'detalhe_periodo_letivo' => 'PeriodoLetivo\Controller\PeriodoLetivoController',
+            'detalhe_periodo_letivo' => 'DetalhePeriodoLetivo\Controller\DetalhePeriodoLetivoController',
             'detalhe_periodo_letivo-detalheperiodoletivo' => 'DetalhePeriodoLetivo\Controller\DetalhePeriodoLetivoController',
         ),
     ),

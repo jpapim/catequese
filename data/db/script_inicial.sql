@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.9-MariaDB, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.6.26, for Win32 (x86)
 --
 -- Host: localhost    Database: bdcatequese
 -- ------------------------------------------------------
--- Server version	10.1.9-MariaDB
+-- Server version	5.6.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -69,17 +69,16 @@ INSERT INTO `academias` VALUES (1,1724,1,1,1,'Academia Olimpica',NULL,NULL,'2015
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `acl`
+-- Temporary view structure for view `acl`
 --
 
 DROP TABLE IF EXISTS `acl`;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `acl` (
-  `id_perfil` tinyint NOT NULL,
-  `nm_resource` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `acl` AS SELECT 
+ 1 AS `id_perfil`,
+ 1 AS `nm_resource`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -93,7 +92,7 @@ CREATE TABLE `action` (
   `id_action` int(11) NOT NULL AUTO_INCREMENT,
   `nm_action` varchar(200) DEFAULT NULL COMMENT '{"label":"Ação"}',
   PRIMARY KEY (`id_action`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +101,7 @@ CREATE TABLE `action` (
 
 LOCK TABLES `action` WRITE;
 /*!40000 ALTER TABLE `action` DISABLE KEYS */;
-INSERT INTO `action` VALUES (1,'index'),(2,'course-information'),(3,'access-course'),(4,'view-pay'),(5,'list'),(6,'cadastro'),(7,'gravar'),(8,'excluir'),(9,'upload'),(10,'download-img-pay'),(11,'download-video-course'),(12,'up-line'),(13,'uni-level'),(14,'dados-pessoais'),(15,'atualizar-dados'),(16,'obter-cidades'),(17,'gravar-atualizacao'),(18,'extrato'),(19,'solicitar-saque'),(20,'liberar-pagamento'),(21,'list-pagamentos-realizados'),(22,'list-contratos-pendentes'),(23,'excluir-contrato'),(24,'enviar-codigo'),(25,'view-video'),(26,'solicitar-patrocinador'),(27,'enviar-id'),(28,'recusar-patrocinador'),(29,'list-ativacao'),(30,'ativar-id'),(31,'gerar-recibo'),(32,'list-saques-realizados'),(33,'liberar-saque'),(34,'negar-saque'),(35,'negar-id'),(36,'alterar-senha'),(37,'salvar-redefinicao-senha'),(38,'imprimir-boleto'),(39,'xxx'),(40,'autocompletecidade'),(41,'cadastrocustomizado'),(42,'cadastroviaacademia'),(43,'gravarviaacademia'),(44,'excluirviaacademia'),(45,'alterarviaacademia'),(46,'gravaralteracaoviaacademia'),(47,'autocompleteacademia'),(48,'carregarsugestaoidadeporcategoria'),(49,'realizarinscricoes'),(50,'autocompleteatleta'),(51,'index-pagination'),(52,'cadastroperiodoletivodetalhe'),(53,'detalhe-pagination'),(54,'adicionarperiodoletivodetalhe');
+INSERT INTO `action` VALUES (1,'index'),(2,'course-information'),(3,'access-course'),(4,'view-pay'),(5,'list'),(6,'cadastro'),(7,'gravar'),(8,'excluir'),(9,'upload'),(10,'download-img-pay'),(11,'download-video-course'),(12,'up-line'),(13,'uni-level'),(14,'dados-pessoais'),(15,'atualizar-dados'),(16,'obter-cidades'),(17,'gravar-atualizacao'),(18,'extrato'),(19,'solicitar-saque'),(20,'liberar-pagamento'),(21,'list-pagamentos-realizados'),(22,'list-contratos-pendentes'),(23,'excluir-contrato'),(24,'enviar-codigo'),(25,'view-video'),(26,'solicitar-patrocinador'),(27,'enviar-id'),(28,'recusar-patrocinador'),(29,'list-ativacao'),(30,'ativar-id'),(31,'gerar-recibo'),(32,'list-saques-realizados'),(33,'liberar-saque'),(34,'negar-saque'),(35,'negar-id'),(36,'alterar-senha'),(37,'salvar-redefinicao-senha'),(38,'imprimir-boleto'),(39,'xxx'),(40,'autocompletecidade'),(41,'cadastrocustomizado'),(42,'cadastroviaacademia'),(43,'gravarviaacademia'),(44,'excluirviaacademia'),(45,'alterarviaacademia'),(46,'gravaralteracaoviaacademia'),(47,'autocompleteacademia'),(48,'carregarsugestaoidadeporcategoria'),(49,'realizarinscricoes'),(50,'autocompleteatleta'),(51,'index-pagination'),(52,'cadastroperiodoletivodetalhe'),(53,'detalhe-pagination'),(54,'adicionarperiodoletivodetalhe'),(55,'excluirvialistagemperiodoletivo');
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,21 +183,20 @@ INSERT INTO `atleta` VALUES (1,1,4213,1,1,'Alysson Vicuña de Oliveira','1981-08
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `auth`
+-- Temporary view structure for view `auth`
 --
 
 DROP TABLE IF EXISTS `auth`;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `auth` (
-  `id_usuario` tinyint NOT NULL,
-  `id_perfil` tinyint NOT NULL,
-  `em_email` tinyint NOT NULL,
-  `pw_senha` tinyint NOT NULL,
-  `nm_usuario` tinyint NOT NULL,
-  `id_contrato` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `auth` AS SELECT 
+ 1 AS `id_usuario`,
+ 1 AS `id_perfil`,
+ 1 AS `em_email`,
+ 1 AS `pw_senha`,
+ 1 AS `nm_usuario`,
+ 1 AS `id_contrato`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -493,7 +491,7 @@ CREATE TABLE `controller` (
   `nm_modulo` varchar(50) DEFAULT NULL,
   `cs_exibir_combo` char(1) DEFAULT 'N',
   PRIMARY KEY (`id_controller`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -502,7 +500,7 @@ CREATE TABLE `controller` (
 
 LOCK TABLES `controller` WRITE;
 /*!40000 ALTER TABLE `controller` DISABLE KEYS */;
-INSERT INTO `controller` VALUES (1,'arte_marcial-artemarcial','Arte Marcial','S'),(2,'estilo-estilo','Estilo da Arte','S'),(3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','S'),(5,'cidade-cidade','Cidade','S'),(6,'estado-estado','Estado','S'),(7,'graduacao-graduacao','Graduação','S'),(8,'pagamento-pagamento','Pagamento','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','S'),(10,'banco-banco','Banco','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(13,'tipo_evento-tipoevento','Tipo de Evento','S'),(14,'evento-evento','Evento','S'),(15,'graduacao','Teste de Action ','S'),(16,'academia-academia','Academia','S'),(17,'atleta-atleta','Atleta','S'),(18,'categoria_peso-categoriapeso','Categoria de Peso','S'),(19,'categoria_idade-categoriaidade','Categoria de Idade','S'),(20,'regras_lutas-regraslutas','Regras de Luta','S'),(21,'detalhes_regras_luta-detalhesregrasluta','Definição das Regras de Luta','S'),(22,'inscricoes_evento-inscricoesevento','Inscrições nos Eventos','S'),(23,'cliente-cliente','Cliente','S'),(24,'check-check','Checkbox','S'),(25,'controller-controller','Controller','S'),(26,'action-action','Action','S'),(27,'xxx','xxx','S'),(28,'periodo_letivo-periodoletivo','Periodo Letivo','S'),(29,'sacramento-sacramento','Sacramento','S'),(30,'movimento_pastoral-movimentopastoral','Movimento Pastoral','S');
+INSERT INTO `controller` VALUES (1,'arte_marcial-artemarcial','Arte Marcial','S'),(2,'estilo-estilo','Estilo da Arte','S'),(3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','S'),(5,'cidade-cidade','Cidade','S'),(6,'estado-estado','Estado','S'),(7,'graduacao-graduacao','Graduação','S'),(8,'pagamento-pagamento','Pagamento','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','S'),(10,'banco-banco','Banco','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(13,'tipo_evento-tipoevento','Tipo de Evento','S'),(14,'evento-evento','Evento','S'),(15,'graduacao','Teste de Action ','S'),(16,'academia-academia','Academia','S'),(17,'atleta-atleta','Atleta','S'),(18,'categoria_peso-categoriapeso','Categoria de Peso','S'),(19,'categoria_idade-categoriaidade','Categoria de Idade','S'),(20,'regras_lutas-regraslutas','Regras de Luta','S'),(21,'detalhes_regras_luta-detalhesregrasluta','Definição das Regras de Luta','S'),(22,'inscricoes_evento-inscricoesevento','Inscrições nos Eventos','S'),(23,'cliente-cliente','Cliente','S'),(24,'check-check','Checkbox','S'),(25,'controller-controller','Controller','S'),(26,'action-action','Action','S'),(27,'xxx','xxx','S'),(28,'periodo_letivo-periodoletivo','Periodo Letivo','S'),(29,'sacramento-sacramento','Sacramento','S'),(30,'movimento_pastoral-movimentopastoral','Movimento Pastoral','S'),(31,'detalhe_periodo_letivo-detalheperiodoletivo','Detalhe do Periodo Letivo','S'),(32,'detalhe_periodo_letivo','Nome da Controller Periodo Letivo','S');
 /*!40000 ALTER TABLE `controller` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -546,7 +544,7 @@ CREATE TABLE `detalhe_periodo_letivo` (
   PRIMARY KEY (`id_detalhe_periodo_letivo`),
   KEY `FK_Reference_124` (`id_periodo_letivo`),
   CONSTRAINT `FK_Reference_124` FOREIGN KEY (`id_periodo_letivo`) REFERENCES `periodo_letivo` (`id_periodo_letivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Data que qirão compor o periodo letivo';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='Data que qirão compor o periodo letivo';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -555,7 +553,7 @@ CREATE TABLE `detalhe_periodo_letivo` (
 
 LOCK TABLES `detalhe_periodo_letivo` WRITE;
 /*!40000 ALTER TABLE `detalhe_periodo_letivo` DISABLE KEYS */;
-INSERT INTO `detalhe_periodo_letivo` VALUES (1,14,'2016-06-13');
+INSERT INTO `detalhe_periodo_letivo` VALUES (1,14,'2016-06-13'),(2,15,'0000-00-00'),(3,15,'0000-00-00'),(4,15,'0000-00-00'),(5,15,'0000-00-00'),(6,15,'0000-00-00'),(7,15,'0000-00-00'),(8,15,'0000-00-00'),(11,16,'0000-00-00'),(12,16,'0000-00-00'),(13,16,'0000-00-00'),(14,14,'2016-06-08'),(15,14,'2016-06-23'),(16,14,'2016-06-23'),(17,12,'2016-06-16'),(18,12,'2016-06-20'),(20,12,'2016-06-17');
 /*!40000 ALTER TABLE `detalhe_periodo_letivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -828,7 +826,7 @@ CREATE TABLE `eventos` (
   CONSTRAINT `FK_Reference_29` FOREIGN KEY (`id_tipo_evento`) REFERENCES `tipos_eventos` (`id_tipo_evento`),
   CONSTRAINT `FK_Reference_30` FOREIGN KEY (`id_regra_luta`) REFERENCES `regras_lutas` (`id_regra_luta`),
   CONSTRAINT `FK_TB_EVENT_REFERENCE_TB_TIPOS` FOREIGN KEY (`id_tipo_evento`) REFERENCES `tipos_eventos` (`id_tipo_evento`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='tb_eventos';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='tb_eventos';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -837,7 +835,7 @@ CREATE TABLE `eventos` (
 
 LOCK TABLES `eventos` WRITE;
 /*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
-INSERT INTO `eventos` VALUES (1,1,'1ª Copa Brasil','2015-09-08 21:47:08',41.69,60.36,3,'\0',568),(2,1,'Brazil Open 2015 - LNT','2016-10-20 21:47:08',35.00,54.00,7,'\0',4298),(3,1,'Brazil Open 2015 - CBTKD','2015-11-16 21:47:08',32.00,36.00,3,'',547),(4,1,'Rio Verde Open','2015-12-20 21:47:08',28.00,45.00,3,'\0',4),(5,1,'Copa Pantanal','2015-11-16 00:00:00',45.00,55.00,7,'\0',968),(6,1,'3º GranPrix Vicuña','2015-10-18 01:00:00',41.58,60.00,7,'\0',5185),(7,1,'Wilmar Open de Taekwondo','2015-08-29 00:00:00',41.50,55.00,3,'\0',5064);
+INSERT INTO `eventos` VALUES (1,1,'1ª Copa Brasil','2015-09-08 21:47:08',41.69,60.36,3,'\0',568),(2,1,'Brazil Open 2015 - LNT','2016-10-20 21:47:08',35.00,54.00,7,'\0',4298),(3,1,'Brazil Open 2015 - CBTKD','2015-11-16 21:47:08',32.00,36.00,3,'',547),(4,1,'Rio Verde Open','2015-12-20 21:47:08',28.00,45.00,3,'\0',4),(5,1,'Copa Pantanal','2015-11-16 00:00:00',45.00,55.00,7,'\0',968),(6,1,'3º GranPrix Vicuña','2015-10-18 01:00:00',41.58,60.00,7,'\0',5185),(7,1,'Wilmar Open de Taekwondo','2015-08-29 00:00:00',41.50,55.00,3,'\0',5064),(8,1,'Evento Teste','2016-06-24 00:00:00',222.00,222.00,1,'',37);
 /*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1145,7 +1143,7 @@ CREATE TABLE `perfil_controller_action` (
   CONSTRAINT `fk_perfil_controller_action_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id_action`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_controller` FOREIGN KEY (`id_controller`) REFERENCES `controller` (`id_controller`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=196 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1154,7 +1152,7 @@ CREATE TABLE `perfil_controller_action` (
 
 LOCK TABLES `perfil_controller_action` WRITE;
 /*!40000 ALTER TABLE `perfil_controller_action` DISABLE KEYS */;
-INSERT INTO `perfil_controller_action` VALUES (1,1,1,1),(2,2,1,1),(3,3,1,1),(4,4,1,1),(5,5,1,1),(6,6,1,1),(7,1,5,1),(8,6,6,1),(9,5,6,1),(10,5,7,1),(11,6,7,1),(12,6,8,1),(13,1,2,1),(14,1,3,1),(15,1,9,1),(16,7,1,1),(17,1,4,1),(18,1,10,1),(19,1,11,1),(20,3,7,1),(21,2,5,1),(22,2,12,1),(23,2,13,1),(24,3,14,1),(25,8,18,1),(26,5,16,1),(27,3,17,1),(28,3,18,1),(29,8,19,1),(30,1,1,2),(31,2,1,2),(32,3,1,2),(33,4,1,2),(34,5,1,2),(35,6,1,2),(36,1,5,2),(37,6,6,2),(38,5,6,2),(39,5,7,2),(40,6,7,2),(41,6,8,2),(42,1,2,2),(43,1,3,2),(44,1,9,2),(45,7,1,2),(46,1,4,2),(47,1,10,2),(48,1,11,2),(49,3,7,2),(50,2,5,2),(51,2,12,2),(52,2,13,2),(53,3,14,2),(54,8,18,2),(55,8,20,1),(56,8,21,1),(57,8,22,1),(58,8,23,1),(59,3,15,2),(60,1,24,1),(61,1,24,2),(62,3,15,1),(63,2,25,1),(64,2,25,2),(65,2,26,1),(66,2,26,2),(67,2,27,1),(68,2,27,2),(69,2,28,1),(70,2,28,2),(71,2,29,1),(72,2,30,1),(73,8,9,1),(74,8,9,2),(75,8,31,1),(76,8,31,2),(77,8,32,1),(78,8,33,1),(79,8,34,1),(80,2,35,1),(81,3,36,1),(82,3,36,2),(83,3,37,1),(84,3,37,2),(85,5,16,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(89,3,6,1),(90,10,1,1),(91,10,6,1),(92,10,7,1),(93,11,1,1),(94,10,8,1),(95,12,1,1),(96,12,6,1),(97,12,7,1),(98,1,7,1),(99,1,6,1),(100,1,8,1),(101,2,6,1),(102,2,8,1),(103,2,7,1),(104,7,6,1),(105,7,7,1),(106,7,8,1),(107,13,1,1),(108,13,6,1),(109,13,7,1),(110,13,8,1),(111,14,1,1),(112,14,6,1),(113,14,7,1),(114,14,8,1),(115,7,39,1),(116,15,39,1),(117,15,1,1),(118,16,1,1),(119,16,6,1),(120,16,7,1),(121,16,8,1),(122,16,40,1),(123,16,41,1),(124,17,1,1),(125,17,6,1),(126,17,7,1),(127,17,8,1),(128,17,42,1),(129,17,43,1),(130,17,44,1),(131,17,45,1),(132,17,46,1),(133,17,47,1),(134,17,40,1),(135,18,1,1),(136,18,6,1),(137,18,7,1),(138,18,8,1),(139,19,1,1),(140,19,6,1),(141,19,7,1),(142,19,8,1),(143,20,1,1),(144,20,6,1),(145,20,7,1),(146,20,8,1),(147,21,1,1),(148,21,6,1),(149,21,7,1),(150,21,8,1),(151,19,48,1),(152,22,1,1),(153,22,6,1),(154,22,7,1),(155,22,8,1),(156,14,49,1),(157,5,40,1),(158,16,42,1),(159,16,47,1),(160,17,50,1),(161,17,51,1),(162,17,1,1),(163,25,1,1),(164,25,6,1),(165,25,7,1),(166,25,8,1),(167,25,51,1),(168,26,1,1),(169,26,6,1),(170,26,7,1),(171,26,8,1),(172,26,51,1),(173,24,1,1),(174,24,6,1),(175,24,7,1),(176,24,8,1),(177,24,51,1),(178,28,1,1),(179,28,6,1),(180,28,7,1),(181,28,8,1),(182,28,51,1),(183,29,1,1),(184,29,6,1),(185,29,7,1),(186,29,8,1),(187,29,51,1),(188,30,1,1),(189,30,6,1),(190,30,7,1),(191,30,8,1),(192,30,51,1),(193,28,52,1),(194,28,53,1),(195,28,54,1);
+INSERT INTO `perfil_controller_action` VALUES (1,1,1,1),(2,2,1,1),(3,3,1,1),(4,4,1,1),(5,5,1,1),(6,6,1,1),(7,1,5,1),(8,6,6,1),(9,5,6,1),(10,5,7,1),(11,6,7,1),(12,6,8,1),(13,1,2,1),(14,1,3,1),(15,1,9,1),(16,7,1,1),(17,1,4,1),(18,1,10,1),(19,1,11,1),(20,3,7,1),(21,2,5,1),(22,2,12,1),(23,2,13,1),(24,3,14,1),(25,8,18,1),(26,5,16,1),(27,3,17,1),(28,3,18,1),(29,8,19,1),(30,1,1,2),(31,2,1,2),(32,3,1,2),(33,4,1,2),(34,5,1,2),(35,6,1,2),(36,1,5,2),(37,6,6,2),(38,5,6,2),(39,5,7,2),(40,6,7,2),(41,6,8,2),(42,1,2,2),(43,1,3,2),(44,1,9,2),(45,7,1,2),(46,1,4,2),(47,1,10,2),(48,1,11,2),(49,3,7,2),(50,2,5,2),(51,2,12,2),(52,2,13,2),(53,3,14,2),(54,8,18,2),(55,8,20,1),(56,8,21,1),(57,8,22,1),(58,8,23,1),(59,3,15,2),(60,1,24,1),(61,1,24,2),(62,3,15,1),(63,2,25,1),(64,2,25,2),(65,2,26,1),(66,2,26,2),(67,2,27,1),(68,2,27,2),(69,2,28,1),(70,2,28,2),(71,2,29,1),(72,2,30,1),(73,8,9,1),(74,8,9,2),(75,8,31,1),(76,8,31,2),(77,8,32,1),(78,8,33,1),(79,8,34,1),(80,2,35,1),(81,3,36,1),(82,3,36,2),(83,3,37,1),(84,3,37,2),(85,5,16,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(89,3,6,1),(90,10,1,1),(91,10,6,1),(92,10,7,1),(93,11,1,1),(94,10,8,1),(95,12,1,1),(96,12,6,1),(97,12,7,1),(98,1,7,1),(99,1,6,1),(100,1,8,1),(101,2,6,1),(102,2,8,1),(103,2,7,1),(104,7,6,1),(105,7,7,1),(106,7,8,1),(107,13,1,1),(108,13,6,1),(109,13,7,1),(110,13,8,1),(111,14,1,1),(112,14,6,1),(113,14,7,1),(114,14,8,1),(115,7,39,1),(116,15,39,1),(117,15,1,1),(118,16,1,1),(119,16,6,1),(120,16,7,1),(121,16,8,1),(122,16,40,1),(123,16,41,1),(124,17,1,1),(125,17,6,1),(126,17,7,1),(127,17,8,1),(128,17,42,1),(129,17,43,1),(130,17,44,1),(131,17,45,1),(132,17,46,1),(133,17,47,1),(134,17,40,1),(135,18,1,1),(136,18,6,1),(137,18,7,1),(138,18,8,1),(139,19,1,1),(140,19,6,1),(141,19,7,1),(142,19,8,1),(143,20,1,1),(144,20,6,1),(145,20,7,1),(146,20,8,1),(147,21,1,1),(148,21,6,1),(149,21,7,1),(150,21,8,1),(151,19,48,1),(152,22,1,1),(153,22,6,1),(154,22,7,1),(155,22,8,1),(156,14,49,1),(157,5,40,1),(158,16,42,1),(159,16,47,1),(160,17,50,1),(161,17,51,1),(162,17,1,1),(163,25,1,1),(164,25,6,1),(165,25,7,1),(166,25,8,1),(167,25,51,1),(168,26,1,1),(169,26,6,1),(170,26,7,1),(171,26,8,1),(172,26,51,1),(173,24,1,1),(174,24,6,1),(175,24,7,1),(176,24,8,1),(177,24,51,1),(178,28,1,1),(179,28,6,1),(180,28,7,1),(181,28,8,1),(182,28,51,1),(183,29,1,1),(184,29,6,1),(185,29,7,1),(186,29,8,1),(187,29,51,1),(188,30,1,1),(189,30,6,1),(190,30,7,1),(191,30,8,1),(192,30,51,1),(193,28,52,1),(194,28,53,1),(195,28,54,1),(196,31,55,1),(197,32,55,1);
 /*!40000 ALTER TABLE `perfil_controller_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1171,7 +1169,7 @@ CREATE TABLE `periodo_letivo` (
   `dt_fim` datetime DEFAULT NULL,
   `dt_ano_letivo` char(4) DEFAULT NULL,
   PRIMARY KEY (`id_periodo_letivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='Armazena informações sobre inicio e término do periodo letiv';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='Armazena informações sobre inicio e término do periodo letiv';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1180,7 +1178,7 @@ CREATE TABLE `periodo_letivo` (
 
 LOCK TABLES `periodo_letivo` WRITE;
 /*!40000 ALTER TABLE `periodo_letivo` DISABLE KEYS */;
-INSERT INTO `periodo_letivo` VALUES (12,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO1'),(13,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO2'),(14,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO3');
+INSERT INTO `periodo_letivo` VALUES (12,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO1'),(13,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO2'),(14,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO3'),(15,'1969-12-10 00:00:00','1969-12-08 00:00:00','ANO4'),(16,'2016-06-22 00:00:00','2016-06-13 00:00:00','ANO5');
 /*!40000 ALTER TABLE `periodo_letivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1781,19 +1779,18 @@ INSERT INTO `usuario` VALUES (1,'Alysson Vicuña de Oliveira','1983-12-20 21:47:
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `vw_regras_lutas`
+-- Temporary view structure for view `vw_regras_lutas`
 --
 
 DROP TABLE IF EXISTS `vw_regras_lutas`;
 /*!50001 DROP VIEW IF EXISTS `vw_regras_lutas`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `vw_regras_lutas` (
-  `id_regra_luta` tinyint NOT NULL,
-  `nm_regra_luta` tinyint NOT NULL,
-  `nm_graduacao_inicial` tinyint NOT NULL,
-  `nm_graduacao_final` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `vw_regras_lutas` AS SELECT 
+ 1 AS `id_regra_luta`,
+ 1 AS `nm_regra_luta`,
+ 1 AS `nm_graduacao_inicial`,
+ 1 AS `nm_graduacao_final`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1806,7 +1803,6 @@ USE `bdcatequese`;
 -- Final view structure for view `acl`
 --
 
-/*!50001 DROP TABLE IF EXISTS `acl`*/;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1825,7 +1821,6 @@ USE `bdcatequese`;
 -- Final view structure for view `auth`
 --
 
-/*!50001 DROP TABLE IF EXISTS `auth`*/;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1844,7 +1839,6 @@ USE `bdcatequese`;
 -- Final view structure for view `vw_regras_lutas`
 --
 
-/*!50001 DROP TABLE IF EXISTS `vw_regras_lutas`*/;
 /*!50001 DROP VIEW IF EXISTS `vw_regras_lutas`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1868,4 +1862,4 @@ USE `bdcatequese`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-13  9:53:57
+-- Dump completed on 2016-06-14 10:57:38

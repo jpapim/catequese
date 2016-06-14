@@ -103,19 +103,19 @@ class DetalhePeriodoLetivoController extends AbstractCrudController {
 
             $controller = $this->params('controller');
 
-            #xd($this->params('id2'));
-            xd($this->params('id'));
             $id = Cript::dec($this->params('id'));
+            $id_periodo_letivo = Cript::enc( $this->params('aux') );
+
             $this->service->setId($id);
 
             $dados = $this->service->filtrarObjeto()->current();
             if (!$dados) {
-                throw new \Exception('Registro não encontrado');
+                throw new \Exception('Registro nï¿½o encontrado');
             }
 
             $this->service->excluir();
             $this->addSuccessMessage('Registro excluido com sucesso');
-            return $this->redirect()->toRoute('navegacao',array('controller'=>'periodo_letivo-periodoletivo','action'=>'index'));
+            return $this->redirect()->toRoute('navegacao',array('controller'=>'periodo_letivo-periodoletivo','action'=>'cadastroperiodoletivodetalhe', 'id'=>$id_periodo_letivo));
         } catch (\Exception $e) {
             if( strstr($e->getMessage(), '1451') ) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
                 $this->addErrorMessage('Para excluir a academia voce deve excluir todos os atletas da academia. Verifique!');

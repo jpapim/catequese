@@ -162,7 +162,7 @@ class PeriodoLetivoController extends AbstractCrudController {
 
             $dadosView = [
                 'service' => new \DetalhePeriodoLetivo\Service\detalhePeriodoLetivoService(),
-                'form' => new \DetalhePeriodoLetivo\Form\DetalhePeriodoLetivoForm(), //$this->form,
+                'form' => new \DetalhePeriodoLetivo\Form\DetalhePeriodoLetivoForm(),
                 'controller' => $this->params('controller'),
                 'atributos' => array(),
                 'id_periodo_letivo' => $id_periodo_letivo,
@@ -222,6 +222,7 @@ class PeriodoLetivoController extends AbstractCrudController {
             'countPerPage' => $countPerPage,
             'camposFilter' => $camposFilter,
             'controller' => $this->params('controller'),
+            'id_periodo_letivo'=>$id_periodo_letivo,
             'atributos' => array()
         ]);
 

@@ -64,7 +64,7 @@
                          </td>
                             <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => 'detalhe_periodo_letivo-detalheperiodoletivo', 'action' => 'excluirvialistagemperiodoletivo', 'id' => Estrutura\Helpers\Cript::enc($detalhe_periodo_letivo['id_detalhe_periodo_letivo']) ))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('detalhe_periodo_letivo', array('controller' => 'detalhe_periodo_letivo-detalheperiodoletivo', 'action' => 'excluirvialistagemperiodoletivo', 'id' => Estrutura\Helpers\Cript::enc($detalhe_periodo_letivo['id_detalhe_periodo_letivo']), 'aux' => $id_periodo_letivo ))) ?>
                                 </span>
                             </td>
                         </tr>                    
