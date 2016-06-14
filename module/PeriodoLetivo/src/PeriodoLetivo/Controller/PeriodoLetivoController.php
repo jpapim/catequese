@@ -130,7 +130,7 @@ class PeriodoLetivoController extends AbstractCrudController {
             if (isset($post['id']) && $post['id']) {
                 $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'index'));
             } else {
-                $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'cadastroperiodoletivodetalhe','id'=>$id_periodo_letivo));
+                $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'cadastroperiodoletivodetalhe','id'=>Cript::enc($id_periodo_letivo) ));
             }
 
             return $id_periodo_letivo;
@@ -157,6 +157,7 @@ class PeriodoLetivoController extends AbstractCrudController {
         //recuperar o id do Periodo Letivo
         $id_periodo_letivo = Cript::dec($this->params('id') );
 
+        #xd($this->params('id'));
         $periodo_letivo = new \PeriodoLetivo\Service\PeriodoLetivoService();
         $dadosPeriodoLetivo = $periodo_letivo->buscar($id_periodo_letivo);
 
