@@ -1,5 +1,5 @@
 <?php
-namespace Check;
+namespace Permissao;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
@@ -46,9 +46,9 @@ class Module
     {
         return array(
             'factories' => array(
-                'Check\Service\CheckService' => function($sm) {
+                'Permissao\Service\PermissaoService' => function($sm) {
             
-                    return new \Check\Service\CheckService();
+                    return new \Permissao\Service\PermissaoService();
                 },
             )
         );

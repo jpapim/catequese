@@ -3,12 +3,12 @@
 return array(
     'router' => array(
         'routes' => array(
-            'check-home' => array(
+            'permissao-home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/check',
+                    'route'    => '/permissao',
                     'defaults' => array(
-                        'controller' => 'check',
+                        'controller' => 'permissao',
                         'action'     => 'index',
                     ),
                 ),
@@ -36,8 +36,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'check' => 'Check\Controller\CheckController',
-            'check-check' => 'Check\Controller\CheckController',
+            'permissao' => 'Permissao\Controller\PermissaoController',
+            'permissao-permissao' => 'Permissao\Controller\PermissaoController',
 
         ),
     ),

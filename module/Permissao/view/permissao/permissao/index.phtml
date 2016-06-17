@@ -4,21 +4,21 @@
 <!--<link rel="stylesheet" href="/assets/css/jquery.tablesorter.pager.css">-->
 
 <?php
-  /** @var $form \Check\Form\Check */
-  /** @var $lista \Check\Service\Check[] */
+  /** @var $form \Permissao\Form\Permissao */
+  /** @var $lista \Permissao\Service\Permissao[] */
 ?>
 <div class="page-head">
-    <h2>Lista de Checks</h2>
+    <h2>Lista de Permissaos</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
         <div class="col-md-12">
-            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Adicionar um novo estado">Novo Check</a>
-            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Carregar lista de Controllers">Carregar Checkbox</a>
+            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Adicionar um novo estado">Novo Permissao</a>
+            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Carregar lista de Controllers">Carregar Permissaobox</a>
         </div>
     </div>
     <br />
-    <div class="row" id="check-pagination"></div>
+    <div class="row" id="permissao-pagination"></div>
 </div>
 <script>
     $(function () {
@@ -26,18 +26,18 @@
             type: "post",
             dataType: "text",
             cache: false,
-            url: '/check-check/index-pagination',
+            url: '/permissao-permissao/index-pagination',
             async: true,
             data: {
             },
             beforeSend: function () {
-                $('#check-pagination').html(
+                $('#permissao-pagination').html(
                     '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
                 );
             },
             success: function (data) {
 
-                $('#check-pagination').html(data);
+                $('#permissao-pagination').html(data);
             }
         });
 

@@ -1,21 +1,21 @@
 <?php
 
-namespace Check\Controller;
+namespace Permissao\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Zend\View\Model\ViewModel;
 
 use Estrutura\Helpers\Cript;
 
-class CheckController extends AbstractCrudController
+class PermissaoController extends AbstractCrudController
 {
     /**
-     * @var \Check\Service\Check
+     * @var \Permissao\Service\Permissao
      */
     protected $service;
 
     /**
-     * @var \Check\Form\Check
+     * @var \Permissao\Form\Permissao
      */
     protected $form;
 
@@ -27,15 +27,6 @@ class CheckController extends AbstractCrudController
     {
         return parent::index($this->service, $this->form);
     }
-
-    /*
-    public function gravarAction(){
-        #Alysson
-        $this->addSuccessMessage('Registro Inserido/Alterado com sucesso');
-        $this->redirect()->toRoute('navegacao', array('controller' => 'check-check', 'action' => 'index'));
-        #xd($this->form);
-        return parent::gravar($this->service, $this->form);
-    }*/
 
     public function gravarAction() {
         try {
@@ -115,12 +106,12 @@ class CheckController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
-                'filter' => "estado.nm_estado LIKE ?",
+                'filter' => "perfil_controller_action.id_controller = ?",
             ],
             '1' => NULL,
         ];
 
-        $paginator = $this->service->getChecksPaginator($filter, $camposFilter);
+        $paginator = $this->service->getPermissaoPaginator($filter, $camposFilter);
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
         $countPerPage = $this->getCountPerPage(

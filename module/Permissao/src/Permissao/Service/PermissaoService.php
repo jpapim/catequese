@@ -1,33 +1,34 @@
 <?php
 
-namespace Check\Service;
+namespace Permissao\Service;
 
-use \Check\Entity\CheckEntity as Entity;
+use \Permissao\Entity\PermissaoEntity as Entity;
 
-class CheckService extends Entity {
+class PermissaoService extends Entity {
 
-    public function getCheckToArray($id) {
+    public function getPermissaoToArray($id) {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
         #die($id);
-        $select = $sql->select('estado')
+        $select = $sql->select('perfil_controller_action')
             ->where([
-                'estado.id_estado = ?' => $id,
+                'perfil_controller_action.id_perfil_controller_action = ?' => $id,
             ]);
         #print_r($sql->prepareStatementForSqlObject($select)->execute());exit;
 
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
-    public function getChecksPaginator($filter = NULL, $camposFilter = NULL) {
+    public function getPermissaoPaginator($filter = NULL, $camposFilter = NULL) {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
-        $select = $sql->select('estado')->columns([
-            'id_estado',
-            'nm_estado',
-            'sg_estado',
+        $select = $sql->select('perfil_controller_action')->columns([
+            'id_perfil_controller_action',
+            'id_controller',
+            'id_action',
+            'id_perfil',
         ]);
 
         $where = [
@@ -44,7 +45,7 @@ class CheckService extends Entity {
             }
         }
 
-        $select->where($where)->order(['nm_estado ASC']);
+        $select->where($where)->order(['id_controller ASC']);
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
 

@@ -92,7 +92,7 @@ CREATE TABLE `action` (
   `id_action` int(11) NOT NULL AUTO_INCREMENT,
   `nm_action` varchar(200) DEFAULT NULL COMMENT '{"label":"Ação"}',
   PRIMARY KEY (`id_action`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `action` (
 
 LOCK TABLES `action` WRITE;
 /*!40000 ALTER TABLE `action` DISABLE KEYS */;
-INSERT INTO `action` VALUES (1,'index'),(2,'course-information'),(3,'access-course'),(4,'view-pay'),(5,'list'),(6,'cadastro'),(7,'gravar'),(8,'excluir'),(9,'upload'),(10,'download-img-pay'),(11,'download-video-course'),(12,'up-line'),(13,'uni-level'),(14,'dados-pessoais'),(15,'atualizar-dados'),(16,'obter-cidades'),(17,'gravar-atualizacao'),(18,'extrato'),(19,'solicitar-saque'),(20,'liberar-pagamento'),(21,'list-pagamentos-realizados'),(22,'list-contratos-pendentes'),(23,'excluir-contrato'),(24,'enviar-codigo'),(25,'view-video'),(26,'solicitar-patrocinador'),(27,'enviar-id'),(28,'recusar-patrocinador'),(29,'list-ativacao'),(30,'ativar-id'),(31,'gerar-recibo'),(32,'list-saques-realizados'),(33,'liberar-saque'),(34,'negar-saque'),(35,'negar-id'),(36,'alterar-senha'),(37,'salvar-redefinicao-senha'),(38,'imprimir-boleto'),(39,'xxx'),(40,'autocompletecidade'),(41,'cadastrocustomizado'),(42,'cadastroviaacademia'),(43,'gravarviaacademia'),(44,'excluirviaacademia'),(45,'alterarviaacademia'),(46,'gravaralteracaoviaacademia'),(47,'autocompleteacademia'),(48,'carregarsugestaoidadeporcategoria'),(49,'realizarinscricoes'),(50,'autocompleteatleta'),(51,'index-pagination'),(52,'cadastroperiodoletivodetalhe'),(53,'detalhe-pagination'),(54,'adicionarperiodoletivodetalhe'),(55,'excluirvialistagemperiodoletivo');
+INSERT INTO `action` VALUES (1,'index'),(2,'course-information'),(3,'access-course'),(4,'view-pay'),(5,'list'),(6,'cadastro'),(7,'gravar'),(8,'excluir'),(9,'upload'),(10,'download-img-pay'),(11,'download-video-course'),(12,'up-line'),(13,'uni-level'),(14,'dados-pessoais'),(15,'atualizar-dados'),(16,'obter-cidades'),(17,'gravar-atualizacao'),(18,'extrato'),(19,'solicitar-saque'),(20,'liberar-pagamento'),(21,'list-pagamentos-realizados'),(22,'list-contratos-pendentes'),(23,'excluir-contrato'),(24,'enviar-codigo'),(25,'view-video'),(26,'solicitar-patrocinador'),(27,'enviar-id'),(28,'recusar-patrocinador'),(29,'list-ativacao'),(30,'ativar-id'),(31,'gerar-recibo'),(32,'list-saques-realizados'),(33,'liberar-saque'),(34,'negar-saque'),(35,'negar-id'),(36,'alterar-senha'),(37,'salvar-redefinicao-senha'),(38,'imprimir-boleto'),(39,'xxx'),(40,'autocompletecidade'),(41,'cadastrocustomizado'),(42,'cadastroviaacademia'),(43,'gravarviaacademia'),(44,'excluirviaacademia'),(45,'alterarviaacademia'),(46,'gravaralteracaoviaacademia'),(47,'autocompleteacademia'),(48,'carregarsugestaoidadeporcategoria'),(49,'realizarinscricoes'),(50,'autocompleteatleta'),(51,'index-pagination'),(52,'cadastroperiodoletivodetalhe'),(53,'detalhe-pagination'),(54,'adicionarperiodoletivodetalhe'),(55,'excluirvialistagemperiodoletivo'),(56,'teste-teste');
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -500,7 +500,7 @@ CREATE TABLE `controller` (
 
 LOCK TABLES `controller` WRITE;
 /*!40000 ALTER TABLE `controller` DISABLE KEYS */;
-INSERT INTO `controller` VALUES (1,'arte_marcial-artemarcial','Arte Marcial','S'),(2,'estilo-estilo','Estilo da Arte','S'),(3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','S'),(5,'cidade-cidade','Cidade','S'),(6,'estado-estado','Estado','S'),(7,'graduacao-graduacao','Graduação','S'),(8,'pagamento-pagamento','Pagamento','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','S'),(10,'banco-banco','Banco','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(13,'tipo_evento-tipoevento','Tipo de Evento','S'),(14,'evento-evento','Evento','S'),(15,'graduacao','Teste de Action ','S'),(16,'academia-academia','Academia','S'),(17,'atleta-atleta','Atleta','S'),(18,'categoria_peso-categoriapeso','Categoria de Peso','S'),(19,'categoria_idade-categoriaidade','Categoria de Idade','S'),(20,'regras_lutas-regraslutas','Regras de Luta','S'),(21,'detalhes_regras_luta-detalhesregrasluta','Definição das Regras de Luta','S'),(22,'inscricoes_evento-inscricoesevento','Inscrições nos Eventos','S'),(23,'cliente-cliente','Cliente','S'),(24,'check-check','Checkbox','S'),(25,'controller-controller','Controller','S'),(26,'action-action','Action','S'),(27,'xxx','xxx','S'),(28,'periodo_letivo-periodoletivo','Periodo Letivo','S'),(29,'sacramento-sacramento','Sacramento','S'),(30,'movimento_pastoral-movimentopastoral','Movimento Pastoral','S'),(31,'detalhe_periodo_letivo-detalheperiodoletivo','Detalhe do Periodo Letivo','S'),(32,'detalhe_periodo_letivo','Nome da Controller Periodo Letivo','S');
+INSERT INTO `controller` VALUES (1,'arte_marcial-artemarcial','Arte Marcial','S'),(2,'estilo-estilo','Estilo da Arte','S'),(3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','S'),(5,'cidade-cidade','Cidade','S'),(6,'estado-estado','Estado','S'),(7,'graduacao-graduacao','Graduação','S'),(8,'pagamento-pagamento','Pagamento','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','S'),(10,'banco-banco','Banco','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(13,'tipo_evento-tipoevento','Tipo de Evento','S'),(14,'evento-evento','Evento','S'),(15,'graduacao','Teste de Action ','S'),(16,'academia-academia','Academia','S'),(17,'atleta-atleta','Atleta','S'),(18,'categoria_peso-categoriapeso','Categoria de Peso','S'),(19,'categoria_idade-categoriaidade','Categoria de Idade','S'),(20,'regras_lutas-regraslutas','Regras de Luta','S'),(21,'detalhes_regras_luta-detalhesregrasluta','Definição das Regras de Luta','S'),(22,'inscricoes_evento-inscricoesevento','Inscrições nos Eventos','S'),(23,'cliente-cliente','Cliente','S'),(24,'permissao-permissao','Gerenciador de Permissao','S'),(25,'controller-controller','Controller','S'),(26,'action-action','Action','S'),(27,'xxx','xxx','S'),(28,'periodo_letivo-periodoletivo','Periodo Letivo','S'),(29,'sacramento-sacramento','Sacramento','S'),(30,'movimento_pastoral-movimentopastoral','Movimento Pastoral','S'),(31,'detalhe_periodo_letivo-detalheperiodoletivo1','Detalhe do Periodo Letivo','N'),(32,'detalhe_periodo_letivo','Nome da Controller Periodo Letivo','S');
 /*!40000 ALTER TABLE `controller` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -544,7 +544,7 @@ CREATE TABLE `detalhe_periodo_letivo` (
   PRIMARY KEY (`id_detalhe_periodo_letivo`),
   KEY `FK_Reference_124` (`id_periodo_letivo`),
   CONSTRAINT `FK_Reference_124` FOREIGN KEY (`id_periodo_letivo`) REFERENCES `periodo_letivo` (`id_periodo_letivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='Data que qirão compor o periodo letivo';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='Data que qirão compor o periodo letivo';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -553,7 +553,7 @@ CREATE TABLE `detalhe_periodo_letivo` (
 
 LOCK TABLES `detalhe_periodo_letivo` WRITE;
 /*!40000 ALTER TABLE `detalhe_periodo_letivo` DISABLE KEYS */;
-INSERT INTO `detalhe_periodo_letivo` VALUES (1,14,'2016-06-13'),(2,15,'0000-00-00'),(3,15,'0000-00-00'),(4,15,'0000-00-00'),(5,15,'0000-00-00'),(6,15,'0000-00-00'),(7,15,'0000-00-00'),(8,15,'0000-00-00'),(11,16,'0000-00-00'),(12,16,'0000-00-00'),(13,16,'0000-00-00'),(14,14,'2016-06-08'),(15,14,'2016-06-23'),(16,14,'2016-06-23'),(17,12,'2016-06-16'),(18,12,'2016-06-20'),(20,12,'2016-06-17');
+INSERT INTO `detalhe_periodo_letivo` VALUES (1,14,'2016-06-13'),(2,15,'0000-00-00'),(3,15,'0000-00-00'),(4,15,'0000-00-00'),(5,15,'0000-00-00'),(6,15,'0000-00-00'),(7,15,'0000-00-00'),(8,15,'0000-00-00'),(12,16,'0000-00-00'),(13,16,'0000-00-00'),(14,14,'2016-06-08'),(15,14,'2016-06-23'),(16,14,'2016-06-23'),(18,12,'2016-06-20'),(20,12,'2016-06-17'),(22,20,'2016-06-17'),(24,20,'2016-06-15'),(25,20,'2016-06-25');
 /*!40000 ALTER TABLE `detalhe_periodo_letivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1169,7 +1169,7 @@ CREATE TABLE `periodo_letivo` (
   `dt_fim` datetime DEFAULT NULL,
   `dt_ano_letivo` char(4) DEFAULT NULL,
   PRIMARY KEY (`id_periodo_letivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='Armazena informações sobre inicio e término do periodo letiv';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='Armazena informações sobre inicio e término do periodo letiv';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1178,7 +1178,7 @@ CREATE TABLE `periodo_letivo` (
 
 LOCK TABLES `periodo_letivo` WRITE;
 /*!40000 ALTER TABLE `periodo_letivo` DISABLE KEYS */;
-INSERT INTO `periodo_letivo` VALUES (12,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO1'),(13,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO2'),(14,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO3'),(15,'1969-12-10 00:00:00','1969-12-08 00:00:00','ANO4'),(16,'2016-06-22 00:00:00','2016-06-13 00:00:00','ANO5');
+INSERT INTO `periodo_letivo` VALUES (12,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO1'),(13,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO2'),(14,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO3'),(15,'1969-12-10 00:00:00','1969-12-08 00:00:00','ANO4'),(16,'2016-06-22 00:00:00','2016-06-13 00:00:00','ANO5'),(17,'2016-06-15 00:00:00','2016-06-30 00:00:00','ANO6'),(18,'2016-06-23 00:00:00','2016-06-17 00:00:00','ANO7'),(19,'2016-06-01 00:00:00','2016-06-15 00:00:00','ANO8'),(20,'2016-06-08 00:00:00','2016-06-30 00:00:00','ANO9');
 /*!40000 ALTER TABLE `periodo_letivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1862,4 +1862,4 @@ USE `bdcatequese`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-14 10:57:38
+-- Dump completed on 2016-06-17 16:27:19

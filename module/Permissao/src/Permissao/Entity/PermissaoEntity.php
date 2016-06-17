@@ -1,10 +1,10 @@
 <?php
 
-namespace Check\Entity;
+namespace Permissao\Entity;
 
 use Estrutura\Service\AbstractEstruturaService;
 
-class CheckEntity extends AbstractEstruturaService{
+class PermissaoEntity extends AbstractEstruturaService{
 
         protected $id; 
         protected $nm_estado; 

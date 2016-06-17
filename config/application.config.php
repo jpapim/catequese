@@ -50,6 +50,7 @@ return array(
         'MovimentoPastoral',
         'Controller',
         'Action',
+        'Permissao',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

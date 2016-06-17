@@ -13,7 +13,7 @@ class ActionForm extends AbstractForm{
         $this->inputFilter = new InputFilter();
         $objForm = new FormObject('actionform',$this,$this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");  
-        $objForm->text("nm_action")->required(false)->label("Action");
+        $objForm->text("nm_action")->required(true)->label("Nome da Action");
 
         $this->formObject = $objForm;
     }

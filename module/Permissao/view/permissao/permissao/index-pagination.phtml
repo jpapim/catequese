@@ -2,16 +2,16 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterChecks" >
+        <table class="table table-striped" id="tablesorterPermissao" >
             <thead>
                 <tr>
-                    <th class="text-center">Nome do Check</th>
+                    <th class="text-center">Nome do Permissao</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                    <th class="text-center">Nome do Check</th>
+                    <th class="text-center">Nome do Permissao</th>
                     <th class="text-center">Ações</th>
                 </tr>
                 <tr>
@@ -19,9 +19,9 @@
                         <?php
                         echo $this->paginationControl(
                                 $paginator, 'Sliding', 'partials/pagination.phtml', [
-                                'urlPagination' => '/check-check/index-pagination',
+                                'urlPagination' => '/permissao-permissao/index-pagination',
                                 'countPerPage' => $countPerPage,
-                                'divData' => '#check-pagination',
+                                'divData' => '#permissao-pagination',
                                 ]
                         );
                         ?>  
@@ -55,14 +55,14 @@
                         ?>                            
                     </tr>
                     <?php
-                    foreach ($paginator as $key => $check) { ?>
+                    foreach ($paginator as $key => $permissao) { ?>
                         <?php #print_r($academia); die;?>
                         <tr>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($check['nm_estado']) . ' - ' .  \Estrutura\Helpers\String::tudoMaiusculo($check['sg_estado']) ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($permissao['nm_estado']) . ' - ' .  \Estrutura\Helpers\String::tudoMaiusculo($permissao['sg_estado']) ?></td>
                             <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($check['id_estado'])))) ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($check['id_estado'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($permissao['id_estado'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($permissao['id_estado'])))) ?>
                                 </span>
                             </td>
                         </tr>                    
@@ -110,7 +110,7 @@
         };
 
         // call the tablesorter plugin and apply the uitheme widget
-        $("#tablesorterChecks").tablesorter({
+        $("#tablesorterPermissao").tablesorter({
             // this will apply the bootstrap theme if "uitheme" widget is included
             // the widgetOptions.uitheme is no longer required to be set
             theme: "bootstrap",
