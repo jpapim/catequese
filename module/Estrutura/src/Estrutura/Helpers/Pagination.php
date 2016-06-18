@@ -15,7 +15,7 @@ class Pagination {
      * @param unknown_type $files
      * @return array
      */
-    public static function getCountPerPage($totalItemCount) {
+    /*public static function getCountPerPage($totalItemCount) {
 
         $values = [];
         if ($totalItemCount > 400) {
@@ -31,6 +31,12 @@ class Pagination {
             $values = [400, 300, 200, 100, 50, 25, 10] ;
         }
         return array_reverse($values);
-    }
+    }*/
 
+    public static function getCountPerPage($totalItemCount) {
+
+        $values = [200, 100, 50, 25, 10] ;
+
+        return array_reverse($values);
+    }
 }

@@ -3,6 +3,15 @@
 return array(
     'router' => array(
         'routes' => array(
+            'navegacao' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route'    => '/:controller[/:action[/:id]]',
+                    'defaults' => array(
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
             'cidade-home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
