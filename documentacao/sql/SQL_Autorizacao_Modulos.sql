@@ -46,3 +46,8 @@ insert into perfil_controller_action(id_controller,id_action, id_perfil) values(
 insert into perfil_controller_action(id_controller,id_action, id_perfil) values('25','51','1');
 >>>>>>> master
 >>>>>>> dev-raimundo
+INSERIR MODULO CATEQUISTA
+INSERT INTO controller(nm_controller) VALUES('catequista-catequista');
+
+AUTORIZACAO cATEQUISTA
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(28,1,1),(28,6,1),(28,51,1),(28,7,1),(28,8,1);
