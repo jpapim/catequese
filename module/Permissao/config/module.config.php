@@ -3,15 +3,16 @@
 return array(
     'router' => array(
         'routes' => array(
-            'permissao-home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
+            'permissao' => array(
+                'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/permissao',
+                    'route'    => '/permissao-permissao/:action[/:aux][/:aux2]',
                     'defaults' => array(
-                        'controller' => 'permissao',
+                        'controller' => 'permissao-permissao',
                         'action'     => 'index',
                     ),
                 ),
+
             ),
         ),
     ),

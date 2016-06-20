@@ -3,6 +3,7 @@
 namespace Permissao\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
+use PerfilControllerAction\Service\PerfilControllerActionService;
 use Zend\View\Model\ViewModel;
 
 use Estrutura\Helpers\Cript;
@@ -28,6 +29,9 @@ class PermissaoController extends AbstractCrudController
         return parent::index($this->service, $this->form);
     }
 
+    /**
+     * @return bool
+     */
     public function gravarAction() {
         try {
             $controller = $this->params('controller');
@@ -49,22 +53,8 @@ class PermissaoController extends AbstractCrudController
             if (isset($post['id']) && $post['id']) {
                 $post['id'] = Cript::dec($post['id']);
             }
-            #################################################################
-            # Inicio da Customiza�ao dos Valores antes de gravar no banco
-            #$academia = new \Academia\Service\AcademiaService();
-            #$arrCidade = $academia->getIdAcademiaPorNomeToArray($post['id_academia']);
-            #$post['id_academia'] = $arrCidade['id_academia'];
 
-            #$cidade = new \Cidade\Service\CidadeService();
-            #$arrCidade = $cidade->getIdCidadePorNomeToArray($post['id_cidade']);
-            #$post['id_cidade'] = $arrCidade['id_cidade'];
-
-            #$post['dt_nascimento'] = Data::converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']);
-            # Fim da Customiza�ao dos Valores antes de gravar no banco
-            #################################################################
-
-            xd($post);
-
+            #xd($post);
             $form->setData($post);
 
             if (!$form->isValid()) {
@@ -74,10 +64,27 @@ class PermissaoController extends AbstractCrudController
                 return false;
             }
 
-            $service->exchangeArray($form->getData());
-            $this->addSuccessMessage('Registro Alterado com sucesso');
-            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
-            return $service->salvar();
+            #Excluir todos os registros com o mesmo id_controller e id_perfil passados no objeto, para depois regravar as permissoes
+            $obPerfilControllerActionService = new \PerfilControllerAction\Service\PerfilControllerActionService();
+            $obPerfilControllerActionService->setIdController($post['id_modulo']);
+            $obPerfilControllerActionService->setIdPerfil($post['id_perfil']);
+            $obPerfilControllerActionService->excluir();
+
+            #Mensagem retornada Quando houver sucesso na operaçao
+            $this->addSuccessMessage('Permissão concedida com Sucesso para Açoes Selecionadas.');
+            $this->redirect()->toRoute('permissao', array('controller' => $controller, 'action' => 'cadastro', 'aux'=>Cript::enc($post['id_perfil']), 'aux2'=> Cript::enc($post['id_modulo']) ));
+            $arrIdAction = $post['id_action'];
+            foreach($arrIdAction as $id_action){
+                #Carrega O array Post com os dados a serem salvos e aproveita a  validação do formulario
+                $this->getRequest()->getPost()->set('id_perfil', $post['id_perfil']);
+                $this->getRequest()->getPost()->set('id_controller', $post['id_modulo']);
+                $this->getRequest()->getPost()->set('id_action', $id_action);
+                #Chamo o metodo para gravar os dados na tabela.
+                parent::gravar(
+                    $this->getServiceLocator()->get('\PerfilControllerAction\Service\PerfilControllerActionService'), new \PerfilControllerAction\Form\PerfilControllerActionForm()
+                );
+            }
+            return true;
 
         } catch (\Exception $e) {
 
@@ -90,7 +97,27 @@ class PermissaoController extends AbstractCrudController
 
     public function cadastroAction()
     {
-        return parent::cadastro($this->service, $this->form);
+        //recuperar o id do Periodo Letivo
+        $id_perfil = Cript::dec($this->params('aux') );
+        $id_controller = Cript::dec($this->params('aux2') );
+
+        #Recupera os IDs utilizados para Gravar e carrega os Dados Iguais, Permanecendo na tela.
+        $post['id_perfil'] = $id_perfil;
+        $post['id_modulo'] = $id_controller;
+
+        $this->form->setData($post);
+
+        $dadosView = [
+            'service' => $this->service,
+            'form' => $this->form,
+            'controller' => $this->params('controller'),
+            'atributos' => array(),
+            'id_perfil' => $id_perfil,
+            'id_controller' => $id_controller,
+        ];
+
+        return new ViewModel($dadosView);
+
     }
 
     public function excluirAction()
@@ -100,7 +127,6 @@ class PermissaoController extends AbstractCrudController
 
     public function indexPaginationAction()
     {
-        #http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
 
         $filter = $this->getFilterPage();
 
@@ -134,6 +160,42 @@ class PermissaoController extends AbstractCrudController
         ]);
 
         return $viewModel->setTerminal(TRUE);
+    }
+
+    public function listarPermissoesAcoesAction()
+    {
+        //Se for a chamada Ajax
+        if ($this->getRequest()->isPost()) {
+            $id_controller_ajax = $this->params()->fromPost('id_controller');
+            $id_perfil_ajax = $this->params()->fromPost('id_perfil');
+
+            #Carrego aqui Todos Os Actions existentes na Tabela de Controle por Controller e Perfil
+            $obPerfilControllerAction = new \PerfilControllerAction\Service\PerfilControllerActionService();
+            $colecaoActionsControle = $obPerfilControllerAction->retornaTodosPorControllerEPerfil($id_controller_ajax, $id_perfil_ajax);
+            $arrActions = [];
+            foreach ($colecaoActionsControle as $key => $ob_action_controle) {
+                $arrActions[] = $ob_action_controle->getIdAction();
+            }
+
+            #Preenche um Array de Opçoes a ser passado para o Formulario
+            $options = array();
+            $options['acoes'] = $arrActions;
+            $options['id_controller'] = $id_controller_ajax;
+            $options['id_perfil'] = $id_perfil_ajax;
+
+            $form = new \Permissao\Form\PermissaoForm($options);
+
+            $viewModel = new ViewModel([
+                'service' => $this->service,
+                'form' => $form,
+                'controller' => $this->params('controller'),
+                'atributos' => array()
+            ]);
+
+            return $viewModel->setTerminal(TRUE);
+        }
+
+
     }
 
 }

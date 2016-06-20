@@ -14,8 +14,6 @@
                 $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
                 echo $this->formHidden($form->get('id'));
 
-                #Customização para Trazer todas as Actions
-                $id_action = $form->get('id_action')->getValue();
                 ?>
                 <div class="form-group">
                     <div class="col-md-4">
@@ -26,46 +24,72 @@
                     </div>
                 </div>
 
-                <div class="row_form">
-                    <div class="col-md-12 ">
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <label for="id_action">Selecione a Action</label><br/>
-                                <?php
-                                #Recuperando todas as actions
-                                $myAction = new \Action\Service\ActionService();
-                                $arrAction = $myAction->fetchAll()->toArray();
-                                foreach ($arrAction as $key => $valor) { ?>
-                                    <input type="checkbox" name="id_action[]" id="id_action<?= $valor['id_action'] ?>"
-                                           value="<?= $valor['id_action'] ?>" <?= $valor['id_action'] == $id_action ? "checked='checked'" : "" ?>  >
-                                    <?= $valor['nm_action'] ?>&nbsp;&nbsp;&nbsp;
-                                    <br/>
-                                <?php } ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="row" id="lista-permissoes"></div>
 
-                <div class="row_form">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <? //= $this->formRow($form->get('id_action2')) ?>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                        <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Voltar</a>
-                    </div>
-                </div>
                 <?= $this->form()->closeTag(); ?>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+
+        function carregarPermissoesRetornoInserir(){
+            <?php
+            if( (isset($id_perfil) && $id_perfil) && (isset($id_controller) && $id_controller) ) { ?>
+                id_perfil = <?=$id_perfil?>;
+                id_modulo = <?=$id_controller?>;
+                if(id_perfil && id_modulo){
+                    carregarListaPermissoesAjax(id_modulo, id_perfil); //Chama a Paginação da listagem
+                }
+            <?php
+            }
+            ?>
+        }
+        function carregarListaPermissoesAjax(id_modulo, id_perfil){
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                cache: false,
+                url: '/permissao-permissao/listar-permissoes-acoes',
+                async: true,
+                data: {
+                    id_controller: id_modulo,
+                    id_perfil: id_perfil
+                },
+                beforeSend: function () {
+                    $('#lista-permissoes').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
+                },
+                success: function (data) {
+
+                    $('#lista-permissoes').html(data);
+                }
+            });
+        }
+
+        //Realiza a chamada Ajax, caso os dois combos estejam preenchidos
+        $('#id_perfil').change(function() {
+            id_perfil = $(this).val();
+            id_modulo = $('#id_modulo').val();
+            if(id_perfil && id_modulo){
+                carregarListaPermissoesAjax(id_modulo, id_perfil); //Chama a Paginação da listagem
+            }
+        });
+
+        //Realiza a chamada Ajax, caso os dois combos estejam preenchidos
+        $('#id_modulo').change(function() {
+            id_perfil = $('#id_perfil').val();
+            id_modulo = $(this).val();
+            if(id_perfil && id_modulo){
+                carregarListaPermissoesAjax(id_modulo, id_perfil); //Chama a Paginação da listagem
+            }
+        });
+
+
+        carregarPermissoesRetornoInserir();
+
+
+    });
+</script>

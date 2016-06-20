@@ -51,6 +51,7 @@ return array(
         'Controller',
         'Action',
         'Permissao',
+        'PerfilControllerAction',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
