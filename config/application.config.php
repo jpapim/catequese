@@ -52,6 +52,7 @@ return array(
         'Action',
         'Permissao',
         'PerfilControllerAction',
+        'Catequista',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
