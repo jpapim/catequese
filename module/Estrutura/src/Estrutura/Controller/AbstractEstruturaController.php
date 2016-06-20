@@ -56,8 +56,9 @@ abstract class AbstractEstruturaController extends AbstractActionController {
             $obj = str_replace(['Controller', 'IndexService'], ['Service', $namespace], $classe);
 
         } else if($controller == 'ControllerController'){ // Alysson - Corrigindo caso for acessar o cadastro de Controller
-
             $obj = "\\" . $namespace . '\Service\\' .  'ControllerService';
+        } else if($controller == 'PerfilControllerActionController'){ // Alysson - Corrigindo caso for acessar o cadastro de Controller
+            $obj = "\\" . $namespace . '\Service\\' .  'PerfilControllerActionService';
         } else { // Se nao ele seta da controller
 
             $objeto = str_replace('Controller', '', $controller);
@@ -85,6 +86,9 @@ abstract class AbstractEstruturaController extends AbstractActionController {
             // Se nao ele seta da controller
         } else if($controller == 'ControllerController'){ // Alysson - Corrigindo caso for acessar o cadastro de Controller
             $obj = "\\" . $namespace . '\Form\\' .  'ControllerForm';
+
+        } else if($controller == 'PerfilControllerActionController'){ // Alysson - Corrigindo caso for acessar o cadastro de Controller
+            $obj = "\\" . $namespace . '\Form\\' .  'PerfilControllerActionForm';
 
         } else {
 
