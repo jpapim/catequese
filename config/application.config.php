@@ -1,10 +1,11 @@
-<?php
+﻿<?php
 
 return array(
     'modules' => array(
         'Application',
         'Auth',
         'Estrutura', //Tem que vir antes dos demais módulos
+        'Situacao',
         'Banco',
         'Principal',
         'Email',
@@ -40,7 +41,7 @@ return array(
         #'Gerador',
         #'Login',
         #'PhpBoletoZf2',
-        #'Situacao',
+       
         #'Telefone',
         #'TipoConta',
         #'TipoTelefone',
@@ -53,6 +54,9 @@ return array(
         'Permissao',
         'PerfilControllerAction',
         'Catequista',
+        'Etapa',
+        'Turma',
+        'TurmaCatequisando',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
