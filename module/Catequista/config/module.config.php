@@ -3,16 +3,24 @@
 return array(
     'router' => array(
         'routes' => array(
-            'permissao' => array(
-                'type'    => 'Segment',
+            'navegacao' => array(
+                'type' => 'Segment',
                 'options' => array(
-                    'route'    => '/permissao-permissao/:action[/:aux][/:aux2]',
+                    'route'    => '/:controller[/:action[/:id]]',
                     'defaults' => array(
-                        'controller' => 'permissao-permissao',
                         'action'     => 'index',
                     ),
                 ),
-
+            ),
+            'catequista-home' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/catequista',
+                    'defaults' => array(
+                        'controller' => 'catequista',
+                        'action'     => 'index',
+                    ),
+                ),
             ),
         ),
     ),
@@ -37,8 +45,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'permissao' => 'Permissao\Controller\PermissaoController',
-            'permissao-permissao' => 'Permissao\Controller\PermissaoController',
+            'catequista' => 'Catequista\Controller\CatequistaController',
+            'catequista-catequista' => 'Catequista\Controller\CatequistaController',
 
         ),
     ),

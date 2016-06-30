@@ -1,1 +1,0 @@
-INSERT INTO `bdcatequese`.`perfil_controller_action` (`id_controller`, `id_action`, `id_perfil`) VALUES ('30', '1', '1');

@@ -1,0 +1,42 @@
+Você cria o banco e as tabelas
+e as colunas
+tem que seguir uma nomenclatura
+Nome de tabelas sempre no singular
+toda tabela teve ter um campo de chave primária
+e todos os campos tem um prefixo
+top
+ronaldo rodrigues (ronaldormelo@gmail.com, ronaldo.r.melo@gmail.com)
+o prefixo é de 3 caracteres
+id_, nm_, tx_, pw_, dt_, nu_
+ex.: id_usuario
+esses prefixos que definen na geração se o campo é textearea, numerico, data etc
+e definem também a geração
+saquei
+ronaldo rodrigues (ronaldormelo@gmail.com, ronaldo.r.melo@gmail.com)
+*definem tambem a validação
+se vc olhar o código lá dentro do módulo "gerador" vc vai ver
+também é possível colocar outros atributos da coluna nos comentários de cada coluna da tabela
+dá uma olhada aí no banco desse sistema
+beleza eu estudo isso lá
+ronaldo rodrigues (ronaldormelo@gmail.com, ronaldo.r.melo@gmail.com)
+a tabela "action"
+quais tabelas foram geradas pelo gerador?
+ok
+Action ja é massa
+ronaldo rodrigues (ronaldormelo@gmail.com, ronaldo.r.melo@gmail.com)
+olha o comentário da coluna "nm_action"
+{"label":"Ação"}
+Ou seja, essa coluna no formuiário vai ter o nome de "Ação"
+para rodar o gerador basta executar no navegador
+executar o que no navagador?
+ronaldo rodrigues (ronaldormelo@gmail.com, ronaldo.r.melo@gmail.com)
+http://<seu_projeto>/gerador/play/<nome_da_tabela>
+tem que habilitar o módulo gerador no application.config.php
+entendeu?
+então você segue a nomenclatura para criar a tabela e as colunas
+executa o gerador
+e ele cria um módulo com o CRUD da tabela
+depois adiciona o novo módulo no application.config.php    
+e já está funcionando
+to indo almoçar
+valeu

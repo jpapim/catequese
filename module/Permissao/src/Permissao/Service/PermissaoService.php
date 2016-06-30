@@ -50,13 +50,5 @@ class PermissaoService extends Entity {
     }
 
 
-    public function preSave() {
-
-    }
-
-    public function posSave() {
-
-    }
-
 
 }
