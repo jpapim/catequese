@@ -1,0 +1,48 @@
+
+<?php
+/**
+ * @var $form \PeriodoLetivo\Form\PeriodoLetivo */
+
+/** @var $lista \Formacao\Service\Formacao
+ */
+
+?>
+
+<div class="page-head">
+    <h2>Formacao</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Novo Cadastro Formacao">Cadastrar Formacao</a>
+        </div>
+    </div>
+    <br />
+    <div class="row" id="formacao_grid"></div>
+</div>
+
+<script>
+    $(function () {
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            cache: false,
+            url: 'formacao-formacao/index-pagination',
+            async: true,
+            data: {
+            },
+            beforeSend: function () {
+
+                $('#formacao_grid').html(
+                    '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                );
+            },
+            success: function (data) {
+
+                $('#formacao_grid').html(data);
+            }
+        });
+
+    })
+</script>
