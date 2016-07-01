@@ -52,6 +52,7 @@ return array(
         'Controller',
         'Action',
         'Permissao',
+        'Paroquia',
         'PerfilControllerAction',
         'Catequista',
         'Etapa',
