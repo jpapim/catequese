@@ -22,6 +22,8 @@ class PermissaoController extends AbstractCrudController
 
     public function __construct(){
         parent::init();
+        #Apagando todos os Arquivos dentro de um diretório.
+        \Estrutura\Helpers\Cache::limparCacheDoSistema();
     }
 
     public function indexAction()

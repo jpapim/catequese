@@ -1,0 +1,88 @@
+
+<div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-xs-12 col-sm-9">    
+
+        <?php
+        if ($temSaqueComReciboEnviado) {
+            ?>
+            <div class="bs-callout bs-callout-info">
+                Quando você envia um recibo de bônus, não é possível realizar atualizações cadastrais.
+            </div>    
+            <?php
+        } else {
+            ?>
+
+            <div class = "well">
+                <div class = "page-head">
+                    <h2>Atualização de dados cadastrais</h2>
+                </div>
+
+                <dl>
+                    <dt>Cd Turma:</dt>
+                    <dd><?= ucwords($turma['cd_Turma'])
+                        ?></dd>
+                </dl> 
+
+                <dl>
+                    <dt>Nome Turma:</dt>
+                    <dd><?= ucwords($turma['nm_turma'])
+                        ?></dd>
+              
+                  
+                
+                
+                <?php
+                $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar-atualizacao')));
+                $form->setAttribute('method', 'post');
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('data-toggle', 'validator');
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                ?>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <?= $this->formRow($form->get('id_etapa')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <?= $this->formRow($form->get('cd_turma')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <?= $this->formRow($form->get('nm_turma')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+         
+                <div class="form-group">                    
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+
+<!--                        <a href="--><?//= $this->url('navegacao', array('controller' => 'mcnetwork-index', 'action' => 'index')) ?><!--" class="btn btn-default">Voltar</a>                    -->
+<!--                        Alysson -->
+                        <a href="<?= $this->url('navegacao', array('controller' => 'turma-turma', 'action' => 'index')) ?>" class="btn btn-default">Voltar</a>
+                    </div>
+                </div>
+
+
+                <?= $this->form()->closeTag(); ?>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+    <?=
+    $this->partial('partials/menu-left', [
+        'auth' => $auth,
+        'contratoEntity' => $contratoEntity,
+        'configList' => $configList,
+        'meusGanhosList' => $meusGanhosList,
+    ]);
+    ?>
+
+</div>
+<script type="text/javascript" src="/assets/compact-js/validator.min.js,jquery.mask.min.js,usuario|usuario|atualizar-dados.js"></script>

@@ -9,7 +9,6 @@
 namespace PeriodoLetivo\Controller;
 
 
-
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Data;
 use Estrutura\Helpers\Pagination;
@@ -19,42 +18,45 @@ use Zend\View\Model\JsonModel;
 use Estrutura\Helpers\Cript;
 
 
-class PeriodoLetivoController extends AbstractCrudController {
+class PeriodoLetivoController extends AbstractCrudController
+{
 
     /**
      * @var \PeriodoLetivo\Service\PeriodoLetivo
      */
-    protected  $service;
+    protected $service;
     /**
      * @var \PeriodoLetivo\Form\PeriodoLetivo
      */
     protected $form;
 
-    public function  __construct(){
+    public function  __construct()
+    {
         parent::init();
     }
 
     public function indexAction()
     {
-        return parent::index($this->service,$this->form);
+        return parent::index($this->service, $this->form);
     }
 
-    public function indexPaginationAction(){
+    public function indexPaginationAction()
+    {
 
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0'=>[
+            '0' => [
                 'filter' => "periodo_letivo.id_periodo_letivo  LIKE ?"
             ],
-            '1'=>[
+            '1' => [
                 'filter' => "periodo_letivo.dt_inicio  LIKE ?"
             ],
-            '2'=>[
-                'filter'=> "periodo_letivo.dt_fim  LIKE ?"
+            '2' => [
+                'filter' => "periodo_letivo.dt_fim  LIKE ?"
             ],
-            '3'=>[
-                'filter'=> "periodo_letivo.dt_ano_letivo  LIKE ?"
+            '3' => [
+                'filter' => "periodo_letivo.dt_ano_letivo  LIKE ?"
             ]
 
         ];
@@ -68,18 +70,18 @@ class PeriodoLetivoController extends AbstractCrudController {
         );
 
         $paginator->setItemCountPerPage($this->getCountPerPage(
-           current(Pagination::getCountPerPage($paginator->getTotalItemCount()))
+            current(Pagination::getCountPerPage($paginator->getTotalItemCount()))
         ))->setCurrentPageNumber($this->getCurrentPage());
 
         $viewModel = new ViewModel([
-            'service'=>$this->service,
-            'form'=>$this->form,
-            'paginator'=>$paginator,
-            'filter'=>$filter,
-            'countPerPage'=>$countPerPage,
-            'camposFilter'=>$camposFilter,
-            'controller'=>$this->params('controller'),
-            'atributos'=>array(),
+            'service' => $this->service,
+            'form' => $this->form,
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            'atributos' => array(),
         ]);
 
         return $viewModel->setTerminal(true);
@@ -128,9 +130,9 @@ class PeriodoLetivoController extends AbstractCrudController {
 
             //Define o redirecionamento
             if (isset($post['id']) && $post['id']) {
-                $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'index'));
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
             } else {
-                $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'cadastroperiodoletivodetalhe','id'=>Cript::enc($id_periodo_letivo) ));
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastroperiodoletivodetalhe', 'id' => Cript::enc($id_periodo_letivo)));
             }
 
             return $id_periodo_letivo;
@@ -144,33 +146,35 @@ class PeriodoLetivoController extends AbstractCrudController {
         }
     }
 
-    public function excluirAction(){
-        return parent::excluir($this->service,$this->form);
+    public function excluirAction()
+    {
+        return parent::excluir($this->service, $this->form);
     }
 
-    public function cadastroAction(){
-        return parent::cadastro($this->service,$this->form);
+    public function cadastroAction()
+    {
+        return parent::cadastro($this->service, $this->form);
     }
 
     public function cadastroperiodoletivodetalheAction()
     {
         //recuperar o id do Periodo Letivo
-        $id_periodo_letivo = Cript::dec($this->params('id') );
+        $id_periodo_letivo = Cript::dec($this->params('id'));
 
         #xd($this->params('id'));
         $periodo_letivo = new \PeriodoLetivo\Service\PeriodoLetivoService();
         $dadosPeriodoLetivo = $periodo_letivo->buscar($id_periodo_letivo);
 
-            $dadosView = [
-                'service' => new \DetalhePeriodoLetivo\Service\detalhePeriodoLetivoService(),
-                'form' => new \DetalhePeriodoLetivo\Form\DetalhePeriodoLetivoForm(),
-                'controller' => $this->params('controller'),
-                'atributos' => array(),
-                'id_periodo_letivo' => $id_periodo_letivo,
-                'dadosPeriodoLetivo' => $dadosPeriodoLetivo,
-            ];
+        $dadosView = [
+            'service' => new \DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService(),
+            'form' => new \DetalhePeriodoLetivo\Form\DetalhePeriodoLetivoForm(),
+            'controller' => $this->params('controller'),
+            'atributos' => array(),
+            'id_periodo_letivo' => $id_periodo_letivo,
+            'dadosPeriodoLetivo' => $dadosPeriodoLetivo,
+        ];
 
-            return new ViewModel($dadosView);
+        return new ViewModel($dadosView);
         //}
     }
 
@@ -184,8 +188,8 @@ class PeriodoLetivoController extends AbstractCrudController {
             $dt_encontro = Data::converterDataHoraBrazil2BancoMySQL($dt_encontro);
             $detalhe_periodo_letivo = new \DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService();
 
-                $id_inserido = $detalhe_periodo_letivo->getTable()->salvar(array('id_periodo_letivo'=>$id_periodo_letivo, 'dt_encontro'=>$dt_encontro), null);
-                $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'dt_encontro'=>$dt_encontro) );
+            $id_inserido = $detalhe_periodo_letivo->getTable()->salvar(array('id_periodo_letivo' => $id_periodo_letivo, 'dt_encontro' => $dt_encontro), null);
+            $valuesJson = new JsonModel(array('id_inserido' => $id_inserido, 'sucesso' => true, 'dt_encontro' => $dt_encontro));
 
             return $valuesJson;
         }
@@ -223,7 +227,7 @@ class PeriodoLetivoController extends AbstractCrudController {
             'countPerPage' => $countPerPage,
             'camposFilter' => $camposFilter,
             'controller' => $this->params('controller'),
-            'id_periodo_letivo'=>$id_periodo_letivo,
+            'id_periodo_letivo' => $id_periodo_letivo,
             'atributos' => array()
         ]);
 
