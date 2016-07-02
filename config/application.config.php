@@ -58,6 +58,8 @@ return array(
         'Etapa',
         'Turma',
         'TurmaCatequisando',
+        'Formacao',
+        'DetalheFormacao',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

@@ -1,7 +1,7 @@
 
 <?php
 /**
- * @var $form \PeriodoLetivo\Form\PeriodoLetivo */
+ * @var $form \Formacao\Form\Formacao */
 
 /** @var $lista \Formacao\Service\Formacao
  */
@@ -22,8 +22,7 @@
 </div>
 
 <script>
-    $(function () {
-
+    $(function() {
         $.ajax({
             type: "post",
             dataType: "text",
@@ -39,7 +38,6 @@
                 );
             },
             success: function (data) {
-
                 $('#formacao_grid').html(data);
             }
         });
