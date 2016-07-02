@@ -95,7 +95,7 @@ class ParoquiaController extends AbstractCrudController
             $arrCidade = $cidade->getIdCidadePorNomeToArray($post['id_cidade']);
             $post['id_cidade'] = $arrCidade['id_cidade'];
 
-//            xd( $post);
+            #xd( $post);
 
             $form->setData($post);
 
