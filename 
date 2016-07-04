@@ -1,0 +1,242 @@
+[33mcommit cd27ff0d34ab2dd3f1e773420c7541554567cf89[m
+Merge: 1ff8c71 fed905f
+Author: Eduferr <eduardofgsantos@gmail.com>
+Date:   Thu Jun 30 11:22:31 2016 -0300
+
+    corrigindo conflitos
+
+[33mcommit 1ff8c7124e60b5e2df7438c3f3013d50a58cb8db[m
+Author: Eduferr <eduardofgsantos@gmail.com>
+Date:   Thu Jun 30 10:46:36 2016 -0300
+
+    Implementacao do cadastro Paroquia
+
+[33mcommit fed905f27c262d225df9738f18828a108f12d58b[m
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Mon Jun 20 16:16:35 2016 -0300
+
+    [Fix] Higienização no menu
+
+[33mcommit d8095dfc82ef2cc43e9735dd6ab38db9a3bf83b1[m
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Mon Jun 20 15:07:42 2016 -0300
+
+    [Fix] Ajustando código catequista, mas ainda não esta funcional.
+
+[33mcommit b943bfebdad2b9cbf85a48fe8d29b4b7f9a1b97c[m
+Merge: 45b5172 474ab1c
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Mon Jun 20 14:15:45 2016 -0300
+
+    Merge branch 'dev-alysson' into dev-raimundo
+
+[33mcommit 474ab1cd0f9f4ece3e234918bb51c89ceb8b5f3b[m
+Author: Alysson Vicuna <alyssontkd@gmail.com>
+Date:   Mon Jun 20 13:04:57 2016 -0300
+
+    [Novo] Implementando gerenciador de Permissoes
+
+[33mcommit e675250a7ab5bd0f95082de17958e1b051594d13[m
+Author: Alysson Vicuna <alyssontkd@gmail.com>
+Date:   Mon Jun 20 12:57:12 2016 -0300
+
+    Atualizando banco inicial
+
+[33mcommit 45b5172ff1fbccbab1413fa44de5f8439df38a4a[m
+Author: Raimundo de Paula <Raimundodep@gmail.com>
+Date:   Sat Jun 18 18:30:00 2016 -0300
+
+    Modulo catequista  ainda imcompleto
+
+[33mcommit 030d7a760ff83a234c3cba1b71f2c0123ab8287d[m
+Author: Alysson Vicuna <alyssontkd@gmail.com>
+Date:   Sat Jun 18 16:08:36 2016 -0300
+
+    [Novo] Adicionando Paginaçao no Cadastro de Cidades, Atualizando dump da base.
+
+[33mcommit fbe9898e872b9b7c1500ef22f7035ffc0e1ca9d8[m
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Fri Jun 17 16:29:14 2016 -0300
+
+    [Fix] Equalizando o ambiente com o modelo do gerenciador de permissao
+
+[33mcommit e9b01b816c602eca8b525a4d4390c561931fbb9c[m
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Tue Jun 14 13:50:06 2016 -0300
+
+    [Fix] Corrigindo erro no Cadastro de Detalhe do Periodo Letivo
+
+[33mcommit 11eab2f9fc1ef86a6040d82fd08854411e1b8d38[m
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Tue Jun 14 11:19:06 2016 -0300
+
+    [Fix] Limpando lixos no código.
+
+[33mcommit 1bc55b1ad563813da3ccaf36ee747c89dd20e3f5[m
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Tue Jun 14 11:10:22 2016 -0300
+
+    [Novo] Finalizando o Cadastro de Periodo Letivo/DetalhePeriodoLetivo.
+
+[33mcommit f7b2eb91b7731ded4e8a4f1e734a77e0a7f12564[m
+Author: Alysson Vicuna <alyssontkd@gmail.com>
+Date:   Tue Jun 14 00:06:34 2016 -0300
+
+    Corrigindo detalhes na listagem de cabeçalho/detalhe
+
+[33mcommit b35e7468d8ac09a0c991a97ad9ebe5f6245f1b44[m
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Mon Jun 13 16:39:18 2016 -0300
+
+    [Novo] Finalizando cadastro de Periodo Letivo
+
+[33mcommit a8b12b4e5d6884fdd5c845d5030a9de0eb12b91f[m
+Author: Alysson Vicuna <alyssontkd@gmail.com>
+Date:   Mon Jun 13 09:55:57 2016 -0300
+
+    Desenvolvendo CRUD para Cabeçalho/Detalhes
+
+[33mcommit 53df9a262d0908a0a7b383f694bea844303f2f26[m
+Author: Alysson Vicuna <alyssontkd@gmail.com>
+Date:   Sat Jun 11 03:07:39 2016 -0300
+
+    [Novo] Adicionando os CRUDS de Action e Controller. [Novo] Adicionando ferramenta de DEBUG.
+
+[33mcommit 9b30b14dfbd78cb2594c5020d8ce0bb3434f4f53[m
+Author: Alysson Vicuna <alyssontkd@gmail.com>
+Date:   Sat Jun 11 01:58:34 2016 -0300
+
+    [Equalizando codigos]
+
+[33mcommit 8c59ebdea1d8959bdbed5042a78eb0da7f3ae53c[m
+Merge: cd0c0fc 1f0a9c8
+Author: Alysson Vicuna <alyssontkd@gmail.com>
+Date:   Sat Jun 11 01:54:59 2016 -0300
+
+    [Equalizando codigos]
+
+[33mcommit 1f0a9c8253f2c743d63278e54ac6e54fcf6bc135[m
+Author: Alysson Vicuna <alyssontkd@gmail.com>
+Date:   Sat Jun 11 01:53:13 2016 -0300
+
+    [Equalizando codigos]
+
+[33mcommit 0c1ed8b91f0ef869e0e6498417ba6898bf9741b7[m
+Author: Alysson Vicuna <alyssontkd@gmail.com>
+Date:   Sat Jun 11 01:50:52 2016 -0300
+
+    [Equalizando codigos]
+
+[33mcommit cd0c0fc0a29dd37d9d990ba6224c5b4c7176ffaf[m
+Merge: 8c5bbbb 3befbb3
+Author: Alysson Vicuna <alyssontkd@gmail.com>
+Date:   Sat Jun 11 01:45:46 2016 -0300
+
+    Merge branch 'master' of https://github.com/alyssontkd/catequese
+
+[33mcommit 8c5bbbb11728a243c1659d224e6e821263b370f8[m
+Author: Igor Oliveira <igor.oliveira.m@gmail.com>
+Date:   Fri Jun 10 16:29:00 2016 -0300
+
+    [Novo] Reenviando Arquivos de index , index-pagination e cadastro do Modulo PeriodoLetivo
+
+[33mcommit 57becd6e0adf2de32de3b955c9a79a044a3701f1[m
+Author: Igor Oliveira <igor.oliveira.m@gmail.com>
+Date:   Fri Jun 10 16:21:01 2016 -0300
+
+    [Novo] Implementacao Modulo DetalhePeriodoLetivo
+
+[33mcommit 3befbb3bfb1b2dcccd46befa77dcf9a6e5170056[m
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Fri Jun 10 14:33:50 2016 -0300
+
+    [Novo] Adicionando um novo componente de Checkbox.
+
+[33mcommit af53666572f2cb221d5b149562beb2d4f6811ca3[m
+Author: Igor Oliveira <igor.oliveira.m@gmail.com>
+Date:   Fri Jun 10 12:25:20 2016 -0300
+
+    [Novo] Finalizacao do Modulo PeriodoLetivo
+
+[33mcommit 4c58c95f86cad4e3c4c3e328f9db946f1175d994[m
+Author: Igor Oliveira <igor.oliveira.m@gmail.com>
+Date:   Thu Jun 9 23:42:47 2016 -0300
+
+    [Novo] Pagina de Cadastro do Modulo PeriodoLetivo
+
+[33mcommit b6567e9d581332c07285d12b1a0aa2b513e3f5a2[m
+Author: Igor Oliveira <igor.oliveira.m@gmail.com>
+Date:   Thu Jun 9 00:38:02 2016 -0300
+
+    [Novo] Actions PeriodoLetivoController, PeriodoLEtivoEntity, PeriodoLetivoForm,PeriodoLetivoTable, view\index , view\index-pagination e Module.php
+
+[33mcommit 30828b2c25177dcd73a6b48a7b241bdb574b334b[m
+Author: Raimundo de Paula <Raimundodep@gmail.com>
+Date:   Wed Jun 8 22:48:30 2016 -0300
+
+    Modulo movimento_pastoral
+
+[33mcommit 4707ddf6b17632b95a2a33cffd60314309f8577a[m
+Author: Igor Oliveira <igor.oliveira.m@gmail.com>
+Date:   Wed Jun 8 13:23:58 2016 -0300
+
+    [Exclusao] Modulo DataFrequencia  nao corresponde ao mer. Recriando novoModulo periodo_letivo.
+
+[33mcommit 2495539dd224c07db92685833ac7f47f37b85e6c[m
+Author: Raimundo de Paula <Raimundodep@gmail.com>
+Date:   Wed Jun 8 11:41:54 2016 -0300
+
+    Implementacao modulo Sacramento
+
+[33mcommit 62933a5c35f704665fd7d9858826655ad8812e0e[m
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Tue Jun 7 17:19:47 2016 -0300
+
+    [Novo] Adicionando modelagem especifica do Negócio
+
+[33mcommit 8e0b51fba69560676670ed170edfb5bd158dda03[m
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Mon Jun 6 17:03:39 2016 -0300
+
+    [Novo] Criando Script para tabelas especificas do negócio
+
+[33mcommit 2b0a8e17c741895608306cab06be57a23dd39d4b[m
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Mon Jun 6 16:28:47 2016 -0300
+
+    [Novo] Adicionando documentos de Visao
+
+[33mcommit c346b202db1f7b6a12b75ce478441b16b514b716[m
+Author: Igor Oliveira <igor.oliveira.m@gmail.com>
+Date:   Sun Jun 5 13:38:45 2016 -0300
+
+    [Novo] Modulo DataFrequencia - Inicio de Implementacao
+
+[33mcommit 60282050258b76392dbc7a55a5c94d485b955f7d[m
+Author: Igor Oliveira <igor.oliveira.m@gmail.com>
+Date:   Sun Jun 5 13:33:22 2016 -0300
+
+    [Reset] Reiniciando criacao do modulo DataFrequencia
+
+[33mcommit 1187ebf677cb94c5c8778a81adc17d2b29ab82e4[m
+Merge: 1230e14 75d2f74
+Author: Igor Oliveira <igor.oliveira.m@gmail.com>
+Date:   Sun Jun 5 13:19:50 2016 -0300
+
+    Merge branch 'dev-igor' of https://github.com/alyssontkd/catequese into dev-igor
+
+[33mcommit 1230e14b4d55bac0007317c09f77cab787aee1eb[m
+Author: Igor Oliveira <igor.oliveira.m@gmail.com>
+Date:   Sun Jun 5 12:54:29 2016 -0300
+
+    [Novo] Inicio do modulo DataFrequencia
+
+[33mcommit 75d2f74c589df2dd7a6f74e1ff766eb242789fc2[m
+Author: Alysson Vicuna <alysson.oliveira@cultura.gov.br>
+Date:   Fri May 27 16:04:52 2016 -0300
+
+    [Novo] Realizando customizações na tabela de Controller
+
+[33mcommit c263753057f1e1c57dadf38915f20b622a15d761[m
+Author: Alysson Vicuna <alyssontkd@gmail.com>
+Date:   Wed May 25 23:00:55 2016 
