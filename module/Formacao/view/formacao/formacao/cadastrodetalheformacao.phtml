@@ -1,0 +1,101 @@
+<div class="page-head">
+    <h2>Cadastro Detalhe Formacao</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="block-flat">
+            <div class="content">
+                <fieldset>
+                    <legend>Dados do Detalhe Formacao</legend>
+                    <?php if(isset($dadosFormacao) && $dadosFormacao){ ?>
+                        <div class="bs-callout bs-callout-primary">
+                            <ul class="primary">
+                                <li><b>Codigo Formacao:</b> <?=$dadosFormacao->getId()?></li>
+                                <li><b>Nome Formacao:</b> <?=$dadosFormacao->getNmFormacao()?></li>
+                            </ul>
+                        </div>
+                    <?php } ?>
+                </fieldset>
+                <?php
+                $form->setAttribute('action', '#');
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('method', 'post');
+
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                $form->get('id')->setValue($form->get('id')->getValue());
+                $form->get('ds_detalhe_formacao')->setValue($form->get('ds_detalhe_formacao')->getValue());
+                echo $this->formHidden($form->get('id'));
+                echo $this->formHidden($form->get('id_formacao'));
+                ?>
+
+                <div class="form-group">
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <?= $this->formRow($form->get('ds_detalhe_formacao')); ?></br>
+                            <a id="adicionar" class="btn btn-default" href="#" title="Adicionar detalhe formacao">Adicionar Detalhe Formação</a>
+                        </div>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+<!--                        <button type="submit" class="btn btn-primary">Salvar</button>-->
+                        <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro', 'id'=>Estrutura\Helpers\Cript::enc($dadosFormacao->getId())))?>" title="Voltar">Voltar</a>
+                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Lista Formação</a>
+                    </div>
+                </div>
+                <?= $this->form()->closeTag(); ?>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="formacaodetalhe-pagination"></div>
+</div>
+<script type="text/javascript" src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+
+        //Função que faz a listagem ser paginada.
+        function carregarGridPaginadaAjax(){
+                $.ajax({
+                    type: "post",
+                    dataType: "text",
+                    cache: false,
+                    url: '/formacao-formacao/detalhe-pagination',
+                    async: true,
+                    data: { id_formacao : <?=$dadosFormacao->getId()?>},
+                    beforeSend: function () {
+                        $('#formacaodetalhe-pagination').html(
+                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                        );
+                    },
+                    success: function (data) {
+                        $('#formacaodetalhe-pagination').html(data);
+                    }
+                });
+        }
+        carregarGridPaginadaAjax(); //Chama a Paginação da listagem
+
+        /*Função Ajax que adiciona os encontros ao Banco de dados*/
+        $('#adicionar').click(function() {
+            var dados = $('#detalheformacaoform').serialize();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/formacao-formacao/adicionardetalheformacao',
+                async: true,
+                data: dados,
+                success: function(response) {
+                    $("#ds_detalhe_formacao").val("");
+                    if(response.sucesso == true){
+                        carregarGridPaginadaAjax();
+                    }
+                }
+            });
+
+            return false;
+        });
+
+    });
+</script>

@@ -21,9 +21,9 @@ class DetalheFormacaoForm extends  AbstractForm {
 
         $this->inputFilter = new InputFilter();
         $objForm = new FormObject('detalheformacaoform',$this,$this->inputFilter);
-        $objForm->hidden("id")->required(false)->label("Id");
-        $objForm->hidden("id_formcao")->required(false)->label("Id_formacao");
-        $objForm->textarea("ds_detalhe_formacao")->required(false)->label("Detalhe Formacao");
+        $objForm->hidden("id")->required(false)->label("ID DETALHE FORMACAO");
+        $objForm->hidden("id_formacao")->required(false)->label("Id_formacao");
+        $objForm->text("ds_detalhe_formacao")->required(false)->label("Detalhe Formacao");
 
         $this->formObject = $objForm;
     }

@@ -90,4 +90,40 @@ class DetalheFormacaoController  extends  AbstractCrudController{
     {
         return parent::excluir($this->service, $this->form);
     }
+
+    public function excluirvialistagemdetalheformacaoAction(){
+        try {
+            $request = $this->getRequest();
+
+            if ($request->isPost()) {
+                return new JsonModel();
+            }
+
+            $controller = $this->params('controller');
+
+            $id = Cript::dec($this->params('id'));
+            $id_detalhe_formacao = Cript::enc( $this->params('aux') );
+
+            $this->service->setId($id);
+
+            $dados = $this->service->filtrarObjeto()->current();
+            if (!$dados) {
+                throw new \Exception('Registro n�o encontrado');
+            }
+
+            $this->service->excluir();
+            $this->addSuccessMessage('Registro excluido com sucesso');
+            return $this->redirect()->toRoute('navegacao',array('controller'=>'formacao-formacao','action'=>'cadastrodetalheformacao', 'id'=>$id_detalhe_formacao));
+        } catch (\Exception $e) {
+            if( strstr($e->getMessage(), '1451') ) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
+                $this->addErrorMessage('Para excluir a academia voce deve excluir todos os atletas da academia. Verifique!');
+            }else {
+                $this->addErrorMessage($e->getMessage());
+            }
+
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
+        }
+
+        return parent::excluir($this->service,$this->form);
+    }
 } 

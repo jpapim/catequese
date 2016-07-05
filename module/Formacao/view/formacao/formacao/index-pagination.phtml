@@ -1,17 +1,17 @@
-<div class="col-md-10 col-md-push-1">
+<div class="col-md-8 col-md-push-2">
     <div class="table-responsive">
         <table class="table table-striped" id="tablesorterFormacao" >
             <thead>
             <tr>
-                <th class="text-center">ID Formacao</th>
-                <th class="text-center">Formacao</th>
+                <th class="text-center">ID Formação</th>
+                <th class="text-center">Formação</th>
                 <th class="text-center">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">ID Formacao</th>
-                <th class="text-center">Formacao</th>
+                <th class="text-center">ID Formação</th>
+                <th class="text-center">Formação</th>
                 <th class="text-center">Ações</th>
             </tr>
             <tr>
@@ -43,7 +43,7 @@
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
-                                <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                <input type="search" placeholder="" class=" col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                             <?php
                             } else {
                                 ?>
@@ -60,10 +60,10 @@
                 foreach ($paginator as $item) {
                     ?>
                     <tr>
-                        <td><?= $item['id_formacao']?></td>
-                        <td><?= $item['nm_formacao']?></td>
+                        <td class="col-md-2"><?= $item['id_formacao']?></td>
+                        <td class="col-md-6"><?= $item['nm_formacao']?></td>
 
-                        <td style="width: 150px;">
+                        <td class="col-md-4" style="width: 150px;">
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_formacao'])))) ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastrodetalheformacao', 'id' => Estrutura\Helpers\Cript::enc($item['id_formacao'])))) ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_formacao'])))) ?>

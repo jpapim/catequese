@@ -8,6 +8,7 @@
 
 namespace Formacao\Controller;
 use DetalheFormacao;
+use DetalheFormacao\Service\DetalheFormacaoService;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
 use Formacao\Service\FormacaoService;
@@ -98,6 +99,7 @@ class FormacaoController extends  AbstractCrudController {
         $formacao = new FormacaoService();
         $dadosFormacao = $formacao->buscar($id_formacao);
 
+
         $dadosView = [
             'service' => new \DetalheFormacao\Service\DetalheFormacaoService(),
             'form' => new \DetalheFormacao\Form\DetalheFormacaoForm(),
@@ -130,15 +132,15 @@ class FormacaoController extends  AbstractCrudController {
     {
         $filter = $this->getFilterPage();
 
-        $id_formacao = $this->params()->fromPost('id_formacao');
+        $id_formacao = $this->params()->fromPost('id');
         $camposFilter = [
             '0' => [
-                //'filter' => "periodoletivodetalhe.nm_sacramento LIKE ?",
+             //   'filter' => "periodoletivodetalhe.nm_sacramento LIKE ?",
             ],
 
         ];
 
-        $paginator = $this->service->getFormacaoPaginator( $filter, $camposFilter);
+        $paginator = $this->service->getFormacaoPaginator( $id_formacao,$filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
