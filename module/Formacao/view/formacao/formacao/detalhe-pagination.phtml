@@ -66,12 +66,13 @@
                             <td class="text-center"><?= $detalhe_formacao['ds_detalhe_formacao'] ?></td>
                             <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('detalhe_formacao-home', array('controller' => 'detalhe_formacao', 'action' => 'excluirvialistagemdetalheformacao', 'id' => Estrutura\Helpers\Cript::enc($detalhe_formacao['id_detalhe_formacao']), 'aux' => $id_formacao ))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('detalhe_formacao', array('controller' => 'detalhe_formacao', 'action' => 'excluirvialistagemdetalheformacao', 'id' => Estrutura\Helpers\Cript::enc($detalhe_formacao['id_detalhe_formacao']), 'aux' => $id_formacao ))) ?>
                                 </span>
                             </td>
                         </tr>                    
                         <?php
                     }
+
                     ?>
                 </tbody>
                 <?php

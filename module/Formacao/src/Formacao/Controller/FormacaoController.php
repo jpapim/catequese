@@ -117,11 +117,12 @@ class FormacaoController extends  AbstractCrudController {
     {
         //Se for a chamada Ajax
         if ($this->getRequest()->isPost()) {
-            $id_formacao = $this->params()->fromPost('id');
+            $id = $this->params()->fromPost('id');
+            $id_formacao= $this->params()->fromPost('id_formacao');
             $ds_detalhe_formacao = $this->params()->fromPost('ds_detalhe_formacao');
             $detalhe_formacao = new DetalheFormacaoService();
 
-            $id_inserido = $detalhe_formacao->getTable()->salvar(array('id_formacao'=>$id_formacao, 'ds_detalhe_formacao'=>$ds_detalhe_formacao), null);
+            $id_inserido = $detalhe_formacao->getTable()->salvar(array('id_detalhe_formacao'=>$id,'id_formacao'=>$id_formacao,'ds_detalhe_formacao'=>$ds_detalhe_formacao), null);
             $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'ds_detalhe_formacao'=>$ds_detalhe_formacao) );
 
             return $valuesJson;
@@ -140,7 +141,7 @@ class FormacaoController extends  AbstractCrudController {
 
         ];
 
-        $paginator = $this->service->getFormacaoPaginator( $id_formacao,$filter, $camposFilter);
+        $paginator = $this->service->getFormacaoDetalhePaginator( $id_formacao,$filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
