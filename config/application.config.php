@@ -62,6 +62,8 @@ return array(
         'Formacao',
         'DetalheFormacao',
         'Infra',
+        'GrauParentesco',
+        'ResponsavelCatequisando',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

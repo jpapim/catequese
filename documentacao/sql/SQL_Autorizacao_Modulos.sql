@@ -51,3 +51,34 @@ INSERT INTO controller(nm_controller) VALUES('catequista-catequista');
 
 AUTORIZACAO cATEQUISTA
 insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(28,1,1),(28,6,1),(28,51,1),(28,7,1),(28,8,1);
+##################################################
+INSERIR MODULO ETAPA
+INSERT into controller(id_controller,nm_controller) VALUES(null,'etapa-etapa');
+
+AUTORIZACAO ETAPA
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(29,1,1),(29,6,1),(29,51,1),(29,7,1),(29,8,1);
+#######################################################
+INSERIR MODULO TURMA
+INSERT into controller(id_controller,nm_controller) VALUES(null,'turma-turma');
+
+AUTORIZACAO TURMA
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(30,1,1),(30,6,1),(30,51,1),(30,7,1),(30,8,1);
+###########################################
+INSERIR MODULO TURMA CATEQUISANDO
+INSERT into controller(id_controller,nm_controller) VALUES(null,'turma_catequisando-turmacatequisando')
+
+AUTORIZACAO TURMA CATEQUISANDO
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(31,1,1),(31,6,1),(31,51,1),(31,7,1),(31,8,1);
+####################################################
+INSERIR MODULO GRAU_PARENTESCO
+INSERT into controller(id_controller,nm_controller) VALUES(null,'grau_parentesco-grauparentesco');
+
+AUTORIZACAO GRAU_PARENTESCO
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(32,1,1),(32,6,1),(32,51,1),(32,7,1),(32,8,1);
+################################################
+INSERIR MODULO RESPONSAVEL_CATEQUISANDO
+INSERT into controller(id_controller,nm_controller) VALUES(null,'responsavel_catequisando-responsavelcatequisando');
+
+AUTORIZACAO RESPONSAVEL_CATEQUISANDO
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(33,1,1),(33,6,1),(33,51,1),(33,7,1),(33,8,1);
+################################################
