@@ -29,38 +29,102 @@ class TurmaService extends Entity {
         //print_r($sql->prepareStatementForSqlObject($select)->execute());exit;
 
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
+   
+        
+        
+        
     }
+    
+     public function fetchPaginator($pagina = 1, $itensPagina = 5, $ordem = 'nm_turma ASC', $like = null, $itensPaginacao = 5) {
+        //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
+        // preparar um select para tabela contato com uma ordem
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+        $select = $sql->select('turma')->order($ordem);
+
+        if (isset($like)) {
+            $select
+                    ->where
+                    ->like('id_turma', "%{$like}%")
+                    ->or
+                    ->like('nm_turma', "%{$like}%");
+        }
+
+        // criar um objeto com a estrutura desejada para armazenar valores
+        $resultSet = new HydratingResultSet(new Reflection(), new \Turma\Entity\TurmaEntity());
+
+        // criar um objeto adapter paginator
+        $paginatorAdapter = new DbSelect(
+                // nosso objeto select
+                $select,
+                // nosso adapter da tabela
+                $this->getAdapter(),
+                // nosso objeto base para ser populado
+                $resultSet
+        );
+
+        # var_dump($paginatorAdapter);
+        #die;
+        // resultado da pagina��o
+        return (new Paginator($paginatorAdapter))
+                        // pagina a ser buscada
+                        ->setCurrentPageNumber((int) $pagina)
+                        // quantidade de itens na p�gina
+                        ->setItemCountPerPage((int) $itensPagina)
+                        ->setPageRange((int) $itensPaginacao);
+    }
+
+  
+    public function getTurmaPaginator($filter = NULL, $camposFilter = NULL) {
+
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+
+        $select = $sql->select('turma')->columns([
+                    'id_turma',
+                    'nm_turma',
+                    
+               
+        ]);
+
+        $where = [
+        ];
+
+        if (!empty($filter)) {
+
+            foreach ($filter as $key => $value) {
+
+                if ($value) {
+
+                    if (isset($camposFilter[$key]['mascara'])) {
+
+                        eval("\$value = " . $camposFilter[$key]['mascara'] . ";");
+                    }
+
+                    $where[$camposFilter[$key]['filter']] = '%' . $value . '%';
+                }
+            }
+        }
+
+        $select->where($where)->order(['nm_turma DESC']);
+
+        return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
+    }
+
+}
+
+    
+    
+    
+    
 
     /**
      * 
      * @return type
      */
-    public function getIdProximoTurmaCadastro($configList) {
 
-        //Busca os usuarios cadastrados
-        $turmaService = $this->getServiceLocator()->get('Turma\Service\TurmaService');
-        $resultSetTurmas = $turmaService->filtrarObjeto();
+    
+    
+    
+    
+    
 
-        /* @var $contratoAsContratoService \ContratoAsContrato\Service\ContratoAsContratoService */
-        $contratoAsContratoService = $this->getServiceLocator()->get('\ContratoAsContrato\Service\ContratoAsContratoService');
-            
-        foreach ($resultSetTurmas as $turmaEntity) {
-
-            /* @var $contratoService \Contrato\Service\ContratoService */
-            $contratoService = $this->getServiceLocator()->get("\Contrato\Service\ContratoService");
-            $contratoService->setIdTurma($turmaEntity->getId());
-            $contrato = $contratoService->filtrarObjeto()->current();
-
-            $contratoAsContratoService->setIdContrato($contrato->getId());
-            $contratoAsContratoService->setIdNivel(1);
-            
-
-            if ($contratoAsContratoService->filtrarObjeto()->count() < $configList['qtd_por_nivel']) {
-
-                return $turmaEntity->getId();
-            }
-        }
-        return NULL;
-    }
-}
 
