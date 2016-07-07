@@ -49,6 +49,7 @@ return array(
         'PeriodoLetivo',
         'DetalhePeriodoLetivo',
         'Sacramento',
+        'SacramentoCatequisando',
         'MovimentoPastoral',
         'Controller',
         'Action',
