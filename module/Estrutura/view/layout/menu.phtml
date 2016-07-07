@@ -31,7 +31,6 @@
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="/paroquia-paroquia">Cad - Paroquia</a></li>
                 <li><a href="/atleta-atleta">Atletas - Modelo</a></li>
                 <li><a href="/academia-academia">Academias - Modelo</a></li>
                 <li><a href="/evento-evento">Competições - Modelo</a></li>
@@ -41,8 +40,7 @@
         <li><a href="#">Relatórios</a></li>
         <?php
         #Alysson - Exibe este item de menu apenas para administradores
-        $usuario_logado = $this->Auth(); #Pega o Usuario Logado
-        if ($usuario_logado->id_perfil == TXT_CONST_PERFIL_ADMINISTRADOR) { ?>
+        if ($this->Auth()->id_perfil == TXT_CONST_PERFIL_ADMINISTRADOR) { ?>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     Configurações
@@ -67,6 +65,7 @@
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
+                <li><a href="/paroquia-paroquia">Cadastro de Paroquia</a></li>
                 <li><a href="/periodo_letivo-periodoletivo">Periodo Letivo</a></li>
                 <li><a href="/sacramento-sacramento">Sacramento</a></li>
                 <li><a href="/sacramento_catequisando-sacramentocatequisando">Sacramento Catequisando</a></li>
@@ -83,15 +82,24 @@
         </li>
 
     </ul>
+
+    <?php if ($this->Auth()->id_perfil == TXT_CONST_PERFIL_ADMINISTRADOR) { ?>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="/infra-infra" title="Botão para limpar as pastas Cache automaticamente.">
+                    <span class="glyphicon glyphicon-ban-circle"></span> Limpar
+                </a>
+            </li>
+        </ul>
+    <?php } ?>
     <ul class="nav navbar-nav navbar-right">
         <li>
-<!--            <a href="/mcnetwork-index">-->
             <a href="/usuario-usuario">
                 <?= ucwords($this->Auth()->nm_usuario); ?>
             </a>
         </li>
         <li class="dropdown">
-            <a href="<?= $this->url('logoff')?>">
+            <a href="<?= $this->url('logoff')?>" title="Sair do Sistema">
                 <span class="glyphicon glyphicon-log-out"></span> Sair
             </a>
         </li>
