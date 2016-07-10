@@ -110,7 +110,7 @@ class DetalhePeriodoLetivoController extends AbstractCrudController {
 
             $dados = $this->service->filtrarObjeto()->current();
             if (!$dados) {
-                throw new \Exception('Registro n�o encontrado');
+                throw new \Exception('Registro nao encontrado');
             }
 
             $this->service->excluir();

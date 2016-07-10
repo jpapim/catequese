@@ -73,13 +73,11 @@ class TurmaCatequisandoService extends Entity {
                 $resultSet
         );
 
-        # var_dump($paginatorAdapter);
-        #die;
-        // resultado da pagina��o
+        // resultado da paginacao
         return (new Paginator($paginatorAdapter))
                         // pagina a ser buscada
                         ->setCurrentPageNumber((int) $pagina)
-                        // quantidade de itens na p�gina
+                        // quantidade de itens na página
                         ->setItemCountPerPage((int) $itensPagina)
                         ->setPageRange((int) $itensPaginacao);
     }
@@ -90,14 +88,14 @@ class TurmaCatequisandoService extends Entity {
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
         $select = $sql->select('turma_catequisando')->columns([
-                    'id_turma_catequisando',
-                   'dt_cadastro',
-                   'cs_aprovado',
-                   'ds_motivo_reprovacao',
-                   'tx_observacoes',
-            
+            'id_turma',
+            'id_periodo_letivo',
+        ])->join('turma', 'turma.id_turma = turma_catequisando.id_turma', [
+            'nm_turma'
+        ])->join('periodo_letivo', 'periodo_letivo.id_periodo_letivo = turma_catequisando.id_periodo_letivo', [
+            'dt_ano_letivo'
         ]);
-
+        $select->quantifier('DISTINCT');
         $where = [
         ];
 
@@ -118,6 +116,56 @@ class TurmaCatequisandoService extends Entity {
         }
 
         $select->where($where)->order(['id_turma_catequisando DESC']);
+
+        return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
+    }
+
+
+    public function getTurmaCatequisandoInternoPaginator($id_turma, $id_periodo_letivo, $filter = NULL, $camposFilter = NULL)
+    {
+
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+
+        $select = $sql->select('turma_catequisando')->columns([
+            'id_turma_catequisando',
+            'id_turma',
+            'id_catequisando',
+            'id_usuario',
+            'id_periodo_letivo',
+            'dt_cadastro',
+            'cs_aprovado',
+            'ds_motivo_reprovacao',
+            'tx_observacoes',
+        ])->join('turma', 'turma.id_turma = turma_catequisando.id_turma', [
+            'nm_turma'
+        ])->join('periodo_letivo', 'periodo_letivo.id_periodo_letivo = turma_catequisando.id_periodo_letivo', [
+            'dt_ano_letivo'
+        ])->join('catequisando', 'catequisando.id_catequisando = turma_catequisando.id_catequisando', [
+            'nm_catequisando'
+        ]);
+
+        $where = [
+            'turma_catequisando.id_turma'=>$id_turma,
+            'turma_catequisando.id_periodo_letivo'=>$id_periodo_letivo,
+        ];
+
+        if (!empty($filter)) {
+
+            foreach ($filter as $key => $value) {
+
+                if ($value) {
+
+                    if (isset($camposFilter[$key]['mascara'])) {
+
+                        eval("\$value = " . $camposFilter[$key]['mascara'] . ";");
+                    }
+
+                    $where[$camposFilter[$key]['filter']] = '%' . $value . '%';
+                }
+            }
+        }
+
+        $select->where($where)->order(['id_catequisando DESC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }

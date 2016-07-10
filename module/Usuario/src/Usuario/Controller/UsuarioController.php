@@ -4,8 +4,11 @@ namespace Usuario\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
+use Estrutura\Helpers\Data;
 use Zend\Filter\File\Encrypt;
 use Zend\View\Model\ViewModel;
+use Estrutura\Service\HtmlHelper;
+
 
 class UsuarioController extends AbstractCrudController {
 
@@ -17,24 +20,9 @@ class UsuarioController extends AbstractCrudController {
     /**
      * @var \Usuario\Form\Usuario
      */
+
     protected $form;
-    protected $camposPendencia = [
-        'nm_estado',
-        'nm_cidade',
-        'nu_rg',
-        'nu_cpf',
-        'nm_profissao',
-        'nm_estado_civil',
-        'nm_nacionalidade',
-        'nr_agencia',
-        'id_banco',
-        'nm_logradouro',
-        'nr_numero',
-        'nm_bairro',
-        'nm_cidade',
-        'nm_estado',
-        'nr_cep',
-    ];
+    protected $camposPendencia = [];
 
     public function __construct()
     {
@@ -45,6 +33,75 @@ class UsuarioController extends AbstractCrudController {
     {
         return parent::index($this->service, $this->form);
     }
+
+
+
+
+//ALTERAR AQUI OS FILTER
+
+    public function indexPaginationAction()
+    {
+        //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
+        
+        $filter = $this->getFilterPage();
+
+        $camposFilter = [
+            '0' => [
+                'filter' => "usuario.nm_usuario LIKE ?",
+            ],
+            '1' => [
+                'filter' => "nascimento.dt_nascimento LIKE ?",
+            ],
+            '2' => [
+                'filter' => "rg.nu_rg LIKE ?",
+            ],
+            '3' => [
+                'filter' => "cpf.nu_cpf LIKE ?",
+            ],
+            '4' => [
+                'filter' => "profissao.nm_profissao LIKE ?",
+            ],
+            '5' => [
+                'filter' => "nacionalidade.nm_nacionalidade LIKE ?",
+            ],
+            '6' => [
+                'filter' => "CAST( (TO_DAYS(NOW())- TO_DAYS(dt_nascimento)) / 365.25 AS SIGNED) = ?",
+            ],            
+            '7' => NULL,
+        ];
+        
+        
+        $paginator = $this->service->getUsuarioPaginator($filter, $camposFilter);
+
+        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+
+        $countPerPage = $this->getCountPerPage(
+                current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        );
+
+        $paginator->setItemCountPerPage($this->getCountPerPage(
+                        current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        ))->setCurrentPageNumber($this->getCurrentPage());
+
+        $viewModel = new ViewModel([
+            'service' => $this->service,
+            'form' => $this->form,
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            'atributos' => array()
+        ]);
+
+        return $viewModel->setTerminal(TRUE);
+    }
+    
+    
+
+
+
+
 
     /**
      * 

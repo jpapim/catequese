@@ -2,82 +2,80 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterAtletas" >
+        <table class="table table-striped" id="tablesorterAtletas">
             <thead>
-                <tr>
-                    <th class="text-center">Data de Cadastro</th>
-                    <th class="text-center">Cs Aprovado</th>
-                    <th class="text-center">Motivo Reprovacao</th>
-                    <th class="text-center">Observações</th>
-                    <th class="text-center">ações</th>
-                  
-                </tr>
+            <tr>
+                <th class="text-center">Turma</th>
+                <th class="text-center">Periodo Letivo</th>
+                <th class="text-center">ações</th>
+
+            </tr>
             </thead>
             <tfoot>
-                <tr>
-                    <th class="text-center">Nome da Turma Catequisando</th>
-                     <th class="text-center">ações</th>
-                
-                </tr>
-                <tr>
-                    <th colspan="6" class="ts-pager form-horizontal">
-                        <?php
+            <tr>
+                <th class="text-center">Turma</th>
+                <th class="text-center">Periodo Letivo</th>
+                <th class="text-center">ações</th>
+
+            </tr>
+            <tr>
+                <th colspan="6" class="ts-pager form-horizontal">
+                    <?php
                     echo $this->paginationControl(
-                                $paginator, 'Sliding', 'partials/pagination.phtml', [
+                        $paginator, 'Sliding', 'partials/pagination.phtml', [
                             'urlPagination' => '/turma_catequisando-turmacatequisando/index-pagination',
                             'countPerPage' => $countPerPage,
                             'divData' => '#atleta-pagination',
-                                ]
-                        );
-                        ?>  
-                    </th>
-                </tr>
+                        ]
+                    );
+                    ?>
+                </th>
+            </tr>
             </tfoot>
             <?php
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
             if (!empty($paginator)) {
                 ?>
                 <tbody class="">
-                    <tr role="row" class="tablesorter-filter-row">
-                        <?php
-                        foreach ($camposFilter as $key => $campoFilter) {
-                            ?>    
-                            <td>
-                                <?php
-                                if (!is_null($campoFilter)) {
-                                    ?>
-                                    <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                                    <?php
-                                } else {
-                                    ?>
-                                    &nbsp;                                        
-                                    <?php
-                                }
-                                ?>
-                            </td>
-                            <?php
-                        }
-                        ?>                            
-                    </tr>
+                <tr role="row" class="tablesorter-filter-row">
                     <?php
-                    foreach ($paginator as $key => $turma_catequisando) {
+                    foreach ($camposFilter as $key => $campoFilter) {
                         ?>
-                        <tr>
-                            <td class="text-center"><?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($turma_catequisando['dt_cadastro']) ?></td>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($turma_catequisando['cs_aprovado']) ?></td>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($turma_catequisando['ds_motivo_reprovacao']) ?></td>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($turma_catequisando['tx_observacoes']) ?></td>
-                         </td>
-                            <td class="text-center">
-                                <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($turma_catequisando['id_turma_catequisando'])))) ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($turma_catequisando['id_turma_catequisando'])))) ?>
-                                </span>
-                            </td>
-                        </tr>                    
+                        <td>
+                            <?php
+                            if (!is_null($campoFilter)) {
+                                ?>
+                                <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>"
+                                       value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                <?php
+                            } else {
+                                ?>
+                                &nbsp;
+                                <?php
+                            }
+                            ?>
+                        </td>
                         <?php
                     }
                     ?>
+                </tr>
+                <?php
+                foreach ($paginator as $key => $turma_catequisando) {
+                    ?>
+                    <tr>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeTudoMaiusculo($turma_catequisando['nm_turma']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeTudoMaiusculo($turma_catequisando['dt_ano_letivo']) ?></td>
+                        </td>
+                        <td class="text-center">
+                                <span class="btn-group" style="width: 100px;">
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('turma_catequisando', array('controller' => $controller, 'action' => 'cadastro', 'id_turma' => Estrutura\Helpers\Cript::enc($turma_catequisando['id_turma']), 'id_periodo_letivo' => Estrutura\Helpers\Cript::enc($turma_catequisando['id_periodo_letivo'])))) ?>
+
+                                </span>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
                 </tbody>
                 <?php
             }
@@ -86,8 +84,11 @@
         </table>
         <div class="row">
             <div class="col-md-12">
-                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
-                <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adiciona um novo Turma">Nova Turma</a>
+                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>"
+                   class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                <a class="btn btn-default"
+                   href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>"
+                   title="Adiciona um novo Turma">Nova Turma</a>
             </div>
         </div>
     </div>
@@ -100,7 +101,7 @@
 <script src="/assets/js/jquery.tablesorter.js" type="text/javascript"></script>
 <script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
 <script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
-<script type="text/javascript" language="javascript" >
+<script type="text/javascript" language="javascript">
     $(function () {
 
         // NOTE: $.tablesorter.theme.bootstrap is ALREADY INCLUDED in the jquery.tablesorter.widgets.js
@@ -142,9 +143,9 @@
                 // reset filters button
                 filter_reset: ".reset"
 
-                        // set the uitheme widget to use the bootstrap theme class names
-                        // this is no longer required, if theme is set
-                        // ,uitheme : "bootstrap"
+                // set the uitheme widget to use the bootstrap theme class names
+                // this is no longer required, if theme is set
+                // ,uitheme : "bootstrap"
 
             },
             headers: {
@@ -167,8 +168,8 @@
                 beforeSend: function () {
 
                     $('#modal-relatorio-body-3').html(
-                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                            );
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
                 },
                 success: function (data) {
 
@@ -189,8 +190,8 @@
                 beforeSend: function () {
 
                     $('#modal-relatorio-body-3').html(
-                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                            );
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
                 },
                 success: function (data) {
 
@@ -219,8 +220,8 @@
                 beforeSend: function () {
 
                     $('#modal-relatorio-body-3').html(
-                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                            );
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
                 },
                 data: {
                     id_saque: idPagamento
