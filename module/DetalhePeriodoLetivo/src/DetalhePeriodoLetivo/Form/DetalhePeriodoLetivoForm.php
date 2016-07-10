@@ -29,7 +29,7 @@ class DetalhePeriodoLetivoForm  extends  AbstractForm{
             ->label("ID PERIODO LETIVO");
         $objForm->date('dt_encontro')->required(true)
             ->setAttribute('class', 'data')
-            ->label("Data de encontro");
+            ->label("Data de encontro:");
 
         $this->formObject = $objForm;
     }
