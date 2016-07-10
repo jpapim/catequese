@@ -74,11 +74,63 @@ class FormacaoController extends  AbstractCrudController {
         return $viewModel->setTerminal(true);
     }
 
-    public function gravarAction(){
+    /*public function gravarAction(){
         $controller = $this->params('controller');
         $this->addSuccessMessage('Registro Alterado com sucesso');
         $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
         return parent::gravar($this->service, $this->form);
+    }*/
+
+    public function gravarAction()
+    {
+        try {
+            $controller = $this->params('controller');
+            $request = $this->getRequest();
+            $service = $this->service;
+            $form = $this->form;
+
+            if (!$request->isPost()) {
+                throw new \Exception('Dados Inválidos');
+            }
+
+            $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
+
+            $files = $request->getFiles();
+            $upload = $this->uploadFile($files);
+
+            $post = array_merge($post, $upload);
+
+            if (isset($post['id']) && $post['id']) {
+                $post['id'] = Cript::dec($post['id']);
+            }
+
+            $form->setData($post);
+
+            if (!$form->isValid()) {
+                $this->addValidateMessages($form);
+                $this->setPost($post);
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+                return false;
+            }
+            $service->exchangeArray($form->getData());
+            $this->addSuccessMessage('Registro Alterado com sucesso');
+            $id_formacao = $service->salvar();
+
+            //Define o redirecionamento
+            if (isset($post['id']) && $post['id']) {
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+            } else {
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastrodetalheformacao', 'id' => Cript::enc($id_formacao)));
+            }
+
+            return $id_formacao;
+
+        } catch (\Exception $e) {
+            $this->setPost($post);
+            $this->addErrorMessage($e->getMessage());
+            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+            return false;
+        }
     }
 
     public function cadastroAction()
@@ -95,7 +147,7 @@ class FormacaoController extends  AbstractCrudController {
     {
         //recuperar o id do Modulo Formacao
         $id_formacao = Cript::dec($this->params('id') );
-        #xd($this->params('id'));
+        #xd($id_formacao);
         $formacao = new FormacaoService();
         $dadosFormacao = $formacao->buscar($id_formacao);
 
@@ -117,12 +169,12 @@ class FormacaoController extends  AbstractCrudController {
     {
         //Se for a chamada Ajax
         if ($this->getRequest()->isPost()) {
-            $id = $this->params()->fromPost('id');
-            $id_formacao= $this->params()->fromPost('id_formacao');
+            $id_formacao= $this->params()->fromPost('id');
             $ds_detalhe_formacao = $this->params()->fromPost('ds_detalhe_formacao');
+            #xd($id_formacao);
             $detalhe_formacao = new DetalheFormacaoService();
 
-            $id_inserido = $detalhe_formacao->getTable()->salvar(array('id_detalhe_formacao'=>$id,'id_formacao'=>$id_formacao,'ds_detalhe_formacao'=>$ds_detalhe_formacao), null);
+            $id_inserido = $detalhe_formacao->getTable()->salvar(array('id_formacao'=>$id_formacao,'ds_detalhe_formacao'=>$ds_detalhe_formacao), null);
             $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'ds_detalhe_formacao'=>$ds_detalhe_formacao) );
 
             return $valuesJson;
@@ -133,7 +185,7 @@ class FormacaoController extends  AbstractCrudController {
     {
         $filter = $this->getFilterPage();
 
-        $id_formacao = $this->params()->fromPost('id');
+        $id_formacao = $this->params()->fromPost('id_formacao');
         $camposFilter = [
             '0' => [
              //   'filter' => "periodoletivodetalhe.nm_sacramento LIKE ?",
@@ -141,7 +193,7 @@ class FormacaoController extends  AbstractCrudController {
 
         ];
 
-        $paginator = $this->service->getFormacaoDetalhePaginator( $id_formacao,$filter, $camposFilter);
+        $paginator = $this->service->getFormacaoDetalhePaginator( $id_formacao, $filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 

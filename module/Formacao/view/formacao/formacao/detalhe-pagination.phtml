@@ -7,7 +7,7 @@
                 <tr>
                     <th class="text-center">ID Formacao</th>
                     <th class="text-center">Detalhe Formacao</th>
-                    <th class="text-center">ações</th>
+                    <th class="text-center">Ações</th>
                   
                 </tr>
             </thead>
@@ -15,7 +15,7 @@
                 <tr>
                     <th class="text-center">ID Formacao</th>
                     <th class="text-center">Detalhe Formacao</th>
-                    <th class="text-center">ações</th>
+                    <th class="text-center">Ações</th>
                 
                 </tr>
                 <tr>
@@ -59,7 +59,7 @@
                         ?>                            
                     </tr>
                     <?php
-                    foreach ($paginator as $key => $detalhe_formacao) {
+                    foreach ($paginator as $key => $detalhe_formacao) { #xd($detalhe_formacao);
                         ?>
                         <tr>
                             <td class="text-center"><?= $detalhe_formacao['id_detalhe_formacao'] ?></td>
@@ -83,6 +83,7 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Lista Formação</a>
             </div>
         </div>
     </div>

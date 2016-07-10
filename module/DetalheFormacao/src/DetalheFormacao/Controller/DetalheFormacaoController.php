@@ -11,6 +11,7 @@ namespace DetalheFormacao\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Zend\View\Model\ViewModel;
+use Estrutura\Helpers\Cript;
 
 class DetalheFormacaoController  extends  AbstractCrudController{
 

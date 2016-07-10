@@ -25,10 +25,10 @@
 
                 $form->prepare();
                 echo $this->form()->openTag($form);
-                $form->get('id')->setValue($form->get('id')->getValue());
+                $form->get('id')->setValue($dadosFormacao->getId());
                 $form->get('ds_detalhe_formacao')->setValue($form->get('ds_detalhe_formacao')->getValue());
                 echo $this->formHidden($form->get('id'));
-                echo $this->formHidden($form->get('id_formacao'));
+
                 ?>
 
                 <div class="form-group">
