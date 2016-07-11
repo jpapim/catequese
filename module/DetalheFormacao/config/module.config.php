@@ -8,12 +8,12 @@
 return array(
     'router' => array(
         'routes' => array(
-            'formacao-home' => array(
+            'detalhe_formacao' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => 'formacao/:action[/:id][/:aux]',
+                    'route'    => '/detalhe_formacao-detalheformacao/:action[/:id][/:aux]',
                     'defaults' => array(
-                        'controller' => 'formacao-formacao',
+                        'controller' => 'detalhe_formacao-detalheformacao',
                         'action'     => 'index',
                     ),
                 ),
@@ -23,9 +23,9 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'formacao' => 'Formacao\Controller\FormacaoController',
-            'formacao-formacao' => 'Formacao\Controller\FormacaoController',
-        ),
+            'detalhe_formacao' => 'DetalheFormacao\Controller\DetalheFormacaoController',
+            'detalhe_formacao-detalheformacao' => 'DetalheFormacao\Controller\DetalheFormacaoController',
+                ),
     ),
     'view_manager' => array(
         'template_path_stack' => array(

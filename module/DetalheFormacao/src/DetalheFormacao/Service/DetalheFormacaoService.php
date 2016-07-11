@@ -9,6 +9,7 @@
 namespace DetalheFormacao\Service;
 
 use DetalheFormacao\Entity\DetalheFormacaoEntity as Entity;
+use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\Sql\Sql;
 use \Zend\Paginator\Paginator;
 use \Zend\Paginator\Adapter\DbSelect;
