@@ -46,6 +46,7 @@
             }
             ?>
         }
+
         function carregarListaPermissoesAjax(id_modulo, id_perfil){
             $.ajax({
                 type: "post",
@@ -75,6 +76,10 @@
             id_modulo = $('#id_modulo').val();
             if(id_perfil && id_modulo){
                 carregarListaPermissoesAjax(id_modulo, id_perfil); //Chama a Paginação da listagem
+            } else {
+                $('#lista-permissoes').html(
+                    '<div class="row"><div class="col-md-12 text-center"></div></div>'
+                );
             }
         });
 
@@ -84,6 +89,10 @@
             id_modulo = $(this).val();
             if(id_perfil && id_modulo){
                 carregarListaPermissoesAjax(id_modulo, id_perfil); //Chama a Paginação da listagem
+            } else {
+                $('#lista-permissoes').html(
+                    '<div class="row"><div class="col-md-12 text-center"></div></div>'
+                );
             }
         });
 

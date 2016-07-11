@@ -13,6 +13,18 @@ return array(
                     ),
                 ),
             ),
+            'turma_catequisando' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/turma_catequisando/:action[/:id_turma][/:id_periodo_letivo]',
+                    'defaults' => array(
+                        'controller' => 'turma_catequisando-turmacatequisando',
+                        'action'     => 'index',
+                    ),
+                ),
+
+            ),
+
         ),
     ),
     'service_manager' => array(
