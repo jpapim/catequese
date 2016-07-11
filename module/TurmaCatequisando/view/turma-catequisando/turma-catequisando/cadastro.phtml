@@ -19,7 +19,6 @@
 
             #Alysson - TODO: Alterar este ID FIXO pelo ID do catequisando Selecionado
             $form->get('id_catequisando')->setValue(2);
-            echo $this->formHidden($form->get('id_catequisando'));
 
             ?>
 
@@ -32,6 +31,13 @@
                 </div>
                 <div class="col-md-6">
                     <?= $this->formRow($form->get('id_periodo_letivo')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <?= $this->formRow($form->get('id_catequisando')) ?>
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
@@ -70,14 +76,14 @@
             id_turma = <?=$id_turma?>;
             id_periodo_letivo = <?=$id_periodo_letivo?>;
             if (id_turma && id_periodo_letivo) {
-                carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo); //Chama a Paginação da listagem
+                carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo); //Chama a Paginaï¿½ï¿½o da listagem
             }
             <?php
             }
             ?>
         }
 
-        //Função que faz a listagem ser paginada.
+        //Funï¿½ï¿½o que faz a listagem ser paginada.
         function carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo) {
             $('#enturmar_aluno').show();
             $.ajax({
@@ -106,7 +112,7 @@
             id_turma = $(this).val();
             id_periodo_letivo = $('#id_periodo_letivo').val();
             if (id_turma && id_periodo_letivo) {
-                carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo);//Chama a Paginação da listagem
+                carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo);//Chama a Paginaï¿½ï¿½o da listagem
             } else {
                 $('#turmacatequisando-pagination').html(
                     '<div class="row"><div class="col-md-12 text-center"></div></div>'
@@ -119,7 +125,7 @@
             id_turma = $('#id_turma').val();
             id_periodo_letivo = $(this).val();
             if (id_turma && id_periodo_letivo) {
-                carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo);//Chama a Paginação da listagem
+                carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo);//Chama a Paginaï¿½ï¿½o da listagem
             } else {
                 $('#turmacatequisando-pagination').html(
                     '<div class="row"><div class="col-md-12 text-center"></div></div>'
@@ -127,7 +133,7 @@
             }
         });
 
-        //Função Ajax que adiciona alunos a uma determinada turma
+        //Funï¿½ï¿½o Ajax que adiciona alunos a uma determinada turma
         $('#enturmar_aluno').click(function () {
             var dados = $('#turmacatequisandoform').serialize();
             $.ajax({
@@ -145,7 +151,7 @@
                     //Caso a insersao tenha sido realizada com sucesso
                     if (response.sucesso == true) {
                         //carrego a lista apenas com os alunos da turma
-                        carregarListaCatequizandosTurmaAjax(response.id_turma, response.id_periodo_letivo);//Chama a Paginação da listagem
+                        carregarListaCatequizandosTurmaAjax(response.id_turma, response.id_periodo_letivo);//Chama a Paginaï¿½ï¿½o da listagem
                         $("#id_turma").val(response.id_turma); //Deixo setado a turma
                         $("#id_periodo_letivo").val(response.id_periodo_letivo); //Deixo setado o periodo letivo
                     }
