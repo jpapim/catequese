@@ -13,7 +13,9 @@ use Zend\Form\Element;
 
 class CheckboxCharacter extends Checkbox
 {
-
+    /**
+     * @author: Alysson Vicuna - Componente criado para permitir que um Checkbox trabalhe como S ou N
+     */
     /**
      * @var string
      */

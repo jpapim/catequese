@@ -70,7 +70,7 @@
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeTudoMaiusculo($turma_catequisando['nm_catequisando']) ?></td>
                         <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('turma_catequisando', array('controller' => 'turma_catequisando-turmacatequisando', 'action' => 'excluir-catequisando-turma', 'id_turma' => Estrutura\Helpers\Cript::enc($turma_catequisando['id_turma']), 'id_periodo_letivo' => $turma_catequisando['id_periodo_letivo']))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('turma_catequisando', array('controller' => 'turma_catequisando-turmacatequisando', 'action' => 'excluir-catequizando-turma', 'id_turma' => Estrutura\Helpers\Cript::enc($turma_catequisando['id_turma']), 'id_periodo_letivo' => Estrutura\Helpers\Cript::enc($turma_catequisando['id_periodo_letivo']), 'id_turma_catequisando' => Estrutura\Helpers\Cript::enc($turma_catequisando['id_turma_catequisando']) ))) ?>
                                 </span>
                         </td>
                     </tr>

@@ -16,7 +16,7 @@ return array(
             'turma_catequisando' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/turma_catequisando/:action[/:id_turma][/:id_periodo_letivo]',
+                    'route'    => '/turma_catequisando/:action[/:id_turma][/:id_periodo_letivo][/:id_turma_catequisando]',
                     'defaults' => array(
                         'controller' => 'turma_catequisando-turmacatequisando',
                         'action'     => 'index',

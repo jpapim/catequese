@@ -67,7 +67,7 @@ class TurmaCatequisandoController extends AbstractCrudController
 
     public function cadastroAction()
     {
-        //Se for chamado via formulario de alteraçao
+        //Se for chamado via formulario de alteraï¿½ao
         if ($this->params('id_turma') && $this->params('id_periodo_letivo')) {
             $id_turma = Cript::dec($this->params('id_turma'));
             $id_periodo_letivo = Cript::dec($this->params('id_periodo_letivo'));
@@ -222,7 +222,7 @@ class TurmaCatequisandoController extends AbstractCrudController
 
     public function excluirCatequizandoTurmaAction()
     {
-        xd('efjbefjbrufbiurfbiu');
+
         try {
             $request = $this->getRequest();
 
@@ -232,22 +232,24 @@ class TurmaCatequisandoController extends AbstractCrudController
 
             $controller = $this->params('controller');
 
-            $id = Cript::dec($this->params('id'));
-            $id_periodo_letivo = Cript::enc($this->params('aux'));
+            $id_turma_catequisando = Cript::dec($this->params('id_turma_catequisando'));
+            $id_turma = Cript::dec($this->params('id_turma'));
+            $id_periodo_letivo = Cript::dec($this->params('id_periodo_letivo'));
 
-            $this->service->setId($id);
+            $this->service->setId($id_turma_catequisando);
 
             $dados = $this->service->filtrarObjeto()->current();
+
             if (!$dados) {
-                throw new \Exception('Registro n?o encontrado');
+                throw new \Exception('Registro nÃ£o encontrado');
             }
 
             $this->service->excluir();
             $this->addSuccessMessage('Registro excluido com sucesso');
-            return $this->redirect()->toRoute('navegacao', array('controller' => 'periodo_letivo-periodoletivo', 'action' => 'cadastroperiodoletivodetalhe', 'id' => $id_periodo_letivo));
+            return $this->redirect()->toRoute('turma_catequisando', array('controller' => 'turma_catequisando-turmacatequisando', 'action' => 'cadastro', 'id_turma' => \Estrutura\Helpers\Cript::enc($id_turma), 'id_periodo_letivo' => \Estrutura\Helpers\Cript::enc($id_periodo_letivo) ));
         } catch (\Exception $e) {
             if (strstr($e->getMessage(), '1451')) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
-                $this->addErrorMessage('Para excluir a academia voce deve excluir todos os atletas da academia. Verifique!');
+                $this->addErrorMessage('Para excluir este registro, apague todos os filhos deste registro primeiro!');
             } else {
                 $this->addErrorMessage($e->getMessage());
             }
