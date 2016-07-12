@@ -39,11 +39,9 @@ class SituacaoConjugalController extends  AbstractCrudController{
 
         $camposFilter =[
             '0' => [
-                'filter' => "situacao_conjugal.id_situacao_conjugal  LIKE ?"
-            ],
-            '1' => [
                 'filter' => "situacao_conjugal.ds_situacao_conjugal  LIKE ?"
             ],
+
 
 
         ];
