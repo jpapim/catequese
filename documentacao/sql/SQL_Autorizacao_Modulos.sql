@@ -82,3 +82,17 @@ INSERT into controller(id_controller,nm_controller) VALUES(null,'responsavel_cat
 AUTORIZACAO RESPONSAVEL_CATEQUISANDO
 insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(33,1,1),(33,6,1),(33,51,1),(33,7,1),(33,8,1);
 ################################################
+
+AUTORIZACAO SACRAMENTO_CATEQUISANDO
+INSERT INTO controller(`nm_controller`, `nm_modulo`, `cs_exibir_combo`) VALUES ('sacramento_catequisando-sacramentocatequisando', 'Sacramento Catequisando', 'S');
+
+
+insert into perfil_controller_action(id_controller,id_action,id_perfil) values('44','1','1');
+insert into perfil_controller_action(id_controller,id_action,id_perfil) values('44','6','1');
+insert into perfil_controller_action(id_controller,id_action,id_perfil) values('44','7','1');
+insert into perfil_controller_action(id_controller,id_action,id_perfil) values('44','8','1');
+insert into perfil_controller_action(id_controller,id_action,id_perfil) values('44','51','1');
+################################################
+
+
+
