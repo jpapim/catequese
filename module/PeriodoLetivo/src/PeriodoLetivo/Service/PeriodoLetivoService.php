@@ -12,6 +12,8 @@ use PeriodoLetivo\Entity\PeriodoLetivoEntity as Entity;
 use Zend\Db\Sql\Sql;
 use \Zend\Paginator\Paginator;
 use \Zend\Paginator\Adapter\DbSelect;
+use Zend\Db\ResultSet\HydratingResultSet;
+use Zend\Stdlib\Hydrator\Reflection;
 
 
 class PeriodoLetivoService extends Entity

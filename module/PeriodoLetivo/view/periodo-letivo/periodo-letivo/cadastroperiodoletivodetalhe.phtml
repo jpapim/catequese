@@ -23,7 +23,9 @@
                 $form->setAttribute('class', 'form-horizontal');
                 $form->setAttribute('method', 'post');
                 $form->setAttribute('data-role', 'form');
-
+               /* echo '<pre>';
+                print_r($dadosPeriodoLetivo);
+                echo '</pre>';*/
                 $form->prepare();
                 echo $this->form()->openTag($form);
                 $form->get('id')->setValue($dadosPeriodoLetivo->getId());

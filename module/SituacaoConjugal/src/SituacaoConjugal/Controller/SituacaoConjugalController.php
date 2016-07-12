@@ -1,68 +1,64 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: IGOR
+ * Date: 12/07/2016
+ * Time: 14:05
+ */
 
-namespace SacramentoCatequisando\Controller;
+namespace SituacaoConjugal\Controller;
+
 
 use Estrutura\Controller\AbstractCrudController;
-use Estrutura\Helpers\Cript;
-use Estrutura\Helpers\Data;
+use Estrutura\Helpers\Pagination;
+use SituacaoConjugal\Form\SituacaoConjugalForm;
+use SituacaoConjugal\Service\SituacaoConjugalService;
 use Zend\View\Model\ViewModel;
-use Zend\View\Model\JsonModel;
 
-class SacramentoCatequisandoController extends AbstractCrudController
-{
+class SituacaoConjugalController extends  AbstractCrudController{
 
+    /** @var  SituacaoConjugalService*/
     protected $service;
+    /** @var  SituacaoConjugalForm*/
     protected $form;
 
-    public function __construct()
+
+    public function  __construct()
     {
         parent::init();
     }
-
     public function indexAction()
     {
         return parent::index($this->service, $this->form);
-
-        return new ViewModel([
-            'service' => $this->service,
-            'form' => $this->form,
-            'controller' => $this->params('controller'),
-            'atributos' => array()
-        ]);
     }
 
     public function indexPaginationAction()
-    {// funcao paginacao
+    {
 
         $filter = $this->getFilterPage();
-        $camposFilter = [
+
+        $camposFilter =[
             '0' => [
-                'filter' => "sacramento_catequisando.id_sacramento_catequisando LIKE ?",
+                'filter' => "situacao_conjugal.id_situacao_conjugal  LIKE ?"
             ],
             '1' => [
-                'filter' => "catequisando.nm_catequisando LIKE ?",
+                'filter' => "situacao_conjugal.ds_situacao_conjugal  LIKE ?"
             ],
-            '2' => [
-                'filter' => "sacramento.nm_sacramento LIKE ?",
-            ],
-            '3' => [
-                'filter' => "paroquia.nm_paroquia LIKE ?",
-            ],
-            '4' => [
-                'filter' => "sacramento_catequisando.cs_comprovante_bastimo LIKE ?",
-            ],
-            '5' => NULL,
+
 
         ];
 
-        $paginator = $this->service->getSacramentoCatequisandoPaginator($filter, $camposFilter);
+
+        $paginator = $this->service->getSituacaoConjugalPaginator($filter, $camposFilter);
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
         $countPerPage = $this->getCountPerPage(
-            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+            current(Pagination::getCountPerPage($paginator->getTotalItemCount()))
         );
+
         $paginator->setItemCountPerPage($this->getCountPerPage(
-            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+            current(Pagination::getCountPerPage($paginator->getTotalItemCount()))
         ))->setCurrentPageNumber($this->getCurrentPage());
+
         $viewModel = new ViewModel([
             'service' => $this->service,
             'form' => $this->form,
@@ -71,9 +67,10 @@ class SacramentoCatequisandoController extends AbstractCrudController
             'countPerPage' => $countPerPage,
             'camposFilter' => $camposFilter,
             'controller' => $this->params('controller'),
-            'atributos' => array()
+            'atributos' => array(),
         ]);
-        return $viewModel->setTerminal(TRUE);
+
+        return $viewModel->setTerminal(true);
     }
 
     public function gravarAction()
@@ -95,5 +92,4 @@ class SacramentoCatequisandoController extends AbstractCrudController
         return parent::excluir($this->service, $this->form);
     }
 
-
-}
+} 
