@@ -10,12 +10,12 @@
 return array(
     'router' => array(
         'routes' => array(
-            'situacao_conjugal' => array(
+            'situacao_conjugal-home' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route'    => '/situacao-conjugal/:action[/:id][/:aux]',
+                    'route'    => 'situacao_conjugal/:action[/:id][/:aux]',
                     'defaults' => array(
-                        'controller' => 'situacao-conjugal',
+                        'controller' => 'situacao_conjugal',
                         'action'     => 'index',
                     ),
                 ),

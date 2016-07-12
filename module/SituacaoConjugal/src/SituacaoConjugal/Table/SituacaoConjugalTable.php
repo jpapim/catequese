@@ -11,7 +11,7 @@ namespace SituacaoConjugal\Table;
 
 use Estrutura\Table\AbstractEstruturaTable;
 
-class SituacaoConjugal extends  AbstractEstruturaTable {
+class SituacaoConjugalTable extends  AbstractEstruturaTable {
 
     public $table = "situacao_conjugal";
     public  $campos= [

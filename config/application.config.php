@@ -65,7 +65,7 @@ return array(
         'Infra',
         'GrauParentesco',
         'ResponsavelCatequisando',
-        'SituacaoConjugal'
+        'SituacaoConjugal',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
