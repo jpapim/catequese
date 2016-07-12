@@ -296,7 +296,7 @@ CREATE TABLE `catequisando` (
   CONSTRAINT `FK_Reference_96` FOREIGN KEY (`id_email`) REFERENCES `email` (`id_email`),
   CONSTRAINT `FK_Reference_97` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`),
   CONSTRAINT `FK_Reference_98` FOREIGN KEY (`id_turno`) REFERENCES `turno` (`id_turno`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,7 +305,7 @@ CREATE TABLE `catequisando` (
 
 LOCK TABLES `catequisando` WRITE;
 /*!40000 ALTER TABLE `catequisando` DISABLE KEYS */;
-INSERT INTO `catequisando` VALUES (2,1,1,1,1,1,1,1,1,1,'Dinoite meu Brother','32323','2016-01-02 02:00:00','2016-01-02 02:00:00','xxxx yyyy ','A','N',NULL,'S','S');
+INSERT INTO `catequisando` VALUES (2,1,1,1,1,1,1,1,1,1,'Dinoite meu Brother','32323','2016-01-02 02:00:00','2016-01-02 02:00:00','xxxx yyyy ','A','N',NULL,'S','S'),(3,2,1,3,5,6,4,1,3,3,'Pluto de Oliveira','66587','2016-01-10 02:00:00','2016-01-20 02:00:00','rjfbkjrebfiuy3bkbiuyfgbrf','A','N',NULL,'S','S'),(4,3,2,5,3,7,8,1,2,1,'Cachorrinha Felina','85474','2014-07-13 03:00:00','2014-06-11 03:00:00','nrtjthjtyjyjytjt','A','N',NULL,'S','N'),(5,2,2,4,2,8,6,1,1,2,'Pretinha Desconfiada','62582','2015-03-21 03:00:00','2014-06-13 03:00:00','liulolololilililoi','A','N',NULL,'S','N');
 /*!40000 ALTER TABLE `catequisando` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -492,7 +492,7 @@ CREATE TABLE `controller` (
   `nm_modulo` varchar(50) DEFAULT NULL,
   `cs_exibir_combo` char(1) DEFAULT 'N',
   PRIMARY KEY (`id_controller`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -501,7 +501,7 @@ CREATE TABLE `controller` (
 
 LOCK TABLES `controller` WRITE;
 /*!40000 ALTER TABLE `controller` DISABLE KEYS */;
-INSERT INTO `controller` VALUES (1,'arte_marcial-artemarcial','Arte Marcial','S'),(2,'estilo-estilo','Estilo da Arte','S'),(3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','S'),(5,'cidade-cidade','Cidade','S'),(6,'estado-estado','Estado','S'),(7,'graduacao-graduacao','Graduação','S'),(8,'pagamento-pagamento','Pagamento','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','S'),(10,'banco-banco','Banco','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(13,'tipo_evento-tipoevento','Tipo de Evento','S'),(14,'evento-evento','Evento','S'),(15,'graduacao','Teste de Action ','S'),(16,'academia-academia','Academia','S'),(17,'atleta-atleta','Atleta','S'),(18,'categoria_peso-categoriapeso','Categoria de Peso','S'),(19,'categoria_idade-categoriaidade','Categoria de Idade','S'),(20,'regras_lutas-regraslutas','Regras de Luta','S'),(21,'detalhes_regras_luta-detalhesregrasluta','Definição das Regras de Luta','S'),(22,'inscricoes_evento-inscricoesevento','Inscrições nos Eventos','S'),(23,'cliente-cliente','Cliente','S'),(24,'permissao-permissao','Gerenciador de Permissao','S'),(25,'controller-controller','Controller','S'),(26,'action-action','Action','S'),(27,'xxx','xxx','S'),(28,'periodo_letivo-periodoletivo','Periodo Letivo','S'),(29,'sacramento-sacramento','Sacramento','S'),(30,'movimento_pastoral-movimentopastoral','Movimento Pastoral','S'),(31,'detalhe_periodo_letivo-detalheperiodoletivo1','Detalhe do Periodo Letivo','N'),(32,'detalhe_periodo_letivo','Nome da Controller Periodo Letivo','S'),(33,'paroquia-paroquia','Paroquias','S'),(34,'catequista-catequista','Catequista','S'),(35,'infra-infra','Infraestrutura','S'),(36,'formacao-formacao','Formaçao Academica','S'),(37,'detalhe_formacao-detalheformacao','Detalhe Formaçao Academica','S'),(38,'turma-turma','Turmas','S'),(39,'etapa-etapa','Etapas','S'),(40,'turma_catequisando-turmacatequisando','Enturmar Aluno','S'),(41,'responsavel_catequisando-responsavelcatequisando','Responsaveis dos Alunos','S'),(42,'grau_parentesco-grauparentesco','Grau de Parentesco','S');
+INSERT INTO `controller` VALUES (1,'arte_marcial-artemarcial','Arte Marcial','S'),(2,'estilo-estilo','Estilo da Arte','S'),(3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','S'),(5,'cidade-cidade','Cidade','S'),(6,'estado-estado','Estado','S'),(7,'graduacao-graduacao','Graduação','S'),(8,'pagamento-pagamento','Pagamento','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','S'),(10,'banco-banco','Banco','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(13,'tipo_evento-tipoevento','Tipo de Evento','S'),(14,'evento-evento','Evento','S'),(15,'graduacao','Teste de Action ','S'),(16,'academia-academia','Academia','S'),(17,'atleta-atleta','Atleta','S'),(18,'categoria_peso-categoriapeso','Categoria de Peso','S'),(19,'categoria_idade-categoriaidade','Categoria de Idade','S'),(20,'regras_lutas-regraslutas','Regras de Luta','S'),(21,'detalhes_regras_luta-detalhesregrasluta','Definição das Regras de Luta','S'),(22,'inscricoes_evento-inscricoesevento','Inscrições nos Eventos','S'),(23,'cliente-cliente','Cliente','S'),(24,'permissao-permissao','Gerenciador de Permissao','S'),(25,'controller-controller','Controller','S'),(26,'action-action','Action','S'),(27,'xxx','xxx','S'),(28,'periodo_letivo-periodoletivo','Periodo Letivo','S'),(29,'sacramento-sacramento','Sacramento','S'),(30,'movimento_pastoral-movimentopastoral','Movimento Pastoral','S'),(31,'detalhe_periodo_letivo-detalheperiodoletivo1','Detalhe do Periodo Letivo','N'),(32,'detalhe_periodo_letivo','Nome da Controller Periodo Letivo','S'),(33,'paroquia-paroquia','Paroquias','S'),(34,'catequista-catequista','Catequista','S'),(35,'infra-infra','Infraestrutura','S'),(36,'formacao-formacao','Formaçao Academica','S'),(37,'detalhe_formacao-detalheformacao','Detalhe Formaçao Academica','S'),(38,'turma-turma','Turmas','S'),(39,'etapa-etapa','Etapas','S'),(40,'turma_catequisando-turmacatequisando','Enturmar Aluno','S'),(41,'responsavel_catequisando-responsavelcatequisando','Responsaveis dos Alunos','S'),(42,'grau_parentesco-grauparentesco','Grau de Parentesco','S'),(44,'sacramento_catequisando-sacramentocatequisando','Sacramento Catequizando','S');
 /*!40000 ALTER TABLE `controller` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -636,7 +636,7 @@ CREATE TABLE `email` (
 
 LOCK TABLES `email` WRITE;
 /*!40000 ALTER TABLE `email` DISABLE KEYS */;
-INSERT INTO `email` VALUES (1,'alyssontkd@gmail.com',1),(2,'ronaldo.r.melo@gmail.com',1),(3,'teste001@gmail.com',1),(4,'teste002@gmail.com',1),(5,'teste003@gmail.com',1),(6,'teste004@gmail.com',1),(7,'1central.millenium@gmail.com',1),(8,'alysson.vicuna@gmail.com',1);
+INSERT INTO `email` VALUES (1,'alyssontkd@gmail.com',1),(2,'ronaldo.r.melo@gmail.com',1),(3,'teste001@gmail.com',1),(4,'teste002@gmail.com',1),(5,'teste003@gmail.com',1),(6,'teste004@gmail.com',1),(7,'central.millenium@gmail.com',1),(8,'alysson.vicuna@gmail.com',1);
 /*!40000 ALTER TABLE `email` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -658,7 +658,7 @@ CREATE TABLE `endereco` (
   PRIMARY KEY (`id_endereco`),
   KEY `ix_endereco_cidades` (`id_cidade`),
   CONSTRAINT `fk_endereco_cidades1` FOREIGN KEY (`id_cidade`) REFERENCES `cidade` (`id_cidade`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -667,7 +667,7 @@ CREATE TABLE `endereco` (
 
 LOCK TABLES `endereco` WRITE;
 /*!40000 ALTER TABLE `endereco` DISABLE KEYS */;
-INSERT INTO `endereco` VALUES (1,'Rua sem nome casa S/N','08','Perto do Terminal','Estrutural','00788978',4);
+INSERT INTO `endereco` VALUES (1,'Rua sem nome casa S/N','08','Perto do Terminal','Estrutural','00788978',4),(2,'Rua com nome e casa C/N','68','Longe do Terminal','Samambaia','87458741',6),(3,'Avenida da Misericordia','98','nada...','Aguas Claras','74125987',4),(4,'Rua 07 Quadra 03','70','Piracema','Jardim Piracema','78600454',5),(5,'Rua 02 Quadra 45','89','...','Piracema','78954784',5);
 /*!40000 ALTER TABLE `endereco` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1149,7 +1149,7 @@ CREATE TABLE `perfil_controller_action` (
   CONSTRAINT `fk_perfil_controller_action_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id_action`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_controller` FOREIGN KEY (`id_controller`) REFERENCES `controller` (`id_controller`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=351 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=356 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1158,7 +1158,7 @@ CREATE TABLE `perfil_controller_action` (
 
 LOCK TABLES `perfil_controller_action` WRITE;
 /*!40000 ALTER TABLE `perfil_controller_action` DISABLE KEYS */;
-INSERT INTO `perfil_controller_action` VALUES (1,1,1,1),(2,2,1,1),(4,4,1,1),(5,5,1,1),(6,6,1,1),(7,1,5,1),(8,6,6,1),(9,5,6,1),(10,5,7,1),(11,6,7,1),(12,6,8,1),(13,1,2,1),(14,1,3,1),(15,1,9,1),(16,7,1,1),(17,1,4,1),(18,1,10,1),(19,1,11,1),(21,2,5,1),(22,2,12,1),(23,2,13,1),(25,8,18,1),(26,5,16,1),(29,8,19,1),(30,1,1,2),(31,2,1,2),(32,3,1,2),(33,4,1,2),(34,5,1,2),(35,6,1,2),(36,1,5,2),(37,6,6,2),(38,5,6,2),(39,5,7,2),(40,6,7,2),(41,6,8,2),(42,1,2,2),(43,1,3,2),(44,1,9,2),(45,7,1,2),(46,1,4,2),(47,1,10,2),(48,1,11,2),(49,3,7,2),(50,2,5,2),(51,2,12,2),(52,2,13,2),(53,3,14,2),(54,8,18,2),(55,8,20,1),(56,8,21,1),(57,8,22,1),(58,8,23,1),(59,3,15,2),(60,1,24,1),(61,1,24,2),(63,2,25,1),(64,2,25,2),(65,2,26,1),(66,2,26,2),(67,2,27,1),(68,2,27,2),(69,2,28,1),(70,2,28,2),(71,2,29,1),(72,2,30,1),(73,8,9,1),(74,8,9,2),(75,8,31,1),(76,8,31,2),(77,8,32,1),(78,8,33,1),(79,8,34,1),(80,2,35,1),(82,3,36,2),(84,3,37,2),(85,5,16,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(90,10,1,1),(91,10,6,1),(92,10,7,1),(93,11,1,1),(94,10,8,1),(95,12,1,1),(96,12,6,1),(97,12,7,1),(98,1,7,1),(99,1,6,1),(100,1,8,1),(101,2,6,1),(102,2,8,1),(103,2,7,1),(104,7,6,1),(105,7,7,1),(106,7,8,1),(107,13,1,1),(108,13,6,1),(109,13,7,1),(110,13,8,1),(111,14,1,1),(112,14,6,1),(113,14,7,1),(114,14,8,1),(115,7,39,1),(116,15,39,1),(117,15,1,1),(118,16,1,1),(119,16,6,1),(120,16,7,1),(121,16,8,1),(122,16,40,1),(123,16,41,1),(124,17,1,1),(125,17,6,1),(126,17,7,1),(127,17,8,1),(128,17,42,1),(129,17,43,1),(130,17,44,1),(131,17,45,1),(132,17,46,1),(133,17,47,1),(134,17,40,1),(139,19,1,1),(140,19,6,1),(141,19,7,1),(142,19,8,1),(143,20,1,1),(144,20,6,1),(145,20,7,1),(146,20,8,1),(147,21,1,1),(148,21,6,1),(149,21,7,1),(150,21,8,1),(151,19,48,1),(152,22,1,1),(153,22,6,1),(154,22,7,1),(155,22,8,1),(156,14,49,1),(157,5,40,1),(158,16,42,1),(159,16,47,1),(160,17,50,1),(161,17,51,1),(162,17,1,1),(163,25,1,1),(164,25,6,1),(165,25,7,1),(166,25,8,1),(167,25,51,1),(168,26,1,1),(169,26,6,1),(170,26,7,1),(171,26,8,1),(172,26,51,1),(173,24,1,1),(174,24,6,1),(175,24,7,1),(176,24,8,1),(177,24,51,1),(178,28,1,1),(179,28,6,1),(180,28,7,1),(181,28,8,1),(182,28,51,1),(183,29,1,1),(184,29,6,1),(185,29,7,1),(186,29,8,1),(187,29,51,1),(188,30,1,1),(189,30,6,1),(190,30,7,1),(191,30,8,1),(192,30,51,1),(193,28,52,1),(194,28,53,1),(195,28,54,1),(196,31,55,1),(197,32,55,1),(198,33,1,1),(199,33,6,1),(200,33,7,1),(201,33,8,1),(202,33,51,1),(203,5,51,1),(204,24,57,1),(205,34,1,1),(206,34,6,1),(207,34,7,1),(208,34,8,1),(209,34,51,1),(215,35,1,1),(216,18,1,1),(217,18,6,1),(218,18,7,1),(219,18,8,1),(220,18,51,1),(247,36,1,1),(248,36,6,1),(249,36,7,1),(250,36,8,1),(251,36,51,1),(252,36,53,1),(253,36,58,1),(254,36,59,1),(255,36,60,1),(256,37,1,1),(257,37,6,1),(258,37,7,1),(259,37,8,1),(260,37,60,1),(261,38,1,1),(262,38,6,1),(263,38,7,1),(264,38,8,1),(265,38,51,1),(266,39,1,1),(267,39,6,1),(268,39,7,1),(269,39,8,1),(270,39,51,1),(297,41,1,1),(298,41,6,1),(299,41,7,1),(300,41,8,1),(301,41,51,1),(302,42,1,1),(303,42,6,1),(304,42,7,1),(305,42,8,1),(306,42,51,1),(317,3,1,1),(318,3,6,1),(319,3,7,1),(320,3,8,1),(321,3,14,1),(322,3,15,1),(323,3,17,1),(324,3,18,1),(325,3,36,1),(326,3,37,1),(327,3,51,1),(342,40,1,1),(343,40,6,1),(344,40,7,1),(345,40,8,1),(346,40,51,1),(347,40,53,1),(348,40,61,1),(349,40,62,1);
+INSERT INTO `perfil_controller_action` VALUES (1,1,1,1),(2,2,1,1),(4,4,1,1),(5,5,1,1),(6,6,1,1),(7,1,5,1),(8,6,6,1),(9,5,6,1),(10,5,7,1),(11,6,7,1),(12,6,8,1),(13,1,2,1),(14,1,3,1),(15,1,9,1),(16,7,1,1),(17,1,4,1),(18,1,10,1),(19,1,11,1),(21,2,5,1),(22,2,12,1),(23,2,13,1),(25,8,18,1),(26,5,16,1),(29,8,19,1),(30,1,1,2),(31,2,1,2),(32,3,1,2),(33,4,1,2),(34,5,1,2),(35,6,1,2),(36,1,5,2),(37,6,6,2),(38,5,6,2),(39,5,7,2),(40,6,7,2),(41,6,8,2),(42,1,2,2),(43,1,3,2),(44,1,9,2),(45,7,1,2),(46,1,4,2),(47,1,10,2),(48,1,11,2),(49,3,7,2),(50,2,5,2),(51,2,12,2),(52,2,13,2),(53,3,14,2),(54,8,18,2),(55,8,20,1),(56,8,21,1),(57,8,22,1),(58,8,23,1),(59,3,15,2),(60,1,24,1),(61,1,24,2),(63,2,25,1),(64,2,25,2),(65,2,26,1),(66,2,26,2),(67,2,27,1),(68,2,27,2),(69,2,28,1),(70,2,28,2),(71,2,29,1),(72,2,30,1),(73,8,9,1),(74,8,9,2),(75,8,31,1),(76,8,31,2),(77,8,32,1),(78,8,33,1),(79,8,34,1),(80,2,35,1),(82,3,36,2),(84,3,37,2),(85,5,16,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(90,10,1,1),(91,10,6,1),(92,10,7,1),(93,11,1,1),(94,10,8,1),(95,12,1,1),(96,12,6,1),(97,12,7,1),(98,1,7,1),(99,1,6,1),(100,1,8,1),(101,2,6,1),(102,2,8,1),(103,2,7,1),(104,7,6,1),(105,7,7,1),(106,7,8,1),(107,13,1,1),(108,13,6,1),(109,13,7,1),(110,13,8,1),(111,14,1,1),(112,14,6,1),(113,14,7,1),(114,14,8,1),(115,7,39,1),(116,15,39,1),(117,15,1,1),(118,16,1,1),(119,16,6,1),(120,16,7,1),(121,16,8,1),(122,16,40,1),(123,16,41,1),(124,17,1,1),(125,17,6,1),(126,17,7,1),(127,17,8,1),(128,17,42,1),(129,17,43,1),(130,17,44,1),(131,17,45,1),(132,17,46,1),(133,17,47,1),(134,17,40,1),(139,19,1,1),(140,19,6,1),(141,19,7,1),(142,19,8,1),(143,20,1,1),(144,20,6,1),(145,20,7,1),(146,20,8,1),(147,21,1,1),(148,21,6,1),(149,21,7,1),(150,21,8,1),(151,19,48,1),(152,22,1,1),(153,22,6,1),(154,22,7,1),(155,22,8,1),(156,14,49,1),(157,5,40,1),(158,16,42,1),(159,16,47,1),(160,17,50,1),(161,17,51,1),(162,17,1,1),(163,25,1,1),(164,25,6,1),(165,25,7,1),(166,25,8,1),(167,25,51,1),(168,26,1,1),(169,26,6,1),(170,26,7,1),(171,26,8,1),(172,26,51,1),(173,24,1,1),(174,24,6,1),(175,24,7,1),(176,24,8,1),(177,24,51,1),(178,28,1,1),(179,28,6,1),(180,28,7,1),(181,28,8,1),(182,28,51,1),(183,29,1,1),(184,29,6,1),(185,29,7,1),(186,29,8,1),(187,29,51,1),(188,30,1,1),(189,30,6,1),(190,30,7,1),(191,30,8,1),(192,30,51,1),(193,28,52,1),(194,28,53,1),(195,28,54,1),(196,31,55,1),(197,32,55,1),(198,33,1,1),(199,33,6,1),(200,33,7,1),(201,33,8,1),(202,33,51,1),(203,5,51,1),(204,24,57,1),(205,34,1,1),(206,34,6,1),(207,34,7,1),(208,34,8,1),(209,34,51,1),(215,35,1,1),(216,18,1,1),(217,18,6,1),(218,18,7,1),(219,18,8,1),(220,18,51,1),(247,36,1,1),(248,36,6,1),(249,36,7,1),(250,36,8,1),(251,36,51,1),(252,36,53,1),(253,36,58,1),(254,36,59,1),(255,36,60,1),(256,37,1,1),(257,37,6,1),(258,37,7,1),(259,37,8,1),(260,37,60,1),(261,38,1,1),(262,38,6,1),(263,38,7,1),(264,38,8,1),(265,38,51,1),(266,39,1,1),(267,39,6,1),(268,39,7,1),(269,39,8,1),(270,39,51,1),(297,41,1,1),(298,41,6,1),(299,41,7,1),(300,41,8,1),(301,41,51,1),(302,42,1,1),(303,42,6,1),(304,42,7,1),(305,42,8,1),(306,42,51,1),(317,3,1,1),(318,3,6,1),(319,3,7,1),(320,3,8,1),(321,3,14,1),(322,3,15,1),(323,3,17,1),(324,3,18,1),(325,3,36,1),(326,3,37,1),(327,3,51,1),(342,40,1,1),(343,40,6,1),(344,40,7,1),(345,40,8,1),(346,40,51,1),(347,40,53,1),(348,40,61,1),(349,40,62,1),(351,44,1,1),(352,44,6,1),(353,44,7,1),(354,44,8,1),(355,44,51,1);
 /*!40000 ALTER TABLE `perfil_controller_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1354,7 +1354,7 @@ CREATE TABLE `sacramento_catequisando` (
   CONSTRAINT `FK_Reference_100` FOREIGN KEY (`id_sacramento`) REFERENCES `sacramento` (`id_sacramento`),
   CONSTRAINT `FK_Reference_101` FOREIGN KEY (`id_paroquia`) REFERENCES `paroquia` (`id_paroquia`),
   CONSTRAINT `FK_Reference_99` FOREIGN KEY (`id_catequisando`) REFERENCES `catequisando` (`id_catequisando`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1363,6 +1363,7 @@ CREATE TABLE `sacramento_catequisando` (
 
 LOCK TABLES `sacramento_catequisando` WRITE;
 /*!40000 ALTER TABLE `sacramento_catequisando` DISABLE KEYS */;
+INSERT INTO `sacramento_catequisando` VALUES (1,2,1,2,'2016-07-12 12:28:08','S'),(2,3,3,2,'2016-07-12 12:46:09','N');
 /*!40000 ALTER TABLE `sacramento_catequisando` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1560,7 +1561,7 @@ CREATE TABLE `telefone` (
   CONSTRAINT `FK_Reference_24` FOREIGN KEY (`id_tipo_telefone`) REFERENCES `tipo_telefone` (`id_tipo_telefone`),
   CONSTRAINT `fk_telefones_situacao` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_telefones_tipo_telefone1` FOREIGN KEY (`id_tipo_telefone`) REFERENCES `tipo_telefone` (`id_tipo_telefone`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1569,7 +1570,7 @@ CREATE TABLE `telefone` (
 
 LOCK TABLES `telefone` WRITE;
 /*!40000 ALTER TABLE `telefone` DISABLE KEYS */;
-INSERT INTO `telefone` VALUES (1,'12','34567890',1,1),(2,'61','91613193',1,1),(3,'61','91613193',1,1),(4,'61','989898989',1,1),(5,'56','576756756',1,1),(6,'87','878778787',1,1),(7,'78','787878787',1,1),(8,'87','878787878',1,1);
+INSERT INTO `telefone` VALUES (1,'12','34567890',1,1),(2,'61','91613193',1,1),(3,'61','91613193',1,1),(4,'61','989898989',1,1),(5,'56','576756756',1,1),(6,'87','878778787',1,1),(7,'78','787878787',1,1),(8,'87','878787878',1,1),(9,'66','785478547',1,1),(10,'66','985474587',2,1),(11,'66','785478547',3,1),(12,'61','874574574',2,1),(13,'61','965854745',2,1),(14,'61','695484742',3,1);
 /*!40000 ALTER TABLE `telefone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1724,7 +1725,7 @@ CREATE TABLE `turno` (
   `id_turno` int(11) NOT NULL AUTO_INCREMENT,
   `nm_turno` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_turno`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Armazenas os Turnos de estudo. Ex: manha, Tarde, Noite ou Di';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Armazenas os Turnos de estudo. Ex: manha, Tarde, Noite ou Di';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1733,7 +1734,7 @@ CREATE TABLE `turno` (
 
 LOCK TABLES `turno` WRITE;
 /*!40000 ALTER TABLE `turno` DISABLE KEYS */;
-INSERT INTO `turno` VALUES (1,'Matutino');
+INSERT INTO `turno` VALUES (1,'Matutino'),(2,'Vespertino'),(3,'Noturno'),(4,'Diurno');
 /*!40000 ALTER TABLE `turno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1855,4 +1856,4 @@ USE `bdcatequese`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-11 16:55:06
+-- Dump completed on 2016-07-12  9:52:17

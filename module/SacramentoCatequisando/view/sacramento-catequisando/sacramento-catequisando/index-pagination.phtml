@@ -5,21 +5,21 @@
         <table class="table table-striped" id="tablesorterSacramentoCatequisando">
             <thead>
             <tr>
-                <th class="text-center">Id Sacr_Catequisando</th>
-                <th class="text-center">Id Catequisando</th>
+                <th class="text-center">Identificador</th>
+                <th class="text-center">Catequizando</th>
                 <th class="text-center">Sacramento</th>
                 <th class="text-center">Paróquia</th>
-                <th class="text-center">Comp. Bastimo</th>
+                <th class="text-center">Comprov. Bastimo</th>
                 <th class="text-center">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">Id Sacr_Catequisando</th>
-                <th class="text-center">Id Catequisando</th>
+                <th class="text-center">Identificador</th>
+                <th class="text-center">Catequizando</th>
                 <th class="text-center">Sacramento</th>
                 <th class="text-center">Paróquia</th>
-                <th class="text-center">Comp. Bastimo</th>
+                <th class="text-center">Comprov. Bastimo</th>
                 <th class="text-center">Ações</th>
             </tr>
             <tr>
@@ -71,7 +71,7 @@
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequisando['id_catequisando']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequisando['nm_sacramento']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequisando['nm_paroquia']) ?></td>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequisando['cs_comprovante_batismo']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequisando['cs_comprovante_batismo'] == 'S'? 'Sim':'Não') ?></td>
 
                         <td class="text-center">
                                 <span class="" style="width: 100px;">

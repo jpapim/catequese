@@ -17,7 +17,7 @@ class SacramentoCatequisandoForm extends AbstractForm
 
         $objForm = new FormObject('sacramentocatequisandoform', $this, $this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");
-        $objForm->text("id_catequisando", '\Catequisando\Service\CatequisandoService', 'id', 'nm_catequisando')->required(false)->label("Id Catequisando");
+        $objForm->text("id_catequisando", '\Catequisando\Service\CatequisandoService', 'id', 'nm_catequisando')->required(false)->label("Catequizando");
         $objForm->combo("id_sacramento", '\Sacramento\Service\SacramentoService', 'id', 'nm_sacramento')->required(false)->label("Sacramento");
         $objForm->combo("id_paroquia", '\Paroquia\Service\ParoquiaService', 'id', 'nm_paroquia')->required(false)->label("Paróquia");
 
