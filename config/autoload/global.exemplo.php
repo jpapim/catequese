@@ -7,9 +7,11 @@ return [
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
     ),
-    'nomeProjeto' => '',
+    'nomeProjeto' => 'CATQ',
     'general' => [
         'arquivos' => BASE_PATCH . '/data/arquivos/',
+        'cache_css' => BASE_PATCH . '/public/assets/cache/',
+        'cache_sys' => BASE_PATCH . '/data/cache/',
     ],
     'service_manager' => array(
         'factories' => array(
@@ -37,7 +39,7 @@ return [
     ),
     'view_manager' => array(
         'strategies' => array(
-           'ViewJsonStrategy',
+            'ViewJsonStrategy',
         ),
     ),
 ];

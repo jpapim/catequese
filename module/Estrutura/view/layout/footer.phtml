@@ -8,7 +8,13 @@
         </div>
         <div class="col-md-2">&nbsp;</div>
     </div>
-    <br>    
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <?php $obVersionamento = new \Estrutura\View\Helper\Versionamento(); ?>
+            <div class="versao" style="text-align: center;"><?php echo $obVersionamento->getGitFullVersion() ; ?></div>
+        </div>
+    </div>
 </footer>
 
 <!-- Modal -->

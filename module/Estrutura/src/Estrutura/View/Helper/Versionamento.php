@@ -6,6 +6,7 @@ class Versionamento extends AbstractHelper
 {
 
     /**
+     * @author: Alysson Vicuña de Oliveira
      * Retorna a versão do projeto, seja branch ou tag
      */
     public function getGitFullVersion() {
@@ -15,6 +16,7 @@ class Versionamento extends AbstractHelper
     }
 
     /**
+     * @author: Alysson Vicuña de Oliveira
      * Retorna a versão do projeto, seja branch ou tag
      */
     private function getSvnFullVersion() {
