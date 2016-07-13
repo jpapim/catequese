@@ -66,6 +66,7 @@ return array(
         'GrauParentesco',
         'ResponsavelCatequisando',
         'SituacaoConjugal',
+        'Profissao'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
