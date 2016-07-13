@@ -10,7 +10,8 @@ use Zend\View\Model\ViewModel;
 use Estrutura\Service\HtmlHelper;
 
 
-class UsuarioController extends AbstractCrudController {
+class UsuarioController extends AbstractCrudController
+{
 
     /**
      * @var \Usuario\Service\Usuario
@@ -22,7 +23,23 @@ class UsuarioController extends AbstractCrudController {
      */
 
     protected $form;
-    protected $camposPendencia = [];
+    protected $camposPendencia = [
+        'nm_estado',
+        'nm_cidade',
+        'nu_rg',
+        'nu_cpf',
+        'nm_profissao',
+        'nm_estado_civil',
+        'nm_nacionalidade',
+        'nr_agencia',
+        'id_banco',
+        'nm_logradouro',
+        'nr_numero',
+        'nm_bairro',
+        'nm_cidade',
+        'nm_estado',
+        'nr_cep',
+    ];
 
     public function __construct()
     {
@@ -35,14 +52,12 @@ class UsuarioController extends AbstractCrudController {
     }
 
 
-
-
 //ALTERAR AQUI OS FILTER
 
     public function indexPaginationAction()
     {
         //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
-        
+
         $filter = $this->getFilterPage();
 
         $camposFilter = [
@@ -66,21 +81,21 @@ class UsuarioController extends AbstractCrudController {
             ],
             '6' => [
                 'filter' => "CAST( (TO_DAYS(NOW())- TO_DAYS(dt_nascimento)) / 365.25 AS SIGNED) = ?",
-            ],            
+            ],
             '7' => NULL,
         ];
-        
-        
+
+
         $paginator = $this->service->getUsuarioPaginator($filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
         $countPerPage = $this->getCountPerPage(
-                current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
         );
 
         $paginator->setItemCountPerPage($this->getCountPerPage(
-                        current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
         ))->setCurrentPageNumber($this->getCurrentPage());
 
         $viewModel = new ViewModel([
@@ -96,15 +111,10 @@ class UsuarioController extends AbstractCrudController {
 
         return $viewModel->setTerminal(TRUE);
     }
-    
-    
-
-
-
 
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function gravarAction()
@@ -112,21 +122,11 @@ class UsuarioController extends AbstractCrudController {
 
         $form = new \Usuario\Form\UsuarioForm();
 
-        $elementCaptch = $form->getElements()['captcha'];
-        foreach ($elementCaptch->getInputSpecification()['validators'] as $validator) {
-
-            if (!$validator->isValid($this->getRequest()->getPost()->get('captcha'))) {
-
-                $this->addErrorMessage('Captcha inválido.');
-                $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
-                return FALSE;
-            }
-        }
-
         /* @var $emailService \Email\Service\EmailService */
         $emailService = $this->getServiceLocator()->get('\Email\Service\EmailService');
         $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('em_email')));
 
+        #Alysson - Verifica se já existe este emaill cadastrado para um usuário
         if ($emailService->filtrarObjeto()->count()) {
 
             $this->addErrorMessage('Email já cadastrado. Faça seu login.');
@@ -134,41 +134,31 @@ class UsuarioController extends AbstractCrudController {
             return FALSE;
         }
 
-        $contratoService = $this->getServiceLocator()->get('\Contrato\Service\ContratoService');
-        $contratoService->setIdUsuario($this->getRequest()->getPost()->get('id_usuario_pai'));
-        $contratoOrigem = $contratoService->filtrarObjeto()->current();
 
-        if (!$contratoOrigem) {
+        #/* @var $UsuarioService \Usuario\Service\UsuarioService */
+        #$usuarioService = new \Usuario\Service\UsuarioService();
+        #$usuarioService->setNuCpf(\Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_cpf')));
 
-            $this->addErrorMessage('Link de cadastro inválido. Cadastre com outro link.');
-            $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
-            return FALSE;
-        }
+        #Alysson - Verifica se já existe este cpf cadastrado para um usuário
+        #if ($usuarioService->filtrarObjeto()->count()) {
 
-        /* @var $UsuarioService \Usuario\Service\UsuarioService */
-        $usuarioService = new \Usuario\Service\UsuarioService();
-        $usuarioService->setNuCpf(\Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_cpf')));
+        #    $this->addErrorMessage('Cpf já cadastrado. Faça seu login.');
+        #    $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
+        #    return FALSE;
+        #}
 
-        if ($usuarioService->filtrarObjeto()->count()) {
-
-            $this->addErrorMessage('Cpf já cadastrado. Faça seu login.');
-            $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
-            return FALSE;
-        }
-
-        $validatorCpf = new \Estrutura\Validator\Cpf();
-
-        if (!$validatorCpf->isValid(\Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_cpf')))) {
-
-            $this->addErrorMessage('Cpf inválido.');
-            $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
-            return FALSE;
-        }
+        #$validatorCpf = new \Estrutura\Validator\Cpf();
+        #if (!$validatorCpf->isValid(\Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_cpf')))) {
+        #    $this->addErrorMessage('Cpf inválido.');
+        #    $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
+        #    return FALSE;
+        #}
 
         $dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
         $dataMaioridade = new \Datetime();
-        $dataMaioridade->modify('-18 years');
+        $dataMaioridade->modify('-18 years'); #Dezoito anos da data de hoje.
 
+        #Verifica se é menor de 18 anos
         if ($dateNascimento > $dataMaioridade) {
 
             $this->addErrorMessage('Usuário deve ser maior de idade para se cadastrar.');
@@ -178,7 +168,6 @@ class UsuarioController extends AbstractCrudController {
 
         //Verifica tamanho da senha
         if (strlen(trim($this->getRequest()->getPost()->get('pw_senha'))) < 8) {
-
             $this->addErrorMessage('Senha deve ter no mínimo 8 caracteres.');
             $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
             return FALSE;
@@ -186,37 +175,43 @@ class UsuarioController extends AbstractCrudController {
 
         //Verifica se as novas senhas são iguais
         if (strcasecmp($this->getRequest()->getPost()->get('pw_senha'), $this->getRequest()->getPost()->get('pw_senha_confirm')) != 0) {
-
             $this->addErrorMessage('Senhas não correspondem.');
             $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
             return FALSE;
         }
 
+        #Alysson - Realiza tratamento nos dados do telefone para Atribuir ao POST os parametros abaixo.
         $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('nr_telefone')));
         $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('nr_telefone')));
         $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_residencial']);
         $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
+
+        #Alysson - Realiza a Gravação do telefone e retorna o ID inserido para a variavel $resultTelefone
         $resultTelefone = parent::gravar(
-                        $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
+            $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
         );
 
+        #Se o Telefone foi Inserido com sucesso
         if ($resultTelefone) {
-
+            #Alysson - Realiza a Gravação do email  e retorna o ID inserido para a variavel $resultEmail
             $resultEmail = parent::gravar(
-                            $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
+                $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
             );
 
+            #Se o Email foi Inserido com sucesso
             if ($resultEmail) {
 
+                $this->getRequest()->getPost()->set('nm_usuario', $this->getRequest()->getPost()->get('nm_usuario'));
                 $this->getRequest()->getPost()->set('dt_nascimento', $dateNascimento->format('Y-m-d'));
-                $this->getRequest()->getPost()->set('nu_cpf', \Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_cpf')));
-                $this->getRequest()->getPost()->set('id_telefone', $resultTelefone);
-                $this->getRequest()->getPost()->set('id_email', $resultEmail);
-                $this->getRequest()->getPost()->set('id_tipo_usuario', $this->getConfigList()['tipo_usuario_aluno']);
-                $this->getRequest()->getPost()->set('id_situacao_usuario', $this->getConfigList()['situacao_usuario_congelado']);
+                #$this->getRequest()->getPost()->set('nu_cpf', \Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_cpf')));
+                $this->getRequest()->getPost()->set('id_sexo', $this->getRequest()->getPost()->get('id_sexo'));
+                $this->getRequest()->getPost()->set('id_tipo_usuario', $this->getRequest()->getPost()->get('id_tipo_usuario'));
+                $this->getRequest()->getPost()->set('id_situacao_usuario', $this->getConfigList()['situacao_usuario_ativo']);
+                $this->getRequest()->getPost()->set('id_email', $resultEmail); #id_email inserido anteriormente
+                $this->getRequest()->getPost()->set('id_telefone', $resultTelefone); #id_telefone inserido anteriormente
 
                 $resultUsuario = parent::gravar(
-                                $this->getServiceLocator()->get('\Usuario\Service\UsuarioService'), new \Usuario\Form\UsuarioForm()
+                    $this->getServiceLocator()->get('\Usuario\Service\UsuarioService'), new \Usuario\Form\UsuarioForm()
                 );
 
                 if ($resultUsuario) {
@@ -224,61 +219,52 @@ class UsuarioController extends AbstractCrudController {
                     $this->getRequest()->getPost()->set('id_usuario', $resultUsuario);
                     //Verifica se é dia 29, 30, 31
                     $this->getRequest()->getPost()->set('dt_registro', (date('d') >= 29 ? date('Y-m-' . 28 . ' H:m:s') : date('Y-m-d H:m:s')));
-                    $this->getRequest()->getPost()->set('id_perfil', $this->getConfigList()['perfil_aluno']);
+                    #$this->getRequest()->getPost()->set('id_perfil', $this->getConfigList()['perfil_aluno']);
+                    $this->getRequest()->getPost()->set('id_perfil', $this->getConfigList()['perfil_professor']);
                     $this->getRequest()->getPost()->set('pw_senha', md5($this->getRequest()->getPost()->get('pw_senha')));
                     $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_inativo']);
 
                     $resultLogin = parent::gravar(
-                                    $this->getServiceLocator()->get('\Login\Service\LoginService'), new \Login\Form\LoginForm()
+                        $this->getServiceLocator()->get('\Login\Service\LoginService'), new \Login\Form\LoginForm()
                     );
 
+                    #Se cadastro realizado com sucesso, dispara um email para o usuario
                     if ($resultLogin) {
 
-                        $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
-                        $this->getRequest()->getPost()->set('dt_adesao', (date('d') >= 29 ? date('Y-m-' . 28 . ' H:m:s') : date('Y-m-d H:m:s')));
-                        $this->getRequest()->getPost()->set('id_contrato_origem', $contratoOrigem->getId());
+                        $contaEmail = 'no-reply';
 
-                        $resultContrato = parent::gravar(
-                                        $this->getServiceLocator()->get('\Contrato\Service\ContratoService'), new \Contrato\Form\ContratoForm()
-                        );
-
-                        if ($resultContrato) {
-
-
-                            $contaEmail = 'no-reply';
-
-                            $message = new \Zend\Mail\Message();
-                            $message->addFrom($contaEmail . '@mcnetwork.com.br', 'MC Network')
+                        $message = new \Zend\Mail\Message();
+                        $message->addFrom($contaEmail . '@acthosti.com.br', 'Acthos Tecnologia')
 //                    @TODO
 //                        ->addTo(trim($this->getRequest()->getPost()->get('em_email')))
-                                    ->addTo('ronaldo.r.melo@gmail.com')
-                                    ->addBcc('mcnetwork@mcnetwork.com.br')
-                                    ->setSubject('Confirmação de cadastro');
+                            ->addTo('alyssontkd@gmail.com')
+                            ->addBcc('alysson.vicuna@gmail.com')
+                            ->setSubject('Confirmação de cadastro');
 
-                            $applicationService = new \Application\Service\ApplicationService();
-                            $transport = $applicationService->getSmtpTranport($contaEmail);
+                        $applicationService = new \Application\Service\ApplicationService();
+                        $transport = $applicationService->getSmtpTranport($contaEmail);
 
-                            $htmlMessage = $applicationService->tratarModelo(
-                                    [
+                        $htmlMessage = $applicationService->tratarModelo(
+                            [
                                 'BASE_URL' => BASE_URL,
                                 'nomeUsuario' => trim($this->getRequest()->getPost()->get('nm_usuario')),
                                 'txIdentificacao' => base64_encode(\Estrutura\Helpers\Bcrypt::hash($resultLogin)),
                                 'email' => trim($this->getRequest()->getPost()->get('em_email')),
-                                    ], $applicationService->getModelo('cadastro'));
+                            ], $applicationService->getModelo('cadastro'));
 
-                            $html = new \Zend\Mime\Part($htmlMessage);
-                            $html->type = "text/html";
+                        $html = new \Zend\Mime\Part($htmlMessage);
+                        $html->type = "text/html";
 
-                            $body = new \Zend\Mime\Message();
-                            $body->addPart($html);
+                        $body = new \Zend\Mime\Message();
+                        $body->addPart($html);
 
-                            $message->setBody($body);
-                            $transport->send($message);
+                        $message->setBody($body);
+                        $transport->send($message);
 
-                            $this->addSuccessMessage('Parabéns! Cadastro realizado com sucesso. Para confirmar seu cadastro, leia as instruções que enviamos para você por e-mail.');
-                            $this->getServiceLocator()->get('Auth\Table\MyAuth')->forgetMe();
-                            $this->getServiceLocator()->get('AuthService')->clearIdentity();
-                        }
+                        $this->addSuccessMessage('Parabéns! Cadastro realizado com sucesso. Para confirmar seu cadastro, leia as instruções que enviamos para você por e-mail.');
+                        $this->getServiceLocator()->get('Auth\Table\MyAuth')->forgetMe();
+                        $this->getServiceLocator()->get('AuthService')->clearIdentity();
+
                     }
                 }
             }
@@ -288,7 +274,7 @@ class UsuarioController extends AbstractCrudController {
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function cadastroAction()
@@ -307,8 +293,8 @@ class UsuarioController extends AbstractCrudController {
 
         if ($usuario) {
             return parent::cadastro($usuarioService, $form, [
-                        'id_usuario' => $id,
-                        'usuario' => $usuario
+                'id_usuario' => $id,
+                'usuario' => $usuario
             ]);
         } else {
             $this->flashmessenger()->addWarningMessage('Código do patrocinador inválido.');
@@ -318,7 +304,7 @@ class UsuarioController extends AbstractCrudController {
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function dadosPessoaisAction()
@@ -359,7 +345,7 @@ class UsuarioController extends AbstractCrudController {
     }
 
     /**
-     * 
+     *
      * @return ViewModel
      */
     public function atualizarDadosAction()
@@ -412,7 +398,7 @@ class UsuarioController extends AbstractCrudController {
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function excluirAction()
@@ -421,7 +407,7 @@ class UsuarioController extends AbstractCrudController {
     }
 
     /**
-     * 
+     *
      * @return boolean
      * @throws \Exception
      */
@@ -560,7 +546,7 @@ class UsuarioController extends AbstractCrudController {
     }
 
     /**
-     * 
+     *
      * @return ViewModel
      */
     public function alterarSenhaAction()
@@ -591,7 +577,7 @@ class UsuarioController extends AbstractCrudController {
     }
 
     /**
-     * 
+     *
      */
     public function salvarRedefinicaoSenhaAction()
     {

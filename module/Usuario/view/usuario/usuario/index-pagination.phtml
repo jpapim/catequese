@@ -7,6 +7,10 @@
                 <tr>
                     <th class="text-center">Usuário</th>
                     <th class="text-center">Data de Nascimento</th>
+                    <th class="text-center">RG</th>
+                    <th class="text-center">CPF</th>
+                    <th class="text-center">Profissão</th>
+                    <th class="text-center">Nacionalidade</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
@@ -14,6 +18,10 @@
                 <tr>
                     <th class="text-center">Usuário</th>
                     <th class="text-center">Data de Nascimento</th>
+                    <th class="text-center">RG</th>
+                    <th class="text-center">CPF</th>
+                    <th class="text-center">Profissão</th>
+                    <th class="text-center">Nacionalidade</th>
                     <th class="text-center">Ações</th>
                 </tr>
                 <tr>
@@ -62,6 +70,10 @@
                         <tr>
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_usuario']) ?></td>
                             <td class="text-center"><?= $usuario['dt_nascimento'] ?></td>
+                            <td class="text-center"><?= $usuario['nu_rg'] ?></td>
+                            <td class="text-center"><?= $usuario['nu_cpf'] ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_profissao']) ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_nacionalidade']) ?></td>
 
 
                             <td class="text-center">
@@ -90,15 +102,9 @@
         </div>
     </div>
 </div>
-<!--<script src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript"></script>-->
-<script src="/assets/js/moment.js" type="text/javascript"></script>
-<script src="/assets/js/validator.min.js" type="text/javascript"></script>
-<script src="/assets/js/jquery.mask.min.js" type="text/javascript"></script>
-<script src="/assets/js/jquery.ui.widget.js" type="text/javascript"></script>
-<script src="/assets/js/jquery.tablesorter.js" type="text/javascript"></script>
-<script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
-<script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
-
+<script src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript">
+    
+</script>    
 <script type="text/javascript" language="javascript" >
     $(function () {
 

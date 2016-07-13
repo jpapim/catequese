@@ -14,13 +14,13 @@ return array(
     'smtp_options' => array(
         'no-reply' => array(
             'name' => 'no-reply',
-            'host' => '',
+            'host' => 'smtp.gmail.com',
             'port' => 587,
             'connection_class' => 'login',
             'connection_config' => array(
                 'ssl' => 'tls',
-                'username' => '',
-                'password' => ''
+                'username' => 'email@gmail.com',
+                'password' => 'senha'
             ),
         ),
         'contato' => array(
