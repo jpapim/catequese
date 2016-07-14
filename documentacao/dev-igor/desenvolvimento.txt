@@ -17,6 +17,12 @@ Nome do Módulo: Profissao
 Data Criação: 13-07-2016
 Nome da Tabela : profissao
 nome Controller: profissao-profissao
+<<<<<<< HEAD
+=======
+
+ACTIONS:
+index , index-pagination, gravar, excluir, cadastro.
+>>>>>>> 4e98da5f9a33555cc8076ae1b42e583208bae360
 
 ACTIONS:
 index , index-pagination, gravar, excluir, cadastro.
