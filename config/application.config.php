@@ -66,6 +66,12 @@ return array(
         'GrauParentesco',
         'ResponsavelCatequisando',
         'SituacaoConjugal',
+<<<<<<< HEAD
+        'Profissao',
+        'SituacaoResponsavel',
+=======
+        'Profissao'
+>>>>>>> 4e98da5f9a33555cc8076ae1b42e583208bae360
     ),
     'module_listener_options' => array(
         'module_paths' => array(

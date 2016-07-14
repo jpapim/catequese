@@ -10,12 +10,12 @@
 return array(
     'router' => array(
         'routes' => array(
-            'situacao_conjugal-home' => array(
+            'profissao-home' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route'    => 'situacao_conjugal/:action[/:id][/:aux]',
+                    'route'    => 'profissao/:action[/:id][/:aux]',
                     'defaults' => array(
-                        'controller' => 'situacao_conjugal',
+                        'controller' => 'profissao',
                         'action'     => 'index',
                     ),
                 ),
@@ -25,8 +25,8 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-            'situacao_conjugal' => 'SituacaoConjugal\Controller\SituacaoConjugalController',
-            'situacao_conjugal-situacaoconjugal' => 'SituacaoConjugal\Controller\SituacaoConjugalController',
+            'profissao' => 'Profissao\Controller\ProfissaoController',
+            'profissao-profissao' => 'Profissao\Controller\ProfissaoController',
 
         ),
     ),

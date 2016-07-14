@@ -7,3 +7,4 @@ config/autoload/development.php
 nbproject/*
 data/cache/*
 public/assets/cache/*
+documentacao/dev-igor/*

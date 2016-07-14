@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+
+<div class="page-head">
+    <h2>Situação Responsavel</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-default"
+               href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>"
+               title="Novo Situacao Conjugal">Cad Situação Responsável</a>
+        </div>
+    </div>
+    <br/>
+    <div class="row" id="situacao-responsavel-pagination"></div>
+</div>
+
+<script>
+    // funcao ajax para buscar a paginacao
+    $(function () {
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            cache: false,
+            url: '/situacao_responsavel-situacaoresponsavel/index-pagination',
+            async: true,
+            data: {},
+            beforeSend: function () {
+
+                $('#situacao-responsavel-pagination').html(
+                    '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                );
+            },
+            success: function (data) {
+
+                $('#situacao-responsavel-pagination').html(data);
+            }
+        });
+
+    })
+</script>
