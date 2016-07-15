@@ -2,19 +2,17 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterAtletas">
+        <table class="table table-striped" id="tablesorterTurno">
             <thead>
             <tr>
-                <th class="text-center">Turma</th>
-                <th class="text-center">Periodo Letivo</th>
+                <th class="text-center">Nome do Turno</th>
                 <th class="text-center">ações</th>
 
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">Turma</th>
-                <th class="text-center">Periodo Letivo</th>
+                <th class="text-center">Nome do Turno</th>
                 <th class="text-center">ações</th>
 
             </tr>
@@ -23,9 +21,9 @@
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/turma_catequisando-turmacatequisando/index-pagination',
+                            'urlPagination' => '/turno-turnoindex-pagination',
                             'countPerPage' => $countPerPage,
-                            'divData' => '#atleta-pagination',
+                            'divData' => '#turno-pagination',
                         ]
                     );
                     ?>
@@ -60,16 +58,15 @@
                     ?>
                 </tr>
                 <?php
-                foreach ($paginator as $key => $turma_catequisando) {
+                foreach ($paginator as $key => $turno) {
                     ?>
                     <tr>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeTudoMaiusculo($turma_catequisando['nm_turma']) ?></td>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeTudoMaiusculo($turma_catequisando['dt_ano_letivo']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($turno['nm_turno']) ?></td>
                         </td>
                         <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('turma_catequisando', array('controller' => $controller, 'action' => 'cadastro', 'id_turma' => Estrutura\Helpers\Cript::enc($turma_catequisando['id_turma']), 'id_periodo_letivo' => Estrutura\Helpers\Cript::enc($turma_catequisando['id_periodo_letivo']) ))) ?>
-
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($turno['id_turno'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($turno['id_turno'])))) ?>
                                 </span>
                         </td>
                     </tr>
@@ -88,7 +85,7 @@
                    class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
                 <a class="btn btn-default"
                    href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>"
-                   title="Adiciona um novo Turma">Enturmar Alunos</a>
+                   title="Adiciona um novo turno">Novo Turno</a>
             </div>
         </div>
     </div>
@@ -126,7 +123,7 @@
         };
 
         // call the tablesorter plugin and apply the uitheme widget
-        $("#tablesorterAtletas").tablesorter({
+        $("#tablesorterTurno").tablesorter({
             // this will apply the bootstrap theme if "uitheme" widget is included
             // the widgetOptions.uitheme is no longer required to be set
             theme: "bootstrap",
@@ -146,116 +143,11 @@
                 // set the uitheme widget to use the bootstrap theme class names
                 // this is no longer required, if theme is set
                 // ,uitheme : "bootstrap"
-
             },
             headers: {
                 5: {sorter: false}
             }
         });
 
-        $('#filtrarRelatorioSaquesPagos').click(function () {
-
-            $.ajax({
-                type: "post",
-                dataType: "text",
-                cache: false,
-                url: '/mcnetwork-relatorio/relatorio-saques-pagos',
-                async: true,
-                data: {
-                    dt_inicio: $('#dt_inicio').val(),
-                    dt_fim: $('#dt_fim').val()
-                },
-                beforeSend: function () {
-
-                    $('#modal-relatorio-body-3').html(
-                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                    );
-                },
-                success: function (data) {
-
-                    $('#modal-relatorio-body-3').html(data);
-                }
-            });
-        });
-
-        $('#limparRelatorioSaquesPagos').click(function () {
-
-            $.ajax({
-                type: "post",
-                dataType: "text",
-                cache: false,
-                url: '/mcnetwork-relatorio/relatorio-saques-pagos',
-                async: true,
-                data: {},
-                beforeSend: function () {
-
-                    $('#modal-relatorio-body-3').html(
-                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                    );
-                },
-                success: function (data) {
-
-                    $('#modal-relatorio-body-3').html(data);
-                }
-            });
-        });
-
-        $('.relatorio-recibo').off('click').on('click', function () {
-
-            var idPagamento = $(this).attr('rel');
-            var win = window.open('/mcnetwork-cursos/download-img-pay/' + idPagamento, '_blank');
-            win.focus();
-        });
-
-        $('.relatorio-recusar-recibo').off('click').on('click', function () {
-
-            var idPagamento = $(this).attr('rel');
-
-            $.ajax({
-                type: "post",
-                dataType: "text",
-                cache: false,
-                url: '/pagamento-pagamento/recusar-recibo',
-                async: true,
-                beforeSend: function () {
-
-                    $('#modal-relatorio-body-3').html(
-                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                    );
-                },
-                data: {
-                    id_saque: idPagamento
-                },
-                success: function () {
-
-                    $.ajax({
-                        type: "post",
-                        dataType: "text",
-                        cache: false,
-                        url: '/mcnetwork-relatorio/relatorio-saques-pagos',
-                        async: true,
-                        data: {},
-                        success: function (data) {
-
-                            $('#modal-relatorio-body-3').html(data);
-                        }
-                    });
-                }
-            });
-        });
-
-        $("#imprimirRelatorioSaquesPagos").click(function () {
-
-            var modalPrint = $('.modalPrint');
-            modalPrint.removeClass('modal');
-            $('.form-inline').hide();
-            $('#printSection').addClass('printSection');
-            $('#printSection').html(modalPrint.html());
-            window.print();
-            modalPrint.addClass('modal');
-            $('.form-inline').show();
-            $('#printSection').removeClass('printSection');
-            $('#printSection').html('');
-        });
     });
 </script>
