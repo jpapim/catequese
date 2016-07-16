@@ -69,6 +69,7 @@ return array(
         'SituacaoConjugal',
         'Profissao',
         'SituacaoResponsavel',
+        'Catequisando',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

@@ -45,7 +45,7 @@ class SituacaoResponsavelController extends  AbstractCrudController {
                 'filter' => "situacao_responsavel.cs_pai_mae  LIKE ?"
             ],
 
-
+            '2' => NULL,
         ];
 
 

@@ -37,3 +37,10 @@ nome Controller: situacao_responsavel-situacaoresponsavel
 
 ACTIONS:
 index , index-pagination, gravar, excluir, cadastro.
+
+CATEQUISANDO ===========================================================
+
+Nome do Módulo: Catequisando
+Data Criação: 14-07-2016
+Nome da Tabela : catequisando
+nome Controller: catequisando-catequisando
