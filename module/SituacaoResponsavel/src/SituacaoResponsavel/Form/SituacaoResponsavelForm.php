@@ -25,9 +25,9 @@ class SituacaoResponsavelForm  extends  AbstractForm{
         $objForm = new FormObject('situacaoresponsavelform', $this, $this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");
         $objForm->text("ds_situacao_responsavel")->required(false)->label("Descrição Situação Responsável");
-        $objForm->select("cs_pai_mae",array('P','M'))
-            ->setAttribute('style',' text-transform: uppercase')
-            ->required(false)->label("Responsável - P:Pai M:Mãe");
+        $objForm->select("cs_pai_mae",array('P'=>'Pai','M'=>'Mãe'))
+            #->setAttribute('style',' text-transform: uppercase')
+            ->required(false)->label("Responsável");
 
         $this->formObject = $objForm;
     }

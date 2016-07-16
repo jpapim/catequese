@@ -7,7 +7,40 @@ Data Criação: 12-07-2016
 Nome da Tabela : situacao_conjugal
 nome Controller: sutuacao_conjugal-situacaoconjugal
 
+ACTIONS:
+index , index-pagination, gravar, excluir, cadastro.
 
 
+PROFISSAO =============================================================
+
+Nome do Módulo: Profissao
+Data Criação: 13-07-2016
+Nome da Tabela : profissao
+nome Controller: profissao-profissao
+<<<<<<< HEAD
+=======
+
+ACTIONS:
+index , index-pagination, gravar, excluir, cadastro.
+>>>>>>> 4e98da5f9a33555cc8076ae1b42e583208bae360
+
+ACTIONS:
+index , index-pagination, gravar, excluir, cadastro.
+
+SITUACAO_RESPONSAVEL =============================================================
 
 
+Nome do Módulo: SituacaoResponsavel
+Data Criação: 14-07-2016
+Nome da Tabela : situacao_responsavel
+nome Controller: situacao_responsavel-situacaoresponsavel
+
+ACTIONS:
+index , index-pagination, gravar, excluir, cadastro.
+
+CATEQUISANDO ===========================================================
+
+Nome do Módulo: Catequisando
+Data Criação: 14-07-2016
+Nome da Tabela : catequisando
+nome Controller: catequisando-catequisando

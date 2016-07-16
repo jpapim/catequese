@@ -1,5 +1,5 @@
 
-<div class="col-md-8 col-md-push-2">
+<div class="col-md-12">
     <div class="table-responsive">
         <table class="table table-striped" id="tablesorterProfissao" >
             <thead>
@@ -13,14 +13,14 @@
             <tr>
 
                 <th class="text-center col-md-7">Profissões</th>
-                <th class="text-center col-md-6">Ações</th>
+                <th class="text-center col-md-5">Ações</th>
             </tr>
             <tr>
                 <th colspan="6" class="ts-pager form-horizontal">
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/profissao/index-pagination',
+                            'urlPagination' => '/profissao-profissao/index-pagination',
                             'countPerPage' => $countPerPage,
                             'divData' => '#profissao-pagination',
                         ]
@@ -63,7 +63,6 @@
 
                         <td style="width: 150px;" class="text-center">
                              <span class="btn-group" style="width: 150px;">
-                                <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_profissao'])))) ?>
                                 <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_profissao'])))) ?>
                                 <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_profissao'])))) ?>
                              </span>

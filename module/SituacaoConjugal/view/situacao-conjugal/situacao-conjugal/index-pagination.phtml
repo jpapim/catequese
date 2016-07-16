@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
 
-<div class="col-md-6 col-md-push-3">
+<div class="col-md-12">
     <div class="table-responsive">
         <table class="table table-striped" id="tablesorterSituacaoConjugal" >
             <thead>
@@ -45,7 +45,7 @@
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
-                                <input type="search" placeholder="" class="tablesorter-filter col-md-8 col-md-push-2" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                <input type="search" placeholder="" class="tablesorter-filter col-md-7" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                             <?php
                             } else {
                                 ?>
@@ -64,8 +64,7 @@
                     <tr>
                        <td class="text-center"><?=$item['ds_situacao_conjugal']?></td>
 
-                        <td style="width: 150px;">
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_situacao_conjugal'])))) ?>
+                        <td style="width: 150px;" class="text-center">
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_situacao_conjugal'])))) ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_situacao_conjugal'])))) ?>
                         </td>

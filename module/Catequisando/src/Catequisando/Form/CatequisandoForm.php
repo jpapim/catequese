@@ -23,6 +23,8 @@ class CatequisandoForm extends  AbstractForm{
         $objForm = new FormObject('catequisandoform',$this,$this->inputFilter);
 
         $objForm->hidden("id")->required(false)->label("Id");
+        $objForm->hidden("id_usuario")->required(false)->label("Id usuario");
+        $objForm->hidden("id_usuario_cadastro")->required(false)->label("Id usuario Cadastro");
         #FK - Endereço
         $objForm->hidden("id_endereco")->required(false)->label("ID Endereço");
         #FK - Sexo

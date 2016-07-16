@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.26, for Win32 (x86)
+-- MySQL dump 10.16  Distrib 10.1.9-MariaDB, for Win32 (AMD64)
 --
 -- Host: localhost    Database: bdcatequese
 -- ------------------------------------------------------
--- Server version	5.6.24
+-- Server version	10.1.9-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -69,16 +69,17 @@ INSERT INTO `academias` VALUES (1,1724,1,1,1,'Academia Olimpica',NULL,NULL,'2015
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `acl`
+-- Temporary table structure for view `acl`
 --
 
 DROP TABLE IF EXISTS `acl`;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `acl` AS SELECT 
- 1 AS `id_perfil`,
- 1 AS `nm_resource`*/;
+/*!50001 CREATE TABLE `acl` (
+  `id_perfil` tinyint NOT NULL,
+  `nm_resource` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -183,20 +184,21 @@ INSERT INTO `atleta` VALUES (1,1,4213,1,1,'Alysson Vicuña de Oliveira','1981-08
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `auth`
+-- Temporary table structure for view `auth`
 --
 
 DROP TABLE IF EXISTS `auth`;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `auth` AS SELECT 
- 1 AS `id_usuario`,
- 1 AS `id_perfil`,
- 1 AS `em_email`,
- 1 AS `pw_senha`,
- 1 AS `nm_usuario`,
- 1 AS `id_contrato`*/;
+/*!50001 CREATE TABLE `auth` (
+  `id_usuario` tinyint NOT NULL,
+  `id_perfil` tinyint NOT NULL,
+  `em_email` tinyint NOT NULL,
+  `pw_senha` tinyint NOT NULL,
+  `nm_usuario` tinyint NOT NULL,
+  `id_contrato` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -517,7 +519,7 @@ CREATE TABLE `controller` (
   `nm_modulo` varchar(50) DEFAULT NULL,
   `cs_exibir_combo` char(1) DEFAULT 'N',
   PRIMARY KEY (`id_controller`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -526,7 +528,7 @@ CREATE TABLE `controller` (
 
 LOCK TABLES `controller` WRITE;
 /*!40000 ALTER TABLE `controller` DISABLE KEYS */;
-INSERT INTO `controller` VALUES (1,'arte_marcial-artemarcial','Arte Marcial','S'),(2,'estilo-estilo','Estilo da Arte','S'),(3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','S'),(5,'cidade-cidade','Cidade','S'),(6,'estado-estado','Estado','S'),(7,'graduacao-graduacao','Graduação','S'),(8,'pagamento-pagamento','Pagamento','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','S'),(10,'banco-banco','Banco','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(13,'tipo_evento-tipoevento','Tipo de Evento','S'),(14,'evento-evento','Evento','S'),(15,'graduacao','Teste de Action ','S'),(16,'academia-academia','Academia','S'),(17,'atleta-atleta','Atleta','S'),(18,'categoria_peso-categoriapeso','Categoria de Peso','S'),(19,'categoria_idade-categoriaidade','Categoria de Idade','S'),(20,'regras_lutas-regraslutas','Regras de Luta','S'),(21,'detalhes_regras_luta-detalhesregrasluta','Definição das Regras de Luta','S'),(22,'inscricoes_evento-inscricoesevento','Inscrições nos Eventos','S'),(23,'cliente-cliente','Cliente','S'),(24,'permissao-permissao','Gerenciador de Permissao','S'),(25,'controller-controller','Controller','S'),(26,'action-action','Action','S'),(27,'xxx','xxx','S'),(28,'periodo_letivo-periodoletivo','Periodo Letivo','S'),(29,'sacramento-sacramento','Sacramento','S'),(30,'movimento_pastoral-movimentopastoral','Movimento Pastoral','S'),(31,'detalhe_periodo_letivo-detalheperiodoletivo1','Detalhe do Periodo Letivo','N'),(32,'detalhe_periodo_letivo','Nome da Controller Periodo Letivo','S'),(33,'paroquia-paroquia','Paroquias','S'),(34,'catequista-catequista','Catequista','S'),(35,'infra-infra','Infraestrutura','S'),(36,'formacao-formacao','Formaçao Academica','S'),(37,'detalhe_formacao-detalheformacao','Detalhe Formaçao Academica','S'),(38,'turma-turma','Turmas','S'),(39,'etapa-etapa','Etapas','S'),(40,'turma_catequisando-turmacatequisando','Enturmar Aluno','S'),(41,'responsavel_catequisando-responsavelcatequisando','Responsaveis dos Alunos','S'),(42,'grau_parentesco-grauparentesco','Grau de Parentesco','S'),(44,'sacramento_catequisando-sacramentocatequisando','Sacramento Catequizando','S');
+INSERT INTO `controller` VALUES (1,'arte_marcial-artemarcial','Arte Marcial','S'),(2,'estilo-estilo','Estilo da Arte','S'),(3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','S'),(5,'cidade-cidade','Cidade','S'),(6,'estado-estado','Estado','S'),(7,'graduacao-graduacao','Graduação','S'),(8,'pagamento-pagamento','Pagamento','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','S'),(10,'banco-banco','Banco','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(13,'tipo_evento-tipoevento','Tipo de Evento','S'),(14,'evento-evento','Evento','S'),(15,'graduacao','Teste de Action ','S'),(16,'academia-academia','Academia','S'),(17,'atleta-atleta','Atleta','S'),(18,'categoria_peso-categoriapeso','Categoria de Peso','S'),(19,'categoria_idade-categoriaidade','Categoria de Idade','S'),(20,'regras_lutas-regraslutas','Regras de Luta','S'),(21,'detalhes_regras_luta-detalhesregrasluta','Definição das Regras de Luta','S'),(22,'inscricoes_evento-inscricoesevento','Inscrições nos Eventos','S'),(23,'cliente-cliente','Cliente','S'),(24,'permissao-permissao','Gerenciador de Permissao','S'),(25,'controller-controller','Controller','S'),(26,'action-action','Action','S'),(27,'xxx','xxx','S'),(28,'periodo_letivo-periodoletivo','Periodo Letivo','S'),(29,'sacramento-sacramento','Sacramento','S'),(30,'movimento_pastoral-movimentopastoral','Movimento Pastoral','S'),(31,'detalhe_periodo_letivo-detalheperiodoletivo1','Detalhe do Periodo Letivo','N'),(32,'detalhe_periodo_letivo','Nome da Controller Periodo Letivo','S'),(33,'paroquia-paroquia','Paroquias','S'),(34,'catequista-catequista','Catequista','S'),(35,'infra-infra','Infraestrutura','S'),(36,'formacao-formacao','Formaçao Academica','S'),(37,'detalhe_formacao-detalheformacao','Detalhe Formaçao Academica','S'),(38,'turma-turma','Turmas','S'),(39,'etapa-etapa','Etapas','S'),(40,'turma_catequisando-turmacatequisando','Enturmar Aluno','S'),(41,'responsavel_catequisando-responsavelcatequisando','Responsaveis dos Alunos','S'),(42,'grau_parentesco-grauparentesco','Grau de Parentesco','S'),(44,'sacramento_catequisando-sacramentocatequisando','Sacramento Catequizando','S'),(45,'catequisando-catequisando','Catequizando','S'),(46,'profissao-profissao','Profissões','S'),(47,'situacao_responsavel-situacaoresponsavel','Situação Responsável','S'),(48,'situacao_conjugal-situacaoconjugal','Situação Conjugal','S'),(49,'turno-turno','Turnos','S');
 /*!40000 ALTER TABLE `controller` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1174,7 +1176,7 @@ CREATE TABLE `perfil_controller_action` (
   CONSTRAINT `fk_perfil_controller_action_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id_action`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_controller` FOREIGN KEY (`id_controller`) REFERENCES `controller` (`id_controller`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=364 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=389 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1183,7 +1185,7 @@ CREATE TABLE `perfil_controller_action` (
 
 LOCK TABLES `perfil_controller_action` WRITE;
 /*!40000 ALTER TABLE `perfil_controller_action` DISABLE KEYS */;
-INSERT INTO `perfil_controller_action` VALUES (1,1,1,1),(2,2,1,1),(4,4,1,1),(5,5,1,1),(6,6,1,1),(7,1,5,1),(8,6,6,1),(9,5,6,1),(10,5,7,1),(11,6,7,1),(12,6,8,1),(13,1,2,1),(14,1,3,1),(15,1,9,1),(16,7,1,1),(17,1,4,1),(18,1,10,1),(19,1,11,1),(21,2,5,1),(22,2,12,1),(23,2,13,1),(25,8,18,1),(26,5,16,1),(29,8,19,1),(30,1,1,2),(31,2,1,2),(32,3,1,2),(33,4,1,2),(34,5,1,2),(35,6,1,2),(36,1,5,2),(37,6,6,2),(38,5,6,2),(39,5,7,2),(40,6,7,2),(41,6,8,2),(42,1,2,2),(43,1,3,2),(44,1,9,2),(45,7,1,2),(46,1,4,2),(47,1,10,2),(48,1,11,2),(49,3,7,2),(50,2,5,2),(51,2,12,2),(52,2,13,2),(53,3,14,2),(54,8,18,2),(55,8,20,1),(56,8,21,1),(57,8,22,1),(58,8,23,1),(59,3,15,2),(60,1,24,1),(61,1,24,2),(63,2,25,1),(64,2,25,2),(65,2,26,1),(66,2,26,2),(67,2,27,1),(68,2,27,2),(69,2,28,1),(70,2,28,2),(71,2,29,1),(72,2,30,1),(73,8,9,1),(74,8,9,2),(75,8,31,1),(76,8,31,2),(77,8,32,1),(78,8,33,1),(79,8,34,1),(80,2,35,1),(82,3,36,2),(84,3,37,2),(85,5,16,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(90,10,1,1),(91,10,6,1),(92,10,7,1),(93,11,1,1),(94,10,8,1),(98,1,7,1),(99,1,6,1),(100,1,8,1),(101,2,6,1),(102,2,8,1),(103,2,7,1),(104,7,6,1),(105,7,7,1),(106,7,8,1),(107,13,1,1),(108,13,6,1),(109,13,7,1),(110,13,8,1),(111,14,1,1),(112,14,6,1),(113,14,7,1),(114,14,8,1),(115,7,39,1),(116,15,39,1),(117,15,1,1),(118,16,1,1),(119,16,6,1),(120,16,7,1),(121,16,8,1),(122,16,40,1),(123,16,41,1),(124,17,1,1),(125,17,6,1),(126,17,7,1),(127,17,8,1),(128,17,42,1),(129,17,43,1),(130,17,44,1),(131,17,45,1),(132,17,46,1),(133,17,47,1),(134,17,40,1),(139,19,1,1),(140,19,6,1),(141,19,7,1),(142,19,8,1),(143,20,1,1),(144,20,6,1),(145,20,7,1),(146,20,8,1),(147,21,1,1),(148,21,6,1),(149,21,7,1),(150,21,8,1),(151,19,48,1),(152,22,1,1),(153,22,6,1),(154,22,7,1),(155,22,8,1),(156,14,49,1),(157,5,40,1),(158,16,42,1),(159,16,47,1),(160,17,50,1),(161,17,51,1),(162,17,1,1),(163,25,1,1),(164,25,6,1),(165,25,7,1),(166,25,8,1),(167,25,51,1),(168,26,1,1),(169,26,6,1),(170,26,7,1),(171,26,8,1),(172,26,51,1),(173,24,1,1),(174,24,6,1),(175,24,7,1),(176,24,8,1),(177,24,51,1),(178,28,1,1),(179,28,6,1),(180,28,7,1),(181,28,8,1),(182,28,51,1),(183,29,1,1),(184,29,6,1),(185,29,7,1),(186,29,8,1),(187,29,51,1),(188,30,1,1),(189,30,6,1),(190,30,7,1),(191,30,8,1),(192,30,51,1),(193,28,52,1),(194,28,53,1),(195,28,54,1),(196,31,55,1),(197,32,55,1),(198,33,1,1),(199,33,6,1),(200,33,7,1),(201,33,8,1),(202,33,51,1),(203,5,51,1),(204,24,57,1),(205,34,1,1),(206,34,6,1),(207,34,7,1),(208,34,8,1),(209,34,51,1),(215,35,1,1),(216,18,1,1),(217,18,6,1),(218,18,7,1),(219,18,8,1),(220,18,51,1),(247,36,1,1),(248,36,6,1),(249,36,7,1),(250,36,8,1),(251,36,51,1),(252,36,53,1),(253,36,58,1),(254,36,59,1),(255,36,60,1),(256,37,1,1),(257,37,6,1),(258,37,7,1),(259,37,8,1),(260,37,60,1),(261,38,1,1),(262,38,6,1),(263,38,7,1),(264,38,8,1),(265,38,51,1),(266,39,1,1),(267,39,6,1),(268,39,7,1),(269,39,8,1),(270,39,51,1),(297,41,1,1),(298,41,6,1),(299,41,7,1),(300,41,8,1),(301,41,51,1),(302,42,1,1),(303,42,6,1),(304,42,7,1),(305,42,8,1),(306,42,51,1),(317,3,1,1),(318,3,6,1),(319,3,7,1),(320,3,8,1),(321,3,14,1),(322,3,15,1),(323,3,17,1),(324,3,18,1),(325,3,36,1),(326,3,37,1),(327,3,51,1),(342,40,1,1),(343,40,6,1),(344,40,7,1),(345,40,8,1),(346,40,51,1),(347,40,53,1),(348,40,61,1),(349,40,62,1),(351,44,1,1),(352,44,6,1),(353,44,7,1),(354,44,8,1),(355,44,51,1),(356,12,1,1),(357,12,6,1),(358,12,7,1),(359,12,8,1),(360,12,51,1),(361,11,1,2),(362,11,1,3),(363,11,1,4);
+INSERT INTO `perfil_controller_action` VALUES (1,1,1,1),(2,2,1,1),(4,4,1,1),(5,5,1,1),(6,6,1,1),(7,1,5,1),(8,6,6,1),(9,5,6,1),(10,5,7,1),(11,6,7,1),(12,6,8,1),(13,1,2,1),(14,1,3,1),(15,1,9,1),(16,7,1,1),(17,1,4,1),(18,1,10,1),(19,1,11,1),(21,2,5,1),(22,2,12,1),(23,2,13,1),(25,8,18,1),(26,5,16,1),(29,8,19,1),(30,1,1,2),(31,2,1,2),(32,3,1,2),(33,4,1,2),(34,5,1,2),(35,6,1,2),(36,1,5,2),(37,6,6,2),(38,5,6,2),(39,5,7,2),(40,6,7,2),(41,6,8,2),(42,1,2,2),(43,1,3,2),(44,1,9,2),(45,7,1,2),(46,1,4,2),(47,1,10,2),(48,1,11,2),(49,3,7,2),(50,2,5,2),(51,2,12,2),(52,2,13,2),(53,3,14,2),(54,8,18,2),(55,8,20,1),(56,8,21,1),(57,8,22,1),(58,8,23,1),(59,3,15,2),(60,1,24,1),(61,1,24,2),(63,2,25,1),(64,2,25,2),(65,2,26,1),(66,2,26,2),(67,2,27,1),(68,2,27,2),(69,2,28,1),(70,2,28,2),(71,2,29,1),(72,2,30,1),(73,8,9,1),(74,8,9,2),(75,8,31,1),(76,8,31,2),(77,8,32,1),(78,8,33,1),(79,8,34,1),(80,2,35,1),(82,3,36,2),(84,3,37,2),(85,5,16,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(90,10,1,1),(91,10,6,1),(92,10,7,1),(93,11,1,1),(94,10,8,1),(98,1,7,1),(99,1,6,1),(100,1,8,1),(101,2,6,1),(102,2,8,1),(103,2,7,1),(104,7,6,1),(105,7,7,1),(106,7,8,1),(107,13,1,1),(108,13,6,1),(109,13,7,1),(110,13,8,1),(111,14,1,1),(112,14,6,1),(113,14,7,1),(114,14,8,1),(115,7,39,1),(116,15,39,1),(117,15,1,1),(118,16,1,1),(119,16,6,1),(120,16,7,1),(121,16,8,1),(122,16,40,1),(123,16,41,1),(124,17,1,1),(125,17,6,1),(126,17,7,1),(127,17,8,1),(128,17,42,1),(129,17,43,1),(130,17,44,1),(131,17,45,1),(132,17,46,1),(133,17,47,1),(134,17,40,1),(139,19,1,1),(140,19,6,1),(141,19,7,1),(142,19,8,1),(143,20,1,1),(144,20,6,1),(145,20,7,1),(146,20,8,1),(147,21,1,1),(148,21,6,1),(149,21,7,1),(150,21,8,1),(151,19,48,1),(152,22,1,1),(153,22,6,1),(154,22,7,1),(155,22,8,1),(156,14,49,1),(157,5,40,1),(158,16,42,1),(159,16,47,1),(160,17,50,1),(161,17,51,1),(162,17,1,1),(163,25,1,1),(164,25,6,1),(165,25,7,1),(166,25,8,1),(167,25,51,1),(168,26,1,1),(169,26,6,1),(170,26,7,1),(171,26,8,1),(172,26,51,1),(173,24,1,1),(174,24,6,1),(175,24,7,1),(176,24,8,1),(177,24,51,1),(178,28,1,1),(179,28,6,1),(180,28,7,1),(181,28,8,1),(182,28,51,1),(183,29,1,1),(184,29,6,1),(185,29,7,1),(186,29,8,1),(187,29,51,1),(188,30,1,1),(189,30,6,1),(190,30,7,1),(191,30,8,1),(192,30,51,1),(193,28,52,1),(194,28,53,1),(195,28,54,1),(196,31,55,1),(197,32,55,1),(198,33,1,1),(199,33,6,1),(200,33,7,1),(201,33,8,1),(202,33,51,1),(203,5,51,1),(204,24,57,1),(205,34,1,1),(206,34,6,1),(207,34,7,1),(208,34,8,1),(209,34,51,1),(215,35,1,1),(216,18,1,1),(217,18,6,1),(218,18,7,1),(219,18,8,1),(220,18,51,1),(247,36,1,1),(248,36,6,1),(249,36,7,1),(250,36,8,1),(251,36,51,1),(252,36,53,1),(253,36,58,1),(254,36,59,1),(255,36,60,1),(256,37,1,1),(257,37,6,1),(258,37,7,1),(259,37,8,1),(260,37,60,1),(261,38,1,1),(262,38,6,1),(263,38,7,1),(264,38,8,1),(265,38,51,1),(266,39,1,1),(267,39,6,1),(268,39,7,1),(269,39,8,1),(270,39,51,1),(297,41,1,1),(298,41,6,1),(299,41,7,1),(300,41,8,1),(301,41,51,1),(302,42,1,1),(303,42,6,1),(304,42,7,1),(305,42,8,1),(306,42,51,1),(317,3,1,1),(318,3,6,1),(319,3,7,1),(320,3,8,1),(321,3,14,1),(322,3,15,1),(323,3,17,1),(324,3,18,1),(325,3,36,1),(326,3,37,1),(327,3,51,1),(342,40,1,1),(343,40,6,1),(344,40,7,1),(345,40,8,1),(346,40,51,1),(347,40,53,1),(348,40,61,1),(349,40,62,1),(351,44,1,1),(352,44,6,1),(353,44,7,1),(354,44,8,1),(355,44,51,1),(356,12,1,1),(357,12,6,1),(358,12,7,1),(359,12,8,1),(360,12,51,1),(361,11,1,2),(362,11,1,3),(363,11,1,4),(364,45,1,1),(365,45,6,1),(366,45,7,1),(367,45,8,1),(368,45,51,1),(369,46,1,1),(370,46,6,1),(371,46,7,1),(372,46,9,1),(373,46,51,1),(374,47,1,1),(375,47,6,1),(376,47,7,1),(377,47,8,1),(378,47,51,1),(379,49,1,1),(380,49,6,1),(381,49,7,1),(382,49,8,1),(383,49,51,1),(384,48,1,1),(385,48,6,1),(386,48,7,1),(387,48,8,1),(388,48,51,1);
 /*!40000 ALTER TABLE `perfil_controller_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1224,7 +1226,7 @@ CREATE TABLE `profissao` (
   `id_profissao` int(11) NOT NULL AUTO_INCREMENT,
   `nm_profissao` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_profissao`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Armazena a profissão do responsavel';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='Armazena a profissão do responsavel';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1233,6 +1235,7 @@ CREATE TABLE `profissao` (
 
 LOCK TABLES `profissao` WRITE;
 /*!40000 ALTER TABLE `profissao` DISABLE KEYS */;
+INSERT INTO `profissao` VALUES (1,'Professor'),(2,'Analista de Sistemas'),(3,'Gerente de Projetos'),(4,'Auxiliar Administrativo'),(5,'Secretária'),(6,'Agente de Portaria'),(7,'Concierge'),(8,'Vendedor');
 /*!40000 ALTER TABLE `profissao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1479,7 +1482,7 @@ CREATE TABLE `situacao_conjugal` (
   `id_situacao_conjugal` int(11) NOT NULL AUTO_INCREMENT,
   `ds_situacao_conjugal` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_situacao_conjugal`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Armazena a situacao conjugal dos pais do catequisando. Ex: S';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Armazena a situacao conjugal dos pais do catequisando. Ex: S';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1488,6 +1491,7 @@ CREATE TABLE `situacao_conjugal` (
 
 LOCK TABLES `situacao_conjugal` WRITE;
 /*!40000 ALTER TABLE `situacao_conjugal` DISABLE KEYS */;
+INSERT INTO `situacao_conjugal` VALUES (1,'Casado'),(2,'Amaziado'),(3,'Solteiro'),(4,'Divorciado');
 /*!40000 ALTER TABLE `situacao_conjugal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1503,7 +1507,7 @@ CREATE TABLE `situacao_responsavel` (
   `ds_situacao_responsavel` varchar(50) DEFAULT NULL,
   `cs_pai_mae` char(1) DEFAULT NULL,
   PRIMARY KEY (`id_situacao_responsavel`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Armazena a situação do responsavel. Ex. Mora com pai, pai fa';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Armazena a situação do responsavel. Ex. Mora com pai, pai fa';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1512,6 +1516,7 @@ CREATE TABLE `situacao_responsavel` (
 
 LOCK TABLES `situacao_responsavel` WRITE;
 /*!40000 ALTER TABLE `situacao_responsavel` DISABLE KEYS */;
+INSERT INTO `situacao_responsavel` VALUES (1,'AAAAA','P'),(2,'BBBBB','M'),(3,'CCCCC','M');
 /*!40000 ALTER TABLE `situacao_responsavel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1750,7 +1755,7 @@ CREATE TABLE `turno` (
   `id_turno` int(11) NOT NULL AUTO_INCREMENT,
   `nm_turno` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_turno`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Armazenas os Turnos de estudo. Ex: manha, Tarde, Noite ou Di';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Armazenas os Turnos de estudo. Ex: manha, Tarde, Noite ou Di';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1814,18 +1819,19 @@ INSERT INTO `usuario` VALUES (1,'Alysson Vicuña de Oliveira','1983-12-20 21:47:
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `vw_regras_lutas`
+-- Temporary table structure for view `vw_regras_lutas`
 --
 
 DROP TABLE IF EXISTS `vw_regras_lutas`;
 /*!50001 DROP VIEW IF EXISTS `vw_regras_lutas`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_regras_lutas` AS SELECT 
- 1 AS `id_regra_luta`,
- 1 AS `nm_regra_luta`,
- 1 AS `nm_graduacao_inicial`,
- 1 AS `nm_graduacao_final`*/;
+/*!50001 CREATE TABLE `vw_regras_lutas` (
+  `id_regra_luta` tinyint NOT NULL,
+  `nm_regra_luta` tinyint NOT NULL,
+  `nm_graduacao_inicial` tinyint NOT NULL,
+  `nm_graduacao_final` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1838,6 +1844,7 @@ USE `bdcatequese`;
 -- Final view structure for view `acl`
 --
 
+/*!50001 DROP TABLE IF EXISTS `acl`*/;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1856,6 +1863,7 @@ USE `bdcatequese`;
 -- Final view structure for view `auth`
 --
 
+/*!50001 DROP TABLE IF EXISTS `auth`*/;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1874,6 +1882,7 @@ USE `bdcatequese`;
 -- Final view structure for view `vw_regras_lutas`
 --
 
+/*!50001 DROP TABLE IF EXISTS `vw_regras_lutas`*/;
 /*!50001 DROP VIEW IF EXISTS `vw_regras_lutas`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1897,4 +1906,4 @@ USE `bdcatequese`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-13 17:58:27
+-- Dump completed on 2016-07-16 11:04:55

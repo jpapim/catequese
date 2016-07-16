@@ -1,20 +1,20 @@
 <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
 
-<div class="col-md-10 col-md-push-1">
+<div class="col-md-12">
     <div class="table-responsive">
         <table class="table table-striped" id="tablesorterSituacaoResp" >
             <thead>
             <tr>
 
                 <th class="text-center col-md-4">Descrição</th>
-                <th class="text-center col-md-4">Responsável P-Pai M-Mãe</th>
+                <th class="text-center col-md-4">Responsável</th>
                 <th class="text-center col-md-4">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
                 <th class="text-center col-md-4">Descrição</th>
-                <th class="text-center col-md-4">Responsável P-Pai M-Mãe</th>
+                <th class="text-center col-md-4">Responsável</th>
                 <th class="text-center col-md-4">Ações</th>
             </tr>
             <tr>
@@ -29,7 +29,6 @@
                     );
                     ?>
                 </th>
-
             </tr>
 
             </tfoot>
@@ -64,18 +63,9 @@
                     ?>
                     <tr>
                         <td class="text-center"><?=$item['ds_situacao_responsavel']?></td>
-                        <td class="text-center">
-                            <?php
-                                if($item['cs_pai_mae']==0):
-                                    echo"Pai";
-                                else:
-                                    echo "Mãe";
-                                endif;
-                            ?>
-                        </td>
+                        <td class="text-center"><?=$item['cs_pai_mae'] == 'P'? 'Pai': 'Mãe' ?></td>
 
                         <td style="width: 150px;" class="text-center">
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_situacao_responsavel'])))) ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_situacao_responsavel'])))) ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_situacao_responsavel'])))) ?>
                         </td>

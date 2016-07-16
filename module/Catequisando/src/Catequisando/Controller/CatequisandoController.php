@@ -70,4 +70,15 @@ class CatequisandoController extends  AbstractCrudController{
 
         return $viewModel->setTerminal(TRUE);
     }
+
+    public function cadastroAction()
+    { // funnção alterar
+        return parent::cadastro($this->service, $this->form);
+    }
+
+    public function excluirAction()
+    {
+        return parent::excluir($this->service, $this->form);
+    }
+
 } 
