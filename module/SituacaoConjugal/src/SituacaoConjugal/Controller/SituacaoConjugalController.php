@@ -41,9 +41,7 @@ class SituacaoConjugalController extends  AbstractCrudController{
             '0' => [
                 'filter' => "situacao_conjugal.ds_situacao_conjugal  LIKE ?"
             ],
-
-
-
+            '1' => NULL,
         ];
 
 
