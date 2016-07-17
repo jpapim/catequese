@@ -19,10 +19,13 @@
 
                 ?>
                 <!--DADOS PESSOAIS -->
+                <hr>
                 <fieldset>
+
                     <div class="container">
+
                         <div class="row">
-                            <div class="col-md-5 col-md-push-1">
+                            <div class="col-md-5 col-md-push-1"><!--Lado Esquerdo -->
 
                                 <div class="form-group">
                                     <div class="col-md-12">
@@ -34,6 +37,13 @@
                                             <?= $this->formRow($form->get('id_sexo')) ?>
                                         </div>
                                    </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?= $this->formRow($form->get('cidades')) ?>
+                                    </div>
+                                </div>
+
                               <div class="col-md-5">
                                    <div class="form-group">
                                        <?= $this->formRow($form->get('id_telefone_residencial')) ?>
@@ -44,9 +54,9 @@
                                            <?= $this->formRow($form->get('id_telefone_celular')) ?>
                                        </div>
                                    </div>
-                               </div><!-- TERMINA AQUI-->
+                               </div>
 
-                            <div class="col-md-4 col-md-push-2">
+                            <div class="col-md-4 col-md-push-2"> <!-- Lado Direito -->
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <?=$this->formRow($form->get('dt_nascimento'))?>
@@ -61,6 +71,12 @@
 
                                 <div class="form-group">
                                     <div class="col-md-12">
+                                        <?=$this->formRow($form->get('em_email_confirm'))?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
                                         <?=$this->formRow($form->get('id_endereco'))?>
                                     </div>
                                 </div>
@@ -68,7 +84,7 @@
                             </div>
                         </div>
                 </fieldset><!-- FIM DADOS PESSOAIS -->
-
+                <hr>
                 <fieldset>
                     <div class="form-group">
                         <div class="col-md-4 col-md-push-1">
@@ -80,6 +96,36 @@
                             <?=$this->formRow($form->get('cs_estudante'))?>
                         </div>
                     </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-push-1">
+                            <?=$this->formRow($form->get('sacramento'))?>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-push-1">
+                            <?= $this->formRow($form->get('cs_participante_movimento_pastoral'))?>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-push-1">
+                            <?= $this->formRow($form->get('etapa'))?>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                        <div class="col-md-6 col-md-push-1">
+                            <?= $this->formRow($form->get('tx_observacao'))?>
+                        </div>
                 </fieldset>
 
                 </div>
@@ -105,7 +151,7 @@
             source: "/academia-academia/autocompleteacademia"
         });
 
-        $( "input#id_cidade" ).autocomplete({
+        $( "input#cidades" ).autocomplete({
             minLength: 4,
             source: "/cidade-cidade/autocompletecidade"
         });
