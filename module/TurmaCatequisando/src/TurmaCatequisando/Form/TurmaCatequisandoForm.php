@@ -22,8 +22,8 @@ class TurmaCatequisandoForm extends AbstractForm
         $objForm->combo("id_turma", '\Turma\Service\TurmaService', 'id', 'nm_turma')->required(false)->label("Turma");
         #TODO: MODULO CATEQUISANDO AINDA NAO IMPLEMENTADO ->
         # TODO: $objForm->combo("id_catequisando", '\Catequisando\Service\CatequisandoService', 'id', 'nm_catequisando')->required(false)->label("catequisando");
-        #$objForm->hidden("id_catequisando")->required(false)->label("Catequizando");
-        $objForm->text("id_catequisando")->required(true)->label("Catequizando");
+        #$objForm->hidden("id_catequisando")->required(false)->label("Catequisando");
+        $objForm->text("id_catequisando")->required(true)->label("Catequisando");
 
         $objForm->hidden("id_usuario")->required(false)->label("Identificacao do Usuario");
         $objForm->combo("id_periodo_letivo", '\PeriodoLetivo\Service\PeriodoLetivoService', 'id', 'dt_ano_letivo')->required(false)->label("Periodo Letivo");

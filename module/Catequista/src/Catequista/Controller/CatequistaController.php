@@ -2,6 +2,7 @@
 
 namespace Catequista\Controller;
 
+use Email\Service\EmailService;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
 use Estrutura\Helpers\Data;

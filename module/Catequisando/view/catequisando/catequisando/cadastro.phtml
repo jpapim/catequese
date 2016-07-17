@@ -1,5 +1,5 @@
 <div class="page-head">
-    <h2>Cadastro</h2>
+    <h2>Adicionar Aluno</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
@@ -12,90 +12,76 @@
                 $form->prepare();
                 echo $this->form()->openTag($form);
                 $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
-                $form->get('id_usuario')->setValue($this->Auth()->id_usuario);
-                $form->get('id_usuario_cadastro')->setValue($this->Auth()->id_usuario);
 
                 echo $this->formHidden($form->get('id'));
-                echo $this->formHidden($form->get('id_usuario'));
-                echo $this->formHidden($form->get('id_usuario_cadastro'));
-
-
-                #Recuperando o Nome de Uma Cidade Pelo ID e Setando no Formulario
-                $academia = new \Academia\Service\AcademiaService();
-                $arrAcademia = $academia->getAcademiaToArray($form->get('id_academia')->getValue());
-                $form->setData(['id_academia' => $arrAcademia['nm_academia']]);
-
-                #Recuperando o Nome de Uma Cidade Pelo ID e Setando no Formulario
-                $cidade = new \Cidade\Service\CidadeService();
-                $arrCidade = $cidade->getCidadeToArray($form->get('id_cidade')->getValue());
-                $form->setData(['id_cidade' => $arrCidade['nm_cidade']]);
 
                 $form->get('dt_nascimento')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_nascimento')->getValue()));
 
-                $id_graduacao =  $form->get('id_graduacao')->getValue();
                 ?>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?=$this->formRow($form->get('id_academia')) ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?=$this->formRow($form->get('nm_atleta'))?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?= $this->formRow($form->get('id_sexo')) ?>
-                    </div>
-                </div>
+                <!--DADOS PESSOAIS -->
+                <fieldset>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-5 col-md-push-1">
 
-                <!-- Alysson - Customizado para Adicionar Imagens -->
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <?php
-                        ###################################################################
-                        #Recuperando Todos os Dados das Graduaçoes
-                        $graduacao = new \Graduacao\Service\GraduacaoService();
-                        $arrGraduacao = $graduacao->fetchAll()->toArray();
-                        $arrGraduacaoTratado = array();
-                        foreach($arrGraduacao as $valor){ ?>
-                            <input type="radio" name="id_graduacao" id="id_graduacao_<?=$valor['id_graduacao']?>" value="<?=$valor['id_graduacao']?>" <?= $valor['id_graduacao'] == $id_graduacao ? "checked='checked'" : "" ?>  >
-                            <img alt="<?=$valor['nm_graduacao']?>" height="42" width="42" src="/assets/img/graduacoes/<?=$valor['nm_graduacao']?>.jpeg" />
-                            <?//=$valor['nm_graduacao']?>&nbsp;&nbsp;&nbsp;
-                        <?php } ?>
-                    </div>
-                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?= $this->formRow($form->get('nm_catequisando')) ?>
+                                    </div>
+                                </div>
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <?= $this->formRow($form->get('id_sexo')) ?>
+                                        </div>
+                                   </div>
+                              <div class="col-md-5">
+                                   <div class="form-group">
+                                       <?= $this->formRow($form->get('id_telefone_residencial')) ?>
+                                   </div>
+                               </div>
+                                   <div class="col-md-5 col-md-push-1">
+                                       <div class="form-group">
+                                           <?= $this->formRow($form->get('id_telefone_celular')) ?>
+                                       </div>
+                                   </div>
+                               </div><!-- TERMINA AQUI-->
 
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?=$this->formRow($form->get('nr_peso'))?>
+                            <div class="col-md-4 col-md-push-2">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('dt_nascimento'))?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('em_email'))?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('id_endereco'))?>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                </fieldset><!-- FIM DADOS PESSOAIS -->
+
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-push-1">
+                            <?=$this->formRow($form->get('cs_necessidade_especial'))?>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?=$this->formRow($form->get('dt_nascimento'))?>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-push-1">
+                            <?=$this->formRow($form->get('cs_estudante'))?>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?=$this->formRow($form->get('id_cidade')) ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?=$this->formRow($form->get('tx_endereco'))?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?=$this->formRow($form->get('tx_complemento'))?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?=$this->formRow($form->get('nr_cep'))?>
-                    </div>
+                </fieldset>
+
                 </div>
                 <div class="form-group">
                     <div class="col-md-10">

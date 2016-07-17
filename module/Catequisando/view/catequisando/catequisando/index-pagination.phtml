@@ -2,7 +2,10 @@
 
 <?php
   $catequisando =  new Catequisando\Service\CatequisandoService();
+  $telefone = new Telefone\Service\TelefoneService();
 
+  /*  $resultSet = $catequisando->getCatequisandoJoins(2);
+    $catequisando->classTest($resultSet);*/
 ?>
 <div class="col-md-12">
     <div class="table-responsive">
@@ -75,8 +78,8 @@
                     ?>
                     <tr>
                         <td class="text-center"><?=$item['nm_catequisando']?></td>
-                        <td class="text-center"><?=$item['id_telefone_residencial']?></td>
-                        <td class="text-center"><?=$item['id_telefone_celular']?></td>
+                        <td class="text-center"><?=$item['id_catequisando']?></td>
+                        <td class="text-center"><?=$resultSet['nr_telefone']?></td>
                         <td class="text-center"><?=$item['em_email']?></td>
                         <td class="text-center"><?=$resultSet['nm_turma']?></td>
 
