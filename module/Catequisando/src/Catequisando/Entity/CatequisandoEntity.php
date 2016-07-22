@@ -23,7 +23,8 @@ class CatequisandoEntity extends  AbstractEstruturaService{
     protected  $id_situacao;
     protected  $id_turno;
     protected  $id_movimento_pastoral;
-    protected  $nm_catequisandonr_matricula;
+    protected  $nm_catequisando;
+    protected  $nr_matricula;
     protected  $dt_nascimento;
     protected  $dt_ingresso;
     protected  $tx_observacao;
