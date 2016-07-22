@@ -16,21 +16,17 @@ class FrequenciaTurmaService extends Entity
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
-
-
         $select = $sql->select('frequencia_turma')->columns([
             'id_frequencia_turma',
             'id_turma_catequisando',
             'id_detalhe_periodo_letivo',
-        ])
-            ->join(array('tct' =>
+        ])->join(array('tct' =>
                 'turma_catequisando'), 'tct.id_turma_catequisando = frequencia_turma.id_turma_catequisando',
                 array('id_turma', 'id_catequisando', 'id_usuario', 'turma_catequisando_id_periodo_letivo'=>'id_periodo_letivo', 'dt_cadastro', 'cs_aprovado', 'ds_motivo_reprovacao', 'tx_observacoes') #Alysson - Criando Alias para a Coluna
-            )
-            ->join( array('dpl' =>
+        )->join( array('dpl' =>
                 'detalhe_periodo_letivo'), 'dpl.id_detalhe_periodo_letivo = frequencia_turma.id_detalhe_periodo_letivo',
                 array('detalhe_periodo_letivo_id_periodo_letivo'=>'id_periodo_letivo', 'dt_encontro')#Alysson - Criando Alias para a Coluna
-            );
+        );
 
         $where = [
         ];
