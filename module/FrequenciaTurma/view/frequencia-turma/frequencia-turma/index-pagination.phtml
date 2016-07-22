@@ -6,16 +6,16 @@
             <thead>
             <tr>
                 <th class="text-center">Identificador</th>
-                <th class="text-center">Id Turma Catequizando</th>
-                <th class="text-center">Id Detalhe do Período Letivo</th>
+                <th class="text-center">ID Turma Catequizando</th>
+                <th class="text-center">ID Detalhe do Período Letivo</th>
                 <th class="text-center">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
                 <th class="text-center">Identificador</th>
-                <th class="text-center">Id Turma Catequizando</th>
-                <th class="text-center">Id Detalhe do Período Letivo</th>
+                <th class="text-center">ID Turma Catequizando</th>
+                <th class="text-center">ID Detalhe do Período Letivo</th>
                 <th class="text-center">Ações</th>
             </tr>
             <tr>
@@ -60,7 +60,7 @@
                     ?>
                 </tr>
                 <?php
-                foreach ($paginator as $key => $frequenciaturma) {
+                foreach ($paginator as $key => $item) {
                     ?>
                     <tr>
                         <td class="text-center"><?= $item['id_frequencia_turma']?></td>
@@ -69,8 +69,8 @@
 
                         <td class="text-center">
                                 <span class="" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($frequenciaturma['id_frequencia_turma'])))) ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($frequenciaturma['id_frequencia_turma'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_frequencia_turma'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_frequencia_turma'])))) ?>
                                 </span>
                         </td>
                     </tr>
