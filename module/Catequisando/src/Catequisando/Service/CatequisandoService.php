@@ -119,7 +119,7 @@ class CatequisandoService extends  Entity{
         ])
         ->join('turma_catequisando','turma_catequisando.id_catequisando =  catequisando.id_catequisando')
         ->join('turma','turma.id_turma = turma_catequisando.id_turma',['nm_turma'])
-        ->join('telefone','telefone.id_telefone = catequisando.id_telefone_residencial',['nr_telefone'])
+        ->join('telefone','telefone.id_telefone = catequisando.id_telefone_residencial',['nr_ddd_telefone','nr_telefone'])
        /* ->join('responsavel_catequisando','responsavel_catequisando.id_catequisando =  catequisando.id_catequisando')
         ->join('responsavel','responsavel.id_responsavel = responsavel_catequisando.id_responsavel',['nm_responsavel'])*/
         ->where([

@@ -1,3 +1,11 @@
+<?php
+    if(isset($_POST)){
+        echo "<pre>";
+        print_r($_POST);
+        echo "</pre>";
+    }
+?>
+
 <div class="page-head">
     <h2>Adicionar Aluno</h2>
 </div>
@@ -12,10 +20,9 @@
                 $form->prepare();
                 echo $this->form()->openTag($form);
                 $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
-
                 echo $this->formHidden($form->get('id'));
-
                 $form->get('dt_nascimento')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_nascimento')->getValue()));
+
 
                 ?>
                 <!--DADOS PESSOAIS -->
@@ -40,26 +47,54 @@
 
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <?= $this->formRow($form->get('cidades')) ?>
+                                        <?= $this->formRow($form->get('id_cidade')) ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?= $this->formRow($form->get('nm_bairro')) ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?= $this->formRow($form->get('nm_complemento')) ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?= $this->formRow($form->get('nr_numero')) ?>
                                     </div>
                                 </div>
 
-                              <div class="col-md-5">
-                                   <div class="form-group">
-                                       <?= $this->formRow($form->get('id_telefone_residencial')) ?>
-                                   </div>
-                               </div>
-                                   <div class="col-md-5 col-md-push-1">
-                                       <div class="form-group">
-                                           <?= $this->formRow($form->get('id_telefone_celular')) ?>
-                                       </div>
-                                   </div>
                                </div>
 
                             <div class="col-md-4 col-md-push-2"> <!-- Lado Direito -->
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <?=$this->formRow($form->get('dt_nascimento'))?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('nr_cep'))?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('nm_logradouro'))?>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <?= $this->formRow($form->get('id_telefone_residencial')) ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-md-push-1">
+                                    <div class="form-group">
+                                        <?= $this->formRow($form->get('id_telefone_celular')) ?>
                                     </div>
                                 </div>
 
@@ -75,11 +110,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <?=$this->formRow($form->get('id_endereco'))?>
-                                    </div>
-                                </div>
                             </div>
                             </div>
                         </div>
@@ -151,7 +181,7 @@
             source: "/academia-academia/autocompleteacademia"
         });
 
-        $( "input#cidades" ).autocomplete({
+        $( "input#id_cidade" ).autocomplete({
             minLength: 4,
             source: "/cidade-cidade/autocompletecidade"
         });

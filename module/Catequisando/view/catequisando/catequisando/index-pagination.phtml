@@ -1,34 +1,29 @@
 <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
-
 <?php
-  $catequisando =  new Catequisando\Service\CatequisandoService();
-  $telefone = new Telefone\Service\TelefoneService();
 
-  /*  $resultSet = $catequisando->getCatequisandoJoins(2);
-    $catequisando->classTest($resultSet);*/
+    $catequisando =  new \Catequisando\Service\CatequisandoService();
 ?>
 <div class="col-md-12">
     <div class="table-responsive">
         <table class="table table-striped" id="tablesorterCatequisando" >
             <thead>
             <tr>
-
                 <th class="text-center col-md-2">Nome</th>
                 <th class="text-center col-md-2">Responsável</th>
-                <th class="text-center col-md-1">Tel. Residencial</th>
+                <th class="text-center col-md-2">Tel. Residencial</th>
                 <th class="text-center col-md-2">Email</th>
                 <th class="text-center col-md-1">Turma</th>
-                <th class="text-center col-md-2">Ações</th>
+                <th class="text-center col-md-1">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
                 <th class="text-center col-md-2">Nome</th>
                 <th class="text-center col-md-2">Responsável</th>
-                <th class="text-center col-md-1">Tel. Residencial</th>
+                <th class="text-center col-md-2">Tel. Residencial</th>
                 <th class="text-center col-md-2">Email</th>
                 <th class="text-center col-md-1">Turma</th>
-                <th class="text-center col-md-2">Ações</th>
+                <th class="text-center col-md-1">Ações</th>
             </tr>
             <tr>
                 <th colspan="6" class="ts-pager form-horizontal">
@@ -74,17 +69,16 @@
                 </tr>
                 <?php
                 foreach ($paginator as $item) {
-                    $resultSet =  $catequisando->getCatequisandoJoins($item['id_catequisando'])
+                    $resultSet =  $catequisando->getCatequisandoJoins($item['id_catequisando']);
                     ?>
                     <tr>
                         <td class="text-center"><?=$item['nm_catequisando']?></td>
                         <td class="text-center"><?=$item['id_catequisando']?></td>
-                        <td class="text-center"><?=$resultSet['nr_telefone']?></td>
+                        <td class="text-center"><?="(".$resultSet['nr_ddd_telefone'].") "." ".$resultSet['nr_telefone']?></td>
                         <td class="text-center"><?=$item['em_email']?></td>
                         <td class="text-center"><?=$resultSet['nm_turma']?></td>
 
                         <td style="width: 100px;" class="text-center">
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_catequisando'])))) ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_catequisando'])))) ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_catequisando'])))) ?>
                         </td>

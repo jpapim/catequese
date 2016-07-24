@@ -9,6 +9,7 @@
 namespace Catequisando\Form;
 
 
+use Endereco\Form\EnderecoForm;
 use Estrutura\Form\AbstractForm;
 use Estrutura\Form\FormObject;
 use Etapa\Service\EtapaService;
@@ -16,7 +17,6 @@ use Sacramento\Service\SacramentoService;
 use Zend\InputFilter\InputFilter;
 
 class CatequisandoForm extends  AbstractForm{
-
 
     public function __construct(){
         parent::__construct('catequisandoform');
@@ -26,20 +26,24 @@ class CatequisandoForm extends  AbstractForm{
 
         $objForm->hidden("id")->required(false)->label("Id");
 
-        #FK - Endereço
-        $objForm->combo("id_endereco", '\Endereco\Service\EnderecoService', 'id', 'nm_logradouro')->required(false)->label("Endereco");
+        ##### Endereço ######
+        $objForm->combo("nm_logradouro", '\Endereco\Service\EnderecoService', 'id', 'nm_logradouro')->required(false)->label("Logradouro");
+        $objForm->text("nr_numero")->required(true)->label("Número");
+        $objForm->text("nm_complemento")->required(true)->label("Complemento");
+        $objForm->text("nm_bairro")->required(true)->label("Bairro");
+        $objForm->cep("nr_cep")->required(true)->label("Cep");
 
         #FK - Cidades
-        $objForm->text("cidades")->required(false)->label("Cidade");
+        $objForm->text("id_cidade")->required(false)->label("Cidade");
 
         #FK - Sexo
         $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(FALSE)->label("Sexo");
 
         #FK- Telefone Residencial
-        $objForm->text("id_telefone_residencial")->required(false)->label("Telefone Residencial");
+        $objForm->telefone("id_telefone_residencial")->required(false)->label("Telefone Residencial");
 
         #FK- Telefone Celular
-        $objForm->text("id_telefone_celular")->required(false)->label("Telefone Celular");
+        $objForm->telefone("id_telefone_celular")->required(false)->label("Telefone Celular");
 
         # SACRAMENTOS #
         #Resgatando as informações da tabela sacaramento
@@ -51,14 +55,14 @@ class CatequisandoForm extends  AbstractForm{
         foreach($colecaoSacramento as $key => $obSacramento){
             $arrSacramentos[]=[
                 'value'=>$obSacramento->getId(),
-                'id'=>'sacramento'. $key,
+                'name'=>'sacramento',
                 'label'=>$obSacramento->getNmSacramento(),
             ];
         }
         $objForm->multicheckbox('sacramento', $arrSacramentos)->required(false)->label('Sacramesntos que já recebeu');
 
         # ETAPA #
-        #Resgatando as informações da tabela sacaramento
+        #Resgatando as informações da tabela sacramento
         #
         $obEtapa =  new EtapaService();
         $colecaoEtapa = $obEtapa->fetchAll();
@@ -67,7 +71,7 @@ class CatequisandoForm extends  AbstractForm{
         foreach($colecaoEtapa as $key => $etapa){
             $arrEtapa[]=[
                 'value'=>$etapa->getId(),
-                'id'=>'etapa'. $key,
+                'name'=>'etapa['.$etapa->getId().']',
                 'label'=>$etapa->getNmEtapa(),
             ];
         }
@@ -80,14 +84,11 @@ class CatequisandoForm extends  AbstractForm{
             ->setAttribute('data-match', '#em_email')
             ->setAttribute('data-match-error', 'Email não correspondem');
         $objForm->combo("id_email", '\Email\Service\EmailService', 'id', 'em_email')->required(false)->label("Email");
-        $objForm->combo('id_situacao','\Situacao\Service\SituacaoService','id','nm_situacao')->required(false)->label("Situacao");
 
-        $objForm->text("nm_catequisando")
+            $objForm->text("nm_catequisando")
             ->setAttribute('maxlength','150')
             ->required(true)->label("Nome");
-
         $objForm->date("dt_nascimento")->required(true)->setAttribute('class', 'data')->label("Data de nascimento");
-        $objForm->date("dt_ingresso")->required(true)->setAttribute('class', 'data')->label("Data de Ingresso");
 
         $objForm->text("nm_matricula")
             ->setAttribute('maxlength','8')
@@ -103,8 +104,7 @@ class CatequisandoForm extends  AbstractForm{
         $objForm->radio("cs_necessidade_especial",['Sim','Não'])
             ->setAttribute('style',' text-transform: uppercase')
             ->required(true)
-            ->label("Possui necessidade especial?
-");
+            ->label("Possui necessidade especial?");
 
         $objForm->text("nm_necessidade_especial")->required(false)->label("Necessidade Especial");
 
