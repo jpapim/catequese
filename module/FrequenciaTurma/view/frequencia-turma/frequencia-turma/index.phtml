@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+
+<div class="page-head">
+    <h2>Lista de Frequencia da Turma</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-default"
+               href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>"
+               title="Nova Frequencia da Turma">Nova Frequencia da Turma</a>
+        </div>
+    </div>
+    <br/>
+    <div class="row" id="frequencia-turma"></div>
+</div>
+
+<script>
+    // funcao ajax para buscar a paginacao
+    $(function () {
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            cache: false,
+            url: '/frequencia_turma-frequenciaturma/index-pagination',
+            async: true,
+            data: {},
+            beforeSend: function () {
+
+                $('#frequencia-turma').html(
+                    '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                );
+            },
+            success: function (data) {
+
+                $('#frequencia-turma').html(data);
+            }
+        });
+
+    })
+</script>

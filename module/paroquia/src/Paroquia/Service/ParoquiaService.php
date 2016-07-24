@@ -110,6 +110,7 @@ class ParoquiaService extends Entity
             }
         }
         $select->where($where)->order(['nm_paroquia DESC']);
+        #xd($select->getSqlString($this->getAdapter()->getPlatform()));
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
 }

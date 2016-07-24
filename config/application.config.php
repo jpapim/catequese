@@ -60,6 +60,7 @@ return array(
         'Catequista',
         'Etapa',
         'Turma',
+        'FrequenciaTurma',
         'Turno',
         'TurmaCatequisando',
         'Formacao',
