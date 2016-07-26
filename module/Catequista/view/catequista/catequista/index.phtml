@@ -1,70 +1,44 @@
 <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
-<?php
-  /** @var $form \Usuario\Form\Usuario */
-  /** @var $lista \Usuario\Service\Usuario[] */
-?>
+
+<!--<link rel="stylesheet" href="/assets/css/jquery.tablesorter.theme.bootstrap.css">-->
+<!--<link rel="stylesheet" href="/assets/css/jquery.tablesorter.pager.css">-->
+
 <div class="page-head">
-    <h2>Lista de Catequistas do Sistema</h2>
+    <h2>Lista de Catequista</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
-        <div class="col-md-12">
-            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Inserir um novo usuário do sistema">Novo Catequista</a>
+        <div class="col-md-12"><?php // botao novo catequista?>
+            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adiciona um novo catequista">Novo Catequista</a>
         </div>
     </div>
     <br />
-    <div class="row">
-        <div class="col-md-12">
-            <div class="block-flat">
-                <div class="content">
-
-                    <table class="table table-bordered dataTable">
-                        <thead>
-                            <tr>
-                                <th>Catequista</th> 
-                                <th>Data de nascimento</th> 
-                                <th>Data ingresso</th> 
-                                <th>N° Matricula</th> 
-                                <th>Data de nascimento</th> 
-                                <th>Data ingresso</th> 
-                                <th>Observação</th> 
-                                <th>Situação</th>
-                                <th>Cordenador</th>
-                                
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        <?php foreach($lista as $item){ ?>
-                            <tr>
-                                <td><?=$item->getNmCatequista()?></td> 
-                               
-                                
-                                <td><?=$item->getNrMatricula()?></td> 
-                                 <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item->getDtNascimento())?></td>
-                                 <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item->getDtIngresso())?></td>
-                                 <td><?=$item->getTxObservacao()?></td> 
-                                <td><?=$item->getDsSituacao()?></td> 
-                                 <td><?=$item->getCsCordenador()?></td>
-                                 <td>&nbsp;</td>
-                                  <td>&nbsp;</td>
-                                                                
-                                <td style="width: 150px;">
-                                    <?=\Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro','id'=>Estrutura\Helpers\Cript::enc($item->getId()))))?>
-                                    <?=\Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao',array('controller'=>$controller,'action'=>'excluir','id'=>Estrutura\Helpers\Cript::enc($item->getId()))))?>
-                                </td>
-                            </tr>
-                        <?php }; ?>
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a href="<?=$this->url('navegacao', ['controller'=>'principal-principal'])?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>    
+    <div class="row" id="atleta-pagination"></div>    
 </div>
+
+<script>
+    <?php // funcao ajax para buscar a paginacao?>
+    $(function () {
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            cache: false,
+            url: '/catequista-catequista/index-pagination',
+            async: true,
+            data: {
+            },
+            beforeSend: function () {
+
+                $('#atleta-pagination').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                        );
+            },
+            success: function (data) {
+
+                $('#atleta-pagination').html(data);
+            }
+        });
+
+    })
+</script>
