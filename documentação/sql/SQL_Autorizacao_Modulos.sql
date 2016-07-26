@@ -117,6 +117,10 @@ insert into perfil_controller_action(id_controller,id_action,id_perfil) values('
 insert into perfil_controller_action(id_controller,id_action,id_perfil) values('46','51','1');
 
 ################################################
+INSERIR MODULO RESPONSAVEL
+INSERT into controller(id_controller,nm_controller) VALUES(null,'responsavel-responsavel');
 
-
+AUTORIZACAO RESPONSAVEL_CATEQUISANDO
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(34,1,1),(34,6,1),(34,51,1),(34,7,1),(34,8,1);
+################################################
 
