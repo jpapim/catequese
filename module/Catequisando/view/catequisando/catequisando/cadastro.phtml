@@ -1,9 +1,9 @@
 <?php
-    if(isset($_POST)){
+/*    if(isset($form)){
         echo "<pre>";
-        print_r($_POST);
+        print_r($form->get('id_email'));
         echo "</pre>";
-    }
+    }*/
 ?>
 
 <div class="page-head">
@@ -74,7 +74,11 @@
                                         <?=$this->formRow($form->get('dt_nascimento'))?>
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('id_naturalidade'))?>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <?=$this->formRow($form->get('nr_cep'))?>
@@ -131,7 +135,7 @@
                 <fieldset>
                     <div class="form-group">
                         <div class="col-md-4 col-md-push-1">
-                            <?=$this->formRow($form->get('sacramento'))?>
+                            <?=$this->formRow($form->get('arrSacramento'))?>
                         </div>
                     </div>
                 </fieldset>
@@ -139,7 +143,7 @@
                 <fieldset>
                     <div class="form-group">
                         <div class="col-md-4 col-md-push-1">
-                            <?= $this->formRow($form->get('cs_participante_movimento_pastoral'))?>
+                            <?= $this->formRow($form->get('cs_participa_movimento_pastoral'))?>
                         </div>
                     </div>
                 </fieldset>
@@ -147,7 +151,7 @@
                 <fieldset>
                     <div class="form-group">
                         <div class="col-md-6 col-md-push-1">
-                            <?= $this->formRow($form->get('etapa'))?>
+                            <?= $this->formRow($form->get('arrEtapa'))?>
                         </div>
                     </div>
                 </fieldset>
@@ -176,12 +180,12 @@
             { dateFormat: 'dd/mm/yy' }
         );
 
-        $( "input#id_academia" ).autocomplete({
-            minLength: 3,
-            source: "/academia-academia/autocompleteacademia"
+        $( "input#id_cidade" ).autocomplete({
+            minLength: 4,
+            source: "/cidade-cidade/autocompletecidade"
         });
 
-        $( "input#id_cidade" ).autocomplete({
+        $( "input#id_naturalidade" ).autocomplete({
             minLength: 4,
             source: "/cidade-cidade/autocompletecidade"
         });

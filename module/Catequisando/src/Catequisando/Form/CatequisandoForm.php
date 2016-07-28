@@ -9,7 +9,6 @@
 namespace Catequisando\Form;
 
 
-use Endereco\Form\EnderecoForm;
 use Estrutura\Form\AbstractForm;
 use Estrutura\Form\FormObject;
 use Etapa\Service\EtapaService;
@@ -24,20 +23,24 @@ class CatequisandoForm extends  AbstractForm{
         $this->inputFilter = new InputFilter();
         $objForm = new FormObject('catequisandoform',$this,$this->inputFilter);
 
+        ### ID
         $objForm->hidden("id")->required(false)->label("Id");
-
         ##### Endereço ######
-        $objForm->combo("nm_logradouro", '\Endereco\Service\EnderecoService', 'id', 'nm_logradouro')->required(false)->label("Logradouro");
+        $objForm->hidden("id_endereco")->required(false);
+        $objForm->text("nm_logradouro")->required(false)->label("Logradouro");
         $objForm->text("nr_numero")->required(true)->label("Número");
         $objForm->text("nm_complemento")->required(true)->label("Complemento");
         $objForm->text("nm_bairro")->required(true)->label("Bairro");
         $objForm->cep("nr_cep")->required(true)->label("Cep");
 
+        #FK - Naturalidade
+        $objForm->text("id_naturalidade")->required(false)->label("Naturalidade");
+
         #FK - Cidades
         $objForm->text("id_cidade")->required(false)->label("Cidade");
 
         #FK - Sexo
-        $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(FALSE)->label("Sexo");
+        $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(false)->label("Sexo");
 
         #FK- Telefone Residencial
         $objForm->telefone("id_telefone_residencial")->required(false)->label("Telefone Residencial");
@@ -59,7 +62,7 @@ class CatequisandoForm extends  AbstractForm{
                 'label'=>$obSacramento->getNmSacramento(),
             ];
         }
-        $objForm->multicheckbox('sacramento', $arrSacramentos)->required(false)->label('Sacramesntos que já recebeu');
+        $objForm->multicheckbox('arrSacramento', $arrSacramentos)->required(false)->label('Sacramentos que já recebeu');
 
         # ETAPA #
         #Resgatando as informações da tabela sacramento
@@ -75,45 +78,49 @@ class CatequisandoForm extends  AbstractForm{
                 'label'=>$etapa->getNmEtapa(),
             ];
         }
-        $objForm->multicheckbox('etapa', $arrEtapa)->required(false)->label('Etapas já frequentadas');
+        $objForm->multicheckbox('arrEtapa', $arrEtapa)->required(false)->label('Etapas já frequentadas');
 
 
         #FK- Email
+        $objForm->hidden("id_email")->required(false);
         $objForm->email("em_email")->required(true)->label("Email");
         $objForm->email("em_email_confirm")->required(true)->label("Confirme o email")
             ->setAttribute('data-match', '#em_email')
             ->setAttribute('data-match-error', 'Email não correspondem');
-        $objForm->combo("id_email", '\Email\Service\EmailService', 'id', 'em_email')->required(false)->label("Email");
 
-            $objForm->text("nm_catequisando")
-            ->setAttribute('maxlength','150')
-            ->required(true)->label("Nome");
+        ### Nome do Catequizando
+        $objForm->text("nm_catequisando")->required(true)->label("Nome");
+        ### Data de Nascimento
         $objForm->date("dt_nascimento")->required(true)->setAttribute('class', 'data')->label("Data de nascimento");
 
+        ### Matricula
         $objForm->text("nm_matricula")
-            ->setAttribute('maxlength','8')
-            ->required(true)
+            ->required(false)
             ->label("Matricula");
 
+        ### Observação
         $objForm->textarea("tx_observacao")
             ->required(false)
             ->label("Observações");
 
+        # ID SITUACAO
+        $objForm->hidden("id_situacao")->required(false);
         $objForm->text("ds_situacao")->required(false)->label("Descrição Situacao");
 
-        $objForm->radio("cs_necessidade_especial",['Sim','Não'])
+        ### [Radio] Necessidade Especial
+        $objForm->radio("cs_necessidade_especial",['S'=>'Sim','N'=>'Não'])
             ->setAttribute('style',' text-transform: uppercase')
             ->required(true)
             ->label("Possui necessidade especial?");
 
-        $objForm->text("nm_necessidade_especial")->required(false)->label("Necessidade Especial");
-
-        $objForm->radio("cs_estudante",['Sim','Não'])
+        ### [Radio] Estudante
+        $objForm->radio("cs_estudante",['S'=>'Sim','N'=>'Não'])
             ->setAttribute('style',' text-transform: uppercase')
             ->required(true)
             ->label("Inscrito Estuda?");
 
-        $objForm->radio("cs_participante_movimento_pastoral",['S'=>'Sim','N'=>'Não'])
+        ### [Radio] Participante de Movimento Pastoral
+        $objForm->radio("cs_participa_movimento_pastoral",['S'=>'Sim','N'=>'Não'])
             ->setAttribute('style',' text-transform: uppercase')
             ->required(true)
             ->label("Participante do Movimento Pastoral");

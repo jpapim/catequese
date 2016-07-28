@@ -6,7 +6,7 @@ return array(
             'catequisando-home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/catequisando',
+                    'route'    => '/catequisando/:action[/:id][/:aux]',
                     'defaults' => array(
                         'controller' => 'catequisando',
                         'action'     => 'index',

@@ -8,21 +8,19 @@
 
 namespace Catequisando\Controller;
 
-
-use Catequisando\Form\CatequisandoForm;
-use Catequisando\Service\CatequisandoService;
+use Cidade\Service\CidadeService;
 use Estrutura\Controller\AbstractCrudController;
-use Estrutura\Helpers\Cript;
 use Estrutura\Helpers\Data;
+use Zend\Db\Sql\Insert;
 use Zend\View\Model\ViewModel;
 
 
 class CatequisandoController extends  AbstractCrudController{
 
-    /**@var CatequisandoService     */
+    /**@var \Catequisando\Service\Catequisando     */
      protected $service;
 
-    /**@var CatequisandoForm     */
+    /**@var \Catequisando\Form\Catequisando     */
     protected $form;
 
 
@@ -41,9 +39,22 @@ class CatequisandoController extends  AbstractCrudController{
         $filter = $this->getFilterPage();
 
         $camposFilter = [
+            '0' => [
+                'filter' => "catequisando.nm_catequisando LIKE ?",
+            ],
+            '1' => null,
 
+            '2' => NULL,
+
+            '3' => [
+                'filter' => "email.em_email LIKE ?",
+            ],
+            '4' => [
+                'filter' => "turma.nm_turma LIKE ?",
+            ],
+
+            '5' => NULL,
         ];
-
 
         $paginator = $this->service->getCatequisandoPaginator($filter, $camposFilter);
 
@@ -73,86 +84,106 @@ class CatequisandoController extends  AbstractCrudController{
 
     public function gravarAction()
     {
-
-        /* @var $emailService \Email\Service\EmailService */
-        $emailService = $this->getServiceLocator()->get('Email\Service\EmailService');
-        $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('em_email')));
-
-        if ($emailService->filtrarObjeto()->count()) {
-
-            $this->addErrorMessage('Email já cadastrado. Faça seu login.');
-            $this->redirect()->toRoute('navegacao', array('controller' => 'catequisando', 'action' => 'index'));
-            return FALSE;
-        }
-
-        $dateNascimento = \DateTime::createFromFormat('Y-m-d', $this->getRequest()->getPost()->get('dt_nascimento'));
-
-        # Grava os dados do Endereco e retorna o ID do Endereco
-        $resultEndereco = parent::gravar(
-            $this->getServiceLocator()->get('\Endereco\Service\EnderecoService'), new \Endereco\Form\EnderecoForm()
-        );
-        if($resultEndereco){
-            $this->addSuccessMessage('Parabéns! Endereço cadastro com sucesso.');
-        }
-
-        # Realizando Tratamento do Telefone Residencial
-        $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_residencial')));
-        $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_residencial')));
-        $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_residencial']);
-        $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
-
-        $resultTelefoneResidencial = parent::gravar(
-            $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
-        );
-
-        # REalizando Tratamento do  Telefone Celular
-        $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_celular')));
-        $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_celular')));
-        $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_celular']);
-        $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
-
-        $resultTelefoneCelular = parent::gravar(
-            $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
-        );
+              $controller =  $this->params('controller');
+              $insert = new Insert();
 
 
-        if ($resultTelefoneResidencial && $resultTelefoneCelular) {
-            $this->addSuccessMessage('Parabéns! Telefones cadastros com sucesso.');
-        }
 
+           /* @var $emailService \Email\Service\EmailService */
+           $emailService = $this->getServiceLocator()->get('\Email\Service\EmailService');
+           $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('em_email')));
 
-        # Gravando email e retornando o ID do Email
-            $resultEmail = parent::gravar(
-                $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
-            );
+           if ($emailService->filtrarObjeto()->count()) {
 
-            if ($resultEmail) {
-                    $this->addSuccessMessage('Parabéns! Email cadastrado com sucesso.');
+               $this->addErrorMessage('Email já cadastrado. Faça seu login.');
+               $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+               return FALSE;
+           }
+
+            $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_nascimento'));
+
+           # Realizando Tratamento do Telefone Residencial
+           $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_residencial')));
+           $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_residencial')));
+           $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_residencial']);
+           $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
+
+           $resultTelefoneResidencial = parent::gravar(
+               $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
+           );
+
+            if(!empty($resultTelefoneResidencial) && $resultTelefoneResidencial){
+                # REalizando Tratamento do  Telefone Celular
+                $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_celular')));
+                $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_celular')));
+                $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_celular']);
+                $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
+
+                $resultTelefoneCelular = parent::gravar(
+                    $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
+                );
+
+                if(!empty($resultTelefoneCelular) && $resultTelefoneCelular){
+
+                    # Grava os dados do Endereco e retorna o ID do Endereco
+                    $cidade =  new CidadeService();
+                    $id_cidade = $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('id_cidade'));
+                    $this->getRequest()->getPost()->set('id_cidade', $id_cidade['id_cidade']);
+
+                    $idEndereco = parent::gravar(
+                        $this->getServiceLocator()->get('\Endereco\Service\EnderecoService'),new \Endereco\Form\EnderecoForm()
+                    );
+
+                    if(!empty($idEndereco) && $idEndereco){
+                        # Gravando email e retornando o ID do Email
+                        $idEmail = parent::gravar(
+                            $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
+                        );
+                        if(!empty($idEmail) && $idEmail){
+
+                            $this->getRequest()->getPost()->set('id_endereco',$idEndereco);
+                            $this->getRequest()->getPost()->set('nm_catequisando',$this->getRequest()->getPost()->get('nm_catequisando'));
+                            $this->getRequest()->getPost()->set('id_sexo', $this->getRequest()->getPost()->get('id_sexo'));
+                            $this->getRequest()->getPost()->set('dt_nascimento', $dataNascimento);
+                            $this->getRequest()->getPost()->set('id_telefone_residencial', $resultTelefoneResidencial);
+                            $this->getRequest()->getPost()->set('id_telefone_celular', $resultTelefoneCelular);
+                            $this->getRequest()->getPost()->set('id_email', $idEmail);
+                            $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
+                            $this->getRequest()->getPost()->set('dt_ingresso', (date('d') >= 29 ? date('Y-m-' . 28 . ' H:m:s') : date('Y-m-d H:m:s')));
+                            $this->getRequest()->getPost()->set('ds_situacao', 'A');
+
+                            $resultCatequisando = parent::gravar(
+                                $this->getServiceLocator()->get('\Catequisando\Service\CatequisandoService'),new \Catequisando\Form\CatequisandoForm()
+                            );
+
+                            if($resultCatequisando){
+
+                                #Resgatando e inserindo manualmente na tabela catequisanto_etapa_cursou as ids das etapas ja realizadas.
+                                $arrEtapa =  $this->getRequest()->getPost()->get('arrEtapa');
+                                $arrColums=['id_etapa','id_catequisando','dt_cadastro'];
+
+                                foreach($arrEtapa as $etapa){
+                                    $insert->into('catequisanto_etapa_cursou')
+                                        ->columns($arrColums)
+                                        ->values([$etapa,$resultCatequisando,(date('d') >= 29 ? date('Y-m-' . 28 . ' H:m:s') : date('Y-m-d H:m:s'))]);
+                                }
+                                $status = true;
+                            }
+                        }
+                    }
+                }
             }
 
-        # Tratando informações do array Sacramento
-        $sacramento = $this->getRequest()->getPost()->get('sacramento');
+           if ($status ) {
+               $this->addSuccessMessage('Parabéns! Catequizando cadastrado com sucesso.');
+               $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+           }
+            else{
+                $this->addErrorMessage('Processo não pode ser concluido.');
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
 
-
-        #Tratando informações do array etapa
-        $etapa = $this->getRequest()->getPost()->get('etapa');
-
-        $this->getRequest()->getPost()->set('id_endereco', $resultEndereco);
-        $this->getRequest()->getPost()->set('dt_nascimento', $dateNascimento);
-        $this->getRequest()->getPost()->set('id_telefone_residencial', $resultTelefoneResidencial);
-        $this->getRequest()->getPost()->set('id_telefone_celular', $resultTelefoneCelular);
-        $this->getRequest()->getPost()->set('id_email', $resultEmail);
-       # $this->getRequest()->getPost()->set('id_tipo_usuario', $this->getConfigList()['tipo_usuario_aluno']);
-        $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
-
-        $resultCatequisando= parent::gravar(
-            $this->getServiceLocator()->get('\Catequisando\Service\CatequisandoService'), new \Catequisando\Form\CatequisandoForm());
-
-        if ($resultCatequisando) {
-            $this->addSuccessMessage('Parabéns! Catequizando cadastrado com sucesso.');
-        }
-        $this->redirect()->toRoute('navegacao', array('controller' => 'catequisando', 'action' => 'index'));
-    }
+            }
+       }
 
     public function cadastroAction()
     { // funn��o alterar
