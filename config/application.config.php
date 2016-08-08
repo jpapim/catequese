@@ -72,7 +72,10 @@ return array(
         'Profissao',
         'SituacaoResponsavel',
         'Catequisando',
-    ),
+	'Responsavel',
+        'CatequistaTurma',
+        'CatequisandoEtapaCursou',
+        ),
     'module_listener_options' => array(
         'module_paths' => array(
             './module',
