@@ -166,6 +166,7 @@ class CatequisandoController extends  AbstractCrudController{
                                     $insert->into('catequisanto_etapa_cursou')
                                         ->columns($arrColums)
                                         ->values([$etapa,$resultCatequisando,(date('d') >= 29 ? date('Y-m-' . 28 . ' H:m:s') : date('Y-m-d H:m:s'))]);
+
                                 }
                                 $status = true;
                             }
