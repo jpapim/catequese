@@ -8,10 +8,11 @@
 
 namespace Catequisando\Controller;
 
+use CatequisandoEtapaCursou\Form\CatequisandoEtapaCursouForm;
+use CatequisandoEtapaCursou\Service\CatequisandoEtapaCursouService;
 use Cidade\Service\CidadeService;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Data;
-use Zend\Db\Sql\Insert;
 use Zend\View\Model\ViewModel;
 
 
@@ -84,10 +85,7 @@ class CatequisandoController extends  AbstractCrudController{
 
     public function gravarAction()
     {
-              $controller =  $this->params('controller');
-              $insert = new Insert();
-
-
+           $controller =  $this->params('controller');
 
            /* @var $emailService \Email\Service\EmailService */
            $emailService = $this->getServiceLocator()->get('\Email\Service\EmailService');
@@ -140,6 +138,9 @@ class CatequisandoController extends  AbstractCrudController{
                             $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
                         );
                         if(!empty($idEmail) && $idEmail){
+                            #Resgatando id de cidade e atribuindo ao campo id_naturalidade do cadastro de catequizando.
+                            $id_naturalidade =  $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('id_naturalidade'));
+                            $this->getRequest()->getPost()->set('id_naturalidade',$id_naturalidade['id_cidade']);
 
                             $this->getRequest()->getPost()->set('id_endereco',$idEndereco);
                             $this->getRequest()->getPost()->set('nm_catequisando',$this->getRequest()->getPost()->get('nm_catequisando'));
@@ -157,17 +158,29 @@ class CatequisandoController extends  AbstractCrudController{
                             );
 
                             if($resultCatequisando){
-
                                 #Resgatando e inserindo manualmente na tabela catequisanto_etapa_cursou as ids das etapas ja realizadas.
+
                                 $arrEtapa =  $this->getRequest()->getPost()->get('arrEtapa');
-                                $arrColums=['id_etapa','id_catequisando','dt_cadastro'];
+
 
                                 foreach($arrEtapa as $etapa){
-                                    $insert->into('catequisanto_etapa_cursou')
-                                        ->columns($arrColums)
-                                        ->values([$etapa,$resultCatequisando,(date('d') >= 29 ? date('Y-m-' . 28 . ' H:m:s') : date('Y-m-d H:m:s'))]);
+                                    $this->getRequest()->getPost()->set('id_etapa',$etapa[0]);
+                                    $this->getRequest()->getPost()->set('id_catequisando',$resultCatequisando);
+                                    $this->getRequest()->getPost()->set('dt_cadastro',date('Y-m-d H:m:s'));
 
+
+                                    $id_etapa= parent::gravar(
+                                      $this->getServiceLocator()->get('\CatequisandoEtapaCursou\Service\CatequisandoEtapaCursouService'),new \CatequisandoEtapaCursou\Form\CatequisandoEtapaCursouForm()
+                                    );
+                                 }
+
+                                xd( $this->getServiceLocator()->get('\CatequisandoEtapaCursou\Service\CatequisandoEtapaCursouService'));
+
+
+                                if(!$id_etapa){
+                                    $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
                                 }
+
                                 $status = true;
                             }
                         }
@@ -193,6 +206,7 @@ class CatequisandoController extends  AbstractCrudController{
 
     public function excluirAction()
     {
+
         return parent::excluir($this->service, $this->form);
     }
 

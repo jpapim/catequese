@@ -129,9 +129,5 @@ class CatequisandoService extends  Entity{
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
-    public  function classTest($resultSet){
-        echo '<pre>';
-        print_r($resultSet);
-        echo '</pre>';
-    }
+
 } 
