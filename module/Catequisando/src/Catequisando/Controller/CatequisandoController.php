@@ -8,8 +8,7 @@
 
 namespace Catequisando\Controller;
 
-use CatequisandoEtapaCursou\Form\CatequisandoEtapaCursouForm;
-use CatequisandoEtapaCursou\Service\CatequisandoEtapaCursouService;
+
 use Cidade\Service\CidadeService;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Data;
@@ -29,6 +28,7 @@ class CatequisandoController extends  AbstractCrudController{
     {
         parent::init();
     }
+
     public function indexAction()
     {
         return parent::index($this->service, $this->form);
@@ -159,28 +159,28 @@ class CatequisandoController extends  AbstractCrudController{
 
                             if($resultCatequisando){
                                 #Resgatando e inserindo manualmente na tabela catequisanto_etapa_cursou as ids das etapas ja realizadas.
-
+                                $objCECService=  new \CatequisandoEtapaCursou\Service\CatequisandoEtapaCursouService();
                                 $arrEtapa =  $this->getRequest()->getPost()->get('arrEtapa');
 
-
                                 foreach($arrEtapa as $etapa){
-                                    $this->getRequest()->getPost()->set('id_etapa',$etapa[0]);
-                                    $this->getRequest()->getPost()->set('id_catequisando',$resultCatequisando);
-                                    $this->getRequest()->getPost()->set('dt_cadastro',date('Y-m-d H:m:s'));
-
-
-                                    $id_etapa= parent::gravar(
-                                      $this->getServiceLocator()->get('\CatequisandoEtapaCursou\Service\CatequisandoEtapaCursouService'),new \CatequisandoEtapaCursou\Form\CatequisandoEtapaCursouForm()
-                                    );
+                                    $objCECService->setIdEtapa($etapa);
+                                    $objCECService->setIdCatequisando($resultCatequisando);
+                                    $objCECService->setDtCadastro(date('Y-m-d H:m:s'));
+                                    $objCECService->salvar();
                                  }
 
-                                xd( $this->getServiceLocator()->get('\CatequisandoEtapaCursou\Service\CatequisandoEtapaCursouService'));
+                                # Resgatando e inserindo manualmente na tabela sacramento catequisando as ids  dos sacramentos e  a id catequisando
 
+                                #objeto do tipo SacramentoCatequisandoService
+                                $objSCService= new \SacramentoCatequisando\Service\SacramentoCatequisandoService();
+                                $arrSacramento =  $this->getRequest()->getPost()->get('arrSacramento');
 
-                                if(!$id_etapa){
-                                    $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+                                foreach($arrSacramento as $sacramento){
+                                    $objSCService->setIdCatequisando($resultCatequisando);
+                                    $objSCService->setIdSacramento($sacramento);
+                                    $objSCService->setDtCadastro(date('Y-m-d H:m:s'));
+                                    $objSCService->salvar();
                                 }
-
                                 $status = true;
                             }
                         }
@@ -201,14 +201,17 @@ class CatequisandoController extends  AbstractCrudController{
 
     public function cadastroAction()
     { // funn��o alterar
+        #xd($this->getRequest()->getPost());
         return parent::cadastro($this->service, $this->form);
     }
 
     public function excluirAction()
     {
+      # xd($this->getRequest()->getPost());
+           return parent::excluir($this->service, $this->form);
 
-        return parent::excluir($this->service, $this->form);
+
     }
 
 
-} 
+}

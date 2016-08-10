@@ -67,6 +67,7 @@ class CatequisandoForm extends  AbstractForm{
         # ETAPA #
         #Resgatando as informações da tabela sacramento
         #
+
         $obEtapa =  new EtapaService();
         $colecaoEtapa = $obEtapa->fetchAll();
         $arrEtapa=[];
@@ -79,6 +80,7 @@ class CatequisandoForm extends  AbstractForm{
             ];
         }
         $objForm->multicheckbox('arrEtapa', $arrEtapa)->required(false)->label('Etapas já frequentadas');
+
 
 
         #FK- Email

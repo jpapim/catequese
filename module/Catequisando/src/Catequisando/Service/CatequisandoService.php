@@ -22,6 +22,7 @@ class CatequisandoService extends  Entity{
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
         $select = $sql->select('catequisando')->columns([
+
             'id_catequisando',
             'id_telefone_residencial',
             'id_telefone_celular',
@@ -115,18 +116,22 @@ class CatequisandoService extends  Entity{
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
         $select = $sql->select('catequisando')->columns([
+
             'nm_catequisando'
         ])
-        ->join('turma_catequisando','turma_catequisando.id_catequisando =  catequisando.id_catequisando')
+        ->join('turma_catequisando','turma_catequisando.id_catequisando =  catequisando.id_catequisando',['id_turma'])
         ->join('turma','turma.id_turma = turma_catequisando.id_turma',['nm_turma'])
-       /* ->join('responsavel_catequisando','responsavel_catequisando.id_catequisando =  catequisando.id_catequisando')
-        ->join('responsavel','responsavel.id_responsavel = responsavel_catequisando.id_responsavel',['nm_responsavel'])*/
-        ->where([
+
+            ->where([
             'catequisando.id_catequisando = ?' =>$id
         ]);
 
 
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
+    }
+
+    public function  getCatequisandoResponsavel($id){
+
     }
 
 
