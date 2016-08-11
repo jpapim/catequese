@@ -21,7 +21,6 @@ return array(
         'Cidade',
         'Estado',
         'Sexo',
-        'EstadoCivil',
         'TipoUsuario',
         'SituacaoUsuario',
         'Endereco',
@@ -71,6 +70,8 @@ return array(
         'Profissao',
         'SituacaoResponsavel',
         'Catequisando',
+        'EstadoCivil',
+
     ),
     'module_listener_options' => array(
         'module_paths' => array(
