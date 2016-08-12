@@ -136,3 +136,16 @@ INSERT into controller(id_controller,nm_controller) VALUES(null,'catequisando_et
 AUTORIZACAO CATEQUISANDO_ETAPA_CURSOU
 insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(37,1,1),(37,6,1),(37,51,1),(37,7,1),(37,8,1);
 ##############################################################
+INSERIR MODULO SACRAMENTO_RESPONSAVEL
+INSERT into controller(id_controller,nm_controller) VALUES(null,'sacramento_responsavel-sacramentoresponsavel');
+
+AUTORIZACAO SACRAMENTO_RESPONSAVEL
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(38,1,1),(38,6,1),(38,51,1),(38,7,1),(38,8,1);
+#########################################################
+INSERIR MODULO SITUACAO_RESPONSAVEL_CATEQUISANDO
+INSERT into controller(id_controller,nm_controller) VALUES(null,'situacao_responsavel_catequisando-situacaoresponsavelcatequisando');
+
+AUTORIZACAO SITUACAO_RESPONSAVEL_CATEQUISANDO
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(39,1,1),(39,6,1),(39,51,1),(39,7,1),(39,8,1);
+##############################################################
+

@@ -74,6 +74,9 @@ return array(
 	'Responsavel',
         'CatequistaTurma',
         'CatequisandoEtapaCursou',
+        'SacramentoResponsavel',
+        'SituacaoResponsavelCatequisando',
+        #'CatequistaEtapaAtuacao',
         ),
     'module_listener_options' => array(
         'module_paths' => array(
