@@ -47,4 +47,12 @@ class ControllerService extends Entity {
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
 
+    /**
+     * Método criado para Sobrescrever o método utilizado para carregar os combos
+     * @return \Zend\Db\ResultSet\ResultSet
+     */
+    public function fetchAllModulos() {
+        return $this->select();
+    }
+
 }
