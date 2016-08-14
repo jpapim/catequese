@@ -11,6 +11,7 @@ namespace Catequisando\Controller;
 
 use Cidade\Service\CidadeService;
 use Estrutura\Controller\AbstractCrudController;
+use Estrutura\Helpers\Cript;
 use Estrutura\Helpers\Data;
 use Zend\View\Model\ViewModel;
 
@@ -162,12 +163,20 @@ class CatequisandoController extends  AbstractCrudController{
                                 $objCECService=  new \CatequisandoEtapaCursou\Service\CatequisandoEtapaCursouService();
                                 $arrEtapa =  $this->getRequest()->getPost()->get('arrEtapa');
 
+                                #x($arrEtapa);
+                                #xd($resultCatequisando);
+
                                 foreach($arrEtapa as $etapa){
-                                    $objCECService->setIdEtapa($etapa);
-                                    $objCECService->setIdCatequisando($resultCatequisando);
-                                    $objCECService->setDtCadastro(date('Y-m-d H:m:s'));
-                                    $objCECService->salvar();
+                                    $this->getRequest()->getPost()->set('id_etapa', $etapa);
+                                    $this->getRequest()->getPost()->set('id_catequisando', $resultCatequisando);
+                                    $this->getRequest()->getPost()->set('dt_cadastro', date('Y-m-d H:m:s'));
+                                    #Chamo o metodo para gravar os dados na tabela.
+                                    parent::gravar(
+                                        $this->getServiceLocator()->get('\CatequisandoEtapaCursou\Service\CatequisandoEtapaCursouService'), new \CatequisandoEtapaCursou\Form\CatequisandoEtapaCursouForm()
+                                    );
+
                                  }
+
 
                                 # Resgatando e inserindo manualmente na tabela sacramento catequisando as ids  dos sacramentos e  a id catequisando
 
@@ -207,8 +216,23 @@ class CatequisandoController extends  AbstractCrudController{
 
     public function excluirAction()
     {
-      # xd($this->getRequest()->getPost());
-           return parent::excluir($this->service, $this->form);
+        #ID_CATEQUISANDO
+        $id = Cript::dec($this->params('id'));
+        if(isset($id) && $id){
+            #Primeira tabela filha
+            $obCatequisandoEtapaCursouService = new \CatequisandoEtapaCursou\Service\CatequisandoEtapaCursouService();
+            $obCatequisandoEtapaCursouService->setIdCatequisando($id);
+            $obCatequisandoEtapaCursouService->excluir();
+
+            #Outra tabela Filha
+
+            #Outra tabela Filha
+
+
+            $retornoExcluir = parent::excluir($this->service, $this->form);
+        }
+
+           return $retornoExcluir;
 
 
     }

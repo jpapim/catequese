@@ -7,6 +7,7 @@
         <table class="table table-striped" id="tablesorterCatequisando" >
             <thead>
             <tr>
+                <th class="text-center">Identificador</th>
                 <th class="text-center">Nome</th>
                 <th class="text-center">Responsável</th>
                 <th class="text-center">Tel. Residencial</th>
@@ -17,6 +18,7 @@
             </thead>
             <tfoot>
             <tr>
+                <th class="text-center">Identificador</th>
                 <th class="text-center">Nome</th>
                 <th class="text-center">Responsável</th>
                 <th class="text-center">Tel. Residencial</th>
@@ -69,9 +71,11 @@
 
                 foreach ($paginator as $item) {
                     $result = $catequisando->getCatequisandoJoins($item['id_catequisando']);
-
+                    #x(Estrutura\Helpers\Cript::enc($item['id_catequisando']));
+                    #xd(Estrutura\Helpers\Cript::dec($item['id_catequisando']));
                     ?>
                     <tr>
+                        <td class="text-center"><?=$item['id_catequisando']?></td>
                         <td class="text-center"><?=$item['nm_catequisando']?></td>
                         <td class="text-center"><?="Responsável em Breve"?></td>
                         <td class="text-center"><?= '('.$item['nr_ddd_telefone'].') '.Estrutura\Helpers\Telefone::telefoneMask($item['nr_telefone'])?></td>
