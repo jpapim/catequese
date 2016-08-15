@@ -17,7 +17,7 @@ use Zend\InputFilter\InputFilter;
 
 class CatequisandoForm extends  AbstractForm{
 
-    public function __construct(){
+    public function __construct($options=[]){
         parent::__construct('catequisandoform');
 
         $this->inputFilter = new InputFilter();
@@ -55,13 +55,30 @@ class CatequisandoForm extends  AbstractForm{
         $colecaoSacramento = $oSacramento->fetchAll();
         $arrSacramentos=[];
 
-        foreach($colecaoSacramento as $key => $obSacramento){
-            $arrSacramentos[]=[
-                'value'=>$obSacramento->getId(),
-                'name'=>'sacramento',
-                'label'=>$obSacramento->getNmSacramento(),
-            ];
+        if(isset($options['arrSacramento']) && $options['arrSacramento']){
+            foreach($colecaoSacramento as $key => $obSacramento){
+                $arrSacramentos[]=[
+                    'value'=>$obSacramento->getId(),
+                    'name'=>'sacramento',
+                    'label'=>$obSacramento->getNmSacramento(),
+                    'selected'=>in_array($obSacramento->getId(),$options['arrSacramento'])? true: false,
+                ];
+            }
+
+        }else{
+
+            foreach($colecaoSacramento as $key => $obSacramento){
+                $arrSacramentos[]=[
+                    'value'=>$obSacramento->getId(),
+                    'name'=>'sacramento',
+                    'label'=>$obSacramento->getNmSacramento(),
+
+                ];
+            }
         }
+
+
+
         $objForm->multicheckbox('arrSacramento', $arrSacramentos)->required(false)->label('Sacramentos que já recebeu');
 
         # ETAPA #
@@ -72,13 +89,27 @@ class CatequisandoForm extends  AbstractForm{
         $colecaoEtapa = $obEtapa->fetchAll();
         $arrEtapa=[];
 
-        foreach($colecaoEtapa as $key => $etapa){
-            $arrEtapa[]=[
-                'value'=>$etapa->getId(),
-                'name'=>'etapa['.$etapa->getId().']',
-                'label'=>$etapa->getNmEtapa(),
-            ];
+        if(isset($options['arrEtapa']) && $options['arrEtapa']){
+
+            foreach($colecaoEtapa as $key => $etapa){
+                $arrEtapa[]=[
+                    'value'=>$etapa->getId(),
+                    'name'=>'etapa['.$etapa->getId().']',
+                    'label'=>$etapa->getNmEtapa(),
+                    'selected'=>in_array($etapa->getId(),$options['arrEtapa'])? true: false,
+                ];
+            }
+        }else{
+            foreach($colecaoEtapa as $key => $etapa){
+                $arrEtapa[]=[
+                    'value'=>$etapa->getId(),
+                    'name'=>'etapa['.$etapa->getId().']',
+                    'label'=>$etapa->getNmEtapa(),
+
+                ];
+            }
         }
+
         $objForm->multicheckbox('arrEtapa', $arrEtapa)->required(false)->label('Etapas já frequentadas');
 
 
