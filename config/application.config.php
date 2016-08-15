@@ -76,7 +76,7 @@ return array(
         'CatequisandoEtapaCursou',
         'SacramentoResponsavel',
         'SituacaoResponsavelCatequisando',
-        #'CatequistaEtapaAtuacao',
+        'CatequistaEtapaAtuacao',
         ),
     'module_listener_options' => array(
         'module_paths' => array(
