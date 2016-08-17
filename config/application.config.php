@@ -22,7 +22,6 @@ return array(
         'Cidade',
         'Estado',
         'Sexo',
-        'EstadoCivil',
         'TipoUsuario',
         'SituacaoUsuario',
         'Endereco',
@@ -75,10 +74,10 @@ return array(
         'Responsavel',
         'CatequistaTurma',
         'CatequisandoEtapaCursou',
-
         'SacramentoResponsavel',
         'SituacaoResponsavelCatequisando',
         'CatequistaEtapaAtuacao',
+        'EstadoCivil',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

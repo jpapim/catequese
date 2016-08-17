@@ -94,8 +94,8 @@ insert into perfil_controller_action(id_controller,id_action,id_perfil) values('
 insert into perfil_controller_action(id_controller,id_action,id_perfil) values('44','51','1');
 ################################################
 
-AUTORIZACAO TURNO
-INSERT INTO `bdcatequese`.`controller` (`nm_controller`, `nm_modulo`, `cs_exibir_combo`) VALUES ('turno-turno', 'Turnos', 'S');
+AUTORIZACAO FREQUENCIA TURMA
+INSERT INTO `bdcatequese`.`controller` (`nm_controller`, `nm_modulo`, `cs_exibir_combo`) VALUES ('frequencia_turma-frequenciaturma', 'Frequencia Turma', 'S');
 
 
 insert into perfil_controller_action(id_controller,id_action,id_perfil) values('45','1','1');
@@ -106,8 +106,8 @@ insert into perfil_controller_action(id_controller,id_action,id_perfil) values('
 
 ################################################
 
-AUTORIZACAO FREQUENCIA TURNO
-INSERT INTO `bdcatequese`.`controller` (`nm_controller`, `nm_modulo`, `cs_exibir_combo`) VALUES ('frequencia_turma-frequenciaturma', 'Frequencia Turma', 'S');
+AUTORIZACAO ESTADO CIVIL
+INSERT INTO `bdcatequese`.`controller` (`nm_controller`, `nm_modulo`, `cs_exibir_combo`) VALUES ('estado_civil-estadocivil', 'Estado Civil', 'S');
 
 
 insert into perfil_controller_action(id_controller,id_action,id_perfil) values('46','1','1');
@@ -159,6 +159,10 @@ insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(3
 =======
 >>>>>>> dev-igor
 
+<<<<<<< HEAD
 AUTORIZACAO CATEQUISANDO_ETAPA_CURSOU
 insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(37,1,1),(37,6,1),(37,51,1),(37,7,1),(37,8,1);
 ##############################################################
+=======
+
+>>>>>>> dev-eduardo
