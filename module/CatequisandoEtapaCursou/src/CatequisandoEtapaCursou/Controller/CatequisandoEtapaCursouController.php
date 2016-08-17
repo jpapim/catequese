@@ -34,6 +34,7 @@ class CatequisandoEtapaCursouController extends AbstractCrudController
             'atributos' => array()
         ]);
     }
+<<<<<<< HEAD
     
     public function gravarAction(){
    
@@ -48,16 +49,31 @@ $dateCadastro = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPos
 
 
    
+=======
+
+
+    public function gravarAction(){
+// FORMATANDO AS DATAS RECEBIDAS     
+$dateCadastro = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_cadastro'));
+###########################- GRAVANDO EMAIL -#######################################################################
+
+>>>>>>> dev-igor
   // INSERINDO CAMPOS COM FKS DA TABELA
        $this->getRequest()->getPost()->set('id_etapa', $this->getRequest()->getPost()->get('id_etapa'));
        $this->getRequest()->getPost()->set('id_catequisando', $this->getRequest()->getPost()->get('id_catequisando'));
        $this->getRequest()->getPost()->set('dt_cadastro', $dateCadastro);
+<<<<<<< HEAD
         
+=======
+>>>>>>> dev-igor
        
            parent::gravar(
                             $this->getServiceLocator()->get('\CatequisandoEtapaCursou\Service\CatequisandoEtapaCursouService'), new \CatequisandoEtapaCursou\Form\CatequisandoEtapaCursouForm()
             );
+<<<<<<< HEAD
     
+=======
+>>>>>>> dev-igor
     $this->addSuccessMessage('Registro Inserido/Alterado com sucesso');
     $this->redirect()->toRoute('navegacao', array('controller' => 'catequisando_etapa_cursou-catequisandoetapacursou', 'action' => 'index'));
   

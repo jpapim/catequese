@@ -1,5 +1,6 @@
 ﻿<?php
 
+
 return array(
     'modules' => array(
         'Application',
@@ -71,20 +72,21 @@ return array(
         'Profissao',
         'SituacaoResponsavel',
         'Catequisando',
-	'Responsavel',
+        'Responsavel',
         'CatequistaTurma',
         'CatequisandoEtapaCursou',
+
         'SacramentoResponsavel',
         'SituacaoResponsavelCatequisando',
         'CatequistaEtapaAtuacao',
-        ),
+    ),
     'module_listener_options' => array(
         'module_paths' => array(
             './module',
             './vendor',
         ),
         'config_glob_paths' => array(
-            'config/autoload/{,*.}{global,' . APPLICATION_ENV . '}.php'            
+            'config/autoload/{,*.}{global,' . APPLICATION_ENV . '}.php'
         ),
-    ) 
+    )
 );

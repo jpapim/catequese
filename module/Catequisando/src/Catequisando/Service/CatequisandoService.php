@@ -10,7 +10,6 @@ namespace Catequisando\Service;
 
 use Catequisando\Entity\CatequisandoEntity as Entity;
 use Zend\Db\ResultSet\HydratingResultSet;
-use Zend\Db\ResultSet\ResultSet;
 use Zend\Stdlib\Hydrator\Reflection;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
@@ -23,13 +22,17 @@ class CatequisandoService extends  Entity{
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
         $select = $sql->select('catequisando')->columns([
+
             'id_catequisando',
             'id_telefone_residencial',
             'id_telefone_celular',
             'nm_catequisando',
 
+
         ])
-        ->join('email','catequisando.id_email = email.id_email',['em_email']);
+        ->join('email','catequisando.id_email = email.id_email',['em_email'])
+        ->join('telefone','telefone.id_telefone = catequisando.id_telefone_residencial',['nr_ddd_telefone','nr_telefone']);
+
         $where = [
         ];
 
@@ -110,19 +113,16 @@ class CatequisandoService extends  Entity{
     }
 
     public function  getCatequisandoJoins($id){
-
-        $catequisando =  $this->getCatequisandoToArray($id);
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
         $select = $sql->select('catequisando')->columns([
+
             'nm_catequisando'
         ])
-        ->join('turma_catequisando','turma_catequisando.id_catequisando =  catequisando.id_catequisando')
+        ->join('turma_catequisando','turma_catequisando.id_catequisando =  catequisando.id_catequisando',['id_turma'])
         ->join('turma','turma.id_turma = turma_catequisando.id_turma',['nm_turma'])
-        ->join('telefone','telefone.id_telefone = catequisando.id_telefone_residencial',['nr_telefone'])
-       /* ->join('responsavel_catequisando','responsavel_catequisando.id_catequisando =  catequisando.id_catequisando')
-        ->join('responsavel','responsavel.id_responsavel = responsavel_catequisando.id_responsavel',['nm_responsavel'])*/
-        ->where([
+
+            ->where([
             'catequisando.id_catequisando = ?' =>$id
         ]);
 
@@ -130,9 +130,9 @@ class CatequisandoService extends  Entity{
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
-    public  function classTest($resultSet){
-        echo '<pre>';
-        print_r($resultSet);
-        echo '</pre>';
+    public function  getCatequisandoResponsavel($id){
+
     }
+
+
 } 

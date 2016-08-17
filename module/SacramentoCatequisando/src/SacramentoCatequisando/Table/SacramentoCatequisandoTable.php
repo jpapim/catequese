@@ -11,6 +11,7 @@ class SacramentoCatequisandoTable extends AbstractEstruturaTable
         'id_sacramento_catequisando'=>'id',
         'id_catequisando'=>'id_catequisando',
         'id_sacramento'=>'id_sacramento',
+        'dt_cadastro'=>'dt_cadastro',
         'id_paroquia'=>'id_paroquia',
         'cs_comprovante_batismo'=>'cs_comprovante_batismo',
 
