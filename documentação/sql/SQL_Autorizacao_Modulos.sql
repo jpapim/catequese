@@ -117,6 +117,35 @@ insert into perfil_controller_action(id_controller,id_action,id_perfil) values('
 insert into perfil_controller_action(id_controller,id_action,id_perfil) values('46','51','1');
 
 ################################################
+INSERIR MODULO RESPONSAVEL
+INSERT into controller(id_controller,nm_controller) VALUES(null,'responsavel-responsavel');
 
+AUTORIZACAO RESPONSAVEL_CATEQUISANDO
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(34,1,1),(34,6,1),(34,51,1),(34,7,1),(34,8,1);
+################################################
 
+INSERIR MODULO CATEQUISTA_TURMA
+INSERT into controller(id_controller,nm_controller) VALUES(null,'catequista_turma-catequistaturma');
+
+AUTORIZACAO CATEQUISTA_TURMA
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(36,1,1),(36,6,1),(36,51,1),(36,7,1),(36,8,1);
+#########################################################
+INSERIR MODULO CATEQUISANDO_ETAPA_CURSOU
+INSERT into controller(id_controller,nm_controller) VALUES(null,'catequisando_etapa_cursou-catequisandoetapacursou');
+
+AUTORIZACAO CATEQUISANDO_ETAPA_CURSOU
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(37,1,1),(37,6,1),(37,51,1),(37,7,1),(37,8,1);
+##############################################################
+INSERIR MODULO SACRAMENTO_RESPONSAVEL
+INSERT into controller(id_controller,nm_controller) VALUES(null,'sacramento_responsavel-sacramentoresponsavel');
+
+AUTORIZACAO SACRAMENTO_RESPONSAVEL
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(38,1,1),(38,6,1),(38,51,1),(38,7,1),(38,8,1);
+#########################################################
+INSERIR MODULO SITUACAO_RESPONSAVEL_CATEQUISANDO
+INSERT into controller(id_controller,nm_controller) VALUES(null,'situacao_responsavel_catequisando-situacaoresponsavelcatequisando');
+
+AUTORIZACAO SITUACAO_RESPONSAVEL_CATEQUISANDO
+insert into perfil_controller_action(id_controller,id_action,id_perfil) VALUES(39,1,1),(39,6,1),(39,51,1),(39,7,1),(39,8,1);
+##############################################################
 

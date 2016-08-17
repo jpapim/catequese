@@ -4,12 +4,12 @@
 <!--<link rel="stylesheet" href="/assets/css/jquery.tablesorter.pager.css">-->
 
 <div class="page-head">
-    <h2>Lista de Catequista</h2>
+    <h2>Lista de Turmas</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
-        <div class="col-md-12"><?php // botao novo catequista?>
-            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adiciona um novo catequista">Novo Catequista</a>
+        <div class="col-md-12"><?php ?>
+            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adiciona um novo">Novo</a>
         </div>
     </div>
     <br />
@@ -24,7 +24,7 @@
             type: "post",
             dataType: "text",
             cache: false,
-            url: '/catequista-catequista/index-pagination',
+            url: '/situacao_responsavel_catequisando-situacaoresponsavelcatequisando/index-pagination',
             async: true,
             data: {
             },

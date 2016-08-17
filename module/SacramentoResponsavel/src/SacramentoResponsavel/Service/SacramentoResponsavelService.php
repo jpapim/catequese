@@ -1,30 +1,30 @@
 <?php
 
-namespace Catequista\Service;
+namespace SacramentoResponsavel\Service;
 
-use Catequista\Entity\CatequistaEntity as Entity;
+use SacramentoResponsavel\Entity\SacramentoResponsavelEntity as Entity;
 
-class CatequistaService extends Entity {
+class SacramentoResponsavelService extends Entity {
 
  
-    public function getCatequista($id) {
+    public function getSacramentoResponsavel($id) {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
         //die($id);
-        $select = $sql->select('catequista')
+        $select = $sql->select('sacramento_responsavel')
              
                ->join(
-                        'sexo', 'sexo.id_sexo = catequista.id_sexo'
+                        'sacramento', 'sacramento.id_sacramento = sacramento_responsavel.id_sacramento'
                 )
           
                 ->join(
-                        'email', 'email.id_email = catequista.id_email'
+                        'responsavel', 'responsavel.id_responsavel = sacramento_responsavel.id_responsavel'
                 )
        
                
                 ->where([
-            'catequista.id_catequista = ?' => $id,
+            'sacramento_responsavel.id_sacramento_responsavel = ?' => $id,
         ]);
         //print_r($sql->prepareStatementForSqlObject($select)->execute());exit;
 
@@ -35,43 +35,34 @@ class CatequistaService extends Entity {
      * 
      * @return type
      */
-    public function getIdProximoCatequistaCadastro($configList) {
+    public function getIdProximoSacramentoResponsavelCadastro($configList) {
 
         //Busca os usuarios cadastrados
-        $catequistaService = $this->getServiceLocator()->get('Catequista\Service\CatequistaService');
-        $resultSetCatequistas = $catequistaService->filtrarObjeto();
+        $SacramentoResponsavelService = $this->getServiceLocator()->get('SacramentoResponsavel\Service\SacramentoResponsavelService');
+        $resultSetSacramentoResponsavel = $SacramentoResponsavelService->filtrarObjeto();
 
     
     }
 
-         public function fetchPaginator($pagina = 1, $itensPagina = 5, $ordem = 'id_catequista ASC', $like = null, $itensPaginacao = 5) {
+         public function fetchPaginator($pagina = 1, $itensPagina = 5, $ordem = 'id_sacramento_responsavel ASC', $like = null, $itensPaginacao = 5) {
         //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
         // preparar um select para tabela contato com uma ordem
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
-        $select = $sql->select('catequista')->order($ordem);
+        $select = $sql->select('sacramento_responsavel')->order($ordem);
 
         if (isset($like)) {
             $select
                     ->where
-                    ->like('id_catequista', "%{$like}%")
+                    ->like('id_sacramento_responsavel', "%{$like}%")
                     ->or
-                   ->like('nm_catequista', "%{$like}%")
+                   ->like('id_sacramento', "%{$like}%")
                     ->or
-                   ->like('nr_matricula', "%{$like}%")
-                    ->or
-                   ->like('dt_nascimento', "%{$like}%")
-                    ->or
-                   ->like('dt_ingresso', "%{$like}%")
-                    ->or
-                   ->like('tx_observacao', "%{$like}%")
-                    ->or
-                   ->like('ds_situacao', "%{$like}%")
-                    ->or
-                   ->like('cs_coodenador', "%{$like}%") ;
+                   ->like('id_responsavel', "%{$like}%");
+                   
         }
 
         // criar um objeto com a estrutura desejada para armazenar valores
-        $resultSet = new HydratingResultSet(new Reflection(), new \Catequista\Entity\CatequistaEntity());
+        $resultSet = new HydratingResultSet(new Reflection(), new \SacramentoResponsavel\Entity\SacramentoResponsavelEntity());
 
         // criar um objeto adapter paginator
         $paginatorAdapter = new DbSelect(
@@ -95,20 +86,23 @@ class CatequistaService extends Entity {
     }
 
   
-    public function getCatequistaPaginator($filter = NULL, $camposFilter = NULL) {
+    public function getSacramentoResponsavelPaginator($filter = NULL, $camposFilter = NULL) {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
-        $select = $sql->select('catequista')->columns([
-                   'nm_catequista',
-                    'nr_matricula',
-                    'dt_nascimento',
-                    'dt_ingresso',
-                    'tx_observacao',
-                     'ds_situacao',
-                    'cs_coordenador'
-            
+        $select = $sql->select('sacramento_responsavel')->columns([
+                   'id_sacramento_responsavel',
+                    'id_sacramento',
+                    'id_responsavel',
+                   ])->join('sacramento', 'sacramento.id_sacramento = sacramento_responsavel.id_sacramento', [
+            'nm_sacramento'
+          ])->join('responsavel', 'responsavel.id_responsavel = sacramento_responsavel.id_responsavel', [
+            'nm_responsavel'
         ]);
+       
+        $where = [
+        ];
+      
 
         $where = [
         ];
@@ -129,7 +123,7 @@ class CatequistaService extends Entity {
             }
         }
 
-        $select->where($where)->order(['id_catequista DESC']);
+        $select->where($where)->order(['id_sacramento_responsavel DESC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
