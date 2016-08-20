@@ -1,5 +1,6 @@
 ﻿<?php
 
+
 return array(
     'modules' => array(
         'Application',
@@ -21,7 +22,6 @@ return array(
         'Cidade',
         'Estado',
         'Sexo',
-        'EstadoCivil',
         'TipoUsuario',
         'SituacaoUsuario',
         'Endereco',
@@ -59,6 +59,7 @@ return array(
         'Catequista',
         'Etapa',
         'Turma',
+        'FrequenciaTurma',
         'Turno',
         'TurmaCatequisando',
         'Formacao',
@@ -70,6 +71,13 @@ return array(
         'Profissao',
         'SituacaoResponsavel',
         'Catequisando',
+        'Responsavel',
+        'CatequistaTurma',
+        'CatequisandoEtapaCursou',
+        'SacramentoResponsavel',
+        'SituacaoResponsavelCatequisando',
+        'CatequistaEtapaAtuacao',
+        'EstadoCivil',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
@@ -77,7 +85,7 @@ return array(
             './vendor',
         ),
         'config_glob_paths' => array(
-            'config/autoload/{,*.}{global,' . APPLICATION_ENV . '}.php'            
+            'config/autoload/{,*.}{global,' . APPLICATION_ENV . '}.php'
         ),
-    ) 
+    )
 );

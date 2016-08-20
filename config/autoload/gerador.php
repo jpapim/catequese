@@ -10,7 +10,7 @@ return [
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
     ),
-    'database' => 'mcnetwork',
+    'database' => 'bdcatequese',
     'location' => BASE_PATCH . '/module/',
     'service_manager' => array(
         'factories' => array(

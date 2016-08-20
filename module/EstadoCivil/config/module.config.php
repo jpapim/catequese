@@ -37,7 +37,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'estado_civil' => 'EstadoCivil\Controller\EstadoCivilController',
-            'estado_civil-estadocivil' => 'Estado_civil\Controller\EstadocivilController',
+            'estado_civil-estadocivil' => 'EstadoCivil\Controller\EstadoCivilController',
 
         ),
     ),

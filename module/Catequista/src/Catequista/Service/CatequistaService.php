@@ -6,12 +6,7 @@ use Catequista\Entity\CatequistaEntity as Entity;
 
 class CatequistaService extends Entity {
 
-    /**
-     * 
-     * @param type $auth
-     * @param type $nivel
-     * @return type
-     */
+ 
     public function getCatequista($id) {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
@@ -22,15 +17,11 @@ class CatequistaService extends Entity {
                ->join(
                         'sexo', 'sexo.id_sexo = catequista.id_sexo'
                 )
-                   
-               
+          
                 ->join(
                         'email', 'email.id_email = catequista.id_email'
                 )
-                            
-               
-               
-                
+       
                
                 ->where([
             'catequista.id_catequista = ?' => $id,
@@ -50,25 +41,98 @@ class CatequistaService extends Entity {
         $catequistaService = $this->getServiceLocator()->get('Catequista\Service\CatequistaService');
         $resultSetCatequistas = $catequistaService->filtrarObjeto();
 
-        /* @var $contratoAsContratoService \ContratoAsContrato\Service\ContratoAsContratoService */
-        $contratoAsContratoService = $this->getServiceLocator()->get('\ContratoAsContrato\Service\ContratoAsContratoService');
+    
+    }
+
+         public function fetchPaginator($pagina = 1, $itensPagina = 5, $ordem = 'id_catequista ASC', $like = null, $itensPaginacao = 5) {
+        //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
+        // preparar um select para tabela contato com uma ordem
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+        $select = $sql->select('catequista')->order($ordem);
+
+        if (isset($like)) {
+            $select
+                    ->where
+                    ->like('id_catequista', "%{$like}%")
+                    ->or
+                   ->like('nm_catequista', "%{$like}%")
+                    ->or
+                   ->like('nr_matricula', "%{$like}%")
+                    ->or
+                   ->like('dt_nascimento', "%{$like}%")
+                    ->or
+                   ->like('dt_ingresso', "%{$like}%")
+                    ->or
+                   ->like('tx_observacao', "%{$like}%")
+                    ->or
+                   ->like('ds_situacao', "%{$like}%")
+                    ->or
+                   ->like('cs_coodenador', "%{$like}%") ;
+        }
+
+        // criar um objeto com a estrutura desejada para armazenar valores
+        $resultSet = new HydratingResultSet(new Reflection(), new \Catequista\Entity\CatequistaEntity());
+
+        // criar um objeto adapter paginator
+        $paginatorAdapter = new DbSelect(
+                // nosso objeto select
+                $select,
+                // nosso adapter da tabela
+                $this->getAdapter(),
+                // nosso objeto base para ser populado
+                $resultSet
+        );
+
+        # var_dump($paginatorAdapter);
+        #die;
+        // resultado da pagina��o
+        return (new Paginator($paginatorAdapter))
+                        // pagina a ser buscada
+                        ->setCurrentPageNumber((int) $pagina)
+                        // quantidade de itens na p�gina
+                        ->setItemCountPerPage((int) $itensPagina)
+                        ->setPageRange((int) $itensPaginacao);
+    }
+
+  
+    public function getCatequistaPaginator($filter = NULL, $camposFilter = NULL) {
+
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+
+        $select = $sql->select('catequista')->columns([
+                   'nm_catequista',
+                    'nr_matricula',
+                    'dt_nascimento',
+                    'dt_ingresso',
+                    'tx_observacao',
+                     'ds_situacao',
+                    'cs_coordenador'
             
-        foreach ($resultSetCatequistas as $catequistaEntity) {
+        ]);
 
-            /* @var $contratoService \Contrato\Service\ContratoService */
-            $contratoService = $this->getServiceLocator()->get("\Contrato\Service\ContratoService");
-            $contratoService->setIdCatequista($catequistaEntity->getId());
-            $contrato = $contratoService->filtrarObjeto()->current();
+        $where = [
+        ];
 
-            $contratoAsContratoService->setIdContrato($contrato->getId());
-            $contratoAsContratoService->setIdNivel(1);
-            
+        if (!empty($filter)) {
 
-            if ($contratoAsContratoService->filtrarObjeto()->count() < $configList['qtd_por_nivel']) {
+            foreach ($filter as $key => $value) {
 
-                return $catequistaEntity->getId();
+                if ($value) {
+
+                    if (isset($camposFilter[$key]['mascara'])) {
+
+                        eval("\$value = " . $camposFilter[$key]['mascara'] . ";");
+                    }
+
+                    $where[$camposFilter[$key]['filter']] = '%' . $value . '%';
+                }
             }
         }
-        return NULL;
+
+        $select->where($where)->order(['id_catequista DESC']);
+
+        return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
+
 }
+    

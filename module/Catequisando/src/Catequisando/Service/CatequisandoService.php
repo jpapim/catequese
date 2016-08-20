@@ -22,13 +22,17 @@ class CatequisandoService extends  Entity{
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
         $select = $sql->select('catequisando')->columns([
+
             'id_catequisando',
             'id_telefone_residencial',
             'id_telefone_celular',
             'nm_catequisando',
 
+
         ])
-        ->join('email','catequisando.id_email = email.id_email',['em_email']);
+        ->join('email','catequisando.id_email = email.id_email',['em_email'])
+        ->join('telefone','telefone.id_telefone = catequisando.id_telefone_residencial',['nr_ddd_telefone','nr_telefone']);
+
         $where = [
         ];
 
@@ -109,17 +113,26 @@ class CatequisandoService extends  Entity{
     }
 
     public function  getCatequisandoJoins($id){
-
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
-        $select = $sql->select('catequisando')
-            ->join('turma_catequisando','turma_catequisando.id_catequisando =  catequisando.id_catequisando')
-            ->join('turma','turma.id_turma = turma_catequisando.id_turma',['nm_turma'])
+        $select = $sql->select('catequisando')->columns([
+
+            'nm_catequisando'
+        ])
+        ->join('turma_catequisando','turma_catequisando.id_catequisando =  catequisando.id_catequisando',['id_turma'])
+        ->join('turma','turma.id_turma = turma_catequisando.id_turma',['nm_turma'])
+
             ->where([
-                'catequisando.id_catequisando = ?' => $id,
-            ]);
+            'catequisando.id_catequisando = ?' =>$id
+        ]);
+
 
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
+
+    public function  getCatequisandoResponsavel($id){
+
+    }
+
 
 } 

@@ -295,7 +295,7 @@ class Data
      * @return string
      */
     public static function converterDataHoraBancoMySQL2Brazil($dataMysql) {
-        return date('d/m/Y H:i:s',strtotime($dataMysql));
+        return isset($dataMysql) && $dataMysql ? date('d/m/Y H:i:s',strtotime($dataMysql)): "";
     }
 
     /***
@@ -304,11 +304,19 @@ class Data
      * @return string
      */
     public static function converterDataHoraBrazil2BancoMySQL($dataBrazil) {
-        $array = explode("/", $dataBrazil);
-        $array = array_reverse($array);
-        $str = implode($array, "/");
+        $dataConvertida = "";
+        if(isset($dataBrazil) && $dataBrazil) {
+            $arDataHora = explode(" ", $dataBrazil);
+            $data = $arDataHora[0];
+            $hora = $arDataHora[1];
+            $array = explode("/", $data);
+            $array = array_reverse($array);
+            $str = implode($array, "/");
+            $str .= ' ' . $hora;
+            $dataConvertida = date("Y-m-d H:i:s", strtotime($str));
+        }
 
-        return date("Y-m-d H:i:s", strtotime($str));
+        return $dataConvertida;
     }
 
     /**

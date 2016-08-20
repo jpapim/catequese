@@ -8,10 +8,10 @@ class ResponsavelCatequisandoTable extends AbstractEstruturaTable{
 
     public $table = 'responsavel_catequisando';
     public $campos = [
-        'id_responsavel_catequisando'=>'id', 
-        'id_responsavel'=>'id_responsavel',
+        'id_responsavel_catequisando'=>'id',
         'id_catequisando'=>'id_catequisando',
-        'id_grau_parentesco'=>'id_grau_parentesco',    
+        'id_responsavel'=>'id_responsavel',
+        'id_grau_parentesco'=>'id_grau_parentesco',
     ];
 
 }
