@@ -1,6 +1,7 @@
 <?php
 namespace SacramentoCatequisando;
 
+use SacramentoCatequisando\Service\SacramentoCatequisandoService;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
@@ -35,7 +36,6 @@ class Module
         return array(
             'factories' => array(
                 'SacramentoCatequisando\Service\SacramentoCatequisandoService' => function($sm) {
-
                     return new SacramentoCatequisandoService();
                 },
             )

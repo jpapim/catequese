@@ -13,7 +13,7 @@ use Estrutura\Service\AbstractEstruturaService;
 
 class CatequisandoEntity extends  AbstractEstruturaService{
 
-    protected $id_catequisando;
+    protected $id;
     protected $id_endereco;
     protected $id_sexo;
     protected $id_naturalidade;
@@ -33,4 +33,5 @@ class CatequisandoEntity extends  AbstractEstruturaService{
     protected  $nm_necessidade_especial;
     protected  $cs_estudante;
     protected  $cs_participa_movimento_pastoral;
+
 } 
