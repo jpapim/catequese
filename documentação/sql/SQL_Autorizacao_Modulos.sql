@@ -118,6 +118,18 @@ insert into perfil_controller_action(id_controller,id_action,id_perfil) values('
 
 ################################################
 
+AUTORIZACAO TURNO
+INSERT INTO `bdcatequese`.`controller` (`nm_controller`, `nm_modulo`, `cs_exibir_combo`) VALUES ('turno-turno', 'Turno', 'S');
+
+
+insert into perfil_controller_action(id_controller,id_action,id_perfil) values('47','1','1');
+insert into perfil_controller_action(id_controller,id_action,id_perfil) values('47','6','1');
+insert into perfil_controller_action(id_controller,id_action,id_perfil) values('47','7','1');
+insert into perfil_controller_action(id_controller,id_action,id_perfil) values('47','8','1');
+insert into perfil_controller_action(id_controller,id_action,id_perfil) values('47','51','1');
+
+################################################
+
 
 
 
