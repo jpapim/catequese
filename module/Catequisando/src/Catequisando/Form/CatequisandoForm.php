@@ -34,19 +34,21 @@ class CatequisandoForm extends  AbstractForm{
         $objForm->cep("nr_cep")->required(true)->label("Cep");
 
         #FK - Naturalidade
-        $objForm->text("id_naturalidade")->required(false)->label("Naturalidade");
+        $objForm->text("nm_naturalidade")->required(false)->label("Naturalidade");
 
         #FK - Cidades
-        $objForm->text("id_cidade")->required(false)->label("Cidade");
+        $objForm->text("nm_cidade")->required(false)->label("Cidade");
 
         #FK - Sexo
         $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(false)->label("Sexo");
 
         #FK- Telefone Residencial
-        $objForm->telefone("id_telefone_residencial")->required(false)->label("Telefone Residencial");
+        $objForm->hidden("id_telefone_residencial")->required(false);
+        $objForm->telefone("telefone_residencial")->required(false)->label("Telefone Residencial");
 
         #FK- Telefone Celular
-        $objForm->telefone("id_telefone_celular")->required(false)->label("Telefone Celular");
+        $objForm->telefone("telefone_celular")->required(false)->label("Telefone Celular");
+        $objForm->hidden("id_telefone_celular")->required(false);
 
         # SACRAMENTOS #
         #Resgatando as informações da tabela sacaramento
