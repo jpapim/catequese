@@ -40,7 +40,7 @@
 
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <?= $this->formRow($form->get('id_cidade')) ?>
+                                        <?= $this->formRow($form->get('nm_cidade')) ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <?=$this->formRow($form->get('id_naturalidade'))?>
+                                        <?=$this->formRow($form->get('nm_naturalidade'))?>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -86,12 +86,12 @@
 
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <?= $this->formRow($form->get('id_telefone_residencial')) ?>
+                                        <?= $this->formRow($form->get('telefone_residencial')) ?>
                                     </div>
                                 </div>
                                 <div class="col-md-5 col-md-push-1">
                                     <div class="form-group">
-                                        <?= $this->formRow($form->get('id_telefone_celular')) ?>
+                                        <?= $this->formRow($form->get('telefone_celular')) ?>
                                     </div>
                                 </div>
 
@@ -172,12 +172,12 @@
             { dateFormat: 'dd/mm/yy' }
         );
 
-        $( "input#id_cidade" ).autocomplete({
+        $( "input#nm_cidade" ).autocomplete({
             minLength: 4,
             source: "/cidade-cidade/autocompletecidade"
         });
 
-        $( "input#id_naturalidade" ).autocomplete({
+        $( "input#nm_naturalidade" ).autocomplete({
             minLength: 4,
             source: "/cidade-cidade/autocompletecidade"
         });
