@@ -7,7 +7,8 @@ namespace Estrutura\Helpers;
  * @created 28/05/2012
  *
  */
-class Utilities {
+class Utilities
+{
 
     /**
      * Ajusta a apresentação dos números de documentos
@@ -15,7 +16,8 @@ class Utilities {
      * @param int|string $nu_doc
      * @return string
      */
-    public static function ajustarNuDoc($nu_doc) {
+    public static function ajustarNuDoc($nu_doc)
+    {
 
         if (strlen($nu_doc)) {
 
@@ -60,7 +62,8 @@ class Utilities {
      * @param string $string
      * @return string
      */
-    public static function mascaraformato($mask, $string) {
+    public static function mascaraformato($mask, $string)
+    {
 
         //Retira caracteres especiais da string
         $outputString = str_replace('/', '', (str_replace('-', '', (str_replace(' ', '', (str_replace('.', '', $string)))))));
@@ -98,12 +101,13 @@ class Utilities {
 
     /**
      * Executa a funcão map em todos os valores do array
-     * 
+     *
      * @param type $function
      * @param array $arrParam
      * @return array $arrParam
      */
-    public static function arrayMapArray($funcao, array $arrParam) {
+    public static function arrayMapArray($funcao, array $arrParam)
+    {
 
         $ret = array();
         foreach ($arrParam as $key => $value) {
@@ -123,7 +127,8 @@ class Utilities {
      * @param string $preenchimento
      * @return string
      */
-    public static function preencheEsquerda($texto, $tamanho, $preenchimento = ' ') {
+    public static function preencheEsquerda($texto, $tamanho, $preenchimento = ' ')
+    {
 
         return substr(str_pad(trim(utf8_decode($texto)), $tamanho, $preenchimento, STR_PAD_LEFT), 0, ($tamanho));
     }
@@ -135,9 +140,20 @@ class Utilities {
      * @param string $preenchimento
      * @return string
      */
-    public static function preencheDireita($texto, $tamanho, $preenchimento = ' ') {
+    public static function preencheDireita($texto, $tamanho, $preenchimento = ' ')
+    {
 
         return substr(str_pad(trim(utf8_decode($texto)), $tamanho, $preenchimento, STR_PAD_RIGHT), 0, ($tamanho));
     }
 
+    public static function descobrirSistemaOperacionalServidor()
+    {
+        if(strstr($_SERVER['HTTP_USER_AGENT'], 'Linux')) {
+            return 'linux'; // Linux
+        } elseif(strstr($_SERVER['HTTP_USER_AGENT'], 'Windows')) {
+            return 'windows'; //Windows
+        } else {
+            return 'undefined'; //Nao identificado
+        }
+    }
 }

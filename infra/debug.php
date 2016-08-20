@@ -17,7 +17,7 @@ function xd($obj) {
 /* FUNCAO UTIL PARA DEBUG SEM  DIE */
 
 function x($obj) {
-    echo "<div style='background-color:#0000CD; border:1px #666666 solid; text-align:left;'>";
+    echo "<div style='background-color:#7A77BB; border:1px #666666 solid; text-align:left;'>";
     echo "<pre>";
     print_r($obj);
     echo "</pre>";
