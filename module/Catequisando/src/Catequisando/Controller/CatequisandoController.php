@@ -88,8 +88,8 @@ class CatequisandoController extends  AbstractCrudController{
     public function gravarAction()
     {
         $controller =  $this->params('controller');
-
-        #$pos = $this->getRequest()->getPost()->toArray();
+        $id_catequizando = Cript::dec($this->getRequest()->getPost()->get('id'));
+        $pos = $this->getRequest()->getPost()->toArray();
         #$arrc = $this->service->buscar(Cript::dec($pos['id']))->toArray();
 
             if($this->getRequest()->getPost()->get('id')){
@@ -102,10 +102,19 @@ class CatequisandoController extends  AbstractCrudController{
             $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('em_email')));
             if ($emailService->filtrarObjeto()->count()) {
 
-                $this->addErrorMessage('Email já cadastrado. Faça seu login.');
-                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
-                return FALSE;
+                if(!isset($id_catequizando) ){
+                    $this->addErrorMessage('Email já cadastrado. Faça seu login.');
+                    $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+                    return FALSE;
+                } else {
+                    $emailService->setId($this->service->buscar($id_catequizando)->getIdEmail());
+                    $emailService->setEmEmail($pos['em_email']);
+                   # $this->getRequest()->getPost()->set('id_email', $this->service->buscar($id_catequizando)->getIdEmail());
+                }
+
             }
+       # x($this->service->buscar($id_catequizando));
+       # xd($pos);
             $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_nascimento'));
 
            # Realizando Tratamento do Telefone Residencial
@@ -142,9 +151,10 @@ class CatequisandoController extends  AbstractCrudController{
 
                     if($idEndereco){
                         # Gravando email e retornando o ID do Email
-                        $idEmail = parent::gravar(
-                            $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
-                        );
+                       # $idEmail = parent::gravar(
+                        #    $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
+                        #);
+                        $idEmail =$this->service->buscar($id_catequizando)->getIdEmail();
                         if(!empty($idEmail) && $idEmail){
                             #Resgatando id de cidade e atribuindo ao campo id_naturalidade do cadastro de catequizando.
                             $id_naturalidade =  $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('nm_naturalidade'));
@@ -471,17 +481,17 @@ class CatequisandoController extends  AbstractCrudController{
 
            #}
             $post['dt_nascimento'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']);
-           x($post['dt_nascimento']);
-           xd($post);
-           #xd($arr);
+           #x($post['dt_nascimento']);
+           #xd($post);
            $form = new \Catequisando\Form\CatequisandoForm();
            $form->setData($post);
-           parent::gravar(
-               $this->getServiceLocator()->get('\Catequisando\Service\CatequisandoService'),$form
-           );
+           $my_service = new \Catequisando\Service\CatequisandoService();
+           $my_service->exchangeArray($form->getData());
 
            $this->addSuccessMessage('Parabéns! Catequizando cadastrado com sucesso.');
            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+
+           return $my_service->salvar();
 
        }catch (\Exception $e) {
 
