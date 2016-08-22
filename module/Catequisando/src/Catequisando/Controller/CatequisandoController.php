@@ -392,8 +392,8 @@ class CatequisandoController extends  AbstractCrudController{
            $post['id']= $id;
            $arr = $this->service->buscar($id)->toArray();
 
-           #x($post);
-
+            ### Modificando o formato da data de nascimento para inserir no banco de dados.
+           $post['dt_nascimento'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']);
            ### Atualizando Email;
            $objEmail = new \Email\Service\EmailService();
            $objEmail->setId($arr['id_email']);
@@ -433,7 +433,9 @@ class CatequisandoController extends  AbstractCrudController{
 
            ## Recuperando id da Naturalidade
            $id_naturalidade = $cidade->getIdCidadePorNomeToArray($post['nm_naturalidade']);
-           $post['id_naturalidade'] = $id_naturalidade['id_cidade'];
+           $post['id_naturalidade']= $id_naturalidade['id_cidade'];
+
+           x($post);
 
            ## Atualizando Sacramento Catequisando
            $arrSacramento = $this->getRequest()->getPost()->get('arrSacramento');
@@ -469,29 +471,19 @@ class CatequisandoController extends  AbstractCrudController{
               $et->salvar();
           }
 
-           ## Setando atualizações do post no array do catequisando
-           #foreach($post as $key => $valor){
-           #    if($key =='dt_nascimento'){
-           #        $valor = Data:: converterDataHoraBrazil2BancoMySQL($valor);
-           #    }#
 
-           #    if(array_key_exists($key,$post)){
-           #        $arr[$key]=$valor;
-           #    }
-
-           #}
-            $post['dt_nascimento'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']);
            #x($post['dt_nascimento']);
            #xd($post);
            $form = new \Catequisando\Form\CatequisandoForm();
            $form->setData($post);
+          
            $my_service = new \Catequisando\Service\CatequisandoService();
-           $my_service->exchangeArray($form->getData());
-
+           $my_service->exchangeArray($post);
+           $retorno =$my_service->salvar();
            $this->addSuccessMessage('Parabéns! Catequizando cadastrado com sucesso.');
            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
 
-           return $my_service->salvar();
+           return $retorno;
 
        }catch (\Exception $e) {
 
