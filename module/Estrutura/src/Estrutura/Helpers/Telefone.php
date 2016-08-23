@@ -1,7 +1,5 @@
 <?php
-
 namespace Estrutura\Helpers;
-
 /**
  *
  * @author ronaldo
@@ -9,7 +7,6 @@ namespace Estrutura\Helpers;
  */
 class Telefone
 {
-
     /**
      *
      * @param string $telefone
@@ -20,10 +17,8 @@ class Telefone
      */
     public static function telefoneFilter($telefone)
     {
-
         return preg_replace('#[() -]#', '', $telefone);
     }
-
     /**
      *
      * @param int $telefone
@@ -34,49 +29,35 @@ class Telefone
      */
     public static function telefoneMask($telefone)
     {
-
         if ($telefone) {
             switch (strlen($telefone)) {
-
                 //55554444
                 case 8:
-
                     return substr($telefone, 0, 4) . '-' . substr($telefone, 4, 4);
-
                 //555544444
                 case 9:
-
                     return substr($telefone, 0, 4) . '-' . substr($telefone, 4, 5);
-
                 //6155554444
                 case 10:
-
                     return '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 4) . '-' . substr($telefone, 6, 4);
-
                 //61555544444    
                 case 11:
-
                     return '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 4) . '-' . substr($telefone, 6, 5);
-
                 default:
                     return $telefone;
             }
         } else {
-
             return NULL;
         }
     }
-
     public static function getDDD($telefoneComMascara)
     {
         $telefone = trim($telefoneComMascara);
         if (!strpos($telefone, ')') === false) {
-
             return substr($telefone, 1, 2);
         }
         return NULL;
     }
-
     public static function getTelefone($telefoneComMascara)
     {
         $telefone = trim($telefoneComMascara);
@@ -94,5 +75,4 @@ class Telefone
             }
         }
     }
-
 }
