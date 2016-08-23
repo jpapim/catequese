@@ -1,133 +1,177 @@
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css" >           
-<div class="row row-offcanvas row-offcanvas-right">
-    <div class="col-xs-12 col-sm-9">
-        <div class="well">
-            <div class="page-head">
-                <h2>Cadastro</h2>
-            </div>
+<div class="page-head">
+    <h2>Adicionar Professor</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="block-flat">
+            <div class="content">
+                <?php
+                $form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('data-role', 'form');
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
+                echo $this->formHidden($form->get('id'));
+                $form->get('dt_nascimento')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_nascimento')->getValue()));
+              
+                ?>
+                <!--DADOS PESSOAIS -->
+                <hr>
+                <fieldset>
 
-           
-            <?php
-            $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')));
-            $form->setAttribute('method', 'post');
-            $form->setAttribute('class', 'form-horizontal');
-            $form->setAttribute('data-toggle', 'validator');
-            $form->prepare();
-            echo $this->form()->openTag($form);
-            ?>
-            <div class="bs-callout bs-callout-info">
-          
-            </div>
-            <br />
+                    <div class="container">
 
-            <input type="hidden" name="id_catequista_pai" value="<?= $atributos['id_catequista'] ?>" />
-            <div class="form-group">
-           <div class="form-group">
-              <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_usuario')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-               <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_cidade')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_endereco')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-               
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_sexo')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-               
-             <div class="col-md-7">
-                    <?= $this->formRow($form->get('em_email')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>                    
-            </div>
-            <div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('em_email_confirm')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>  
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_situacao')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-                
-                      <div class="col-md-7">
-                    <?= $this->formRow($form->get('nm_catequista')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>     
-                    <div class="col-md-7">
-                    <?= $this->formRow($form->get('nr_matricula')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-          
-            <div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formLabel($form->get('dt_nascimento')) ?>
-                    <div class="input-group" id="datetimepicker">
-                        <?= $this->formInput($form->get('dt_nascimento')) ?>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>                            
+                        <div class="row">
+                            <div class="col-md-5 col-md-push-1"><!--Lado Esquerdo -->
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?= $this->formRow($form->get('nm_catequista')) ?>
+                                    </div>
+                                </div>
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <?= $this->formRow($form->get('id_sexo')) ?>
+                                        </div>
+                                   </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?= $this->formRow($form->get('nm_cidade')) ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?= $this->formRow($form->get('nm_bairro')) ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?= $this->formRow($form->get('nm_complemento')) ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?= $this->formRow($form->get('nr_numero')) ?>
+                                    </div>
+                                </div>
+                        <div class="form-group">
+                        <div class="col-md-4 col-md-push-0">
+                            <?=$this->formRow($form->get('dt_ingresso'))?>
+                        </div>
+                     <div class="col-md-4 col-md-push-1">
+                            <?=$this->formRow($form->get('nr_matricula'))?>
+                        </div>
+                        </div>
+                          
+                                
+                               </div>
+
+                            <div class="col-md-4 col-md-push-2"> <!-- Lado Direito -->
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('dt_nascimento'))?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('nm_naturalidade'))?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('nr_cep'))?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('nm_logradouro'))?>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <?= $this->formRow($form->get('telefone_residencial')) ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-md-push-1">
+                                    <div class="form-group">
+                                        <?= $this->formRow($form->get('telefone_celular')) ?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('em_email'))?>
+                                    </div>
+                                </div>       <div class="form-group">
+                      
                     </div>
-                    <div class="help-block with-errors"></div>
-                    
-                     <div class="col-md-7">
-                    <?= $this->formLabel($form->get('dt_ingresso')) ?>
-                    <div class="input-group" id="datetimepicker">
-                        <?= $this->formInput($form->get('dt_ingresso')) ?>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>                            
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('em_email_confirm'))?>
+                                    </div>
+                                </div>
+
+                            </div>
+                            </div>
+                        </div>
+                </fieldset><!-- FIM DADOS PESSOAIS -->
+            
+                <fieldset>
+                 
+                     <div class="form-group">
+                       <div class="col-md-4 col-md-push-1">
+                            <?=  $this->formRow($form->get('id_detalhe_formacao'))?>
+                        </div>
                     </div>
-                          <div class="col-md-7">
-                    <?= $this->formRow($form->get('tx_observacao')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-                          <div class="col-md-7">
-                    <?= $this->formRow($form->get('ds_situacao')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-                         
-                          <div class="col-md-7">
-                    <?= $this->formRow($form->get('cs_coordenador')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-                         
-                    <div class="help-block with-errors"></div>
-                    
-                    
-                </div>
-            </div>    
+                </fieldset>
+             
+               <fieldset>
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-push-1">
+                            <?= $this->formRow($form->get('arrEtapa'))?>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                        <div class="col-md-6 col-md-push-1">
+                            <?= $this->formRow($form->get('tx_observacao'))?>
+                        </div>
+                </fieldset>
                
-
-
-<?php /*
-
-            <div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('captcha')); ?>
-                    <div class="help-block with-errors"></div>
+                <fieldset class="form-group">
+                        <div class="col-md-6 col-md-push-1">
+                            <?= $this->formRow($form->get('id_situacao'))?>
+                        </div>
+                </fieldset>
+               </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+                    </div>
                 </div>
+                <?= $this->form()->closeTag(); ?>
             </div>
-*/?>
-            <div class="form-group">
-                <div class="col-md-7">
-                    <label>
-                        <input type="checkbox" required="required" value="1">
-                        Li e concordo com o <a href="#" target="_blank">Termo de Utilização do serviço</a>
-                    </label>                            
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-10">
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                    <a href="<?= $this->url('navegacao', ['controller' => 'auth', 'action' => 'login']) ?>" class="btn btn-default">Voltar</a>                    
-                </div>
-            </div>
-            <?= $this->form()->closeTag(); ?>
         </div>
     </div>
-</div>
-<script type="text/javascript" src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+        $( "#dt_nascimento" ).datepicker(
+            { dateFormat: 'dd/mm/yy' }
+        );
+        $( "input#nm_cidade" ).autocomplete({
+            minLength: 4,
+            source: "/cidade-cidade/autocompletecidade"
+        });
+        $( "input#nm_naturalidade" ).autocomplete({
+            minLength: 4,
+            source: "/cidade-cidade/autocompletecidade"
+        });
+    });
+</script>
