@@ -308,7 +308,7 @@ class Data
         if(isset($dataBrazil) && $dataBrazil) {
             $arDataHora = explode(" ", $dataBrazil);
             $data = $arDataHora[0];
-            $hora = $arDataHora[1];
+            $hora = isset($arDataHora[1]) ? $arDataHora[1] : '00:00:00';
             $array = explode("/", $data);
             $array = array_reverse($array);
             $str = implode($array, "/");
