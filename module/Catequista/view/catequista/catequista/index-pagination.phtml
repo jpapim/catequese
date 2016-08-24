@@ -12,8 +12,7 @@
                     <th class="text-center">Dt Nasc</th>
                     <th class="text-center">Dt Ingresso</th>
                      <th class="text-center">Observacao</th>
-                      <th class="text-center">Situacao</th>
-                       <th class="text-center">Coordenador</th>
+                   
                         <th class="text-center">Ações</th>
                   
                 
@@ -27,8 +26,7 @@
                     <th class="text-center">Dt Nasc</th>
                     <th class="text-center">Dt Ingresso</th>
                      <th class="text-center">Observacao</th>
-                      <th class="text-center">Situacao</th>
-                       <th class="text-center">Coordenador</th>
+                     
                         <th class="text-center">Ações</th>
                 
                 </tr>
@@ -81,8 +79,7 @@
                             <td class="text-center"><?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($catequista['dt_nascimento']) ?></td>
                             <td class="text-center"><?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($catequista['dt_ingresso']) ?></td>
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequista['tx_observacao']) ?></td>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequista['ds_situacao']) ?></td>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequista['cs_coordenador']) ?></td>
+                            
                             <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($catequista['id_catequista'])))) ?>
