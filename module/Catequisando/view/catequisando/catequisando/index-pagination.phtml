@@ -70,16 +70,15 @@
                 <?php
 
                 foreach ($paginator as $item) {
-                    $result = $catequisando->getCatequisandoJoins($item['id_catequisando']);
-
+                        #x($item);
                     ?>
                     <tr>
 
                         <td class="text-center"><?=$item['nm_catequisando']?></td>
-                        <td class="text-center"><?="Responsável em Breve"?></td>
+                        <td class="text-center"><?=$item['nm_responsavel']?></td>
                         <td class="text-center"><?=\Estrutura\Helpers\Telefone::telefoneMask($item['nr_ddd_telefone'].$item['nr_telefone'])?></td>
                         <td class="text-center"><?=$item['em_email']?></td>
-                        <td class="text-center"><?=$result['nm_turma']?></td>
+                        <td class="text-center"><?=$item['nm_turma']?></td>
 
                         <td style="width: 100px;" class="text-center">
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_catequisando'])))) ?>

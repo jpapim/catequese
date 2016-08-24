@@ -45,9 +45,13 @@ class CatequisandoController extends  AbstractCrudController{
             '0' => [
                 'filter' => "catequisando.nm_catequisando LIKE ?",
             ],
-            '1' => null,
+            '1' => [
+                'filter' => "responsavel.nm_responsavel LIKE ?",
+            ],
 
-            '2' => NULL,
+            '2' =>[
+                'filter' => "telefone.nr_telefone LIKE ?",
+            ],
 
             '3' => [
                 'filter' => "email.em_email LIKE ?",
@@ -114,9 +118,19 @@ class CatequisandoController extends  AbstractCrudController{
                 }
 
             }
-       # x($this->service->buscar($id_catequizando));
-       # xd($pos);
-            $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_nascimento'));
+
+        $dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
+        $dataMaioridade = new \Datetime();
+        $dataMaioridade->modify('-8 years');
+
+        if ($dateNascimento > $dataMaioridade) {
+
+            $this->addErrorMessage('O Cadastrado não apresenta idade mínima.');
+            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' =>'cadastro',true));
+            return FALSE;
+        }
+        $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_nascimento'));
+
 
            # Realizando Tratamento do Telefone Residencial
            $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_residencial')));
@@ -305,7 +319,7 @@ class CatequisandoController extends  AbstractCrudController{
           $form->setData($arrCatequisando);
           $form->setData($this->getRequest()->getPost());
 
-          x($this->getRequest()->getPost()->get('telefone_residencial'));
+          #x($this->getRequest()->getPost()->get('telefone_residencial'));
           $dadosView = [
               'service' => $this->service,
               'form' => $form,
@@ -438,7 +452,7 @@ class CatequisandoController extends  AbstractCrudController{
            $id_naturalidade = $cidade->getIdCidadePorNomeToArray($post['nm_naturalidade']);
            $post['id_naturalidade']= $id_naturalidade['id_cidade'];
 
-           x($post);
+           #x($post);
 
            ## Atualizando Sacramento Catequisando
            $arrSacramento = $this->getRequest()->getPost()->get('arrSacramento');

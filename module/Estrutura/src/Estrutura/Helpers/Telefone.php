@@ -63,7 +63,7 @@ class Telefone
         $telefone = trim($telefoneComMascara);
         if (!strpos($telefone, ')') === false) {
             if (!strpos($telefone, '-') === false) {
-                return str_replace('-', '', substr($telefone, 4, strlen($telefone)));
+                return str_replace('-', '', substr($telefone, 5, strlen($telefone)));
             } else {
                 return substr($telefone, 4, 8);
             }
