@@ -31,7 +31,13 @@ class CatequisandoService extends  Entity{
 
         ])
         ->join('email','catequisando.id_email = email.id_email',['em_email'])
-        ->join('telefone','telefone.id_telefone = catequisando.id_telefone_residencial',['nr_ddd_telefone','nr_telefone']);
+        ->join('telefone','telefone.id_telefone = catequisando.id_telefone_residencial',['nr_ddd_telefone','nr_telefone'])
+        ->join('responsavel_catequisando','responsavel_catequisando.id_catequisando = catequisando.id_catequisando',['id_responsavel'],\Zend\Db\Sql\Select::JOIN_LEFT)
+        ->join('responsavel','responsavel.id_responsavel = responsavel_catequisando.id_responsavel',['nm_responsavel'],\Zend\Db\Sql\Select::JOIN_LEFT)
+        ->join('turma_catequisando','turma_catequisando.id_catequisando = catequisando.id_catequisando',['id_turma'],\Zend\Db\Sql\Select::JOIN_LEFT)
+        ->join('turma','turma.id_turma = turma_catequisando.id_turma',['nm_turma'],\Zend\Db\Sql\Select::JOIN_LEFT);
+
+
 
         $where = [
         ];
@@ -39,7 +45,6 @@ class CatequisandoService extends  Entity{
         if (!empty($filter)) {
 
             foreach ($filter as $key => $value) {
-
                 if ($value) {
 
                     if (isset($camposFilter[$key]['mascara'])) {
@@ -52,7 +57,7 @@ class CatequisandoService extends  Entity{
             }
         }
 
-        $select->where($where)->order(['id_catequisando ASC']);
+        $select->where($where)->order(['nm_catequisando ASC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
@@ -112,26 +117,33 @@ class CatequisandoService extends  Entity{
         return $sql->prepareStatementForSqlObject($select)->execute();
     }
 
-    public function  getCatequisandoJoins($id){
+    public function  getCatequisandoTurma($id){
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
-        $select = $sql->select('catequisando')->columns([
+        $select = $sql->select('turma_catequisando')->columns(['id_turma'])
+            ->where(['turma_catequisando.id_catequisando = ?'=>$id]);
 
-            'nm_catequisando'
-        ])
-        ->join('turma_catequisando','turma_catequisando.id_catequisando =  catequisando.id_catequisando',['id_turma'])
-        ->join('turma','turma.id_turma = turma_catequisando.id_turma',['nm_turma'])
+        $id_turma = $sql->prepareStatementForSqlObject($select)->execute()->current();
 
-            ->where([
-            'catequisando.id_catequisando = ?' =>$id
-        ]);
+        $select = $sql->select('turma')->columns(['nm_turma'])
+            ->where(['turma.id_turma = ?'=>$id_turma['id_turma']]);
 
-
-        return $sql->prepareStatementForSqlObject($select)->execute()->current();
+        $x =  $sql->prepareStatementForSqlObject($select)->execute()->current();
+        return $x['nm_turma'];
     }
 
     public function  getCatequisandoResponsavel($id){
+        $sql =  new \Zend\Db\Sql\Sql($this->getAdapter());
 
+        $select =$sql->select('responsavel_catequisando')->columns(['id_responsavel'])
+        ->where(['responsavel_catequisando.id_catequisando = ?' =>$id ]);
+
+        $id_responsavel = $sql->prepareStatementForSqlObject($select)->execute()->current();
+        #$id_responsavel['id_responsavel']
+        $select=$sql->select('responsavel')->columns(['nm_responsavel'])->where(['responsavel.id_responsavel = ?'=>$id_responsavel['id_responsavel']]);
+
+        $nm_responsavel = $sql->prepareStatementForSqlObject($select)->execute()->current();
+         return $nm_responsavel['nm_responsavel'];
     }
 
 
