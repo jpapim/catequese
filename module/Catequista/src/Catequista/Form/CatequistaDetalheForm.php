@@ -20,7 +20,7 @@ class CatequistaDetalheForm extends AbstractForm {
        $objForm = new FormObject('catequistadetalheform',$this,$this->inputFilter);
       $objForm->hidden("id")->required(false)->label("Id");
       //##############----BUSCANDO CAMPOS-- #################### 
-       #$objForm->combo("id_usuario", '\Usuario\Service\UsuarioService', 'id', 'nm_usuario')->required(false)->label("Usuario");
+       $objForm->combo("id_usuario", '\Usuario\Service\UsuarioService', 'id', 'nm_usuario')->required(false)->label("Usuario");
        $objForm->combo("id_cidade", '\Cidade\Service\CidadeService', 'id', 'nm_cidade')->required(false)->label("Cidade");
        $objForm->combo("id_endereco", '\Endereco\Service\EnderecoService', 'id', 'nm_logradouro')->required(false)->label("Endereco");
        $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(FALSE)->label("Sexo");
