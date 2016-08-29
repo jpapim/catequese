@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+
+<div class="page-head">
+    <h2>Lista de Sacramentos do Catequizando</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-default"
+               href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>"
+               title="Novo Sacramento_Catequizando">Novo Sacramento do Catequizando</a>
+        </div>
+    </div>
+    <br/>
+    <div class="row" id="sacramento-catequizando-pagination"></div>
+</div>
+
+<script>
+    // funcao ajax para buscar a paginacao
+    $(function () {
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            cache: false,
+            url: '/sacramento_catequizando-sacramentocatequizando/index-pagination',
+            async: true,
+            data: {},
+            beforeSend: function () {
+
+                $('#sacramento-catequizando-pagination').html(
+                    '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                );
+            },
+            success: function (data) {
+
+                $('#sacramento-catequizando-pagination').html(data);
+            }
+        });
+
+    })
+</script>

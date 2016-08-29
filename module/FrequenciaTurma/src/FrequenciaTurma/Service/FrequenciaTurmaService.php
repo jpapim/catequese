@@ -18,11 +18,11 @@ class FrequenciaTurmaService extends Entity
 
         $select = $sql->select('frequencia_turma')->columns([
             'id_frequencia_turma',
-            'id_turma_catequisando',
+            'id_turma_catequizando',
             'id_detalhe_periodo_letivo',
         ])->join(array('tct' =>
-                'turma_catequisando'), 'tct.id_turma_catequisando = frequencia_turma.id_turma_catequisando',
-                array('id_turma', 'id_catequisando', 'id_usuario', 'turma_catequisando_id_periodo_letivo'=>'id_periodo_letivo', 'dt_cadastro', 'cs_aprovado', 'ds_motivo_reprovacao', 'tx_observacoes') #Alysson - Criando Alias para a Coluna
+                'turma_catequizando'), 'tct.id_turma_catequizando = frequencia_turma.id_turma_catequizando',
+                array('id_turma', 'id_catequizando', 'id_usuario', 'turma_catequizando_id_periodo_letivo'=>'id_periodo_letivo', 'dt_cadastro', 'cs_aprovado', 'ds_motivo_reprovacao', 'tx_observacoes') #Alysson - Criando Alias para a Coluna
         )->join( array('dpl' =>
                 'detalhe_periodo_letivo'), 'dpl.id_detalhe_periodo_letivo = frequencia_turma.id_detalhe_periodo_letivo',
                 array('detalhe_periodo_letivo_id_periodo_letivo'=>'id_periodo_letivo', 'dt_encontro')#Alysson - Criando Alias para a Coluna
@@ -64,7 +64,7 @@ class FrequenciaTurmaService extends Entity
                 ->where
                 ->like('id_frequencia_turma', "%{$like}%")
                 ->or
-                ->like('id_turma_catequisando', "%{$like}%")
+                ->like('id_turma_catequizando', "%{$like}%")
                 ->or
                 ->like('id_detalhe_periodo_letivo', "%{$like}%");
         }
