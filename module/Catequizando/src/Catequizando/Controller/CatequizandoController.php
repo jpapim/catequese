@@ -88,8 +88,8 @@ class CatequizandoController extends  AbstractCrudController{
     public function gravarAction()
     {
         $controller =  $this->params('controller');
-
-        #$pos = $this->getRequest()->getPost()->toArray();
+        $id_catequizando = Cript::dec($this->getRequest()->getPost()->get('id'));
+        $pos = $this->getRequest()->getPost()->toArray();
         #$arrc = $this->service->buscar(Cript::dec($pos['id']))->toArray();
 
             if($this->getRequest()->getPost()->get('id')){
@@ -102,10 +102,19 @@ class CatequizandoController extends  AbstractCrudController{
             $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('em_email')));
             if ($emailService->filtrarObjeto()->count()) {
 
-                $this->addErrorMessage('Email já cadastrado. Faça seu login.');
-                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
-                return FALSE;
+                if(!isset($id_catequizando) ){
+                    $this->addErrorMessage('Email já cadastrado. Faça seu login.');
+                    $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+                    return FALSE;
+                } else {
+                    $emailService->setId($this->service->buscar($id_catequizando)->getIdEmail());
+                    $emailService->setEmEmail($pos['em_email']);
+                   # $this->getRequest()->getPost()->set('id_email', $this->service->buscar($id_catequizando)->getIdEmail());
+                }
+
             }
+       # x($this->service->buscar($id_catequizando));
+       # xd($pos);
             $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_nascimento'));
 
            # Realizando Tratamento do Telefone Residencial
@@ -142,9 +151,10 @@ class CatequizandoController extends  AbstractCrudController{
 
                     if($idEndereco){
                         # Gravando email e retornando o ID do Email
-                        $idEmail = parent::gravar(
-                            $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
-                        );
+                       # $idEmail = parent::gravar(
+                        #    $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
+                        #);
+                        $idEmail =$this->service->buscar($id_catequizando)->getIdEmail();
                         if(!empty($idEmail) && $idEmail){
                             #Resgatando id de cidade e atribuindo ao campo id_naturalidade do cadastro de catequizando.
                             $id_naturalidade =  $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('nm_naturalidade'));
@@ -382,8 +392,8 @@ class CatequizandoController extends  AbstractCrudController{
            $post['id']= $id;
            $arr = $this->service->buscar($id)->toArray();
 
-           #x($post);
-
+            ### Modificando o formato da data de nascimento para inserir no banco de dados.
+           $post['dt_nascimento'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']);
            ### Atualizando Email;
            $objEmail = new \Email\Service\EmailService();
            $objEmail->setId($arr['id_email']);
@@ -423,7 +433,9 @@ class CatequizandoController extends  AbstractCrudController{
 
            ## Recuperando id da Naturalidade
            $id_naturalidade = $cidade->getIdCidadePorNomeToArray($post['nm_naturalidade']);
-           $post['id_naturalidade'] = $id_naturalidade['id_cidade'];
+           $post['id_naturalidade']= $id_naturalidade['id_cidade'];
+
+           x($post);
 
            ## Atualizando Sacramento Catequizando
            $arrSacramento = $this->getRequest()->getPost()->get('arrSacramento');
@@ -459,6 +471,7 @@ class CatequizandoController extends  AbstractCrudController{
               $et->salvar();
           }
 
+<<<<<<< HEAD:module/Catequizando/src/Catequizando/Controller/CatequizandoController.php
            ## Setando atualizações do post no array do catequizando
            #foreach($post as $key => $valor){
            #    if($key =='dt_nascimento'){
@@ -480,8 +493,21 @@ class CatequizandoController extends  AbstractCrudController{
                $this->getServiceLocator()->get('\Catequizando\Service\CatequizandoService'),$form
            );
 
+=======
+
+           #x($post['dt_nascimento']);
+           #xd($post);
+           $form = new \Catequisando\Form\CatequisandoForm();
+           $form->setData($post);
+          
+           $my_service = new \Catequisando\Service\CatequisandoService();
+           $my_service->exchangeArray($post);
+           $retorno =$my_service->salvar();
+>>>>>>> d79137b0974014eca0285e7e1224659cae21e2af:module/Catequisando/src/Catequisando/Controller/CatequisandoController.php
            $this->addSuccessMessage('Parabéns! Catequizando cadastrado com sucesso.');
            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+
+           return $retorno;
 
        }catch (\Exception $e) {
 

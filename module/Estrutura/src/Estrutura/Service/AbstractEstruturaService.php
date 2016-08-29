@@ -218,8 +218,7 @@ class AbstractEstruturaService {
 
             $where = [$field => $this->getId()];
         }
-        #var_dump( $dados );
-        #die;
+
         $result = $this->getTable()->salvar($dados, $where);
         if (is_string($result)) {
             $this->setId($result);
