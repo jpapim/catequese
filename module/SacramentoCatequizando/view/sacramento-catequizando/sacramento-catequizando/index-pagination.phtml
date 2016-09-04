@@ -2,20 +2,24 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterFrequenciaTurma">
+        <table class="table table-striped" id="tablesorterSacramentoCatequizando">
             <thead>
             <tr>
                 <th class="text-center">Identificador</th>
-                <th class="text-center">ID Turma Catequizando</th>
-                <th class="text-center">ID Detalhe do Período Letivo</th>
+                <th class="text-center">Catequizando</th>
+                <th class="text-center">Sacramento</th>
+                <th class="text-center">Paróquia</th>
+                <th class="text-center">Comprov. Bastimo</th>
                 <th class="text-center">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
                 <th class="text-center">Identificador</th>
-                <th class="text-center">ID Turma Catequizando</th>
-                <th class="text-center">ID Detalhe do Período Letivo</th>
+                <th class="text-center">Catequizando</th>
+                <th class="text-center">Sacramento</th>
+                <th class="text-center">Paróquia</th>
+                <th class="text-center">Comprov. Bastimo</th>
                 <th class="text-center">Ações</th>
             </tr>
             <tr>
@@ -23,9 +27,9 @@
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/frequencia_turma-frequenciaturma/index-pagination',
+                            'urlPagination' => '/sacramento_catequizando-sacramentocatequizando/index-pagination',
                             'countPerPage' => $countPerPage,
-                            'divData' => '#frequencia-turma',
+                            'divData' => '#sacramento-catequizando-pagination',
                         ]
                     );
                     ?>
@@ -60,17 +64,19 @@
                     ?>
                 </tr>
                 <?php
-                foreach ($paginator as $key => $item) {
+                foreach ($paginator as $key => $sacramentocatequizando) {
                     ?>
                     <tr>
-                        <td class="text-center"><?= $item['id_frequencia_turma']?></td>
-                        <td class="text-center"><?= $item['id_turma_catequizando']?></td>
-                        <td class="text-center"><?= $item['id_detalhe_periodo_letivo']?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequizando['id_sacramento_catequizando']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequizando['nm_catequizando']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequizando['nm_sacramento']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequizando['nm_paroquia']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequizando['cs_comprovante_batismo'] == 'S'? 'Sim':'Não') ?></td>
 
                         <td class="text-center">
                                 <span class="" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_frequencia_turma'])))) ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_frequencia_turma'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($sacramentocatequizando['id_sacramento_catequizando'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($sacramentocatequizando['id_sacramento_catequizando'])))) ?>
                                 </span>
                         </td>
                     </tr>
@@ -89,11 +95,12 @@
                    class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
                 <a class="btn btn-default"
                    href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>"
-                   title="Nova Frequencia da Turma">Nova Frequencia da Turma</a>
+                   title="Novo Sacramento_Catequizando">Novo Sacramento do Catequizando</a>
             </div>
         </div>
     </div>
 </div>
+<!--<script src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript"></script>-->
 <script src="/assets/js/moment.js" type="text/javascript"></script>
 <script src="/assets/js/validator.min.js" type="text/javascript"></script>
 <script src="/assets/js/jquery.mask.min.js" type="text/javascript"></script>
@@ -102,7 +109,7 @@
 <script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
 <script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 
-<script type="text/javascript" language="javascript" >
+<script type="text/javascript" language="javascript">
     $(function () {
 
         // NOTE: $.tablesorter.theme.bootstrap is ALREADY INCLUDED in the jquery.tablesorter.widgets.js
@@ -127,7 +134,7 @@
         };
 
         // call the tablesorter plugin and apply the uitheme widget
-        $("#tablesorterFrequenciaTurma").tablesorter({
+        $("#tablesorterSacramentoCatequizando").tablesorter({
             // this will apply the bootstrap theme if "uitheme" widget is included
             // the widgetOptions.uitheme is no longer required to be set
             theme: "bootstrap",

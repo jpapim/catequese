@@ -1,6 +1,6 @@
 <?php
 
-namespace FrequenciaTurma\Controller;
+namespace ResponsavelCatequizando\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
@@ -8,10 +8,12 @@ use Estrutura\Helpers\Data;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
-class FrequenciaTurmaController extends AbstractCrudController
+class ResponsavelCatequizandoController extends AbstractCrudController
 {
 
     protected $service;
+
+
     protected $form;
 
     public function __construct()
@@ -35,28 +37,37 @@ class FrequenciaTurmaController extends AbstractCrudController
     {// funcao paginacao
 
         $filter = $this->getFilterPage();
+
         $camposFilter = [
             '0' => [
-                'filter' => "frequencia_turma.id_frequencia_turma LIKE ?",
+                'filter' => "responsavel_catequizando.id_responsavel_catequizando LIKE ?",
             ],
             '1' => [
-                'filter' => "turma_catequizando.id_turma_catequizando LIKE ?",
+                'filter' => "catequizando.nm_catequizando LIKE ?",
             ],
             '2' => [
-                'filter' => "detalhe_periodo_letivo.id_detalhe_periodo_letivo LIKE ?",
+                'filter' => "responsavel.nm_responsavel LIKE ?",
             ],
-            '3' => NULL,
+
+            '3' => [
+                'filter' => "grau_parentesco.nm_grau_parentesco LIKE ?",
+            ],
+            '4' => NULL,
 
         ];
 
-        $paginator = $this->service->getFrequenciaTurmaPaginator($filter, $camposFilter);
+        $paginator = $this->service->getResponsavelCatequizandoPaginator($filter, $camposFilter);
+
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+
         $countPerPage = $this->getCountPerPage(
             current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
         );
+
         $paginator->setItemCountPerPage($this->getCountPerPage(
             current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
         ))->setCurrentPageNumber($this->getCurrentPage());
+
         $viewModel = new ViewModel([
             'service' => $this->service,
             'form' => $this->form,
@@ -67,6 +78,7 @@ class FrequenciaTurmaController extends AbstractCrudController
             'controller' => $this->params('controller'),
             'atributos' => array()
         ]);
+
         return $viewModel->setTerminal(TRUE);
     }
 
@@ -80,7 +92,7 @@ class FrequenciaTurmaController extends AbstractCrudController
     }
 
     public function cadastroAction()
-    { //função de alterar
+    { // funnção alterar
         return parent::cadastro($this->service, $this->form);
     }
 
@@ -89,5 +101,31 @@ class FrequenciaTurmaController extends AbstractCrudController
         return parent::excluir($this->service, $this->form);
     }
 
+    //    public function gravarAction()
+//    {
+//
+//        //##############################################################################################
+//        //GRAVANDO RESPONSAVEL
+//
+//        // INSERINDO CAMPOS COM FKS DA TABELA
+//        $ResponsavelCatequizandoService = $this->getServiceLocator()->get('\ResponsavelCatequizando\Service\ResponsavelCatequizandoService');
+//        //  $catequistaService->setIdResponsavel(trim($this->getRequest()->getPost()->get('id_responsavel')));
+//        //  $catequistaService->setIdCatequizando(trim($this->getRequest()->getPost()->get('id_catequizando')));
+//        $catequistaService->setIdGrauParentesco(trim($this->getRequest()->getPost()->get('id_grau_parentesco')));
+//
+//        parent::gravar(
+//            $this->getServiceLocator()->get('\ResponsavelCatequizando\Service\ResponsavelCatequizandoService'), new \ResponsavelCatequizando\Form\ResponsavelCatequizandoForm()
+//        );
+//
+//        $this->addSuccessMessage('Registro Inserido/Alterado com sucesso');
+//        $this->redirect()->toRoute('navegacao', array('controller' => 'responsavel_catequizando-responsavelcatequizando', 'action' => 'index'));
+//
+//    }
+    
 
 }
+
+
+
+
+    

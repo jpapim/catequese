@@ -1,6 +1,6 @@
 <?php
 
-namespace FrequenciaTurma\Controller;
+namespace SacramentoCatequizando\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
@@ -8,7 +8,7 @@ use Estrutura\Helpers\Data;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
-class FrequenciaTurmaController extends AbstractCrudController
+class SacramentoCatequizandoController extends AbstractCrudController
 {
 
     protected $service;
@@ -37,19 +37,25 @@ class FrequenciaTurmaController extends AbstractCrudController
         $filter = $this->getFilterPage();
         $camposFilter = [
             '0' => [
-                'filter' => "frequencia_turma.id_frequencia_turma LIKE ?",
+                'filter' => "sacramento_catequizando.id_sacramento_catequizando LIKE ?",
             ],
             '1' => [
-                'filter' => "turma_catequizando.id_turma_catequizando LIKE ?",
+                'filter' => "catequizando.nm_catequizando LIKE ?",
             ],
             '2' => [
-                'filter' => "detalhe_periodo_letivo.id_detalhe_periodo_letivo LIKE ?",
+                'filter' => "sacramento.nm_sacramento LIKE ?",
             ],
-            '3' => NULL,
+            '3' => [
+                'filter' => "paroquia.nm_paroquia LIKE ?",
+            ],
+            '4' => [
+                'filter' => "sacramento_catequizando.cs_comprovante_bastimo LIKE ?",
+            ],
+            '5' => NULL,
 
         ];
 
-        $paginator = $this->service->getFrequenciaTurmaPaginator($filter, $camposFilter);
+        $paginator = $this->service->getSacramentoCatequizandoPaginator($filter, $camposFilter);
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
         $countPerPage = $this->getCountPerPage(
             current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
