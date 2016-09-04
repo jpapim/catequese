@@ -45,9 +45,17 @@ class CatequizandoController extends  AbstractCrudController{
             '0' => [
                 'filter' => "catequizando.nm_catequizando LIKE ?",
             ],
+<<<<<<< HEAD:module/Catequizando/src/Catequizando/Controller/CatequizandoController.php
             '1' => NULL,
+=======
+            '1' => [
+                'filter' => "responsavel.nm_responsavel LIKE ?",
+            ],
+>>>>>>> dev-raimundo:module/Catequisando/src/Catequisando/Controller/CatequisandoController.php
 
-            '2' => NULL,
+            '2' =>[
+                'filter' => "telefone.nr_telefone LIKE ?",
+            ],
 
             '3' => [
                 'filter' => "email.em_email LIKE ?",
@@ -89,10 +97,11 @@ class CatequizandoController extends  AbstractCrudController{
     {
         $controller =  $this->params('controller');
         $id_catequizando = Cript::dec($this->getRequest()->getPost()->get('id'));
+
         $pos = $this->getRequest()->getPost()->toArray();
         #$arrc = $this->service->buscar(Cript::dec($pos['id']))->toArray();
 
-            if($this->getRequest()->getPost()->get('id')){
+            if(isset($id_catequizando) && $id_catequizando){
                 $this->atualizarAction();
                 return FALSE;
             }
@@ -113,24 +122,34 @@ class CatequizandoController extends  AbstractCrudController{
                 }
 
             }
-       # x($this->service->buscar($id_catequizando));
-       # xd($pos);
-            $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_nascimento'));
+
+        $dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
+        $dataMaioridade = new \Datetime();
+        $dataMaioridade->modify('-8 years');
+
+        if ($dateNascimento > $dataMaioridade) {
+
+            $this->addErrorMessage('O Cadastrado não apresenta idade mínima.');
+            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' =>'cadastro',true));
+            return FALSE;
+        }
+        $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_nascimento'));
+
 
            # Realizando Tratamento do Telefone Residencial
-           $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_residencial')));
-           $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_residencial')));
+           $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_residencial')));
+           $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('telefone_residencial')));
+            #xd( $this->getRequest()->getPost()->get('nr_telefone'));
            $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_residencial']);
            $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
-
            $resultTelefoneResidencial = parent::gravar(
                $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
            );
 
             if($resultTelefoneResidencial){
                 # REalizando Tratamento do  Telefone Celular
-                $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_celular')));
-                $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_celular')));
+                $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_celular')));
+                $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('telefone_celular')));
                 $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_celular']);
                 $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
 
@@ -150,11 +169,11 @@ class CatequizandoController extends  AbstractCrudController{
                     );
 
                     if($idEndereco){
-                        # Gravando email e retornando o ID do Email
-                       # $idEmail = parent::gravar(
-                        #    $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
-                        #);
-                        $idEmail =$this->service->buscar($id_catequizando)->getIdEmail();
+                         #Gravando email e retornando o ID do Email
+                       $idEmail = parent::gravar(
+                            $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
+                        );
+
                         if(!empty($idEmail) && $idEmail){
                             #Resgatando id de cidade e atribuindo ao campo id_naturalidade do cadastro de catequizando.
                             $id_naturalidade =  $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('nm_naturalidade'));
@@ -228,8 +247,13 @@ class CatequizandoController extends  AbstractCrudController{
 
 
       if(isset($id) && $id){
+<<<<<<< HEAD:module/Catequizando/src/Catequizando/Controller/CatequizandoController.php
           $arrCatequizando = $this->service->buscar($id)->toArray();
             x($arrCatequizando);
+=======
+          $arrCatequisando = $this->service->buscar($id)->toArray();
+
+>>>>>>> dev-raimundo:module/Catequisando/src/Catequisando/Controller/CatequisandoController.php
          ###################### BUSCANDO INFORMAÇÕES DO CATEQUIZANDO ######################
          ## Recuperando Email
           $objEmail = new \Email\Service\EmailService();
@@ -292,8 +316,8 @@ class CatequizandoController extends  AbstractCrudController{
           $this->getRequest()->getPost()->set('nr_cep', \Estrutura\Helpers\Cep::cepMask($endereco['nr_cep']));
           $this->getRequest()->getPost()->set('nm_cidade', $cidade['nm_cidade']." (".$estadoCidade['sg_estado'].")");
           $this->getRequest()->getPost()->set('nm_naturalidade', $naturalidade['nm_cidade']." (".$estadoNat['sg_estado'].")");
-          $this->getRequest()->getPost()->set('telefone_residencial',\Estrutura\Helpers\Telefone::telefoneMask($telResidencial['nr_ddd_telefone'].$telResidencial['nr_telefone']));
-          $this->getRequest()->getPost()->set('telefone_celular',\Estrutura\Helpers\Telefone::telefoneMask($telCelular['nr_ddd_telefone'].$telCelular['nr_telefone']));
+          $this->getRequest()->getPost()->set('telefone_residencial',\Estrutura\Helpers\Telefone::telefoneFilter($telResidencial['nr_ddd_telefone'].$telResidencial['nr_telefone']));
+          $this->getRequest()->getPost()->set('telefone_celular',($telCelular['nr_ddd_telefone'].$telCelular['nr_telefone']));
 
           $options=array();
           $options['arrSacramento']=$sacramento;
@@ -304,6 +328,7 @@ class CatequizandoController extends  AbstractCrudController{
           $form->setData($arrCatequizando);
           $form->setData($this->getRequest()->getPost());
 
+          #x($this->getRequest()->getPost()->get('telefone_residencial'));
           $dadosView = [
               'service' => $this->service,
               'form' => $form,
@@ -403,15 +428,16 @@ class CatequizandoController extends  AbstractCrudController{
            ### Atualizando Telefone Residencial
            $objTelefone = new \Telefone\Service\TelefoneService();
            $objTelefone->setId($arr['id_telefone_residencial']);
-           $telefone = $post['telefone_residencial'];
+           $telefone =  \Estrutura\Helpers\Telefone::telefoneMask($post['telefone_residencial']);
            $objTelefone->setNrDddTelefone(\Estrutura\Helpers\Telefone::getDDD($telefone));
            $objTelefone->setNrTelefone(\Estrutura\Helpers\Telefone::getTelefone($telefone));
+           #xd($objTelefone->getNrTelefone());
            $objTelefone->salvar();
 
            ### Atualizando Telefone Celular
            $objTelefone = new \Telefone\Service\TelefoneService();
            $objTelefone->setId($arr['id_telefone_celular']);
-           $telefone = $post['telefone_celular'];
+           $telefone =  \Estrutura\Helpers\Telefone::telefoneMask($post['telefone_celular']);
            $objTelefone->setNrDddTelefone(\Estrutura\Helpers\Telefone::getDDD($telefone));
            $objTelefone->setNrTelefone(\Estrutura\Helpers\Telefone::getTelefone($telefone));
            $objTelefone->salvar();
@@ -435,7 +461,7 @@ class CatequizandoController extends  AbstractCrudController{
            $id_naturalidade = $cidade->getIdCidadePorNomeToArray($post['nm_naturalidade']);
            $post['id_naturalidade']= $id_naturalidade['id_cidade'];
 
-           x($post);
+           #x($post);
 
            ## Atualizando Sacramento Catequizando
            $arrSacramento = $this->getRequest()->getPost()->get('arrSacramento');
@@ -502,12 +528,16 @@ class CatequizandoController extends  AbstractCrudController{
           
            $my_service = new \Catequisando\Service\CatequisandoService();
            $my_service->exchangeArray($post);
+<<<<<<< HEAD:module/Catequizando/src/Catequizando/Controller/CatequizandoController.php
            $retorno =$my_service->salvar();
 >>>>>>> d79137b0974014eca0285e7e1224659cae21e2af:module/Catequisando/src/Catequisando/Controller/CatequisandoController.php
+=======
+
+>>>>>>> dev-raimundo:module/Catequisando/src/Catequisando/Controller/CatequisandoController.php
            $this->addSuccessMessage('Parabéns! Catequizando cadastrado com sucesso.');
            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
 
-           return $retorno;
+           return  $my_service->salvar();;
 
        }catch (\Exception $e) {
 

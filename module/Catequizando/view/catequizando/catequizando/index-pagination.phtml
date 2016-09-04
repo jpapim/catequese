@@ -70,6 +70,7 @@
                 <?php
 
                 foreach ($paginator as $item) {
+<<<<<<< HEAD:module/Catequizando/view/catequizando/catequizando/index-pagination.phtml
                     $result = $catequizando->getCatequizandoJoins($item['id_catequizando']);
 
                     ?>
@@ -78,8 +79,17 @@
                         <td class="text-center"><?=$item['nm_catequizando']?></td>
                         <td class="text-center"><?="Responsável em Breve"?></td>
                         <td class="text-center"><?= '('.$item['nr_ddd_telefone'].') '.Estrutura\Helpers\Telefone::telefoneMask($item['nr_telefone'])?></td>
+=======
+                        #x($item);
+                    ?>
+                    <tr>
+
+                        <td class="text-center"><?=$item['nm_catequisando']?></td>
+                        <td class="text-center"><?=$item['nm_responsavel']?></td>
+                        <td class="text-center"><?=\Estrutura\Helpers\Telefone::telefoneMask($item['nr_ddd_telefone'].$item['nr_telefone'])?></td>
+>>>>>>> dev-raimundo:module/Catequisando/view/catequisando/catequisando/index-pagination.phtml
                         <td class="text-center"><?=$item['em_email']?></td>
-                        <td class="text-center"><?=$result['nm_turma']?></td>
+                        <td class="text-center"><?=$item['nm_turma']?></td>
 
                         <td style="width: 100px;" class="text-center">
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_catequizando'])))) ?>

@@ -148,7 +148,37 @@
                         <div class="col-md-6 col-md-push-1">
                             <?= $this->formRow($form->get('id_situacao'))?>
                         </div>
+                
+                    
                 </fieldset>
+                <hr>
+                  <fieldset class="form-group">       
+                        
+                
+               
+                   <div class="col-md-3 col-md-push-1">
+                    <?= $this->formRow($form->get('nm_usuario')) ?>
+                    <div class="help-block with-errors"></div>
+                    </fieldset>
+               <fieldset class="form-group">   
+                   <div class="col-md-3 col-md-push-1">
+                    <?= $this->formRow($form->get('pw_senha')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+                </fieldset>
+             <div class="col-md-3 col-md-push-1">
+                    <?= $this->formRow($form->get('id_perfil')->setValue(3)) ?>
+                    <div class="help-block with-errors"></div>
+                </div> 
+                   <div class="col-md-3 col-md-push-1">
+                    <?= $this->formRow($form->get('id_situacao_usuario')->setValue(1)) ?>
+                    <div class="help-block with-errors"></div>
+                </div>  
+                   <div class="col-md-3 col-md-push-1">
+                    <?= $this->formRow($form->get('id_tipo_usuario')->setValue(3)) ?>
+                    <div class="help-block with-errors"></div>
+                </div>  
+              
                </div>
                 <div class="form-group">
                     <div class="col-md-10">
