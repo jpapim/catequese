@@ -1,6 +1,6 @@
 <?php
 
-namespace CatequisandoEtapaCursou\Controller;
+namespace CatequizandoEtapaCursou\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
@@ -8,7 +8,7 @@ use Estrutura\Helpers\Data;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
-class CatequisandoEtapaCursouController extends AbstractCrudController
+class CatequizandoEtapaCursouController extends AbstractCrudController
 {
    
     protected $service;
@@ -60,7 +60,7 @@ $dateCadastro = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPos
 >>>>>>> dev-igor
   // INSERINDO CAMPOS COM FKS DA TABELA
        $this->getRequest()->getPost()->set('id_etapa', $this->getRequest()->getPost()->get('id_etapa'));
-       $this->getRequest()->getPost()->set('id_catequisando', $this->getRequest()->getPost()->get('id_catequisando'));
+       $this->getRequest()->getPost()->set('id_catequizando', $this->getRequest()->getPost()->get('id_catequizando'));
        $this->getRequest()->getPost()->set('dt_cadastro', $dateCadastro);
 <<<<<<< HEAD
         
@@ -68,14 +68,14 @@ $dateCadastro = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPos
 >>>>>>> dev-igor
        
            parent::gravar(
-                            $this->getServiceLocator()->get('\CatequisandoEtapaCursou\Service\CatequisandoEtapaCursouService'), new \CatequisandoEtapaCursou\Form\CatequisandoEtapaCursouForm()
+                            $this->getServiceLocator()->get('\CatequizandoEtapaCursou\Service\CatequizandoEtapaCursouService'), new \CatequizandoEtapaCursou\Form\CatequizandoEtapaCursouForm()
             );
 <<<<<<< HEAD
     
 =======
 >>>>>>> dev-igor
     $this->addSuccessMessage('Registro Inserido/Alterado com sucesso');
-    $this->redirect()->toRoute('navegacao', array('controller' => 'catequisando_etapa_cursou-catequisandoetapacursou', 'action' => 'index'));
+    $this->redirect()->toRoute('navegacao', array('controller' => 'catequizando_etapa_cursou-catequizandoetapacursou', 'action' => 'index'));
   
     }
 
@@ -98,11 +98,11 @@ $dateCadastro = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPos
                 'filter' => "etapa.nm_etapa LIKE ?",
             ],
               '1' => [
-                 'filter' => "catequisando.nm_catequisando LIKE ?",
+                 'filter' => "catequizando.nm_catequizando LIKE ?",
             ],
             
               '2' => [
-                 'filter' => "catequisando_etapa_cursou.dt_cadastro LIKE ?",
+                 'filter' => "catequizando_etapa_cursou.dt_cadastro LIKE ?",
             ],
             '2' => NULL,
               
@@ -110,7 +110,7 @@ $dateCadastro = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPos
             
         ];
         
-        $paginator = $this->service->getCatequisandoEtapaCursouPaginator($filter, $camposFilter);
+        $paginator = $this->service->getCatequizandoEtapaCursouPaginator($filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
