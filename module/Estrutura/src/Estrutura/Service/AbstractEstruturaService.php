@@ -235,9 +235,19 @@ class AbstractEstruturaService {
         
     }
 
+    public function preDelete() {
+
+    }
+
+    public function posDelete() {
+
+    }
+
     public function excluir() {
         $arr = $this->hydrate();
+        $this->preDelete();
         $this->getTable()->delete($arr);
+        $this->posDelete();
     }
 
     public function load() {
