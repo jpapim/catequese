@@ -32,7 +32,7 @@ class CatequistaForm extends AbstractForm {
                 ->setAttribute('data-match-error', 'Email não correspondem');
         $objForm->combo("id_email", '\Email\Service\EmailService', 'id', 'em_email')->required(false)->label("Email");
         $objForm->combo('id_situacao','\Situacao\Service\SituacaoService','id','nm_situacao')->required(false)->label("Situacao");      
-       $objForm->combo("id_detalhe_formacao", '\DetalheFormacao\Service\DetalheFormacaoService', 'id', 'id_detalhe_formacao')->required(false)->label("Formação Acadêmica");
+       $objForm->combo("id_detalhe_formacao", '\DetalheFormacao\Service\DetalheFormacaoService', 'id', 'ds_detalhe_formacao')->required(false)->label("Formação Acadêmica");
         ##### Endereço ######
         $objForm->hidden("id_endereco")->required(false);
         $objForm->text("nm_logradouro")->required(false)->label("Logradouro");

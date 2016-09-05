@@ -164,7 +164,11 @@
                    <div class="col-md-3 col-md-push-1">
                     <?= $this->formRow($form->get('pw_senha')) ?>
                     <div class="help-block with-errors"></div>
-                </div>                    
+                </div>     
+                       <div class="col-md-3 col-md-push-1">
+                    <?= $this->formRow($form->get('pw_senha_confirm')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>   
                 </fieldset>
              <div class="col-md-3 col-md-push-1">
                     <?= $this->formRow($form->get('id_perfil')->setValue(3)) ?>

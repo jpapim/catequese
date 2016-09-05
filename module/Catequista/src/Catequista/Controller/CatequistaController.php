@@ -2,6 +2,8 @@
 
 namespace Catequista\Controller;
 
+use Cidade\Service\CidadeService;
+use Endereco\Service\EnderecoService;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
 use Estrutura\Helpers\Data;
@@ -51,24 +53,35 @@ class CatequistaController extends AbstractCrudController
 
 ###########################- GRAVANDO EMAIL -#######################################################################
      
-      $form = new \Catequista\Form\CatequistaForm();
-        /* @var $emailService \Email\Service\EmailService */
-        $emailService = $this->getServiceLocator()->get('\Email\Service\EmailService');
-        $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('em_email')));
-        $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('id_situacao')));
-        #Alysson - Verifica se já existe este emaill cadastrado para um usuário
-        if ($emailService->filtrarObjeto()->count()) {
-            $this->addErrorMessage('Email já cadastrado. Faça seu login.');
-           $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'index'));
-            return FALSE;
-        }
-           $resultEmail = parent::gravar(
-                $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
-            );
-      //##############################################################################################
-        //GRAVANDO CATEQUISTA
+      $controller =  $this->params('controller');
+        $id_catequista = Cript::dec($this->getRequest()->getPost()->get('id'));
 
-    if($resultEmail){
+        $pos = $this->getRequest()->getPost()->toArray();
+        #$arrc = $this->service->buscar(Cript::dec($pos['id']))->toArray();
+
+            if(isset($id_catequista) && $id_catequista){
+                $this->atualizarAction();
+                return FALSE;
+            }
+
+        /* @var $emailService \Email\Service\EmailService */
+            $emailService = $this->getServiceLocator()->get('\Email\Service\EmailService');
+            $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('em_email')));
+            if ($emailService->filtrarObjeto()->count()) {
+
+                if(!isset($id_catequista) ){
+                    $this->addErrorMessage('Email já cadastrado. Faça seu login.');
+                    $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+                    return FALSE;
+                } else {
+                    $emailService->setId($this->service->buscar($id_catequista)->getIdEmail());
+                    $emailService->setEmEmail($pos['em_email']);
+                   # $this->getRequest()->getPost()->set('id_email', $this->service->buscar($id_catequista)->getIdEmail());
+                }
+
+            }
+
+    
       
         
          # Realizando Tratamento do Telefone Residencial
@@ -89,28 +102,37 @@ class CatequistaController extends AbstractCrudController
                     $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
                 );
                 if($resultTelefoneCelular){
-                    # Grava os dados do Endereco e retorna o ID do Endereco
-                    $cidade =  new \Cidade\Service\CidadeService();
+                   # Grava os dados do Endereco e retorna o ID do Endereco
+                    $cidade =  new CidadeService();
                     $id_cidade = $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('nm_cidade'));
                     $this->getRequest()->getPost()->set('id_cidade', $id_cidade['id_cidade']);
                     $this->getRequest()->getPost()->set('nr_cep', \Estrutura\Helpers\Cep::cepFilter($this->getRequest()->getPost()->get('nr_cep')));
                     $idEndereco = parent::gravar(
                         $this->getServiceLocator()->get('\Endereco\Service\EnderecoService'),new \Endereco\Form\EnderecoForm()
                     );
+                    
+                   
                 
       
                 
                 if($idEndereco){
+                    
+                      $idEmail = parent::gravar(
+                            $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
+                        );
+if($idEmail){
+                    
                   
-           $id_naturalidade =  $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('nm_naturalidade'));
-           $this->getRequest()->getPost()->set('id_naturalidade',$id_naturalidade['id_cidade']);      
+        #Resgatando id de cidade e atribuindo ao campo id_naturalidade do cadastro de catequizando.
+                            $id_naturalidade =  $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('nm_naturalidade'));
+                            $this->getRequest()->getPost()->set('id_naturalidade',$id_naturalidade['id_cidade']);   
 ###################Cadastro Usuario ainda nao implementado###################################
          $this->getRequest()->getPost()->set('dt_nascimento', $dataNascimento);
          $this->getRequest()->getPost()->set('nm_usuario', $this->getRequest()->getPost()->get('nm_usuario'));
-         $this->getRequest()->getPost()->set('id_email', $resultEmail);
+         $this->getRequest()->getPost()->set('id_email', $idEmail);
          $this->getRequest()->getPost()->set('id_sexo', $this->getRequest()->getPost()->get('id_sexo'));
          $this->getRequest()->getPost()->set('id_endereco', $idEndereco);
-         $this->getRequest()->getPost()->set('id_email', $resultEmail);
+         $this->getRequest()->getPost()->set('id_email', $idEmail);
          $this->getRequest()->getPost()->set('id_telefone', $resultTelefoneCelular);
          $this->getRequest()->getPost()->set('id_tipo_usuario',$this->getRequest()->getPost()->get('id_tipo_usuario'));
          $this->getRequest()->getPost()->set('id_situacao_usuario',$this->getRequest()->getPost()->get('id_situacao_usuario'));
@@ -133,7 +155,10 @@ class CatequistaController extends AbstractCrudController
                     ); 
              
  #################################################################################################################                  
-              if($resultLogin) {        
+              if($resultLogin) {
+                  
+                   if(!empty($idEmail) && $idEmail){
+                  
               #Resgatando id de cidade e atribuindo ao campo id_naturalidade do cadastro de catequista.
            $id_naturalidade =  $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('nm_naturalidade'));
            $this->getRequest()->getPost()->set('id_naturalidade',$id_naturalidade['id_cidade']);
@@ -143,7 +168,7 @@ class CatequistaController extends AbstractCrudController
        $this->getRequest()->getPost()->set('id_endereco', $idEndereco);
        $this->getRequest()->getPost()->set('id_sexo', $this->getRequest()->getPost()->get('id_sexo'));
         
-        $this->getRequest()->getPost()->set('id_email', $resultEmail);
+        $this->getRequest()->getPost()->set('id_email', $idEmail);
          $this->getRequest()->getPost()->set('id_telefone_residencial', $resultTelefoneResidencial);
          $this->getRequest()->getPost()->set('id_telefone_celular', $resultTelefoneCelular);
         $this->getRequest()->getPost()->set('id_situacao', $this->getRequest()->getPost()->get('id_situacao'));
@@ -185,14 +210,14 @@ class CatequistaController extends AbstractCrudController
                 }
             
            if ($status ) {
-               $this->addSuccessMessage('Parabéns! Catequizando cadastrado com sucesso.');
+               $this->addSuccessMessage('Parabéns! Catequista cadastrado com sucesso.');
                $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'index'));
            }
             else{
                 $this->addErrorMessage('Processo não pode ser concluido.');
                 $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
             }
-    }}}}
+    }}}}}
    
            
            
@@ -209,18 +234,20 @@ class CatequistaController extends AbstractCrudController
 
        if(isset($id) && $id){
           $arrCatequista = $this->service->buscar($id)->toArray();
-          x($arrCatequista);
+          
          ###################### BUSCANDO INFORMAÇÕES DO CATEQUIZANDO ######################
          ## Recuperando Email
+        
           $objEmail = new \Email\Service\EmailService();
           $email =  $objEmail->buscar($arrCatequista['id_email'])->toArray();
           
           $objUsuario = new \Usuario\Service\UsuarioService();
           $usuario =  $objUsuario->buscar($arrCatequista['id_usuario'])->toArray();
-          
-          #$obLogin = new \Login\Service\LoginService();
-          #$login =  $obLogin->buscar($arrCatequista['id_usuario'])->toArray();
-          #$login = $obLogin->select('id_usuario = '.$arrCatequista['id_usuario'])->toArray();
+        
+       
+          $obLogin = new \Login\Service\LoginService();
+          $login = $obLogin->getLoginToArray($arrCatequista['id_usuario']);
+       
           
           
           ## Recuperando Endereco
@@ -250,7 +277,6 @@ class CatequistaController extends AbstractCrudController
           $telCelular = $objTelefone->buscar($arrCatequista['id_telefone_celular'])->toArray();
 
           ## Recuperando Etapas que o Catequista já realizou
-
           $obCatequistaEtapaAtuacao = new \CatequistaEtapaAtuacao\Service\CatequistaEtapaAtuacaoService();
           $etapas = $obCatequistaEtapaAtuacao->select('id_catequista = '.$id)->toArray();
 
@@ -263,11 +289,10 @@ class CatequistaController extends AbstractCrudController
          
 
           ############### POPULANDO O FORMULÁRIO DO CATEQUISta COM AS INFORMAÇÕES RESGATADAS ###########
-          $this->getRequest()->getPost()->set('id_catequista',$email['em_email']);
-          $this->getRequest()->getPost()->set('em_email',$email['em_email']);
-        
-          $this->getRequest()->getPost()->set('nm_usuario',$usuario['nm_usuario']);
-          #$this->getRequest()->getPost()->set('pw_senha',$usuario['pw_senha']);
+       $this->getRequest()->getPost()->set('em_email',$email['em_email']);
+       $this->getRequest()->getPost()->set('nm_usuario',$usuario['nm_usuario']);
+     
+          $this->getRequest()->getPost()->set('pw_senha',$login['pw_senha']);
           $this->getRequest()->getPost()->set('nm_logradouro', $endereco['nm_logradouro']);
           $this->getRequest()->getPost()->set('nm_bairro', $endereco['nm_bairro']);
           $this->getRequest()->getPost()->set('nm_complemento', $endereco['nm_complemento']);
@@ -275,8 +300,8 @@ class CatequistaController extends AbstractCrudController
           $this->getRequest()->getPost()->set('nr_cep', \Estrutura\Helpers\Cep::cepMask($endereco['nr_cep']));
           $this->getRequest()->getPost()->set('nm_cidade', $cidade['nm_cidade']." (".$estadoCidade['sg_estado'].")");
           $this->getRequest()->getPost()->set('nm_naturalidade', $naturalidade['nm_cidade']." (".$estadoNat['sg_estado'].")");
-          $this->getRequest()->getPost()->set('telefone_residencial',\Estrutura\Helpers\Telefone::telefoneMask($telResidencial['nr_ddd_telefone'].$telResidencial['nr_telefone']));
-          $this->getRequest()->getPost()->set('telefone_celular',\Estrutura\Helpers\Telefone::telefoneMask($telCelular['nr_ddd_telefone'].$telCelular['nr_telefone']));
+          $this->getRequest()->getPost()->set('telefone_residencial',\Estrutura\Helpers\Telefone::telefoneFilter($telResidencial['nr_ddd_telefone'].$telResidencial['nr_telefone']));
+          $this->getRequest()->getPost()->set('telefone_celular',($telCelular['nr_ddd_telefone'].$telCelular['nr_telefone']));
 
           $options=array();
           
@@ -284,8 +309,8 @@ class CatequistaController extends AbstractCrudController
 
 
           $form=new \Catequista\Form\CatequistaDetalheForm($options);
-          x($options);
-          x($arrCatequista);
+          #x($options);
+          #x($arrCatequista);
           $form->setData($arrCatequista);
           $form->setData($this->getRequest()->getPost());
       
@@ -411,4 +436,115 @@ class CatequistaController extends AbstractCrudController
         return $viewModel->setTerminal(TRUE);
     }
      
+    public function atualizarAction(){
+
+        $controller =  $this->params('controller');
+       try{
+           $post= $this->getRequest()->getPost()->toArray();
+           $id = Cript::dec($post['id']);
+           $post['id']= $id;
+           $arr = $this->service->buscar($id)->toArray();
+
+            ### Modificando o formato da data de nascimento para inserir no banco de dados.
+           $post['dt_nascimento'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']);
+           $post['dt_ingresso'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_ingresso']);
+           ### Atualizando Email;
+           $objEmail = new \Email\Service\EmailService();
+           $objEmail->setId($arr['id_email']);
+           $objEmail->setEmEmail($post['em_email']);
+           $objEmail->salvar();
+
+           ### Atualizando Telefone Residencial
+           $objTelefone = new \Telefone\Service\TelefoneService();
+           $objTelefone->setId($arr['id_telefone_residencial']);
+           $telefone =  \Estrutura\Helpers\Telefone::telefoneMask($post['telefone_residencial']);
+           $objTelefone->setNrDddTelefone(\Estrutura\Helpers\Telefone::getDDD($telefone));
+           $objTelefone->setNrTelefone(\Estrutura\Helpers\Telefone::getTelefone($telefone));
+           #xd($objTelefone->getNrTelefone());
+           $objTelefone->salvar();
+
+           ### Atualizando Telefone Celular
+           $objTelefone = new \Telefone\Service\TelefoneService();
+           $objTelefone->setId($arr['id_telefone_celular']);
+           $telefone =  \Estrutura\Helpers\Telefone::telefoneMask($post['telefone_celular']);
+           $objTelefone->setNrDddTelefone(\Estrutura\Helpers\Telefone::getDDD($telefone));
+           $objTelefone->setNrTelefone(\Estrutura\Helpers\Telefone::getTelefone($telefone));
+           $objTelefone->salvar();
+
+           ### Atualizando Endereco
+           $objEndereco = new \Endereco\Service\EnderecoService();
+           $objEndereco->setId($arr['id_endereco']);
+           $objEndereco->setNmLogradouro($post['nm_logradouro']);
+           $objEndereco->setNmComplemento($post['nm_complemento']);
+           $objEndereco->setNrNumero($post['nr_numero']);
+           $objEndereco->setNrCep(Cep::cepFilter($post['nr_cep']));
+           $objEndereco->setNmBairro($post['nm_bairro']);
+          
+           
+## Recuperando id da Cidade
+           $cidade =  new CidadeService();
+           $id_cidade = $cidade->getIdCidadePorNomeToArray($post['nm_cidade']);
+           $objEndereco->setIdCidade($id_cidade['id_cidade']);
+           $objEndereco->salvar();
+
+           ## Recuperando id da Naturalidade
+           $id_naturalidade = $cidade->getIdCidadePorNomeToArray($post['nm_naturalidade']);
+           $post['id_naturalidade']= $id_naturalidade['id_cidade'];
+
+           #x($post);
+           $objUsuario = new \Usuario\Service\UsuarioService();
+           $objUsuario->setId($arr['id_usuario']);
+           $objUsuario->setNmUsuario($post['nm_usuario']);
+          
+           $objUsuario->salvar();
+          
+            $objLogin = new \Login\Service\LoginService();
+           $objLogin->setId($arr['id_login']);
+           $objLogin->setPwSenha($post['pw_senha']);
+          
+           $objUsuario->salvar();
+           
+
+           ## Atualizando Catequista Etapa Cursou
+           $arrEtapa = $this->getRequest()->getPost()->get('arrEtapa');
+           #x($arrEtapa);
+
+           ## Excluindo dados Antigos
+           $obEtapa = new \CatequistaEtapaAtuacao\Service\CatequistaEtapaAtuacaoService();
+           $obEtapa->setIdCatequista($id);
+           $obEtapa->excluir();
+
+           ## Regravando Ctequisando Etapa Cursou  já realizado pelo Catequizando
+          foreach($arrEtapa as $etapa){
+              $et =  new \CatequistaEtapaAtuacao\Service\CatequistaEtapaAtuacaoService();
+              $et->setIdEtapa($etapa);
+              $et->setIdCatequista($id);
+              $et->salvar();
+          }
+
+
+           #x($post['dt_nascimento']);
+           #xd($post);
+           $form = new \Catequista\Form\CatequistaDetalheForm();
+           $form->setData($post);
+          
+           $my_service = new \Catequista\Service\CatequistaService();
+           $my_service->exchangeArray($post);
+
+           $this->addSuccessMessage('Parabéns! Catequista cadastrado com sucesso.');
+           $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+
+           return  $my_service->salvar();;
+
+       }catch (\Exception $e) {
+
+           $this->setPost($post);
+           $this->addErrorMessage($e->getMessage());
+           $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+           return FALSE;
+       }
+
     }
+
+
+}

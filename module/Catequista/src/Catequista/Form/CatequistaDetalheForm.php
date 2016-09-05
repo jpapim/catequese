@@ -95,7 +95,10 @@ class CatequistaDetalheForm extends AbstractForm {
            $objForm->hidden("id_tipo_usuario")->required(true)->label("tp usuario");
            $objForm->hidden("id_situacao_usuario")->required(true)->label("situa usuario");
            $objForm->text("nm_usuario")->required(true)->label("Usuario");
-           $objForm->password("pw_senha")->required(true)->label("Senha");
+          $objForm->password("pw_senha")->required(true)->label("Senha");
+           $objForm->password("pw_senha_confirm")->required(true)->label("Confirmar senha")
+                ->setAttribute('data-match', '#pw_senha')
+                ->setAttribute('data-match-error', 'Senhas não correspondem');
        
         
            
