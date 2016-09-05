@@ -1,16 +1,16 @@
 <?php
 
-namespace CatequizandoEtapaCursou\Table;
+namespace CatequisandoEtapaCursou\Table;
 
 use Estrutura\Table\AbstractEstruturaTable;
 
-class CatequizandoEtapaCursouTable extends AbstractEstruturaTable{
+class CatequisandoEtapaCursouTable extends AbstractEstruturaTable{
 
-    public $table = 'catequizando_etapa_cursou';
+    public $table = 'catequisando_etapa_cursou';
     public $campos = [
-        'id_catequizando_etapa_cursou'=>'id',
+        'id_catequisando_etapa_cursou'=>'id', 
         'id_etapa'=>'id_etapa',
-        'id_catequizando'=>'id_catequizando',
+        'id_catequisando'=>'id_catequisando',
         'dt_cadastro'=>'dt_cadastro',
     ];
 
