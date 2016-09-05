@@ -19,7 +19,7 @@ class AbstractEstruturaTable {
             $this->tableGateway = $tableGateway;
         }
     }
-    
+
     public function getTableGateway(){
         return $this->tableGateway;
     }
@@ -28,18 +28,25 @@ class AbstractEstruturaTable {
         return $this->tableGateway->select($where);
     }
 
-    public function inserir($dados){
+    public function inserir($dados, $forcar_inserir_nao_autoincrement = false){
         $this->tableGateway->insert($dados);
+        if($forcar_inserir_nao_autoincrement === true){
+            return true;
+        }
         return $this->tableGateway->getLastInsertValue();
     }
     public function atualizar($dados, $where){
         $this->tableGateway->update($dados, $where);
     }
 
-    public function salvar($dados, $where){
-        if($where){
-            $this->atualizar($dados, $where);
-        }else{
+    public function salvar($dados, $where, $forcar_inserir_nao_autoincrement = false){
+        if($forcar_inserir_nao_autoincrement === false) {
+            if ($where) {
+                $this->atualizar($dados, $where);
+            } else {
+                return $this->inserir($dados);
+            }
+        } else {
             return $this->inserir($dados);
         }
 
