@@ -63,11 +63,8 @@ class CatequistaService extends Entity {
                     ->or
                    ->like('dt_ingresso', "%{$like}%")
                     ->or
-                   ->like('tx_observacao', "%{$like}%")
-                    ->or
-                   ->like('ds_situacao', "%{$like}%")
-                    ->or
-                   ->like('cs_coodenador', "%{$like}%") ;
+                   ->like('tx_observacao', "%{$like}%");
+                 
         }
 
         // criar um objeto com a estrutura desejada para armazenar valores
@@ -100,13 +97,14 @@ class CatequistaService extends Entity {
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
         $select = $sql->select('catequista')->columns([
-                   'nm_catequista',
-                    'nr_matricula',
-                    'dt_nascimento',
-                    'dt_ingresso',
-                    'tx_observacao',
-                     'ds_situacao',
-                    'cs_coordenador'
+            'id_catequista',       
+            'nm_catequista',
+            'nr_matricula',
+            'dt_nascimento',
+            'dt_ingresso',
+            'tx_observacao',
+            'ds_situacao',
+            'cs_coordenador'
             
         ]);
 
@@ -134,5 +132,39 @@ class CatequistaService extends Entity {
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
 
-}
+
+    public function getCatequistaToArray($id)
+    {
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+        $select = $sql->select('catequista')
+            ->where([
+                'catequista.id_catequista'=> $id
+            ]);
+        return $sql->prepareStatementForSqlObject($select)->execute()->current();
+    }
+    public function getFiltrarCatequistaPorNomeToArray($nm_catequista) {
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+        $select = $sql->select('catequista')
+            ->columns(array('nm_catequista', 'id_catequista')) #Colunas a retornar. Basta Omitir que ele traz todas as colunas
+            ->where([
+                    "catequista.nm_catequista LIKE ?" => '%' . $nm_catequista . '%',
+                ]);
+        return $sql->prepareStatementForSqlObject($select)->execute();
+    }
+     public function  getCatequistaJoins($id){
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+        $select = $sql->select('catequista')->columns([
+            'nm_catequista'
+        ])
+        ->join('catequista_turma','catequista_turma.id_catequista =  catequista.id_catequista',['id_turma'])
+        ->join('turma','turma.id_turma = catequista_turma.id_turma',['nm_turma'])
+            ->where([
+            'catequista.id_catequista = ?' =>$id
+        ]);
+        return $sql->prepareStatementForSqlObject($select)->execute()->current();
+    }
+
     
+   
+    }
+ 
