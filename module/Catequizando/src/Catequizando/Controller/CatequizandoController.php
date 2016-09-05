@@ -45,7 +45,9 @@ class CatequizandoController extends  AbstractCrudController{
             '0' => [
                 'filter' => "catequizando.nm_catequizando LIKE ?",
             ],
-            '1' => NULL,
+            '1' =>  [
+                'filter' => "responsavel.nm_responsavel LIKE ?",
+            ],
 
             '2' => NULL,
 
@@ -71,6 +73,10 @@ class CatequizandoController extends  AbstractCrudController{
             current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
         ))->setCurrentPageNumber($this->getCurrentPage());
 
+        ### Setando responsavel e  turma no index
+
+
+
         $viewModel = new ViewModel([
             'service' => $this->service,
             'form' => $this->form,
@@ -79,7 +85,8 @@ class CatequizandoController extends  AbstractCrudController{
             'countPerPage' => $countPerPage,
             'camposFilter' => $camposFilter,
             'controller' => $this->params('controller'),
-            'atributos' => array()
+            'atributos' => array(),
+
         ]);
 
         return $viewModel->setTerminal(TRUE);

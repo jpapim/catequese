@@ -1,7 +1,5 @@
 <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
-<?php
-    $catequizando =  new \Catequizando\Service\CatequizandoService();
-?>
+
 <div class="col-md-12">
     <div class="table-responsive">
         <table class="table table-striped" id="tablesorterCatequizando" >
@@ -70,16 +68,15 @@
                 <?php
 
                 foreach ($paginator as $item) {
-                    $result = $catequizando->getCatequizandoJoins($item['id_catequizando']);
 
                     ?>
                     <tr>
 
                         <td class="text-center"><?=$item['nm_catequizando']?></td>
-                        <td class="text-center"><?="Responsável em Breve"?></td>
+                        <td class="text-center"><?=$service->getCatequizandoResponsavel($item['id_catequizando'])?></td>
                         <td class="text-center"><?= '('.$item['nr_ddd_telefone'].') '.Estrutura\Helpers\Telefone::telefoneMask($item['nr_telefone'])?></td>
                         <td class="text-center"><?=$item['em_email']?></td>
-                        <td class="text-center"><?=$result['nm_turma']?></td>
+                        <td class="text-center"><?=$service->getCatequizandoTurma($item['id_catequizando'])?></td>
 
                         <td style="width: 100px;" class="text-center">
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_catequizando'])))) ?>
