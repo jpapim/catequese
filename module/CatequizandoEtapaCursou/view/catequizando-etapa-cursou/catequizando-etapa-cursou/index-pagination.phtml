@@ -6,7 +6,7 @@
             <thead>
                 <tr>
                     <th class="text-center">Etapa</th>
-                    <th class="text-center">Catequisando</th>
+                    <th class="text-center">Catequizando</th>
                     <th class="text-center">ações</th>
                   
                 </tr>
@@ -14,7 +14,7 @@
             <tfoot>
                 <tr>
                          <th class="text-center">Etapa</th>
-                    <th class="text-center">Catequisando</th>
+                    <th class="text-center">Catequizando</th>
                     <th class="text-center">ações</th>
                 
                 </tr>
@@ -23,7 +23,7 @@
                         <?php
                     echo $this->paginationControl(
                                 $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/catequisando_etapa_cursou-catequisandoetapacursou/index-pagination',
+                            'urlPagination' => '/catequizando_etapa_cursou-catequizandoetapacursou/index-pagination',
                             'countPerPage' => $countPerPage,
                             'divData' => '#atleta-pagination',
                                 ]
@@ -59,16 +59,16 @@
                         ?>                            
                     </tr>
                     <?php
-                    foreach ($paginator as $key => $catequisando_etapa_cursou) {
+                    foreach ($paginator as $key => $catequizando_etapa_cursou) {
                         ?>
                         <tr>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequisando_etapa_cursou['nm_etapa']) ?></td>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequisando_etapa_cursou['nm_catequisando']) ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequizando_etapa_cursou['nm_etapa']) ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequizando_etapa_cursou['nm_catequizando']) ?></td>
                          </td>
                             <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($catequisando_etapa_cursou['id_catequisando_etapa_cursou'])))) ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($catequisando_etapa_cursou['id_catequisando_etapa_cursou'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($catequizando_etapa_cursou['id_catequizando_etapa_cursou'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($catequizando_etapa_cursou['id_catequizando_etapa_cursou'])))) ?>
                                 </span>
                             </td>
                         </tr>                    

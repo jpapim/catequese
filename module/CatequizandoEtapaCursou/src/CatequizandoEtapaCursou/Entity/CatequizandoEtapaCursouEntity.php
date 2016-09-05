@@ -1,13 +1,13 @@
 <?php
 
-namespace CatequisandoEtapaCursou\Entity;
+namespace CatequizandoEtapaCursou\Entity;
 
 use Estrutura\Service\AbstractEstruturaService;
 
-class CatequisandoEtapaCursouEntity extends AbstractEstruturaService{
+class CatequizandoEtapaCursouEntity extends AbstractEstruturaService{
     protected $id;
     protected $id_etapa;
-    protected $id_catequisando;
+    protected $id_catequizando;
     protected $dt_cadastro;
 }
 

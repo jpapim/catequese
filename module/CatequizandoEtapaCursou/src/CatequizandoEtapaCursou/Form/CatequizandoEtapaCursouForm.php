@@ -1,26 +1,26 @@
 <?php
 
-namespace CatequisandoEtapaCursou\Form;
+namespace CatequizandoEtapaCursou\Form;
 
 use Estrutura\Form\AbstractForm;
 use Estrutura\Form\FormObject;
 use Zend\InputFilter\InputFilter;
 
 
-class CatequisandoEtapaCursouForm extends AbstractForm
+class CatequizandoEtapaCursouForm extends AbstractForm
 {
 
     public function __construct($options = [])
     {
-        parent::__construct('catequisandoetapacursouform');
+        parent::__construct('catequizandoetapacursouform');
 
         $this->inputFilter = new InputFilter();
 
 
-        $objForm = new FormObject('catequisandoetapacursouform', $this, $this->inputFilter);
+        $objForm = new FormObject('catequizandoetapacursouform', $this, $this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");
         $objForm->combo("id_etapa", '\Etapa\Service\EtapaService', 'id', 'nm_etapa')->required(false)->label("Etapa");              
-        $objForm->combo("id_catequisando", '\Catequisando\Service\CatequisandoService', 'id', 'nm_catequisando')->required(false)->label("Catequisando");
+        $objForm->combo("id_catequizando", '\Catequizando\Service\CatequizandoService', 'id', 'nm_catequizando')->required(false)->label("Catequizando");
         $objForm->date('dt_cadastro',time('d-m-y'))->required(false)->label("Id");
         $this->formObject = $objForm;
     }
