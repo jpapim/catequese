@@ -40,7 +40,7 @@ class FrequenciaTurmaController extends AbstractCrudController
                 'filter' => "frequencia_turma.id_frequencia_turma LIKE ?",
             ],
             '1' => [
-                'filter' => "turma_catequisando.id_turma_catequisando LIKE ?",
+                'filter' => "turma_catequizando.id_turma_catequizando LIKE ?",
             ],
             '2' => [
                 'filter' => "detalhe_periodo_letivo.id_detalhe_periodo_letivo LIKE ?",
