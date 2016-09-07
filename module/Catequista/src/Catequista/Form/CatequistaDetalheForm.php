@@ -44,6 +44,7 @@ class CatequistaDetalheForm extends AbstractForm {
         $objForm->cep("nr_cep")->required(true)->label("Cep");
         #FK - Naturalidade
         $objForm->text("nm_naturalidade")->required(false)->label("Naturalidade");
+        $objForm->text("id_naturalidade")->required(false)->label("Naturalidade");
         #FK - Cidades
         $objForm->text("nm_cidade")->required(false)->label("Cidade");
         

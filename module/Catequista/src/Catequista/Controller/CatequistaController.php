@@ -3,7 +3,7 @@
 namespace Catequista\Controller;
 
 use Cidade\Service\CidadeService;
-use Endereco\Service\EnderecoService;
+use Estrutura\Helpers\Cep;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
 use Estrutura\Helpers\Data;
@@ -80,13 +80,27 @@ class CatequistaController extends AbstractCrudController
                 }
 
             }
+            
+             //Verifica tamanho da senha
+        if (strlen(trim($this->getRequest()->getPost()->get('pw_senha'))) < 8) {
+            $this->addErrorMessage('Senha deve ter no mínimo 8 caracteres.');
+            $this->redirect()->toRoute('cadastro', array('controller' => $controller, 'action' => 'cadastro'));
+            return FALSE;
+        }
+
+        //Verifica se as novas senhas são iguais
+        if (strcasecmp($this->getRequest()->getPost()->get('pw_senha'), $this->getRequest()->getPost()->get('pw_senha_confirm')) != 0) {
+            $this->addErrorMessage('Senhas não correspondem.');
+            $this->redirect()->toRoute('cadastro', array('controller' => $controller, 'action' => 'cadastro'));
+            return FALSE;
+        }
 
     
       
         
          # Realizando Tratamento do Telefone Residencial
-           $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_residencial')));
-           $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_residencial')));
+           $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_residencial')));
+           $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('telefone_residencial')));
            $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_residencial']);
            $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
            $resultTelefoneResidencial = parent::gravar(
@@ -94,8 +108,8 @@ class CatequistaController extends AbstractCrudController
            );
             if($resultTelefoneResidencial){
                 # REalizando Tratamento do  Telefone Celular
-                $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_celular')));
-                $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_celular')));
+                $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_celular')));
+                $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('telefone_celular')));
                 $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_celular']);
                 $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
                 $resultTelefoneCelular = parent::gravar(
@@ -124,8 +138,8 @@ if($idEmail){
                     
                   
         #Resgatando id de cidade e atribuindo ao campo id_naturalidade do cadastro de catequizando.
-                            $id_naturalidade =  $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('nm_naturalidade'));
-                            $this->getRequest()->getPost()->set('id_naturalidade',$id_naturalidade['id_cidade']);   
+                            x($id_naturalidade =  $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('nm_naturalidade')));
+                            x($this->getRequest()->getPost()->set('id_naturalidade',$id_naturalidade['id_cidade']));   
 ###################Cadastro Usuario ainda nao implementado###################################
          $this->getRequest()->getPost()->set('dt_nascimento', $dataNascimento);
          $this->getRequest()->getPost()->set('nm_usuario', $this->getRequest()->getPost()->get('nm_usuario'));
@@ -234,7 +248,7 @@ if($idEmail){
 
        if(isset($id) && $id){
           $arrCatequista = $this->service->buscar($id)->toArray();
-          
+          x($arrCatequista);
          ###################### BUSCANDO INFORMAÇÕES DO CATEQUIZANDO ######################
          ## Recuperando Email
         
@@ -271,7 +285,7 @@ if($idEmail){
 
           ## Telefone Residencial
           $objTelefone = new \Telefone\Service\TelefoneService();
-          $telResidencial = $objTelefone->buscar($arrCatequista['id_telefone_residencial'])->toArray();
+          x($telResidencial = $objTelefone->buscar($arrCatequista['id_telefone_residencial'])->toArray());
 
           ## Telefone Celular
           $telCelular = $objTelefone->buscar($arrCatequista['id_telefone_celular'])->toArray();
