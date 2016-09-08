@@ -99,7 +99,8 @@ class CatequizandoController extends  AbstractCrudController{
         #$pos = $this->getRequest()->getPost()->toArray();
         #$arrc = $this->service->buscar(Cript::dec($pos['id']))->toArray();
 
-            if($this->getRequest()->getPost()->get('id')){
+
+            if(Cript::dec($this->getRequest()->getPost()->get('id'))){
                 $this->atualizarAction();
                 return FALSE;
             }
@@ -113,7 +114,19 @@ class CatequizandoController extends  AbstractCrudController{
                 $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
                 return FALSE;
             }
-            $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_nascimento'));
+
+        $dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
+        $dataMaioridade = new \Datetime();
+        $dataMaioridade->modify('- 8 years'); #oito anos da data de hoje.
+
+        #Verifica se é menor de 18 anos
+        if ($dateNascimento > $dataMaioridade) {
+
+            $this->addErrorMessage('Catequizando deve ter idade mínima de 8 anos.');
+            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+            return FALSE;
+        }
+            $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($dateNascimento);
 
            # Realizando Tratamento do Telefone Residencial
            $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_residencial')));
@@ -478,8 +491,8 @@ class CatequizandoController extends  AbstractCrudController{
 
            #}
             $post['dt_nascimento'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']);
-           x($post['dt_nascimento']);
-           xd($post);
+           $post['dt_nascimento'];
+           
            #xd($arr);
            $form = new \Catequizando\Form\CatequizandoForm();
            $form->setData($post);
