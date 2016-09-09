@@ -115,22 +115,23 @@ class CatequizandoController extends  AbstractCrudController{
                 return FALSE;
             }
 
-        $dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
+        $dataNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
         $dataMaioridade = new \Datetime();
         $dataMaioridade->modify('- 8 years'); #oito anos da data de hoje.
 
         #Verifica se é menor de 18 anos
-        if ($dateNascimento > $dataMaioridade) {
+        if ($dataNascimento > $dataMaioridade) {
 
             $this->addErrorMessage('Catequizando deve ter idade mínima de 8 anos.');
             $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
             return FALSE;
         }
-            $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($dateNascimento);
+            $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_nascimento'));
+
 
            # Realizando Tratamento do Telefone Residencial
-           $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_residencial')));
-           $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_residencial')));
+           $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_residencial')));
+           $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('telefone_residencial')));
            $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_residencial']);
            $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
 
@@ -140,8 +141,8 @@ class CatequizandoController extends  AbstractCrudController{
 
             if($resultTelefoneResidencial){
                 # REalizando Tratamento do  Telefone Celular
-                $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_celular')));
-                $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_celular')));
+                $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_celular')));
+                $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('telefone_celular')));
                 $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_celular']);
                 $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
 
@@ -181,6 +182,7 @@ class CatequizandoController extends  AbstractCrudController{
                             $this->getRequest()->getPost()->set('dt_ingresso', Data::getDataAtual2Banco());
                             $this->getRequest()->getPost()->set('ds_situacao', 'A');
 
+                            #($this->getRequest()->getPost());
                             $resultCatequizando = parent::gravar(
                                 $this->getServiceLocator()->get('\Catequizando\Service\CatequizandoService'),new \Catequizando\Form\CatequizandoForm()
                             );
@@ -239,7 +241,7 @@ class CatequizandoController extends  AbstractCrudController{
 
       if(isset($id) && $id){
           $arrCatequizando = $this->service->buscar($id)->toArray();
-            x($arrCatequizando);
+
          ###################### BUSCANDO INFORMAÇÕES DO CATEQUIZANDO ######################
          ## Recuperando Email
           $objEmail = new \Email\Service\EmailService();
@@ -292,9 +294,16 @@ class CatequizandoController extends  AbstractCrudController{
           }
 
           ############### POPULANDO O FORMULÁRIO DO CATEQUIZANDO COM AS INFORMAÇÕES RESGATADAS ###########
-
+          $this->getRequest()->getPost()->set('id',$arrCatequizando['id']);
+          $this->getRequest()->getPost()->set('nm_catequizando',$arrCatequizando['nm_catequizando']);
+          $this->getRequest()->getPost()->set('ds_situacao',$arrCatequizando['ds_situacao']);
+          $this->getRequest()->getPost()->set('cs_necessidade_especial',$arrCatequizando['cs_necessidade_especial']);
+          $this->getRequest()->getPost()->set('cs_estudante',$arrCatequizando['cs_estudante']);
+          $this->getRequest()->getPost()->set('cs_participa_movimento_pastoral',$arrCatequizando['cs_participa_movimento_pastoral']);
+          $this->getRequest()->getPost()->set('dt_nascimento',$arrCatequizando['dt_nascimento']);
           $this->getRequest()->getPost()->set('em_email',$email['em_email']);
-
+          $this->getRequest()->getPost()->set('id_sexo',$arrCatequizando['id_sexo']);
+          $this->getRequest()->getPost()->set('tx_observacao',$arrCatequizando['tx_observacao']);
           $this->getRequest()->getPost()->set('nm_logradouro', $endereco['nm_logradouro']);
           $this->getRequest()->getPost()->set('nm_bairro', $endereco['nm_bairro']);
           $this->getRequest()->getPost()->set('nm_complemento', $endereco['nm_complemento']);
@@ -309,9 +318,8 @@ class CatequizandoController extends  AbstractCrudController{
           $options['arrSacramento']=$sacramento;
           $options['arrEtapa']= $etapa;
 
-
+          #xd($this->getRequest()->getPost());
           $form=new \Catequizando\Form\CatequizandoForm($options);
-          $form->setData($arrCatequizando);
           $form->setData($this->getRequest()->getPost());
 
           $dadosView = [
@@ -343,7 +351,6 @@ class CatequizandoController extends  AbstractCrudController{
         if(isset($id) && $id){
             $objcatequinzado =  new \Catequizando\Service\CatequizandoService();
             $arrCatequizando =$objcatequinzado->getCatequizandoToArray($id);
-
 
 
             #Excluindo dados da tabela filha - catequizando_etapa_cursou
@@ -442,8 +449,8 @@ class CatequizandoController extends  AbstractCrudController{
            $objEndereco->salvar();
 
            ## Recuperando id da Naturalidade
-           $id_naturalidade = $cidade->getIdCidadePorNomeToArray($post['nm_naturalidade']);
-           $post['id_naturalidade'] = $id_naturalidade['id_cidade'];
+           $id_naturalidade = $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('nm_naturalidade'));
+           $this->getRequest()->getPost()->set('id_naturalidade',$id_naturalidade['id_cidade']);
 
            ## Atualizando Sacramento Catequizando
            $arrSacramento = $this->getRequest()->getPost()->get('arrSacramento');
@@ -479,20 +486,21 @@ class CatequizandoController extends  AbstractCrudController{
               $et->salvar();
           }
 
-           ## Setando atualizações do post no array do catequizando
-           #foreach($post as $key => $valor){
-           #    if($key =='dt_nascimento'){
-           #        $valor = Data:: converterDataHoraBrazil2BancoMySQL($valor);
-           #    }#
+           $dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
+           $dataMaioridade = new \Datetime();
+           $dataMaioridade->modify('- 8 years'); #oito anos da data de hoje.
 
-           #    if(array_key_exists($key,$post)){
-           #        $arr[$key]=$valor;
-           #    }
+           #Verifica se é menor de 8 anos
+           if ($dateNascimento > $dataMaioridade) {
 
-           #}
-            $post['dt_nascimento'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']);
-           $post['dt_nascimento'];
-           
+               $this->addErrorMessage('Catequizando deve ter idade mínima de 8 anos.');
+               $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+               return FALSE;
+           }
+
+            $post['dt_nascimento'] =  Data::converterDataHoraBrazil2BancoMySQL($dateNascimento);
+
+
            #xd($arr);
            $form = new \Catequizando\Form\CatequizandoForm();
            $form->setData($post);
