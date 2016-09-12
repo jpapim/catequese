@@ -180,6 +180,17 @@ class AbstractEstruturaService {
         return $resultSet;
     }
 
+    /**
+     * @author Alysson Vicuña de Oliveira
+     * @param $arrayFiltro array('coluna_tabela' => 'valor')
+     * @return array Registros retortnados do Banco de Dados
+     */
+    public function fetchAllById($arrayFiltro)
+    {
+        $arrayResults = $this->select($arrayFiltro)->toArray();
+        return $arrayResults;
+    }
+    
     public function select($where = null) {
         return $this->getTable()->select($where);
     }
