@@ -91,12 +91,14 @@ class CatequistaDetalheForm extends AbstractForm {
            $objForm->date("dt_ingresso")->required(true)->label("Data de ingresso");
            $objForm->textarea("tx_observacao")->required(true)->label("observacao");
            #$objForm->text("ds_situacao")->required(false)->label("Descricao da situacao");
-          # $objForm->text("cs_coordenador")->required(false)->label("cs cordenador");
+           #$objForm->text("cs_coordenador")->required(false)->label("cs cordenador");
            $objForm->hidden("id_perfil" )->required(true)->label("perfil");
            $objForm->hidden("id_tipo_usuario")->required(true)->label("tp usuario");
            $objForm->hidden("id_situacao_usuario")->required(true)->label("situa usuario");
            $objForm->text("nm_usuario")->required(true)->label("Usuario");
-          $objForm->password("pw_senha")->required(true)->label("Senha");
+           $objForm->password("pw_a_senha")->required(true)->label("Senha Atual");
+           $objForm->password("pw_senha")->required(true)->label("Nova Senha");
+           
            $objForm->password("pw_senha_confirm")->required(true)->label("Confirmar senha")
                 ->setAttribute('data-match', '#pw_senha')
                 ->setAttribute('data-match-error', 'Senhas não correspondem');

@@ -511,12 +511,49 @@ if($idEmail){
            $objUsuario->setNmUsuario($post['nm_usuario']);
           
            $objUsuario->salvar();
-          
-            $objLogin = new \Login\Service\LoginService();
-           $objLogin->setId($arr['id_login']);
-           $objLogin->setPwSenha($post['pw_senha']);
-          
-           $objUsuario->salvar();
+          ##################################################### login######################
+       
+        $loginService = new \Login\Service\LoginService();
+        $loginService->setIdUsuario($auth->id_usuario);
+        $loginEntity = $loginService->filtrarObjeto()->current();
+
+        if (!$loginEntity) {
+
+            $this->addErrorMessage('Usuario inválido.');
+            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha']);
+            return FALSE;
+        }
+           
+           //verifica o tamanho da senha
+           if (strcasecmp(md5($post['pw_a_senha']), $loginEntity->getPwSenha()) != 0) {
+
+            $this->addErrorMessage('Senha atual inválida.');
+            $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'atualizar-dados']);
+            return FALSE;
+        }
+        //Verifica se as novas senhas são iguais
+        if (strcasecmp($this->getRequest()->getPost()->get('pw_senha_confirm'), $this->getRequest()->getPost()->get('pw_senha')) != 0) {
+
+            $this->addErrorMessage('Senhas não correspondem.');
+            $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'atualizar-dados']);
+            return FALSE;
+        }
+
+        //Verifica se a senha atual é igual a senha antiga
+        if (strcasecmp(md5($this->getRequest()->getPost()->get('pw_a_senha')), md5($this->getRequest()->getPost()->get('pw_senha'))) == 0) {
+
+            $this->addErrorMessage('Nova senha igual a senha atual.');
+           $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'atualizar-dados']);
+            return FALSE;
+        }
+
+        //Seta a nova senha
+        $loginEntity->setPwSenha(md5(trim($this->getRequest()->getPost()->get('pw_senha'))));
+        $loginEntity->salvar();
+        
+        
+           ################################################################################################
+           
            
 
            ## Atualizando Catequista Etapa Cursou
@@ -556,9 +593,115 @@ if($idEmail){
            $this->addErrorMessage($e->getMessage());
            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
            return FALSE;
+    }}
+
+    
+       
+       public function atualizardadosAction()
+    {
+      $id =  \Estrutura\Helpers\Cript::dec($this->params('id'));
+
+
+       if(isset($id) && $id){
+          $arrCatequista = $this->service->buscar($id)->toArray();
+          x($arrCatequista);
+         ###################### BUSCANDO INFORMAÇÕES DO CATEQUIZANDO ######################
+         ## Recuperando Email
+        
+          $objEmail = new \Email\Service\EmailService();
+          $email =  $objEmail->buscar($arrCatequista['id_email'])->toArray();
+          
+          $objUsuario = new \Usuario\Service\UsuarioService();
+          $usuario =  $objUsuario->buscar($arrCatequista['id_usuario'])->toArray();
+        
+       
+          $obLogin = new \Login\Service\LoginService();
+          $login = $obLogin->getLoginToArray($arrCatequista['id_usuario']);
+       
+          
+          
+          ## Recuperando Endereco
+          $objEnd = new \Endereco\Service\EnderecoService();
+          $endereco= $objEnd->buscar($arrCatequista['id_endereco'])->toArray();
+
+          ## Recuperando Cidade
+          $objCidade = new \Cidade\Service\CidadeService();
+          $cidade = $objCidade->buscar($endereco['id_cidade'])->toArray();
+
+          ## Recuperar Estado da Cidade
+          $objEstado = new \Estado\Service\EstadoService();
+          $estadoCidade = $objEstado->buscar($cidade['id_estado'])->toArray();
+
+          ## Recuperando Naturalidade
+          $naturalidade = $objCidade->buscar($arrCatequista['id_naturalidade'])->toArray();
+
+          ## Recuperar Estado da Naturalidade
+          $objEstado = new \Estado\Service\EstadoService();
+          $estadoNat = $objEstado->buscar($naturalidade['id_estado'])->toArray();
+
+          ## Telefone Residencial
+          $objTelefone = new \Telefone\Service\TelefoneService();
+          x($telResidencial = $objTelefone->buscar($arrCatequista['id_telefone_residencial'])->toArray());
+
+          ## Telefone Celular
+          $telCelular = $objTelefone->buscar($arrCatequista['id_telefone_celular'])->toArray();
+
+          ## Recuperando Etapas que o Catequista já realizou
+          $obCatequistaEtapaAtuacao = new \CatequistaEtapaAtuacao\Service\CatequistaEtapaAtuacaoService();
+          $etapas = $obCatequistaEtapaAtuacao->select('id_catequista = '.$id)->toArray();
+
+          $etapa=[];
+          foreach($etapas as $e){
+            $etapa[]=$e['id_etapa'];
+          }
+        
+
+         
+
+          ############### POPULANDO O FORMULÁRIO DO CATEQUISta COM AS INFORMAÇÕES RESGATADAS ###########
+       $this->getRequest()->getPost()->set('em_email',$email['em_email']);
+       $this->getRequest()->getPost()->set('nm_usuario',$usuario['nm_usuario']);
+     
+          $this->getRequest()->getPost()->set('pw_senha',$login['pw_senha']);
+          $this->getRequest()->getPost()->set('nm_logradouro', $endereco['nm_logradouro']);
+          $this->getRequest()->getPost()->set('nm_bairro', $endereco['nm_bairro']);
+          $this->getRequest()->getPost()->set('nm_complemento', $endereco['nm_complemento']);
+          $this->getRequest()->getPost()->set('nr_numero', $endereco['nr_numero']);
+          $this->getRequest()->getPost()->set('nr_cep', \Estrutura\Helpers\Cep::cepMask($endereco['nr_cep']));
+          $this->getRequest()->getPost()->set('nm_cidade', $cidade['nm_cidade']." (".$estadoCidade['sg_estado'].")");
+          $this->getRequest()->getPost()->set('nm_naturalidade', $naturalidade['nm_cidade']." (".$estadoNat['sg_estado'].")");
+          $this->getRequest()->getPost()->set('telefone_residencial',\Estrutura\Helpers\Telefone::telefoneFilter($telResidencial['nr_ddd_telefone'].$telResidencial['nr_telefone']));
+          $this->getRequest()->getPost()->set('telefone_celular',($telCelular['nr_ddd_telefone'].$telCelular['nr_telefone']));
+
+          $options=array();
+          
+          $options['arrEtapa']= $etapa;
+
+
+          $form=new \Catequista\Form\CatequistaDetalheForm($options);
+          #x($options);
+          #x($arrCatequista);
+          $form->setData($arrCatequista);
+          $form->setData($this->getRequest()->getPost());
+      
+          $dadosView = [
+              'service' => $this->service,
+              'form' => $form,
+              'controller' => $this->params('controller'),
+              'atributos' =>''
+          ];
+
+          return new ViewModel($dadosView);
+       
+         
        }
 
+        return parent::atualizardados($this->service, $this->form) ;
+
     }
+       
+       
+       }
 
 
-}
+
