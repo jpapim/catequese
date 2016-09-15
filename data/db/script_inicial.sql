@@ -24,51 +24,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `bdcatequese` /*!40100 DEFAULT CHARACTE
 USE `bdcatequese`;
 
 --
--- Table structure for table `academias`
---
-
-DROP TABLE IF EXISTS `academias`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `academias` (
-  `id_academia` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id_associacao',
-  `id_cidade` int(11) DEFAULT NULL COMMENT 'id_cidade',
-  `id_usuario_cadastro` int(11) DEFAULT NULL COMMENT 'id_usuario_cadastro',
-  `id_usuario` int(11) DEFAULT NULL COMMENT 'id_usuario',
-  `id_arte_marcial` smallint(6) DEFAULT NULL COMMENT 'id_arte_marcial',
-  `nm_academia` varchar(100) DEFAULT NULL COMMENT 'nm_academia',
-  `tx_endereco` varchar(100) DEFAULT NULL,
-  `tx_complemento` varchar(100) DEFAULT NULL,
-  `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'dt_cadastro',
-  `nr_cep` varchar(12) DEFAULT NULL COMMENT 'nr_cep',
-  `bo_excluido` tinyint(1) DEFAULT NULL COMMENT 'bo_excluido',
-  PRIMARY KEY (`id_academia`),
-  KEY `fk_tb_assci_reference_tb_usuar2` (`id_usuario_cadastro`),
-  KEY `fk_tb_assoc_reference_tb_artes` (`id_arte_marcial`),
-  KEY `fk_tb_assoc_reference_tb_cidad` (`id_cidade`),
-  KEY `fk_tb_assoc_reference_tb_usuar` (`id_usuario`),
-  CONSTRAINT `FK_Reference_37` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  CONSTRAINT `FK_Reference_38` FOREIGN KEY (`id_usuario_cadastro`) REFERENCES `usuario` (`id_usuario`),
-  CONSTRAINT `FK_Reference_42` FOREIGN KEY (`id_arte_marcial`) REFERENCES `arte_marcial` (`id_arte_marcial`),
-  CONSTRAINT `FK_Reference_43` FOREIGN KEY (`id_cidade`) REFERENCES `cidade` (`id_cidade`),
-  CONSTRAINT `fk_tb_assci_reference_tb_usuar2` FOREIGN KEY (`id_usuario_cadastro`) REFERENCES `usuario` (`id_usuario`),
-  CONSTRAINT `fk_tb_assoc_reference_tb_artes` FOREIGN KEY (`id_arte_marcial`) REFERENCES `arte_marcial` (`id_arte_marcial`),
-  CONSTRAINT `fk_tb_assoc_reference_tb_cidad` FOREIGN KEY (`id_cidade`) REFERENCES `cidade` (`id_cidade`),
-  CONSTRAINT `fk_tb_assoc_reference_tb_usuar` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='tb_academias';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `academias`
---
-
-LOCK TABLES `academias` WRITE;
-/*!40000 ALTER TABLE `academias` DISABLE KEYS */;
-INSERT INTO `academias` VALUES (1,1724,1,1,1,'Academia Olimpica',NULL,NULL,'2015-07-30 13:16:48','71929540',NULL),(2,5817,1,1,1,'Associaçao Rioverdense de Taekwondo',NULL,NULL,'2015-07-30 13:23:51','',NULL),(6,8,1,1,1,'Academia Serafim',NULL,NULL,'2015-07-31 04:24:14','78600000',NULL),(9,4236,1,1,1,'Academia Liberdade',NULL,NULL,'2015-08-02 13:49:50','87098878',NULL),(10,4354,1,1,1,'Academia Dimmyclif',NULL,NULL,'2015-08-07 03:41:33','78985985',NULL),(11,86,1,1,1,'Studio de Artes Marciais e Crossfit','Aaaaaaaaaaaaaaaaaaaaaaaa','bbbbbbbbbbbbbbbbbbbbbbbbbbbbb','2015-08-07 03:48:41','85698842',NULL);
-/*!40000 ALTER TABLE `academias` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Temporary table structure for view `acl`
 --
 
@@ -107,83 +62,6 @@ INSERT INTO `action` VALUES (1,'index'),(2,'course-information'),(3,'access-cour
 UNLOCK TABLES;
 
 --
--- Table structure for table `arte_marcial`
---
-
-DROP TABLE IF EXISTS `arte_marcial`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `arte_marcial` (
-  `id_arte_marcial` smallint(6) NOT NULL AUTO_INCREMENT COMMENT 'id_arte_marcial',
-  `nm_arte_marcial` varchar(50) NOT NULL COMMENT 'nm_arte_marcial',
-  PRIMARY KEY (`id_arte_marcial`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `arte_marcial`
---
-
-LOCK TABLES `arte_marcial` WRITE;
-/*!40000 ALTER TABLE `arte_marcial` DISABLE KEYS */;
-INSERT INTO `arte_marcial` VALUES (1,'TAEKWONDO');
-/*!40000 ALTER TABLE `arte_marcial` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `atleta`
---
-
-DROP TABLE IF EXISTS `atleta`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `atleta` (
-  `id_atleta` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id_atleta',
-  `id_academia` int(11) NOT NULL COMMENT 'id_academia',
-  `id_cidade` int(11) DEFAULT NULL COMMENT 'id_cidade',
-  `id_usuario_cadastro` int(11) NOT NULL COMMENT 'id_usuario_cadastro',
-  `id_usuario` int(11) DEFAULT NULL COMMENT 'id_usuario',
-  `nm_atleta` varchar(50) NOT NULL COMMENT 'nm_atleta',
-  `dt_nascimento` datetime DEFAULT NULL COMMENT 'dt_nascimento',
-  `nr_peso` float NOT NULL DEFAULT '5',
-  `id_graduacao` smallint(6) DEFAULT NULL,
-  `id_sexo` int(11) DEFAULT NULL,
-  `tx_endereco` varchar(200) DEFAULT NULL COMMENT 'tx_endereco',
-  `tx_complemento` varchar(100) DEFAULT NULL,
-  `nr_cep` varchar(12) DEFAULT NULL COMMENT 'nr_cep',
-  `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'dt_cadastro',
-  `bo_excluido` tinyint(1) DEFAULT NULL COMMENT 'bo_excluido',
-  PRIMARY KEY (`id_atleta`),
-  KEY `fk_tb_atlet_reference_tb_assoc` (`id_academia`),
-  KEY `fk_tb_atlet_reference_tb_cidad` (`id_cidade`),
-  KEY `fk_tb_atlet_reference_tb_usuar` (`id_usuario`),
-  KEY `fk_tb_atlet_reference_tb_usuar2` (`id_usuario_cadastro`),
-  KEY `index_atleta_sexo` (`id_sexo`),
-  KEY `index_atleta_graduacao` (`id_graduacao`),
-  CONSTRAINT `FK_Reference_27` FOREIGN KEY (`id_graduacao`) REFERENCES `graduacoes` (`id_graduacao`),
-  CONSTRAINT `FK_Reference_28` FOREIGN KEY (`id_sexo`) REFERENCES `sexo` (`id_sexo`),
-  CONSTRAINT `FK_Reference_35` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  CONSTRAINT `FK_Reference_36` FOREIGN KEY (`id_usuario_cadastro`) REFERENCES `usuario` (`id_usuario`),
-  CONSTRAINT `fk_atletas_references_graduacao` FOREIGN KEY (`id_graduacao`) REFERENCES `graduacoes` (`id_graduacao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_atletas_references_sexo` FOREIGN KEY (`id_sexo`) REFERENCES `sexo` (`id_sexo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tb_atlet_reference_tb_assoc` FOREIGN KEY (`id_academia`) REFERENCES `academias` (`id_academia`),
-  CONSTRAINT `fk_tb_atlet_reference_tb_cidad` FOREIGN KEY (`id_cidade`) REFERENCES `cidade` (`id_cidade`),
-  CONSTRAINT `fk_tb_atlet_reference_tb_usuar` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  CONSTRAINT `fk_tb_atlet_reference_tb_usuar2` FOREIGN KEY (`id_usuario_cadastro`) REFERENCES `usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COMMENT='tb_atletas';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `atleta`
---
-
-LOCK TABLES `atleta` WRITE;
-/*!40000 ALTER TABLE `atleta` DISABLE KEYS */;
-INSERT INTO `atleta` VALUES (1,1,4213,1,1,'Alysson Vicuña de Oliveira','1981-08-16 00:00:00',115,11,1,'Av. Jequitiba Nº 685 Ed. Bahamas Center Ap.310','Perto da Estaçao Águas Claras do Metrô','71929870','2015-08-04 03:42:16',NULL),(18,1,170,1,1,'Raquel Nascimento da SIlva','1987-07-15 00:00:00',72,1,2,'Av. Jequitiba Nº 685 Ed. Bahamas Center Ap.310','Perto da Estaçao Águas Claras do Metrô','54785247','2015-08-06 02:51:50',NULL),(19,2,347,1,1,'Bruno Cleyton da Silva Barros','1981-12-25 00:00:00',88,10,1,'Av. Alameda das Rosas','Jardim Piracema','87552441','2015-08-06 02:54:24',NULL),(20,2,240,1,1,'Joaquim Jose da Silva Xavier','1969-12-31 00:00:00',36,11,1,'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr','Jardim Piracema','96587458','2015-08-06 03:06:55',NULL),(21,2,307,1,1,'Carlos Henrique de Souza','1998-10-25 00:00:00',62,10,1,'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr','Sao Sebastiao','65217488','2015-08-06 03:13:59',NULL),(22,2,2576,1,1,'Arnaldo Jabor Neto','2001-09-14 00:00:00',69,4,1,'Rua 21 no Morro da Cruz','Perto do Parque de Aguas Claras','89584255','2015-08-06 03:20:45',NULL),(28,1,4236,1,1,'Americo Pinto de Oliveira','1951-05-31 00:00:00',72,7,1,'Rua 07 Quadra 03 Casa 70','Jardim Piracema','78600000','2015-08-06 04:08:58',NULL),(31,1,1724,1,1,'Suelia Rodrigues de Souza','1962-12-20 00:00:00',64,8,2,'ttttttttttttttttttt','xxxxxxxxxxxxxxxxxxxxxxx','79965874','2015-08-07 01:45:41',NULL),(32,1,1724,1,1,'Julia Nascimento de Oliveira','2014-10-05 00:00:00',15,9,2,'Av. Jequitiba Nº 685 Ed. Bahamas Center Ap.310','Perto da Estaçao Águas Claras do Metrô','71929540','2015-08-07 01:46:36',NULL),(33,1,1724,1,1,'Adolfo Martins dos Santos','1972-05-12 00:00:00',85,7,1,'Av. Alameda das Rosas','Perto do Parque de Aguas Claras','71929580','2015-08-07 01:46:46',NULL),(34,10,1724,1,1,'Maria da Penha do Nascimento','1962-03-20 00:00:00',71,7,2,'Rua 21 no Morro da Cruz','Sao Sebastiao','98563285','2015-08-07 01:46:56',NULL),(35,1,1724,1,1,'Lamartine Vieira Miranda','1981-01-01 00:00:00',98,8,1,'Av. Alameda das Rosas','Sao Sebastiao','74859675','2015-08-07 01:59:43',NULL),(36,1,1724,1,1,'Barbara Rodrigues','2005-06-15 00:00:00',54,10,2,'Rua 07 Quadra 03 Casa 70','Perto do Parque de Aguas Claras','96857744','2015-08-07 02:01:32',NULL),(37,1,4282,1,1,'Andria Carvalho Matos','1980-12-16 00:00:00',80,6,2,'Rua 21 no Morro da Cruz','Perto da Estaçao Águas Claras do Metrô','69858745','2015-08-07 02:03:23',NULL),(38,1,2312,1,1,'Luana Pereira de Oliveira','1981-08-04 00:00:00',60,4,2,'ttttttttttttttttttt','xxxxxxxxxxxxxxxxxxxxxxx','96587456','2015-08-07 02:06:47',NULL),(40,2,5817,1,1,'Lilian Nascimento','1984-06-15 00:00:00',63,6,2,'Rua 07 Quadra 03 Casa 70','Perto do Parque de Aguas Claras','98547855','2015-08-07 02:53:24',NULL),(41,2,8213,1,1,'Cristian Pedro Albuquerque','1973-04-29 00:00:00',59,4,1,'xxxxxxxxxxxxxxxxxxx','Perto do Parque de Aguas Claras','69857855','2015-08-07 02:53:47',NULL),(42,2,2228,1,1,'Carlos Antonio Potigua','1988-10-12 00:00:00',65,8,1,'Rua 21 no Morro da Cruz','Perto da Estaçao Águas Claras do Metrô','96585742','2015-08-07 02:59:56',NULL),(45,6,8,1,1,'Felipe Magalhaes Souto','1984-03-03 00:00:00',75,6,1,'Rua 07 Quadra 03 Casa 70','Sao Sebastiao','96588588','2015-08-07 03:11:51',NULL),(50,1,34,1,1,'Francis Nascimento Silva','1983-05-06 00:00:00',69,7,1,'Av. Jequitiba Nº 685 Ed. Bahamas Center Ap.310','Jardim Piracema','69855487','2015-08-08 03:24:21',NULL),(51,1,2021,1,1,'Sueiry Gomes de Souza','1982-07-06 00:00:00',78,9,2,'s3s33d3d3d3','d3ed3d3d3d3','71258540','2015-08-08 03:48:12',NULL),(52,1,2024,1,1,'Maria Graça de Lima','1987-05-28 00:00:00',53,10,2,'ttttttttttttttttttt','d3ed3d3d3d3','74985857','2015-08-08 03:55:34',NULL),(53,1,1724,1,1,'Juliana Carvalho Peres','1981-04-23 00:00:00',67,4,2,'yyyyyyyyyyyyyy','xxxxxxxxxxxxxxxxxxxxxxx','72698587','2015-08-08 04:37:00',NULL),(55,1,1724,1,1,'Ivone Lopes do Nacimento','1981-08-16 00:00:00',62,11,2,'xxxxxxxxxxxxxxxxxxx','xxxxxxxxxxxxxxxxxxxxxxx','74985857','2015-08-08 04:42:03',NULL),(56,1,4360,1,1,'Maria Gracilene','1990-05-28 00:00:00',69,8,2,'sssssssssssssssss','d3ed3d3d3d3','72698587','2015-08-08 04:44:08',NULL),(57,1,90,1,1,'Gabriel o Pensador','1987-07-15 00:00:00',59,2,1,'Av. Alameda das Rosas','d3ed3d3d3d3','74985857','2015-08-08 15:29:25',NULL),(58,6,2244,1,1,'Eber Serafim','1962-03-20 00:00:00',74,2,1,'s3s33d3d3d3','Jardim Piracema','87452178','2015-08-08 15:36:24',NULL),(59,6,36,1,1,'Elair Silva do Nascimento','1979-02-09 00:00:00',89,6,1,'s3s33d3d3d3','d3ed3d3d3d3','38587858','2015-08-09 04:49:53',NULL),(60,6,2120,1,1,'Fabiana Lopes','1985-05-14 00:00:00',51,4,2,'Av. Jequitiba Nº 685 Ed. Bahamas Center Ap.310','d3ed3d3d3d3','78547851','2015-08-09 19:12:39',NULL),(61,9,2120,1,1,'Wilmar Peres de Farias','2002-08-04 00:00:00',76,1,1,'s3s33d3d3d3','Perto da Estaçao Águas Claras do Metrô','59888752','2015-08-09 19:44:16',NULL),(62,6,1742,1,1,'Paulo Ueiner Moreira','1986-01-08 00:00:00',78,5,1,'Rua 07 Quadra 03 Casa 70','Perto do Parque de Aguas Claras','69858745','2015-08-11 03:20:23',NULL),(63,1,2120,1,1,'Armelio Pinto de Oliveira','1995-03-15 00:00:00',72,8,1,'Rua 21 no Morro da Cruz','Perto da Estaçao Águas Claras do Metrô','58758258','2015-08-12 00:58:06',NULL);
-/*!40000 ALTER TABLE `atleta` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Temporary table structure for view `auth`
 --
 
@@ -200,56 +78,6 @@ SET character_set_client = utf8;
   `id_contrato` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `categoria_idade`
---
-
-DROP TABLE IF EXISTS `categoria_idade`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `categoria_idade` (
-  `id_categoria_idade` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id_categoria_idade',
-  `nm_categoria_idade` varchar(100) NOT NULL COMMENT 'nm_categoria_idade',
-  `nr_sugestao_idade_inicial` smallint(6) DEFAULT NULL,
-  `nr_sugestao_idade_final` smallint(6) DEFAULT NULL,
-  PRIMARY KEY (`id_categoria_idade`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='tb_categoria_idade';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `categoria_idade`
---
-
-LOCK TABLES `categoria_idade` WRITE;
-/*!40000 ALTER TABLE `categoria_idade` DISABLE KEYS */;
-INSERT INTO `categoria_idade` VALUES (1,'Mirim',7,8),(2,'Infantil',9,11),(3,'Cadetes',12,14),(4,'Sub-21',16,21),(5,'Junior',15,17),(6,'Adulto',18,31),(7,'Master-1',32,34),(8,'Master-2',35,44),(9,'Master-3',45,100);
-/*!40000 ALTER TABLE `categoria_idade` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `categoria_peso`
---
-
-DROP TABLE IF EXISTS `categoria_peso`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `categoria_peso` (
-  `id_categoria_peso` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id_categoria_peso',
-  `nm_categoria_peso` varchar(100) NOT NULL COMMENT 'nm_categoria_peso',
-  PRIMARY KEY (`id_categoria_peso`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='tb_categoria_peso';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `categoria_peso`
---
-
-LOCK TABLES `categoria_peso` WRITE;
-/*!40000 ALTER TABLE `categoria_peso` DISABLE KEYS */;
-INSERT INTO `categoria_peso` VALUES (1,'Mosca'),(2,'Galo'),(3,'Pena'),(4,'Palha'),(5,'Meio-leve'),(6,'Leve'),(7,'Meio-médio'),(8,'Médio'),(9,'Meio-pesado'),(10,'Pesado');
-/*!40000 ALTER TABLE `categoria_peso` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `catequista`
@@ -587,59 +415,6 @@ INSERT INTO `detalhe_periodo_letivo` VALUES (1,14,'2016-06-13'),(2,15,'0000-00-0
 UNLOCK TABLES;
 
 --
--- Table structure for table `detalhes_regras_luta`
---
-
-DROP TABLE IF EXISTS `detalhes_regras_luta`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `detalhes_regras_luta` (
-  `id_detalhe_regra_luta` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id_detalhe_regra_luta',
-  `id_regra_luta` smallint(6) DEFAULT NULL COMMENT 'id_regra_luta',
-  `id_categoria_idade` int(11) DEFAULT NULL COMMENT 'id_categoria_idade',
-  `id_categoria_peso` int(11) DEFAULT NULL COMMENT 'id_categoria_peso',
-  `id_usuario_cadastro` int(11) DEFAULT NULL COMMENT 'id_usuario_cadastro',
-  `id_graduacao_inicial` smallint(6) DEFAULT NULL COMMENT 'id_graduacao_inicial',
-  `id_graduacao_final` smallint(6) DEFAULT NULL COMMENT 'id_graduacao_final',
-  `nr_idade_inicial` smallint(6) DEFAULT NULL COMMENT 'nr_idade_inicial',
-  `nr_idade_final` smallint(6) DEFAULT NULL COMMENT 'nr_idade_final',
-  `nr_peso_inicial` float DEFAULT NULL COMMENT 'nr_peso_inicial',
-  `nr_peso_final` float DEFAULT NULL COMMENT 'nr_peso_final',
-  `id_sexo` int(11) DEFAULT NULL COMMENT 'id_sexo',
-  PRIMARY KEY (`id_detalhe_regra_luta`),
-  KEY `index_det_regras_luta_sexo` (`id_sexo`),
-  KEY `fk_tb_detal_reference_tb_gradu` (`id_graduacao_final`),
-  KEY `fk_tb_detal_reference_tb_gradu2` (`id_graduacao_inicial`),
-  KEY `fk_tb_detal_reference_tb_regra` (`id_regra_luta`),
-  KEY `fk_tb_detal_reference_tb_usuar` (`id_usuario_cadastro`),
-  KEY `fk_tb_detal_reference_tb_categ` (`id_categoria_idade`),
-  KEY `fk_tb_detal_reference_tb_categ2` (`id_categoria_peso`),
-  CONSTRAINT `FK_Reference_22` FOREIGN KEY (`id_regra_luta`) REFERENCES `regras_lutas` (`id_regra_luta`),
-  CONSTRAINT `FK_Reference_33` FOREIGN KEY (`id_graduacao_inicial`) REFERENCES `graduacoes` (`id_graduacao`),
-  CONSTRAINT `FK_Reference_34` FOREIGN KEY (`id_graduacao_final`) REFERENCES `graduacoes` (`id_graduacao`),
-  CONSTRAINT `FK_Reference_41` FOREIGN KEY (`id_sexo`) REFERENCES `sexo` (`id_sexo`),
-  CONSTRAINT `FK_Reference_44` FOREIGN KEY (`id_usuario_cadastro`) REFERENCES `usuario` (`id_usuario`),
-  CONSTRAINT `fk_det_regras_luta_references_sexo` FOREIGN KEY (`id_sexo`) REFERENCES `sexo` (`id_sexo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tb_detal_reference_tb_categ` FOREIGN KEY (`id_categoria_idade`) REFERENCES `categoria_idade` (`id_categoria_idade`),
-  CONSTRAINT `fk_tb_detal_reference_tb_categ2` FOREIGN KEY (`id_categoria_peso`) REFERENCES `categoria_peso` (`id_categoria_peso`),
-  CONSTRAINT `fk_tb_detal_reference_tb_gradu` FOREIGN KEY (`id_graduacao_final`) REFERENCES `graduacoes` (`id_graduacao`),
-  CONSTRAINT `fk_tb_detal_reference_tb_gradu2` FOREIGN KEY (`id_graduacao_inicial`) REFERENCES `graduacoes` (`id_graduacao`),
-  CONSTRAINT `fk_tb_detal_reference_tb_regra` FOREIGN KEY (`id_regra_luta`) REFERENCES `regras_lutas` (`id_regra_luta`),
-  CONSTRAINT `fk_tb_detal_reference_tb_usuar` FOREIGN KEY (`id_usuario_cadastro`) REFERENCES `usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=279 DEFAULT CHARSET=utf8 COMMENT='tb_detalhes_regras_luta';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `detalhes_regras_luta`
---
-
-LOCK TABLES `detalhes_regras_luta` WRITE;
-/*!40000 ALTER TABLE `detalhes_regras_luta` DISABLE KEYS */;
-INSERT INTO `detalhes_regras_luta` VALUES (1,3,1,1,1,1,2,7,8,0,22,1),(2,3,1,2,1,1,2,7,8,22.1,24,1),(3,3,1,3,1,1,2,7,8,24.1,26,1),(4,3,1,4,1,1,2,7,8,26.1,28,1),(5,3,1,5,1,1,2,7,8,28.1,30,1),(6,3,1,6,1,1,2,7,8,30.1,32,1),(7,3,1,7,1,1,2,7,8,32.1,34,1),(8,3,1,8,1,1,2,7,8,34.1,36,1),(9,3,1,9,1,1,2,7,8,36.1,39,1),(10,3,1,10,1,1,2,7,8,39.1,80,1),(11,3,1,1,1,1,2,7,8,0,22,2),(12,3,1,2,1,1,2,7,8,22.1,24,2),(13,3,1,3,1,1,2,7,8,24.1,26,2),(14,3,1,4,1,1,2,7,8,26.1,28,2),(15,3,1,5,1,1,2,7,8,28.1,30,2),(16,3,1,6,1,1,2,7,8,30.1,32,2),(17,3,1,7,1,1,2,7,8,32.1,34,2),(18,3,1,8,1,1,2,7,8,34.1,36,2),(19,3,1,9,1,1,2,7,8,36.1,39,2),(20,3,1,10,1,1,2,7,8,39.1,80,2),(21,3,2,1,1,1,2,9,11,0,30,1),(22,3,2,2,1,1,2,9,11,30.1,32,1),(23,3,2,3,1,1,2,9,11,32.1,34,1),(24,3,2,4,1,1,2,9,11,34.1,36,1),(25,3,2,5,1,1,2,9,11,36.1,39,1),(26,3,2,6,1,1,2,9,11,39.1,42,1),(27,3,2,7,1,1,2,9,11,42.1,45,1),(28,3,2,8,1,1,2,9,11,45.1,48,1),(29,3,2,9,1,1,2,9,11,48.1,52,1),(30,3,2,10,1,1,2,9,11,52.1,100,1),(31,3,2,1,1,1,2,9,11,0,30,2),(32,3,2,2,1,1,2,9,11,30.1,32,2),(33,3,2,3,1,1,2,9,11,32.1,34,2),(34,3,2,4,1,1,2,9,11,34.1,36,2),(35,3,2,5,1,1,2,9,11,36.1,39,2),(36,3,2,6,1,1,2,9,11,39.1,42,2),(37,3,2,7,1,1,2,9,11,42.1,45,2),(38,3,2,8,1,1,2,9,11,45.1,48,2),(39,3,2,9,1,1,2,9,11,48.1,52,2),(40,3,2,10,1,1,2,9,11,52.1,100,2),(41,3,3,1,1,1,2,12,14,0,33,1),(42,3,3,2,1,1,2,12,14,33.1,37,1),(43,3,3,3,1,1,2,12,14,37.1,41,1),(44,3,3,4,1,1,2,12,14,41.1,45,1),(45,3,3,5,1,1,2,12,14,45.1,49,1),(46,3,3,6,1,1,2,12,14,49.1,53,1),(47,3,3,7,1,1,2,12,14,53.1,57,1),(48,3,3,8,1,1,2,12,14,57.1,61,1),(49,3,3,9,1,1,2,12,14,61.1,65,1),(50,3,3,10,1,1,2,12,14,65.1,120,1),(51,3,3,1,1,1,2,12,14,0,29,2),(52,3,3,2,1,1,2,12,14,29.1,33,2),(53,3,3,3,1,1,2,12,14,33.1,37,2),(54,3,3,4,1,1,2,12,14,37.1,41,2),(55,3,3,5,1,1,2,12,14,41.1,44,2),(56,3,3,6,1,1,2,12,14,44.1,47,2),(57,3,3,7,1,1,2,12,14,47.1,51,2),(58,3,3,8,1,1,2,12,14,51.1,55,2),(59,3,3,9,1,1,2,12,14,55.1,59,2),(60,3,3,10,1,1,2,12,14,59.1,120,2),(61,3,5,1,1,1,2,15,17,0,45,1),(62,3,5,2,1,1,2,15,17,45.1,48,1),(63,3,5,3,1,1,2,15,17,48.1,51,1),(64,3,5,4,1,1,2,15,17,51.1,55,1),(65,3,5,5,1,1,2,15,17,55.1,59,1),(66,3,5,6,1,1,2,15,17,59.1,63,1),(67,3,5,7,1,1,2,15,17,63.1,68,1),(68,3,5,8,1,1,2,15,17,68.1,73,1),(69,3,5,9,1,1,2,15,17,73.1,78,1),(70,3,5,10,1,1,2,15,17,78.1,150,1),(71,3,5,1,1,1,2,15,17,0,42,2),(72,3,5,2,1,1,2,15,17,42.1,44,2),(73,3,5,3,1,1,2,15,17,44.1,46,2),(74,3,5,4,1,1,2,15,17,46.1,49,2),(75,3,5,5,1,1,2,15,17,49.1,52,2),(76,3,5,6,1,1,2,15,17,52.1,55,2),(77,3,5,7,1,1,2,15,17,55.1,59,2),(78,3,5,8,1,1,2,15,17,59.1,63,2),(79,3,5,9,1,1,2,15,17,63.1,68,2),(80,3,5,10,1,1,2,15,17,68.1,120,2),(81,3,4,1,1,1,2,16,21,0,54,1),(82,3,4,3,1,1,2,16,21,54.1,58,1),(83,3,4,5,1,1,2,16,21,58.1,63,1),(84,3,4,6,1,1,2,16,21,63.1,68,1),(85,3,4,7,1,1,2,16,21,68.1,74,1),(86,3,4,8,1,1,2,16,21,74.1,73,1),(87,3,4,9,1,1,2,16,21,80.1,87,1),(88,3,4,10,1,1,2,16,21,87.1,200,1),(89,3,4,1,1,1,2,16,21,0,46,2),(90,3,4,3,1,1,2,16,21,46.1,49,2),(91,3,4,5,1,1,2,16,21,49.1,53,2),(92,3,4,6,1,1,2,16,21,53.1,57,2),(93,3,4,7,1,1,2,16,21,57.1,62,2),(94,3,4,8,1,1,2,16,21,62.1,67,2),(95,3,4,9,1,1,2,16,21,67.1,73,2),(96,3,4,10,1,1,2,16,21,73.1,200,2),(97,3,6,1,1,1,2,16,100,0,54,1),(98,3,6,3,1,1,2,16,100,54.1,58,1),(99,3,6,5,1,1,2,16,100,58.1,63,1),(100,3,6,6,1,1,2,16,100,63.1,68,1),(101,3,6,7,1,1,2,16,100,68.1,74,1),(102,3,6,8,1,1,2,16,100,74.1,73,1),(103,3,6,9,1,1,2,16,100,80.1,87,1),(104,3,6,10,1,1,2,16,100,87.1,200,1),(105,3,6,1,1,1,2,16,100,0,46,2),(106,3,6,3,1,1,2,16,100,46.1,49,2),(107,3,6,5,1,1,2,16,100,49.1,53,2),(108,3,6,6,1,1,2,16,100,53.1,57,2),(109,3,6,7,1,1,2,16,100,57.1,62,2),(110,3,6,8,1,1,2,16,100,62.1,67,2),(111,3,6,9,1,1,2,16,100,67.1,73,2),(112,3,6,10,1,1,2,16,100,73.1,200,2),(113,3,7,3,1,1,2,31,34,0,58,1),(114,3,7,6,1,1,2,31,34,58.1,68,1),(115,3,7,8,1,1,2,31,34,68.1,80,1),(116,3,7,10,1,1,2,31,34,80.1,200,1),(117,3,7,3,1,1,2,31,34,0,49,2),(118,3,7,6,1,1,2,31,34,49.1,57,2),(119,3,7,8,1,1,2,31,34,57.1,67,2),(120,3,7,10,1,1,2,31,34,67.1,200,2),(121,3,8,3,1,1,2,35,44,0,58,1),(122,3,8,6,1,1,2,35,44,58.1,68,1),(123,3,8,8,1,1,2,35,44,68.1,80,1),(124,3,8,10,1,1,2,35,44,80.1,200,1),(125,3,8,3,1,1,2,35,44,0,49,2),(126,3,8,6,1,1,2,35,44,49.1,57,2),(127,3,8,8,1,1,2,35,44,57.1,67,2),(128,3,8,10,1,1,2,35,44,67.1,200,2),(129,3,9,3,1,1,2,45,55,0,58,1),(130,3,9,6,1,1,2,45,55,58.1,68,1),(131,3,9,8,1,1,2,45,55,68.1,80,1),(132,3,9,10,1,1,2,45,55,80.1,200,1),(133,3,9,3,1,1,2,45,55,0,49,2),(134,3,9,6,1,1,2,45,55,49.1,57,2),(135,3,9,8,1,1,2,45,55,57.1,67,2),(136,3,9,10,1,1,2,45,55,67.1,200,2),(137,7,1,1,1,1,2,7,8,0,22,1),(138,7,1,2,1,1,2,7,8,22.1,24,1),(139,7,1,3,1,1,2,7,8,24.1,26,1),(140,7,1,4,1,1,2,7,8,26.1,28,1),(141,7,1,5,1,1,2,7,8,28.1,30,1),(142,7,1,6,1,1,2,7,8,30.1,32,1),(143,7,1,7,1,1,2,7,8,32.1,34,1),(144,7,1,8,1,1,2,7,8,34.1,36,1),(145,7,1,9,1,1,2,7,8,36.1,39,1),(146,7,1,10,1,1,2,7,8,39.1,80,1),(147,7,1,1,1,1,2,7,8,0,22,2),(148,7,1,2,1,1,2,7,8,22.1,24,2),(149,7,1,3,1,1,2,7,8,24.1,26,2),(150,7,1,4,1,1,2,7,8,26.1,28,2),(151,7,1,5,1,1,2,7,8,28.1,30,2),(152,7,1,6,1,1,2,7,8,30.1,32,2),(153,7,1,7,1,1,2,7,8,32.1,34,2),(154,7,1,8,1,1,2,7,8,34.1,36,2),(155,7,1,9,1,1,2,7,8,36.1,39,2),(156,7,1,10,1,1,2,7,8,39.1,80,2),(157,7,2,1,1,1,2,9,11,0,30,1),(158,7,2,2,1,1,2,9,11,30.1,32,1),(159,7,2,3,1,1,2,9,11,32.1,34,1),(160,7,2,4,1,1,2,9,11,34.1,36,1),(161,7,2,5,1,1,2,9,11,36.1,39,1),(162,7,2,6,1,1,2,9,11,39.1,42,1),(163,7,2,7,1,1,2,9,11,42.1,45,1),(164,7,2,8,1,1,2,9,11,45.1,48,1),(165,7,2,9,1,1,2,9,11,48.1,52,1),(166,7,2,10,1,1,2,9,11,52.1,100,1),(167,7,2,1,1,1,2,9,11,0,30,2),(168,7,2,2,1,1,2,9,11,30.1,32,2),(169,7,2,3,1,1,2,9,11,32.1,34,2),(170,7,2,4,1,1,2,9,11,34.1,36,2),(171,7,2,5,1,1,2,9,11,36.1,39,2),(172,7,2,6,1,1,2,9,11,39.1,42,2),(173,7,2,7,1,1,2,9,11,42.1,45,2),(174,7,2,8,1,1,2,9,11,45.1,48,2),(175,7,2,9,1,1,2,9,11,48.1,52,2),(176,7,2,10,1,1,2,9,11,52.1,100,2),(177,7,3,1,1,1,2,12,14,0,33,1),(178,7,3,2,1,1,2,12,14,33.1,37,1),(179,7,3,3,1,1,2,12,14,37.1,41,1),(180,7,3,4,1,1,2,12,14,41.1,45,1),(181,7,3,5,1,1,2,12,14,45.1,49,1),(182,7,3,6,1,1,2,12,14,49.1,53,1),(183,7,3,7,1,1,2,12,14,53.1,57,1),(184,7,3,8,1,1,2,12,14,57.1,61,1),(185,7,3,9,1,1,2,12,14,61.1,65,1),(186,7,3,10,1,1,2,12,14,65.1,120,1),(187,7,3,1,1,1,2,12,14,0,29,2),(188,7,3,2,1,1,2,12,14,29.1,33,2),(189,7,3,3,1,1,2,12,14,33.1,37,2),(190,7,3,4,1,1,2,12,14,37.1,41,2),(191,7,3,5,1,1,2,12,14,41.1,44,2),(192,7,3,6,1,1,2,12,14,44.1,47,2),(193,7,3,7,1,1,2,12,14,47.1,51,2),(194,7,3,8,1,1,2,12,14,51.1,55,2),(195,7,3,9,1,1,2,12,14,55.1,59,2),(196,7,3,10,1,1,2,12,14,59.1,120,2),(197,7,5,1,1,1,2,15,17,0,45,1),(198,7,5,2,1,1,2,15,17,45.1,48,1),(199,7,5,3,1,1,2,15,17,48.1,51,1),(200,7,5,4,1,1,2,15,17,51.1,55,1),(201,7,5,5,1,1,2,15,17,55.1,59,1),(202,7,5,6,1,1,2,15,17,59.1,63,1),(203,7,5,7,1,1,2,15,17,63.1,68,1),(204,7,5,8,1,1,2,15,17,68.1,73,1),(205,7,5,9,1,1,2,15,17,73.1,78,1),(206,7,5,10,1,1,2,15,17,78.1,150,1),(207,7,5,1,1,1,2,15,17,0,42,2),(208,7,5,2,1,1,2,15,17,42.1,44,2),(209,7,5,3,1,1,2,15,17,44.1,46,2),(210,7,5,4,1,1,2,15,17,46.1,49,2),(211,7,5,5,1,1,2,15,17,49.1,52,2),(212,7,5,6,1,1,2,15,17,52.1,55,2),(213,7,5,7,1,1,2,15,17,55.1,59,2),(214,7,5,8,1,1,2,15,17,59.1,63,2),(215,7,5,9,1,1,2,15,17,63.1,68,2),(216,7,5,10,1,1,2,15,17,68.1,120,2),(217,7,4,1,1,1,2,16,21,0,54,1),(218,7,4,3,1,1,2,16,21,54.1,58,1),(219,7,4,5,1,1,2,16,21,58.1,63,1),(220,7,4,6,1,1,2,16,21,63.1,68,1),(221,7,4,7,1,1,2,16,21,68.1,74,1),(222,7,4,8,1,1,2,16,21,74.1,73,1),(223,7,4,9,1,1,2,16,21,80.1,87,1),(224,7,4,10,1,1,2,16,21,87.1,200,1),(225,7,4,1,1,1,2,16,21,0,46,2),(226,7,4,3,1,1,2,16,21,46.1,49,2),(227,7,4,5,1,1,2,16,21,49.1,53,2),(228,7,4,6,1,1,2,16,21,53.1,57,2),(229,7,4,7,1,1,2,16,21,57.1,62,2),(230,7,4,8,1,1,2,16,21,62.1,67,2),(231,7,4,9,1,1,2,16,21,67.1,73,2),(232,7,4,10,1,1,2,16,21,73.1,200,2),(233,7,6,1,1,1,2,16,100,0,54,1),(234,7,6,3,1,1,2,16,100,54.1,58,1),(235,7,6,5,1,1,2,16,100,58.1,63,1),(236,7,6,6,1,1,2,16,100,63.1,68,1),(237,7,6,7,1,1,2,16,100,68.1,74,1),(238,7,6,8,1,1,2,16,100,74.1,73,1),(239,7,6,9,1,1,2,16,100,80.1,87,1),(240,7,6,10,1,1,2,16,100,87.1,200,1),(241,7,6,1,1,1,2,16,100,0,46,2),(242,7,6,3,1,1,2,16,100,46.1,49,2),(243,7,6,5,1,1,2,16,100,49.1,53,2),(244,7,6,6,1,1,2,16,100,53.1,57,2),(245,7,6,7,1,1,2,16,100,57.1,62,2),(246,7,6,8,1,1,2,16,100,62.1,67,2),(247,7,6,9,1,1,2,16,100,67.1,73,2),(248,7,6,10,1,1,2,16,100,73.1,200,2),(249,7,7,3,1,1,2,31,34,0,58,1),(250,7,7,6,1,1,2,31,34,58.1,68,1),(251,7,7,8,1,1,2,31,34,68.1,80,1),(252,7,7,10,1,1,2,31,34,80.1,200,1),(253,7,7,3,1,1,2,31,34,0,49,2),(254,7,7,6,1,1,2,31,34,49.1,57,2),(255,7,7,8,1,1,2,31,34,57.1,67,2),(256,7,7,10,1,1,2,31,34,67.1,200,2),(257,7,8,3,1,1,2,35,44,0,58,1),(258,7,8,6,1,1,2,35,44,58.1,68,1),(259,7,8,8,1,1,2,35,44,68.1,80,1),(260,7,8,10,1,1,2,35,44,80.1,200,1),(261,7,8,3,1,1,2,35,44,0,49,2),(262,7,8,6,1,1,2,35,44,49.1,57,2),(263,7,8,8,1,1,2,35,44,57.1,67,2),(264,7,8,10,1,1,2,35,44,67.1,200,2),(265,7,9,3,1,1,2,45,55,0,58,1),(266,7,9,6,1,1,2,45,55,58.1,68,1),(267,7,9,8,1,1,2,45,55,68.1,80,1),(268,7,9,10,1,1,2,45,55,80.1,200,1),(269,7,9,3,1,1,2,45,55,0,49,2),(270,7,9,6,1,1,2,45,55,49.1,57,2),(271,7,9,8,1,1,2,45,55,57.1,67,2),(272,7,9,10,1,1,2,45,55,67.1,200,2),(273,7,1,1,1,3,5,7,8,0,22,1),(274,7,1,1,1,6,9,7,8,0,22,1),(275,7,1,1,1,10,11,7,8,0,22,1),(276,7,6,1,1,3,6,16,100,0,54,1),(277,7,6,1,1,7,9,16,100,0,54,1),(278,7,6,1,1,10,11,16,100,0,54,1);
-/*!40000 ALTER TABLE `detalhes_regras_luta` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `email`
 --
 
@@ -782,31 +557,6 @@ INSERT INTO `estado_civil` VALUES (1,'Casado'),(2,'Solteiro'),(3,'Viúvo'),(4,'D
 UNLOCK TABLES;
 
 --
--- Table structure for table `estilos`
---
-
-DROP TABLE IF EXISTS `estilos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `estilos` (
-  `id_estilo` smallint(6) NOT NULL AUTO_INCREMENT COMMENT 'id_estilo',
-  `nm_estilo` varchar(20) NOT NULL COMMENT 'nm_estilo',
-  `ds_estilo` varchar(250) DEFAULT NULL COMMENT 'ds_estilo',
-  PRIMARY KEY (`id_estilo`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `estilos`
---
-
-LOCK TABLES `estilos` WRITE;
-/*!40000 ALTER TABLE `estilos` DISABLE KEYS */;
-INSERT INTO `estilos` VALUES (1,'WTF','World Taekwondo Federation'),(2,'ITF','International Taekwondo Federation');
-/*!40000 ALTER TABLE `estilos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `etapa`
 --
 
@@ -828,45 +578,6 @@ LOCK TABLES `etapa` WRITE;
 /*!40000 ALTER TABLE `etapa` DISABLE KEYS */;
 INSERT INTO `etapa` VALUES (1,'Sementinha'),(2,'Eucaristia I'),(3,'Eucaristia II'),(4,'Perseverança'),(5,'Pré-Crisma'),(6,'Crisma I'),(7,'Crisma II'),(8,'Adultos I'),(9,'Adultos II');
 /*!40000 ALTER TABLE `etapa` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `eventos`
---
-
-DROP TABLE IF EXISTS `eventos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `eventos` (
-  `id_evento` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id_evento',
-  `id_tipo_evento` smallint(6) DEFAULT NULL COMMENT 'id_tipo_evento',
-  `nm_evento` varchar(100) NOT NULL COMMENT 'nm_evento',
-  `dt_evento` datetime NOT NULL COMMENT 'dt_evento',
-  `vl_inscricao_colorida` decimal(10,2) DEFAULT '0.00' COMMENT 'vl_inscricao_colorida',
-  `vl_inscricao_preta` decimal(10,2) DEFAULT '0.00' COMMENT 'vl_inscricao_preta',
-  `id_regra_luta` smallint(6) NOT NULL,
-  `bo_inativo` bit(1) DEFAULT b'0',
-  `id_cidade` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_evento`),
-  KEY `FK_TB_EVENT_REFERENCE_TB_TIPOS` (`id_tipo_evento`),
-  KEY `IX_REGRA_LUTA` (`id_regra_luta`),
-  KEY `IX_CIDADE` (`id_cidade`),
-  CONSTRAINT `FK_EVENTO_REFERENCES_CIDADE` FOREIGN KEY (`id_cidade`) REFERENCES `cidade` (`id_cidade`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_EVENTO_REFERENCES_REGRAS_LUTA` FOREIGN KEY (`id_regra_luta`) REFERENCES `regras_lutas` (`id_regra_luta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_Reference_29` FOREIGN KEY (`id_tipo_evento`) REFERENCES `tipos_eventos` (`id_tipo_evento`),
-  CONSTRAINT `FK_Reference_30` FOREIGN KEY (`id_regra_luta`) REFERENCES `regras_lutas` (`id_regra_luta`),
-  CONSTRAINT `FK_TB_EVENT_REFERENCE_TB_TIPOS` FOREIGN KEY (`id_tipo_evento`) REFERENCES `tipos_eventos` (`id_tipo_evento`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='tb_eventos';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `eventos`
---
-
-LOCK TABLES `eventos` WRITE;
-/*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
-INSERT INTO `eventos` VALUES (1,1,'1ª Copa Brasil','2015-09-08 21:47:08',41.69,60.36,3,'\0',568),(2,1,'Brazil Open 2015 - LNT','2016-10-20 21:47:08',35.00,54.00,7,'\0',4298),(3,1,'Brazil Open 2015 - CBTKD','2015-11-16 21:47:08',32.00,36.00,3,'',547),(4,1,'Rio Verde Open','2015-12-20 21:47:08',28.00,45.00,3,'\0',4),(5,1,'Copa Pantanal','2015-11-16 00:00:00',45.00,55.00,7,'\0',968),(6,1,'3º GranPrix Vicuña','2015-10-18 01:00:00',41.58,60.00,7,'\0',5185),(7,1,'Wilmar Open de Taekwondo','2015-08-29 00:00:00',41.50,55.00,3,'\0',5064),(8,1,'Evento Teste','2016-06-24 00:00:00',222.00,222.00,1,'',37);
-/*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -922,37 +633,6 @@ LOCK TABLES `frequencia_turma` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `graduacoes`
---
-
-DROP TABLE IF EXISTS `graduacoes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `graduacoes` (
-  `id_graduacao` smallint(6) NOT NULL AUTO_INCREMENT COMMENT 'id_graduacao',
-  `id_estilo` smallint(6) NOT NULL COMMENT 'id_estilo',
-  `id_arte_marcial` smallint(6) NOT NULL COMMENT 'id_arte_marcial',
-  `nm_graduacao` varchar(40) NOT NULL COMMENT 'nm_graduacao',
-  `sg_graduacao` char(15) DEFAULT NULL COMMENT 'sg_graduacao',
-  PRIMARY KEY (`id_graduacao`),
-  KEY `FK_GRADU_REFERENCE_ARTE` (`id_arte_marcial`),
-  KEY `FK_GRADU_REFERENCE_ESTIL` (`id_estilo`),
-  CONSTRAINT `FK_GRADU_REFERENCE_ARTE` FOREIGN KEY (`id_arte_marcial`) REFERENCES `arte_marcial` (`id_arte_marcial`),
-  CONSTRAINT `FK_GRADU_REFERENCE_ESTIL` FOREIGN KEY (`id_estilo`) REFERENCES `estilos` (`id_estilo`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='tb_graduacoes';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `graduacoes`
---
-
-LOCK TABLES `graduacoes` WRITE;
-/*!40000 ALTER TABLE `graduacoes` DISABLE KEYS */;
-INSERT INTO `graduacoes` VALUES (1,1,1,'Faixa Branca','10ª GUB'),(2,1,1,'Ponta Amarela','09ª GUB'),(3,1,1,'Faixa Amarela','08ª GUB'),(4,1,1,'Ponta Verde','07ª GUB'),(5,1,1,'Faixa Verde','06ª GUB'),(6,1,1,'Ponta Azul','05ª GUB'),(7,1,1,'Faixa Azul','04ª GUB'),(8,1,1,'Ponta Vermelha','03ª GUB'),(9,1,1,'Faixa Vermelha','02ª GUB'),(10,1,1,'Ponta Preta','01ª GUB'),(11,1,1,'Faixa Preta','01ª a 10ª DAN');
-/*!40000 ALTER TABLE `graduacoes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `grau_parentesco`
 --
 
@@ -974,36 +654,6 @@ LOCK TABLES `grau_parentesco` WRITE;
 /*!40000 ALTER TABLE `grau_parentesco` DISABLE KEYS */;
 INSERT INTO `grau_parentesco` VALUES (1,'Pai'),(2,'Mae'),(3,'Tio'),(4,'Tia'),(5,'Irmao'),(6,'Irma'),(7,'Avo'),(8,'Avoh'),(9,'Padrasto'),(10,'Madrasta');
 /*!40000 ALTER TABLE `grau_parentesco` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `inscricoes_evento`
---
-
-DROP TABLE IF EXISTS `inscricoes_evento`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `inscricoes_evento` (
-  `id_inscricao_evento` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id_inscricao_evento',
-  `id_evento` int(11) DEFAULT NULL COMMENT 'id_evento',
-  `id_atleta` int(11) DEFAULT NULL COMMENT 'id_atleta',
-  `dt_inscricao` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'dt_inscricao',
-  PRIMARY KEY (`id_inscricao_evento`),
-  KEY `fk_tb_inscr_reference_tb_atlet` (`id_atleta`),
-  KEY `fk_tb_inscr_reference_tb_event` (`id_evento`),
-  CONSTRAINT `fk_tb_inscr_reference_tb_atlet` FOREIGN KEY (`id_atleta`) REFERENCES `atleta` (`id_atleta`),
-  CONSTRAINT `fk_tb_inscr_reference_tb_event` FOREIGN KEY (`id_evento`) REFERENCES `eventos` (`id_evento`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='tb_inscricoes_evento';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `inscricoes_evento`
---
-
-LOCK TABLES `inscricoes_evento` WRITE;
-/*!40000 ALTER TABLE `inscricoes_evento` DISABLE KEYS */;
-INSERT INTO `inscricoes_evento` VALUES (1,1,18,'2015-08-20 03:00:00'),(2,1,1,'2015-08-28 03:00:00'),(3,2,38,'2015-08-19 04:13:25');
-/*!40000 ALTER TABLE `inscricoes_evento` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1237,30 +887,6 @@ LOCK TABLES `profissao` WRITE;
 /*!40000 ALTER TABLE `profissao` DISABLE KEYS */;
 INSERT INTO `profissao` VALUES (1,'Professor'),(2,'Analista de Sistemas'),(3,'Gerente de Projetos'),(4,'Auxiliar Administrativo'),(5,'Secretária'),(6,'Agente de Portaria'),(7,'Concierge'),(8,'Vendedor');
 /*!40000 ALTER TABLE `profissao` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `regras_lutas`
---
-
-DROP TABLE IF EXISTS `regras_lutas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `regras_lutas` (
-  `id_regra_luta` smallint(6) NOT NULL AUTO_INCREMENT COMMENT 'id_regra_luta',
-  `nm_regra_luta` varchar(100) NOT NULL COMMENT 'nm_regra_luta',
-  PRIMARY KEY (`id_regra_luta`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='tb_regras_lutas';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `regras_lutas`
---
-
-LOCK TABLES `regras_lutas` WRITE;
-/*!40000 ALTER TABLE `regras_lutas` DISABLE KEYS */;
-INSERT INTO `regras_lutas` VALUES (1,'Olimpica'),(2,'Interno'),(3,'Oficial WTF'),(4,'Oficial CBTKD'),(5,'Oficial ITF'),(6,'Oficial LNT'),(7,'Interno com Peso Olimpico');
-/*!40000 ALTER TABLE `regras_lutas` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1653,31 +1279,6 @@ INSERT INTO `tipo_usuario` VALUES (1,'Administrador'),(2,'Catequizando'),(3,'Aux
 UNLOCK TABLES;
 
 --
--- Table structure for table `tipos_eventos`
---
-
-DROP TABLE IF EXISTS `tipos_eventos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tipos_eventos` (
-  `id_tipo_evento` smallint(6) NOT NULL AUTO_INCREMENT COMMENT 'id_tipo_evento',
-  `nm_tipo_evento` varchar(25) NOT NULL COMMENT 'nm_tipo_evento',
-  `ds_tipo_evento` varchar(255) DEFAULT NULL COMMENT 'ds_tipo_evento',
-  PRIMARY KEY (`id_tipo_evento`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tipos_eventos`
---
-
-LOCK TABLES `tipos_eventos` WRITE;
-/*!40000 ALTER TABLE `tipos_eventos` DISABLE KEYS */;
-INSERT INTO `tipos_eventos` VALUES (1,'Competição','Competição de Luta');
-/*!40000 ALTER TABLE `tipos_eventos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `turma`
 --
 
@@ -1819,22 +1420,6 @@ INSERT INTO `usuario` VALUES (1,'Alysson Vicuña de Oliveira','1983-12-20 21:47:
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `vw_regras_lutas`
---
-
-DROP TABLE IF EXISTS `vw_regras_lutas`;
-/*!50001 DROP VIEW IF EXISTS `vw_regras_lutas`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `vw_regras_lutas` (
-  `id_regra_luta` tinyint NOT NULL,
-  `nm_regra_luta` tinyint NOT NULL,
-  `nm_graduacao_inicial` tinyint NOT NULL,
-  `nm_graduacao_final` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
-
---
 -- Current Database: `bdcatequese`
 --
 
@@ -1877,26 +1462,6 @@ USE `bdcatequese`;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `vw_regras_lutas`
---
-
-/*!50001 DROP TABLE IF EXISTS `vw_regras_lutas`*/;
-/*!50001 DROP VIEW IF EXISTS `vw_regras_lutas`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `vw_regras_lutas` AS select `rls`.`id_regra_luta` AS `id_regra_luta`,`rls`.`nm_regra_luta` AS `nm_regra_luta`,`grd`.`nm_graduacao` AS `nm_graduacao_inicial`,`grd2`.`nm_graduacao` AS `nm_graduacao_final` from (((`detalhes_regras_luta` `drl` join `regras_lutas` `rls` on((`rls`.`id_regra_luta` = `drl`.`id_regra_luta`))) join `graduacoes` `grd` on((`grd`.`id_graduacao` = `drl`.`id_graduacao_inicial`))) join `graduacoes` `grd2` on((`grd2`.`id_graduacao` = `drl`.`id_graduacao_final`))) where ((`drl`.`id_categoria_peso` = 1) and (`drl`.`id_categoria_idade` = 6) and (`drl`.`id_sexo` = 1)) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
