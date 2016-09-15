@@ -120,6 +120,18 @@ class Utilities
         return $ret;
     }
 
+	/**
+     * @param array $arrParam
+     * @return array
+     */
+    public static function replaceEmptyPorNuloInArray(array $arrParam)
+    {
+        $dados = array_map(function ($value) {
+            return $value === "" ? NULL : $value;
+        }, $arrParam);
+        return $dados;
+    }
+	
     /**
      *
      * @param string $texto

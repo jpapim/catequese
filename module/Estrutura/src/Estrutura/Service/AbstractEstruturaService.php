@@ -190,7 +190,7 @@ class AbstractEstruturaService {
         $arrayResults = $this->select($arrayFiltro)->toArray();
         return $arrayResults;
     }
-    
+
     public function select($where = null) {
         return $this->getTable()->select($where);
     }
@@ -215,27 +215,29 @@ class AbstractEstruturaService {
         return $select;
     }
 
-    #public function filtrarObjetoPorArrayAtributos() {
-    #    $where = $this->hydrate();
-    #    $wTratado = new Where();
-#
-    #       foreach ($where as $chave => $valor) {
-    #           if ($chave == 'NOME') {
-    #               $wTratado->like($chave, '%' . $valor . '%');
-    #           } else {
-    #               $wTratado->equalTo($chave, $valor);
-    #           }
-    #       }#
-#
-#        $select = $this->select($wTratado);
-#        if (is_object($select)) {#
-#
-#            $select->buffer();
-#        }
-#        return $select;
-#    }
+    /**
+     * @author Alysson Vicuña de Oliveira
+     * @param $arrayFiltro array('coluna_tabela' => 'valor')
+     * @return array Registros retortnados do Banco de Dados
+     */
+    public function fetchAllById($arrayFiltro)
+    {
+        $arrayResults = $this->select($arrayFiltro)->toArray();
+        return $arrayResults;
+    }
 
-    public function salvar($forcar_inserir_nao_autoincrement = false) {
+    /**
+     * @author Alysson Vicuña de Oliveira
+     * @return \Estrutura\Table\id
+     */
+    public function inserir_nao_identity() {
+        $dados = $this->hydrate();
+        $dados = Utilities::replaceEmptyPorNuloInArray($dados);
+
+        return $this->getTable()->inserir_nao_identity($dados);
+    }
+
+    public function salvar() {
         $this->preSave();
         $dados = $this->hydrate();
         $where = null;
@@ -248,7 +250,7 @@ class AbstractEstruturaService {
             $where = [$field => $this->getId()];
         }
 
-        $result = $this->getTable()->salvar($dados, $where, $forcar_inserir_nao_autoincrement);
+        $result = $this->getTable()->salvar($dados, $where);
         if (is_string($result)) {
             $this->setId($result);
         }
@@ -261,7 +263,7 @@ class AbstractEstruturaService {
 
     }
 
-    public function posSave($inserted_id = null) {
+    public function posSave() {
 
     }
 
