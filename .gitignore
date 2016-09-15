@@ -4,6 +4,8 @@
 .idea/*
 /nbproject/private/
 config/autoload/development.php
+config/autoload/gerador.php
+config/autoload/global.php
 nbproject/*
 data/cache/*
 public/assets/cache/*
