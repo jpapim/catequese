@@ -1,10 +1,9 @@
 <?php
-
 return array(
     'db' => array(
-		'username' => 'root',
-        'password' => '',
-        'dsn' => 'mysql:dbname=bdcatequese;host=localhost',
+		'username' => 'usuario',
+        'password' => 'senha',
+        'dsn' => 'mysql:dbname=banco;host=localhost',
     ),
     'service_manager' => array(
         'factories' => array(
@@ -19,8 +18,8 @@ return array(
             'connection_class' => 'login',
             'connection_config' => array(
                 'ssl' => 'tls',
-                'username' => 'alyssontkd@gmail.com',
-                'password' => 'alysson321'
+                'username' => 'email@gmail.com',
+                'password' => 'senha'
             ),
         ),
         'contato' => array(
