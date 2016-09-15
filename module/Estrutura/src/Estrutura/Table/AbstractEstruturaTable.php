@@ -33,8 +33,8 @@ class AbstractEstruturaTable {
         $this->tableGateway->insert($dados);
         return $this->tableGateway->getLastInsertValue();
     }
-	
-	/**
+
+    /**
      * Retorna a primeira posição do array, que é o ID inserido.
      *
      * @param $dados
@@ -45,7 +45,7 @@ class AbstractEstruturaTable {
         $this->tableGateway->insert($dados);
         return array_values($dados)[0];
     }
-	
+
     public function atualizar($dados, $where){
         $this->tableGateway->update($dados, $where);
     }

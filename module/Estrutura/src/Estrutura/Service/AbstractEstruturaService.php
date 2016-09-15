@@ -2,6 +2,7 @@
 
 namespace Estrutura\Service;
 
+use Estrutura\Helpers\Utilities;
 use Estrutura\Table\AbstractEstruturaTable;
 use Zend\Db\Sql\Where;
 use Zend\Db\TableGateway\TableGateway;
@@ -213,17 +214,6 @@ class AbstractEstruturaService {
             $select->buffer();
         }
         return $select;
-    }
-
-    /**
-     * @author Alysson Vicuña de Oliveira
-     * @param $arrayFiltro array('coluna_tabela' => 'valor')
-     * @return array Registros retortnados do Banco de Dados
-     */
-    public function fetchAllById($arrayFiltro)
-    {
-        $arrayResults = $this->select($arrayFiltro)->toArray();
-        return $arrayResults;
     }
 
     /**
