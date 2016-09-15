@@ -12,7 +12,6 @@ return array(
         //Ronaldo 02/03/2016 - Responsável por melhorar o desempenho da aplicação
         'EdpSuperluminal', //http://dev.catequese.com.br/?EDPSUPERLUMINAL_CACHE - Execute isso na URL para compilar os arquivos e ficar mais rapido - em cada requisição, em vês de baixar em tempo de execução cada require do autoload, ele salva um unico arquivo, minificado, com todas as classes dentro
         'Situacao',
-        'Banco',
         'Principal',
         'Email',
         'Usuario',
@@ -25,13 +24,11 @@ return array(
         'TipoUsuario',
         'SituacaoUsuario',
         'Endereco',
-        #'ContaBancaria',
         #'DOMPDFModule',
         'Gerador',
         'Login',
         #'PhpBoletoZf2',
         'Telefone',
-        #'TipoConta',
         'TipoTelefone',
         'PeriodoLetivo',
         'DetalhePeriodoLetivo',
