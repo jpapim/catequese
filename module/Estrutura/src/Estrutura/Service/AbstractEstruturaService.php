@@ -137,7 +137,7 @@ class AbstractEstruturaService {
 
     /**
      * Retorna o nome do objeto Table
-     * 
+     *
      * @return type
      */
     private function getTableName() {
@@ -158,9 +158,9 @@ class AbstractEstruturaService {
     }
 
     public function getAdapter() {
-        
+
         if (!self::$adapter) {
-            
+
             self::$adapter = new \Zend\Db\Adapter\Adapter($this->getConfig());
         }
         return self::$adapter;
@@ -180,6 +180,17 @@ class AbstractEstruturaService {
         return $resultSet;
     }
 
+    /**
+     * @author Alysson Vicuña de Oliveira
+     * @param $arrayFiltro array('coluna_tabela' => 'valor')
+     * @return array Registros retortnados do Banco de Dados
+     */
+    public function fetchAllById($arrayFiltro)
+    {
+        $arrayResults = $this->select($arrayFiltro)->toArray();
+        return $arrayResults;
+    }
+    
     public function select($where = null) {
         return $this->getTable()->select($where);
     }
@@ -204,11 +215,29 @@ class AbstractEstruturaService {
         return $select;
     }
 
-    public function salvar() {
+    #public function filtrarObjetoPorArrayAtributos() {
+    #    $where = $this->hydrate();
+    #    $wTratado = new Where();
+#
+    #       foreach ($where as $chave => $valor) {
+    #           if ($chave == 'NOME') {
+    #               $wTratado->like($chave, '%' . $valor . '%');
+    #           } else {
+    #               $wTratado->equalTo($chave, $valor);
+    #           }
+    #       }#
+#
+#        $select = $this->select($wTratado);
+#        if (is_object($select)) {#
+#
+#            $select->buffer();
+#        }
+#        return $select;
+#    }
+
+    public function salvar($forcar_inserir_nao_autoincrement = false) {
         $this->preSave();
-
         $dados = $this->hydrate();
-
         $where = null;
 
         if ($this->getId()) {
@@ -219,25 +248,36 @@ class AbstractEstruturaService {
             $where = [$field => $this->getId()];
         }
 
-        $result = $this->getTable()->salvar($dados, $where);
+        $result = $this->getTable()->salvar($dados, $where, $forcar_inserir_nao_autoincrement);
         if (is_string($result)) {
             $this->setId($result);
         }
-        $this->posSave();
+        $this->posSave($result);
+
         return $result;
     }
 
     public function preSave() {
-        
+
     }
 
-    public function posSave() {
-        
+    public function posSave($inserted_id = null) {
+
+    }
+
+    public function preDelete() {
+
+    }
+
+    public function posDelete() {
+
     }
 
     public function excluir() {
         $arr = $this->hydrate();
+        $this->preDelete();
         $this->getTable()->delete($arr);
+        $this->posDelete();
     }
 
     public function load() {

@@ -159,6 +159,13 @@ class PeriodoLetivoController extends AbstractCrudController
 
     public function cadastroperiodoletivodetalheAction()
     {
+
+        #$this->params()->fromPost('paramname');   // From POST
+        #$this->params()->fromQuery('paramname');  // From GET
+        #$this->params()->fromRoute('paramname');  // From RouteMatch
+        #$this->params()->fromHeader('paramname'); // From header
+        #$this->params()->fromFiles('paramname');  // From file being uploaded
+
         //recuperar o id do Periodo Letivo
         $id_periodo_letivo = Cript::dec($this->params('id'));
 
@@ -198,9 +205,17 @@ class PeriodoLetivoController extends AbstractCrudController
 
     public function detalhePaginationAction()
     {
+        #$this->params()->fromPost('paramname');   // From POST
+        #$this->params()->fromQuery('paramname');  // From GET
+        #$this->params()->fromRoute('paramname');  // From RouteMatch
+        #$this->params()->fromHeader('paramname'); // From header
+        #$this->params()->fromFiles('paramname');  // From file being uploaded
+
         $filter = $this->getFilterPage();
 
         $id_periodo_letivo = $this->params()->fromPost('id_periodo_letivo');
+        $id_periodo_letivo = isset($id_periodo_letivo) && $id_periodo_letivo ? $id_periodo_letivo : $this->params()->fromRoute('id');
+
         $camposFilter = [
             '0' => [
                 //'filter' => "periodoletivodetalhe.nm_sacramento LIKE ?",
