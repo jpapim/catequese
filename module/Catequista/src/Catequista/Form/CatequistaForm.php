@@ -84,22 +84,24 @@ class CatequistaForm extends AbstractForm {
         }
         $objForm->multicheckbox('arrEtapa', $arrEtapa)->required(false)->label('Etapas que já Atuou');
         
-
+        $objForm->radio("cs_coordenador",['S'=>'Sim','N'=>'Não'])
+            ->setAttribute('style',' text-transform: uppercase')
+            ->required(true)
+            ->label("Exerce função de Coordenador?");
 ////CAMPOS DA TABELA
-          
+           
            $objForm->text("nm_catequista")->required(true)->label("Nome completo");
            $objForm->text("nr_matricula")->required(true)->label("numero matricula");
            $objForm->date("dt_nascimento")->required(true)->label("Data de nascimento");
            $objForm->date("dt_ingresso")->required(true)->label("Data de ingresso");
-           $objForm->textarea("tx_observacao")->required(true)->label("observacao");
-           #$objForm->text("ds_situacao")->required(false)->label("Descricao da situacao");
-          # $objForm->text("cs_coordenador")->required(false)->label("cs cordenador");
+           $objForm->textarea("tx_observacao")->required(true)->label("Observacao");
+           $objForm->textarea("ds_situacao")->required(false)->label("Descricao da situacao"); 
            $objForm->hidden("id_perfil" )->required(true)->label("perfil");
            $objForm->hidden("id_tipo_usuario")->required(true)->label("tp usuario");
            $objForm->hidden("id_situacao_usuario")->required(true)->label("situa usuario");
            $objForm->text("nm_usuario")->required(true)->label("Usuario");
            $objForm->password("pw_senha")->required(true)->label("Senha");
-       
+           
         
            
            $this->formObject = $objForm;
