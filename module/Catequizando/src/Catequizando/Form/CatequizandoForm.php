@@ -159,7 +159,7 @@ class CatequizandoForm extends  AbstractForm{
         $objForm->radio("cs_participa_movimento_pastoral",['S'=>'Sim','N'=>'Não'])
             ->setAttribute('style',' text-transform: uppercase')
             ->required(true)
-            ->label("Participante do Movimento Pastoral");
+            ->label("Participante do Movimento Pastoral?");
 
         $this->formObject = $objForm;
     }

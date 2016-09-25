@@ -13,7 +13,7 @@ class SituacaoResponsavelCatequizandoForm extends AbstractForm{
         $this->inputFilter = new InputFilter();
         $objForm = new FormObject('situacaoresponsavelcatequizandoform',$this,$this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");
-        $objForm->combo("id_situacao_responsavel", '\SituacaoResponsavel\Service\SituacaoResponsavelService', 'id', 'ds_situacao_responsavel')->required(true)->label("Descriacao Responsavel");
+        $objForm->combo("id_situacao_responsavel", '\SituacaoResponsavel\Service\SituacaoResponsavelService', 'id', 'ds_situacao_responsavel')->required(true)->label("Descrição do Responsável");
         $objForm->combo("id_catequizando", '\Catequizando\Service\CatequizandoService', 'id', 'nm_catequizando')->required(true)->label("Catequizando");
         $this->formObject = $objForm;
     }

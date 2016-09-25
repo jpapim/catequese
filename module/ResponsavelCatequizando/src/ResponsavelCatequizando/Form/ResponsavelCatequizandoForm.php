@@ -23,8 +23,8 @@ class ResponsavelCatequizandoForm extends AbstractForm
 
         ##############----BUSCANDO CAMPOS-- ####################
         $objForm->combo("id_catequizando", '\Catequizando\Service\CatequizandoService', 'id', 'nm_catequizando')->required(false)->label("Catequizando");
-        $objForm->combo("id_responsavel", '\Responsavel\Service\ResponsavelService', 'id', 'nm_Responsavel')->required(false)->label("Responsavel");
-        $objForm->combo("id_grau_parentesco", '\GrauParentesco\Service\GrauParentescoService', 'id', 'nm_grau_parentesco')->required(false)->label("Grau Parentesco");
+        $objForm->combo("id_responsavel", '\Responsavel\Service\ResponsavelService', 'id', 'nm_Responsavel')->required(false)->label("Responsável");
+        $objForm->combo("id_grau_parentesco", '\GrauParentesco\Service\GrauParentescoService', 'id', 'nm_grau_parentesco')->required(false)->label("Grau de Parentesco");
 
         ########################################################
 
