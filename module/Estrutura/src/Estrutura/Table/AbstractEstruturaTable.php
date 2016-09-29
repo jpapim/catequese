@@ -2,6 +2,7 @@
 
 namespace Estrutura\Table;
 
+use Estrutura\Helpers\Utilities;
 use Zend\Db\Sql\Select;
 
 class AbstractEstruturaTable {
@@ -30,7 +31,7 @@ class AbstractEstruturaTable {
 
     public function inserir($dados)
     {
-        $dados[reset(array_keys($dados))] = NULL; # correção do erro mysql 1366 incorrect integer value sql Mode
+        $dados = Utilities::replaceEmptyPorNuloInArray($dados); # correção do erro mysql 1366 incorrect integer value sql Mode
         $this->tableGateway->insert($dados);
         return $this->tableGateway->getLastInsertValue();
     }
