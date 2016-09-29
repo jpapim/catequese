@@ -30,6 +30,7 @@ class AbstractEstruturaTable {
 
     public function inserir($dados)
     {
+        $dados[reset(array_keys($dados))] = NULL; # correção do erro mysql 1366 incorrect integer value sql Mode
         $this->tableGateway->insert($dados);
         return $this->tableGateway->getLastInsertValue();
     }
