@@ -19,8 +19,8 @@ class Config
 
     private static function getDados($indice)
     {
-        $globals = require(BASE_PATCH . '\config\autoload\global.php');
-        $ambiente = require(BASE_PATCH . '\config\autoload\\' . APPLICATION_ENV . '.php');        
+        $globals = require(BASE_PATCH . DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'autoload'.DIRECTORY_SEPARATOR.'global.php');
+        $ambiente = require(BASE_PATCH . DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'autoload'.DIRECTORY_SEPARATOR . APPLICATION_ENV . '.php');
         
         if (is_array($globals) && is_array($ambiente)) {
             if (isset($globals[$indice]) && isset($ambiente[$indice])) {
