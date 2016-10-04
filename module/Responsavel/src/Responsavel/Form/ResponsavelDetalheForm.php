@@ -26,7 +26,7 @@ class ResponsavelDetalheForm extends AbstractForm {
      
     
        $objForm->hidden("id_email")->required(false)->label("Id");
-        $objForm->hidden('id_situacao')->required(false)->label("Situacao");      
+        $objForm->hidden('id_situacao')->required(false)->label("Situacao");
       # $objForm->combo("id_profissao", '\Profissao\Service\ProfissaoService', 'id', 'nm_profissao')->required(false)->label("Profissao");
       $objForm->hidden("id_movimento_pastoral")->required(false)->label("MovimentoPastoral");  
      

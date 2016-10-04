@@ -17,7 +17,7 @@ class ParoquiaForm extends AbstractForm
         $objForm->hidden("id_usuario")->required(false)->label("Id Usuario");
         $objForm->hidden("id_usuario_cadastro")->required(false)->label("Usuario Cadastrado");
         
-        $objForm->text("nm_paroquia")->required(true)->label("Nome da Paroquia");
+        $objForm->text("nm_paroquia")->required(true)->label("Nome da Paróquia");
         $objForm->text("id_cidade")->required(false)->label("Cidade");
         $this->formObject = $objForm;
     }

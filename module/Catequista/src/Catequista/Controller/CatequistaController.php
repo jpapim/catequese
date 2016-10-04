@@ -71,7 +71,7 @@ class CatequistaController extends AbstractCrudController
 
                 if(!isset($id_catequista) ){
                     $this->addErrorMessage('Email já cadastrado. Faça seu login.');
-                    $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+                     $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
                     return FALSE;
                 } else {
                     $emailService->setId($this->service->buscar($id_catequista)->getIdEmail());
@@ -84,14 +84,14 @@ class CatequistaController extends AbstractCrudController
              //Verifica tamanho da senha
         if (strlen(trim($this->getRequest()->getPost()->get('pw_senha'))) < 8) {
             $this->addErrorMessage('Senha deve ter no mínimo 8 caracteres.');
-            $this->redirect()->toRoute('cadastro', array('controller' => $controller, 'action' => 'cadastro'));
+            $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
             return FALSE;
         }
 
         //Verifica se as novas senhas são iguais
         if (strcasecmp($this->getRequest()->getPost()->get('pw_senha'), $this->getRequest()->getPost()->get('pw_senha_confirm')) != 0) {
             $this->addErrorMessage('Senhas não correspondem.');
-            $this->redirect()->toRoute('cadastro', array('controller' => $controller, 'action' => 'cadastro'));
+            $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
             return FALSE;
         }
 
@@ -138,8 +138,8 @@ if($idEmail){
                     
                   
         #Resgatando id de cidade e atribuindo ao campo id_naturalidade do cadastro de catequizando.
-                            x($id_naturalidade =  $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('nm_naturalidade')));
-                            x($this->getRequest()->getPost()->set('id_naturalidade',$id_naturalidade['id_cidade']));   
+                            $id_naturalidade =  $cidade->getIdCidadePorNomeToArray($this->getRequest()->getPost()->get('nm_naturalidade'));
+                            $this->getRequest()->getPost()->set('id_naturalidade',$id_naturalidade['id_cidade']);   
 ###################Cadastro Usuario ainda nao implementado###################################
          $this->getRequest()->getPost()->set('dt_nascimento', $dataNascimento);
          $this->getRequest()->getPost()->set('nm_usuario', $this->getRequest()->getPost()->get('nm_usuario'));
@@ -194,8 +194,8 @@ if($idEmail){
         $this->getRequest()->getPost()->set('dt_nascimento', $dataNascimento);
         $this->getRequest()->getPost()->set('dt_ingresso', $dataIngresso);
         $this->getRequest()->getPost()->set('tx_observacao', $this->getRequest()->getPost()->get('tx_observacao'));
-       # $this->getRequest()->getPost()->set('ds_situacao', $this->getRequest()->getPost()->get('ds_situacao'));
-       # $this->getRequest()->getPost()->set('cs_coodenador', $this->getRequest()->getPost()->get('cs_coordenador'));
+       $this->getRequest()->getPost()->set('ds_situacao', $this->getRequest()->getPost()->get('ds_situacao'));
+       $this->getRequest()->getPost()->set('cs_coodenador', $this->getRequest()->getPost()->get('cs_coordenador'));
         
         //GRAVANDO CAMPOS CATEQUISTA,PARAMETRO (FORMULARIO ALTERNATIVO SEM COMBOS)
            $resultCatequista= parent::gravar(
@@ -248,7 +248,7 @@ if($idEmail){
 
        if(isset($id) && $id){
           $arrCatequista = $this->service->buscar($id)->toArray();
-          x($arrCatequista);
+         
          ###################### BUSCANDO INFORMAÇÕES DO CATEQUIZANDO ######################
          ## Recuperando Email
         
@@ -285,7 +285,7 @@ if($idEmail){
 
           ## Telefone Residencial
           $objTelefone = new \Telefone\Service\TelefoneService();
-          x($telResidencial = $objTelefone->buscar($arrCatequista['id_telefone_residencial'])->toArray());
+          $telResidencial = $objTelefone->buscar($arrCatequista['id_telefone_residencial'])->toArray();
 
           ## Telefone Celular
           $telCelular = $objTelefone->buscar($arrCatequista['id_telefone_celular'])->toArray();
@@ -604,7 +604,7 @@ if($idEmail){
 
        if(isset($id) && $id){
           $arrCatequista = $this->service->buscar($id)->toArray();
-          x($arrCatequista);
+      
          ###################### BUSCANDO INFORMAÇÕES DO CATEQUIZANDO ######################
          ## Recuperando Email
         
@@ -641,7 +641,7 @@ if($idEmail){
 
           ## Telefone Residencial
           $objTelefone = new \Telefone\Service\TelefoneService();
-          x($telResidencial = $objTelefone->buscar($arrCatequista['id_telefone_residencial'])->toArray());
+          $telResidencial = $objTelefone->buscar($arrCatequista['id_telefone_residencial'])->toArray();
 
           ## Telefone Celular
           $telCelular = $objTelefone->buscar($arrCatequista['id_telefone_celular'])->toArray();

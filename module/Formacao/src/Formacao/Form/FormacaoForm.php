@@ -22,7 +22,7 @@ class FormacaoForm extends  AbstractForm {
         $this->inputFilter = new InputFilter();
         $objForm = new FormObject('formacaoform',$this,$this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");
-        $objForm->text("nm_formacao")->required(false)->label("Formacao");
+        $objForm->text("nm_formacao")->required(false)->label("Formação");
 
         $this->formObject = $objForm;
     }

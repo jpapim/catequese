@@ -26,7 +26,7 @@ class TurmaForm extends AbstractForm {
   
 ////CAMPOS DA TABELA
 
-           $objForm->text("cd_turma")->required(true)->label("Cd Turma");
+           $objForm->text("cd_turma")->required(true)->label("Cadastro da Turma");
            $objForm->text("nm_turma")->required(true)->label("Nome da Turma");
            
 
