@@ -13,7 +13,7 @@ class TurnoForm extends AbstractForm{
         $this->inputFilter = new InputFilter();
         $objForm = new FormObject('turnoform',$this,$this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");  
-        $objForm->text("nm_turno")->required(true)->label("turno");
+        $objForm->text("nm_turno")->required(true)->label("Turno");
 
         $this->formObject = $objForm;
     }

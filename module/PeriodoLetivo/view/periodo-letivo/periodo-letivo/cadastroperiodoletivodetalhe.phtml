@@ -1,19 +1,19 @@
 <div class="page-head">
-    <h2>Cadastro Periodo Letivo</h2>
+    <h2>Cadastro Período Letivo</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
         <div class="block-flat">
             <div class="content">
                 <fieldset>
-                    <legend>Dados do Periodo Letivo</legend>
+                    <legend>Dados do Período Letivo</legend>
                     <?php if(isset($dadosPeriodoLetivo) && $dadosPeriodoLetivo){ ?>
                         <div class="bs-callout bs-callout-primary">
                             <ul class="primary">
-                                <li><b>Codigo Periodo:</b> <?=$dadosPeriodoLetivo->getId()?></li>
-                                <li><b>Periodo Letivo:</b> <?=$dadosPeriodoLetivo->getDtAnoLetivo()?></li>
-                                <li><b>Data de Inicio:</b> <?=$dadosPeriodoLetivo->getDtInicio()?></li>
-                                <li><b>Data de termino:</b> <?=$dadosPeriodoLetivo->getDtFim()?></li>
+                                <li><b>Código Período:</b> <?=$dadosPeriodoLetivo->getId()?></li>
+                                <li><b>Período Letivo:</b> <?=$dadosPeriodoLetivo->getDtAnoLetivo()?></li>
+                                <li><b>Data de Início:</b> <?=$dadosPeriodoLetivo->getDtInicio()?></li>
+                                <li><b>Data de Término:</b> <?=$dadosPeriodoLetivo->getDtFim()?></li>
                             </ul>
                         </div>
                     <?php } ?>
@@ -47,7 +47,7 @@
                     <div class="col-md-10">
 <!--                        <button type="submit" class="btn btn-primary">Salvar</button>-->
                         <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro', 'id'=>Estrutura\Helpers\Cript::enc($dadosPeriodoLetivo->getId())))?>" title="Voltar">Voltar</a>
-                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Lista de Periodo Letivo</a>
+                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Lista de Período Letivo</a>
                     </div>
                 </div>
                 <?= $this->form()->closeTag(); ?>

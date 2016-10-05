@@ -26,7 +26,7 @@ class TurmaCatequizandoForm extends AbstractForm
         $objForm->text("id_catequizando")->required(true)->label("Catequizando");
 
         $objForm->hidden("id_usuario")->required(false)->label("Identificacao do Usuario");
-        $objForm->combo("id_periodo_letivo", '\PeriodoLetivo\Service\PeriodoLetivoService', 'id', 'dt_ano_letivo')->required(false)->label("Periodo Letivo");
+        $objForm->combo("id_periodo_letivo", '\PeriodoLetivo\Service\PeriodoLetivoService', 'id', 'dt_ano_letivo')->required(false)->label("Período Letivo");
 
         //#########################################################################################
         $objForm->textareaHtml("tx_observacoes")->required(true)->label("Observações");

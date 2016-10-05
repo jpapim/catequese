@@ -26,8 +26,8 @@ class PeriodoLetivoForm extends  AbstractForm{
 
         $objForm->date('dt_inicio')->required(true)
             ->setAttribute('class', 'data')
-            ->label("Data de Inicio");
-        $objForm->date("dt_fim")->required(true)->setAttribute('class', 'data')->label("Data de Termino");
+            ->label("Data de Início");
+        $objForm->date("dt_fim")->required(true)->setAttribute('class', 'data')->label("Data de Término");
         $objForm->text("dt_ano_letivo")->required(false)->label("Ano Letivo");
 
         $this->formObject = $objForm;
