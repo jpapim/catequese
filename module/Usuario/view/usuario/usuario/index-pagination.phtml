@@ -6,23 +6,17 @@
             <thead>
                 <tr>
                     <th class="text-center">Usuário</th>
-                    <th class="text-center">Data de Nascimento</th>
-                    <th class="text-center">RG</th>
-                    <th class="text-center">CPF</th>
-                    <th class="text-center">Profissão</th>
-                    <th class="text-center">Nacionalidade</th>
-                    <th class="text-center">Ações</th>
+                    <th class="text-center">E-mail</th>
+                    <th class="text-center">Telefone</th>
+                    <th class="text-center">Tipo de Usuário</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th class="text-center">Usuário</th>
-                    <th class="text-center">Data de Nascimento</th>
-                    <th class="text-center">RG</th>
-                    <th class="text-center">CPF</th>
-                    <th class="text-center">Profissão</th>
-                    <th class="text-center">Nacionalidade</th>
-                    <th class="text-center">Ações</th>
+                    <th class="text-center">E-mail</th>
+                    <th class="text-center">Telefone</th>
+                    <th class="text-center">Tipo de Usuário</th>
                 </tr>
                 <tr>
                     <th colspan="6" class="ts-pager form-horizontal">
@@ -51,7 +45,7 @@
                                 <?php
                                 if (!is_null($campoFilter)) {
                                 ?>
-                                    <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                    <input type="search" placeholder="" class="tablesorter-filter " data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                                     <?php
                                 } else {
                                     ?>
@@ -65,16 +59,13 @@
                         ?>                            
                     </tr>
                     <?php
-                    foreach ($paginator as $key => $usuario) {
+                    foreach ($paginator as $usuario) {
                     ?>
                         <tr>
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_usuario']) ?></td>
-                            <td class="text-center"><?= $usuario['dt_nascimento'] ?></td>
-                            <td class="text-center"><?= $usuario['nu_rg'] ?></td>
-                            <td class="text-center"><?= $usuario['nu_cpf'] ?></td>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_profissao']) ?></td>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_nacionalidade']) ?></td>
-
+                            <td class="text-center"><?= $usuario['em_email'] ?></td>
+                            <td class="text-center"><?= $usuario['nr_telefone'] ?></td>
+                            <td class="text-center"><?= $usuario['nm_tipo_usuario'] ?></td>
 
                             <td class="text-center">
                                 <span class="btn-group" style="width: 120px;">

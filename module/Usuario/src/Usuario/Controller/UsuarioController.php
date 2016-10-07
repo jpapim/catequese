@@ -154,17 +154,6 @@ class UsuarioController extends AbstractCrudController
         #    return FALSE;
         #}
 
-        $dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
-        $dataMaioridade = new \Datetime();
-        $dataMaioridade->modify('-18 years'); #Dezoito anos da data de hoje.
-
-        #Verifica se é menor de 18 anos
-        if ($dateNascimento > $dataMaioridade) {
-
-            $this->addErrorMessage('Usuário deve ser maior de idade para se cadastrar.');
-            $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
-            return FALSE;
-        }
 
         //Verifica tamanho da senha
         if (strlen(trim($this->getRequest()->getPost()->get('pw_senha'))) < 8) {
@@ -202,7 +191,7 @@ class UsuarioController extends AbstractCrudController
             if ($resultEmail) {
 
                 $this->getRequest()->getPost()->set('nm_usuario', $this->getRequest()->getPost()->get('nm_usuario'));
-                $this->getRequest()->getPost()->set('dt_nascimento', $dateNascimento->format('Y-m-d'));
+                //$this->getRequest()->getPost()->set('dt_nascimento', $dateNascimento->format('Y-m-d'));
                 #$this->getRequest()->getPost()->set('nu_cpf', \Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_cpf')));
                 $this->getRequest()->getPost()->set('id_sexo', $this->getRequest()->getPost()->get('id_sexo'));
                 $this->getRequest()->getPost()->set('id_tipo_usuario', $this->getRequest()->getPost()->get('id_tipo_usuario'));

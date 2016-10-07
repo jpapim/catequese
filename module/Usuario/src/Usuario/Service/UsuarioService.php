@@ -157,8 +157,15 @@ class UsuarioService extends Entity {
                     'nu_cpf',
                     'nm_profissao',
                     'nm_nacionalidade',
-                
-        ]);
+                    'id_tipo_usuario',
+
+        ])->join(
+            'email', 'email.id_email = usuario.id_email',['em_email']
+        )->join(
+            'telefone', 'telefone.id_telefone = usuario.id_telefone', ['nr_telefone']
+        )->join(
+            'tipo_usuario', 'tipo_usuario.id_tipo_usuario = usuario.id_tipo_usuario', ['nm_tipo_usuario']
+        );
 
         $where = [
         ];
@@ -180,7 +187,7 @@ class UsuarioService extends Entity {
         }
 
         $select->where($where)->order(['nm_usuario DESC']);
-
+        #xd($select->getSqlString($this->getAdapter()->getPlatform()));
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
 
