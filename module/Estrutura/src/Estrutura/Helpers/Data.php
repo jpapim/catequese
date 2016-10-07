@@ -122,15 +122,15 @@ class Data
      * 										3 => 25 de abril de 2012
      * @return string
      */
-    public static function porExtenso(\DateTime $data, $formato = 1)
+    public static function porExtenso($data, $formato = 3)
     {
-
-        $day = $data->format('d');
-        $month = $data->format('m');
-        $year = $data->format('Y');
-        $hour = $data->format('H');
-        $minute = $data->format('i');
-        $second = $data->format('s');
+        $day = date('d', strtotime( $data ) );
+        $month = date('m', strtotime( $data ) );
+        $year = date('Y', strtotime( $data ) );
+        $week = date('w', strtotime( $data ) );
+        $hour = date('H', strtotime( $data ) );
+        $minute = date('i', strtotime( $data ) );
+        $second = date('s', strtotime( $data ) );
 
         $day = intval($day);
         $month = intval($month);
@@ -298,6 +298,10 @@ class Data
         return isset($dataMysql) && $dataMysql ? date('d/m/Y H:i:s',strtotime($dataMysql)): "";
     }
 
+    public static function converterDataHoraBancoMySQL2DataHoraBrazil($dataMysql) {
+        return isset($dataMysql) && $dataMysql ? date('d/m/Y H:i:s',strtotime($dataMysql)): "";
+    }
+
     /***
      * Converte a data de [09/08/2015 16:12:39] para [2015-08-09 16:12:39]
      * @param $dataBrazil
@@ -345,6 +349,14 @@ class Data
         }
     }
 
+    public static function converterDataHoraBancoMySQL2DataBrazil($dataMysql) {
+        if(isset($dataMysql) && $dataMysql){
+            return date('d/m/Y',strtotime($dataMysql));
+        } else {
+            return '';
+        }
+    }
+
     /***
      * Retorna a data atual do sistema no formato [09/08/2015]
      * @return string
@@ -376,4 +388,86 @@ class Data
     public static function getDataHoraAtual2Banco() {
         return date("Y-m-d H:i:s");
     }
+
+    /**
+     * Extrair apenas a Data de uma Data no Formato 'dd/mm/aaaa hh:mm:ss' e retornará apenas 'dd/mm/aaaa'
+     * @param $dataBrazil no Formato 'dd/mm/aaaa hh:mm:ss'
+     * @return bool|string no formato para Banco de Dados 'aaaa-mm-aa hh:mm:ss'
+     */
+    public static function extrairDataDeUmDataHoraBrazil2Banco($dataBrazil) {
+        $dataConvertida = "";
+        if(isset($dataBrazil) && $dataBrazil) {
+            $arDataHora = explode(" ", $dataBrazil);
+            $data = $arDataHora[0];
+            $array = explode("/", $data);
+            $array = array_reverse($array);
+            $str = implode($array, "/");
+            $dataConvertida = date("Y-m-d", strtotime($str));
+        }
+
+        return $dataConvertida;
+    }
+
+    /**
+     * Extrair apenas a Data de uma Data no Formato 'dd/mm/aaaa hh:mm:ss' e retornará apenas 'dd/mm/aaaa'
+     * @param $dataBrazil no Formato 'dd/mm/aaaa hh:mm:ss'
+     * @return bool|string no formato para Banco de Dados 'aaaa-mm-aa hh:mm:ss'
+     */
+    public static function extrairDataDeUmDataHoraBrazil($dataBrazil) {
+        $dataConvertida = "";
+        if(isset($dataBrazil) && $dataBrazil) {
+            $arDataHora = explode(" ", $dataBrazil);
+            $dataConvertida = $arDataHora[0];
+        }
+
+        return $dataConvertida;
+    }
+
+    /**
+     * Extrair apenas a Hora de uma Data no Formato 'dd/mm/aaaa hh:mm:ss' e retornará apenas 'hh:mm:ss'
+     * @param $dataBrazil no Formato 'dd/mm/aaaa hh:mm:ss'
+     * @return bool|string no formato para Banco de Dados 'hh:mm:ss'
+     */
+    public static function extrairHoraDeUmDataHoraBrazil($dataBrazil) {
+        $horaConvertida = '00:00:00';
+        if(isset($dataBrazil) && $dataBrazil) {
+            $arDataHora = explode(" ", $dataBrazil);
+            $horaConvertida = isset($arDataHora[1]) ? $arDataHora[1] : '00:00:00';
+        }
+
+        return $horaConvertida;
+    }
+
+    public static function pegarAnoCorrente() {
+
+        return date("Y");
+    }
+
+    /**
+     *
+     * @param Zend_Date $data
+     * @return int $dias_diferenca
+     */
+    public static function calculaDiferencaEmHoras($data_inicial, $data_final)
+    {
+        $datatime1 = new \DateTime($data_final);
+        $datatime2 = new \DateTime($data_inicial);
+
+        $diff = $datatime1->diff($datatime2);
+        $horas = $diff->h + ($diff->days * 24);
+
+        return $horas;
+    }
+
+    public static function calculaDiferencaEmMinutos($data_inicial, $data_final)
+    {
+        $datatime1 = new \DateTime($data_final);
+        $datatime2 = new \DateTime($data_inicial);
+
+        $diff = $datatime1->diff($datatime2);
+        $horas = $diff->h + ($diff->days * 24);
+        $minutos = $diff->i;
+        return ($horas * 60) + $minutos;
+    }
+
 }

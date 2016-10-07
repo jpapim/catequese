@@ -151,7 +151,21 @@
                 
                     
                 </fieldset>
-                <hr>
+                 <div class="form-group">
+                        <div class="col-md-6 col-md-push-1">
+                            <?= $this->formRow($form->get('cs_coordenador'))?>
+                        </div>
+                    
+                 </div>
+                <div class="form-group">
+                    <div class="col-md-4 col-md-push-1">
+                            <?= $this->formRow($form->get('ds_situacao'))?>
+                    </div>
+                </div>
+                
+                
+                
+                
                   <fieldset class="form-group">       
                         
                 
@@ -164,17 +178,18 @@
                    <div class="col-md-3 col-md-push-1">
                     <?= $this->formRow($form->get('pw_a_senha')) ?>
                     <div class="help-block with-errors"></div>
-                </div> 
-                    <div class="col-md-3 col-md-push-1">
+               
+                   
                     <?= $this->formRow($form->get('pw_senha')) ?>
                     <div class="help-block with-errors"></div>
-                </div>   
-                   
-                       <div class="col-md-3 col-md-push-1">
+                
                     <?= $this->formRow($form->get('pw_senha_confirm')) ?>
                     <div class="help-block with-errors"></div>
-                </div>   
+                    </div> </div>  
+                    
                 </fieldset>
+                
+               
              <div class="col-md-3 col-md-push-1">
                     <?= $this->formRow($form->get('id_perfil')->setValue(3)) ?>
                     <div class="help-block with-errors"></div>
