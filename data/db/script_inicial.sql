@@ -401,7 +401,7 @@ CREATE TABLE `detalhe_periodo_letivo` (
   PRIMARY KEY (`id_detalhe_periodo_letivo`),
   KEY `FK_Reference_124` (`id_periodo_letivo`),
   CONSTRAINT `FK_Reference_124` FOREIGN KEY (`id_periodo_letivo`) REFERENCES `periodo_letivo` (`id_periodo_letivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='Data que qirão compor o periodo letivo';
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='Data que qirão compor o periodo letivo';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -410,7 +410,7 @@ CREATE TABLE `detalhe_periodo_letivo` (
 
 LOCK TABLES `detalhe_periodo_letivo` WRITE;
 /*!40000 ALTER TABLE `detalhe_periodo_letivo` DISABLE KEYS */;
-INSERT INTO `detalhe_periodo_letivo` VALUES (1,14,'2016-06-13'),(2,15,'0000-00-00'),(3,15,'0000-00-00'),(4,15,'0000-00-00'),(5,15,'0000-00-00'),(6,15,'0000-00-00'),(7,15,'0000-00-00'),(8,15,'0000-00-00'),(12,16,'0000-00-00'),(13,16,'0000-00-00'),(14,14,'2016-06-08'),(15,14,'2016-06-23'),(16,14,'2016-06-23'),(18,12,'2016-06-20'),(20,12,'2016-06-17'),(22,20,'2016-06-17'),(24,20,'2016-06-15'),(25,20,'2016-06-25'),(26,21,'2016-03-01'),(27,21,'2016-03-05'),(28,NULL,'1969-12-31');
+INSERT INTO `detalhe_periodo_letivo` VALUES (1,14,'2016-06-13'),(2,15,'0000-00-00'),(3,15,'0000-00-00'),(4,15,'0000-00-00'),(5,15,'0000-00-00'),(6,15,'0000-00-00'),(7,15,'0000-00-00'),(8,15,'0000-00-00'),(12,16,'0000-00-00'),(13,16,'0000-00-00'),(14,14,'2016-06-08'),(15,14,'2016-06-23'),(16,14,'2016-06-23'),(18,12,'2016-06-20'),(20,12,'2016-06-17'),(22,20,'2016-06-17'),(24,20,'2016-06-15'),(25,20,'2016-06-25'),(26,21,'2016-03-01'),(27,21,'2016-03-05'),(28,NULL,'1969-12-31'),(29,22,'2016-10-10'),(30,22,'2016-10-12');
 /*!40000 ALTER TABLE `detalhe_periodo_letivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -723,40 +723,6 @@ INSERT INTO `movimento_pastoral` VALUES (1,'Campanha da Fraternidade'),(2,'Amor 
 UNLOCK TABLES;
 
 --
--- Table structure for table `pais_catequizando`
---
-
-DROP TABLE IF EXISTS `pais_catequizando`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pais_catequizando` (
-  `id_pais_catequizando` int(11) NOT NULL AUTO_INCREMENT,
-  `id_pai` int(11) DEFAULT NULL,
-  `id_mae` int(11) DEFAULT NULL,
-  `id_catequizando` int(11) DEFAULT NULL,
-  `id_situacao_conjugal` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_pais_catequizando`),
-  KEY `FK_Reference_117` (`id_pai`),
-  KEY `FK_Reference_118` (`id_mae`),
-  KEY `FK_Reference_119` (`id_catequizando`),
-  KEY `FK_Reference_120` (`id_situacao_conjugal`),
-  CONSTRAINT `FK_Reference_117` FOREIGN KEY (`id_pai`) REFERENCES `responsavel` (`id_responsavel`),
-  CONSTRAINT `FK_Reference_118` FOREIGN KEY (`id_mae`) REFERENCES `responsavel` (`id_responsavel`),
-  CONSTRAINT `FK_Reference_119` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`),
-  CONSTRAINT `FK_Reference_120` FOREIGN KEY (`id_situacao_conjugal`) REFERENCES `situacao_conjugal` (`id_situacao_conjugal`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pais_catequizando`
---
-
-LOCK TABLES `pais_catequizando` WRITE;
-/*!40000 ALTER TABLE `pais_catequizando` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pais_catequizando` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `paroquia`
 --
 
@@ -852,7 +818,7 @@ CREATE TABLE `periodo_letivo` (
   `dt_fim` datetime DEFAULT NULL,
   `dt_ano_letivo` char(40) DEFAULT NULL,
   PRIMARY KEY (`id_periodo_letivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='Armazena informações sobre inicio e término do periodo letiv';
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='Armazena informações sobre inicio e término do periodo letiv';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -861,7 +827,7 @@ CREATE TABLE `periodo_letivo` (
 
 LOCK TABLES `periodo_letivo` WRITE;
 /*!40000 ALTER TABLE `periodo_letivo` DISABLE KEYS */;
-INSERT INTO `periodo_letivo` VALUES (12,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO1'),(13,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO2'),(14,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO3'),(15,'1969-12-10 00:00:00','1969-12-08 00:00:00','ANO4'),(16,'2016-06-22 00:00:00','2016-06-13 00:00:00','ANO5'),(17,'2016-06-15 00:00:00','2016-06-30 00:00:00','ANO6'),(18,'2016-06-23 00:00:00','2016-06-17 00:00:00','ANO7'),(19,'2016-06-01 00:00:00','2016-06-15 00:00:00','ANO8'),(20,'2016-06-08 00:00:00','2016-06-30 00:00:00','ANO9'),(21,'2016-03-01 00:00:00','2016-11-30 00:00:00','2016');
+INSERT INTO `periodo_letivo` VALUES (12,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO1'),(13,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO2'),(14,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO3'),(15,'1969-12-10 00:00:00','1969-12-08 00:00:00','ANO4'),(16,'2016-06-22 00:00:00','2016-06-13 00:00:00','ANO5'),(17,'2016-06-15 00:00:00','2016-06-30 00:00:00','ANO6'),(18,'2016-06-23 00:00:00','2016-06-17 00:00:00','ANO7'),(19,'2016-06-01 00:00:00','2016-06-15 00:00:00','ANO8'),(20,'2016-06-08 00:00:00','2016-06-30 00:00:00','ANO9'),(21,'2016-03-01 00:00:00','2016-11-30 00:00:00','2016'),(22,'2016-10-03 00:00:00','2016-10-31 00:00:00','2016'),(23,'2016-10-05 00:00:00','2016-12-31 00:00:00','02/2016');
 /*!40000 ALTER TABLE `periodo_letivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -876,7 +842,7 @@ CREATE TABLE `profissao` (
   `id_profissao` int(11) NOT NULL AUTO_INCREMENT,
   `nm_profissao` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_profissao`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='Armazena a profissão do responsavel';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Armazena a profissão do responsavel';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -885,7 +851,7 @@ CREATE TABLE `profissao` (
 
 LOCK TABLES `profissao` WRITE;
 /*!40000 ALTER TABLE `profissao` DISABLE KEYS */;
-INSERT INTO `profissao` VALUES (1,'Professor'),(2,'Analista de Sistemas'),(3,'Gerente de Projetos'),(4,'Auxiliar Administrativo'),(5,'Secretária'),(6,'Agente de Portaria'),(7,'Concierge'),(8,'Vendedor');
+INSERT INTO `profissao` VALUES (1,'Professor'),(2,'Analista de Sistemas'),(3,'Gerente de Projetos'),(4,'Auxiliar Administrativo'),(5,'Secretária'),(6,'Agente de Portaria'),(7,'Concierge'),(8,'Vendedor'),(9,'Do Lar');
 /*!40000 ALTER TABLE `profissao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -944,13 +910,16 @@ CREATE TABLE `responsavel_catequizando` (
   `id_responsavel` int(11) DEFAULT NULL,
   `id_catequizando` int(11) DEFAULT NULL,
   `id_grau_parentesco` int(11) DEFAULT NULL,
+  `id_situacao_conjugal` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_responsavel_catequizando`),
   KEY `FK_Reference_114` (`id_responsavel`),
   KEY `FK_Reference_115` (`id_catequizando`),
   KEY `FK_Reference_116` (`id_grau_parentesco`),
+  KEY `FK_resp_cateq_sut_conjugal` (`id_situacao_conjugal`),
   CONSTRAINT `FK_Reference_114` FOREIGN KEY (`id_responsavel`) REFERENCES `responsavel` (`id_responsavel`),
   CONSTRAINT `FK_Reference_115` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`),
-  CONSTRAINT `FK_Reference_116` FOREIGN KEY (`id_grau_parentesco`) REFERENCES `grau_parentesco` (`id_grau_parentesco`)
+  CONSTRAINT `FK_Reference_116` FOREIGN KEY (`id_grau_parentesco`) REFERENCES `grau_parentesco` (`id_grau_parentesco`),
+  CONSTRAINT `FK_resp_cateq_sut_conjugal` FOREIGN KEY (`id_situacao_conjugal`) REFERENCES `situacao_conjugal` (`id_situacao_conjugal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1293,7 +1262,7 @@ CREATE TABLE `turma` (
   PRIMARY KEY (`id_turma`),
   KEY `FK_Reference_123` (`id_etapa`),
   CONSTRAINT `FK_Reference_123` FOREIGN KEY (`id_etapa`) REFERENCES `etapa` (`id_etapa`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Tabela que definirá os dados de uma turma de catequizandos';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Tabela que definirá os dados de uma turma de catequizandos';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1302,7 +1271,7 @@ CREATE TABLE `turma` (
 
 LOCK TABLES `turma` WRITE;
 /*!40000 ALTER TABLE `turma` DISABLE KEYS */;
-INSERT INTO `turma` VALUES (2,1,'SEM','TURMA AN1'),(3,2,'EUCA','Turma Eucaristia 01');
+INSERT INTO `turma` VALUES (2,1,'SEM','TURMA AN1'),(3,2,'EUCA','Turma Eucaristia 01'),(4,4,'SEMENduT','hdwuidhwiudhwi');
 /*!40000 ALTER TABLE `turma` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1332,7 +1301,7 @@ CREATE TABLE `turma_catequizando` (
   CONSTRAINT `FK_Reference_128` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`),
   CONSTRAINT `FK_Reference_129` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
   CONSTRAINT `FK_Reference_132` FOREIGN KEY (`id_periodo_letivo`) REFERENCES `periodo_letivo` (`id_periodo_letivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='Tabela que Armazena todos os Catequizandos por Turma';
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COMMENT='Tabela que Armazena todos os Catequizandos por Turma';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1341,7 +1310,7 @@ CREATE TABLE `turma_catequizando` (
 
 LOCK TABLES `turma_catequizando` WRITE;
 /*!40000 ALTER TABLE `turma_catequizando` DISABLE KEYS */;
-INSERT INTO `turma_catequizando` VALUES (1,2,2,1,12,'2016-07-10 19:40:46',NULL,NULL,'ewdwwd'),(2,2,2,1,12,'2016-07-10 19:40:46',NULL,NULL,'efer'),(10,2,2,1,12,'2016-07-10 19:40:06',NULL,NULL,'w2w2w2'),(11,2,2,1,12,'2016-07-10 19:42:57',NULL,NULL,'swsw'),(13,2,2,1,13,'2016-07-10 20:00:58',NULL,NULL,'dededede'),(19,2,2,1,12,'2016-07-10 20:58:56',NULL,NULL,'trhthty'),(20,2,2,1,12,'2016-07-10 21:23:41',NULL,NULL,'wss'),(21,2,2,1,15,'2016-07-10 21:33:00',NULL,NULL,'rgtgrg'),(22,2,2,1,15,'2016-07-10 21:33:05',NULL,NULL,'rgrgrgrgr'),(23,2,2,1,12,'2016-07-11 18:58:30',NULL,NULL,'333333333'),(24,2,2,1,14,'2016-07-11 19:47:46',NULL,NULL,''),(25,2,2,1,14,'2016-07-11 19:50:28',NULL,NULL,'23w2'),(26,2,2,1,14,'2016-07-11 19:50:32',NULL,NULL,'3e3e3'),(28,3,2,1,17,'2016-07-12 13:52:38',NULL,NULL,'yturfuytfuyft'),(29,3,3,1,17,'2016-07-12 13:53:01',NULL,NULL,'ugiugiu'),(30,3,4,1,17,'2016-07-12 13:53:12',NULL,NULL,'oihoihoihho'),(31,3,2,1,14,'2016-09-05 02:30:11',NULL,NULL,'zazazaza');
+INSERT INTO `turma_catequizando` VALUES (1,2,2,1,12,'2016-07-10 19:40:46',NULL,NULL,'ewdwwd'),(2,2,2,1,12,'2016-07-10 19:40:46',NULL,NULL,'efer'),(10,2,2,1,12,'2016-07-10 19:40:06',NULL,NULL,'w2w2w2'),(11,2,2,1,12,'2016-07-10 19:42:57',NULL,NULL,'swsw'),(13,2,2,1,13,'2016-07-10 20:00:58',NULL,NULL,'dededede'),(19,2,2,1,12,'2016-07-10 20:58:56',NULL,NULL,'trhthty'),(20,2,2,1,12,'2016-07-10 21:23:41',NULL,NULL,'wss'),(21,2,2,1,15,'2016-07-10 21:33:00',NULL,NULL,'rgtgrg'),(22,2,2,1,15,'2016-07-10 21:33:05',NULL,NULL,'rgrgrgrgr'),(23,2,2,1,12,'2016-07-11 18:58:30',NULL,NULL,'333333333'),(24,2,2,1,14,'2016-07-11 19:47:46',NULL,NULL,''),(25,2,2,1,14,'2016-07-11 19:50:28',NULL,NULL,'23w2'),(26,2,2,1,14,'2016-07-11 19:50:32',NULL,NULL,'3e3e3'),(28,3,2,1,17,'2016-07-12 13:52:38',NULL,NULL,'yturfuytfuyft'),(29,3,3,1,17,'2016-07-12 13:53:01',NULL,NULL,'ugiugiu'),(30,3,4,1,17,'2016-07-12 13:53:12',NULL,NULL,'oihoihoihho'),(31,3,2,1,14,'2016-09-05 02:30:11',NULL,NULL,'zazazaza'),(32,3,4,1,14,'2016-10-08 13:55:00',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `turma_catequizando` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1472,4 +1441,4 @@ USE `bdcatequese`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-14 21:49:32
+-- Dump completed on 2016-10-08 11:21:03

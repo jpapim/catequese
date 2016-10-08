@@ -27,11 +27,17 @@
             </div>
 
             <div class="form-group">
-                 <div class="col-md-7">
-             <?=  $this->formRow($form->get('id_responsavel')) ?>
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('id_responsavel')) ?>
                     <div class="help-block with-errors"></div>
                 </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('id_situacao_conjugal')) ?>
+                    <div class="help-block with-errors"></div>
                 </div>
+            </div>
             <div class="form-group">
                 <div class="col-md-7">
                     <?= $this->formRow($form->get('id_grau_parentesco')) ?>
