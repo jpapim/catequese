@@ -69,15 +69,12 @@ class CatequistaController extends AbstractCrudController
             $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('em_email')));
             if ($emailService->filtrarObjeto()->count()) {
 
-                if(!isset($id_catequista) ){
-                    $this->addErrorMessage('Email já cadastrado. Faça seu login.');
-                     $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
-                    return FALSE;
-                } else {
-                    $emailService->setId($this->service->buscar($id_catequista)->getIdEmail());
-                    $emailService->setEmEmail($pos['em_email']);
-                   # $this->getRequest()->getPost()->set('id_email', $this->service->buscar($id_catequista)->getIdEmail());
-                }
+                if ($emailService->filtrarObjeto()->count()) {
+
+                $this->addErrorMessage('Email já cadastrado. Faça seu login.');
+                $this->redirect()->toRoute('navegacao', array('catequista-catequista' => $controller, 'action' => 'index'));
+                return FALSE;
+            }
 
             }
             
@@ -306,7 +303,7 @@ if($idEmail){
        $this->getRequest()->getPost()->set('em_email',$email['em_email']);
        $this->getRequest()->getPost()->set('nm_usuario',$usuario['nm_usuario']);
      
-          $this->getRequest()->getPost()->set('pw_senha',$login['pw_senha']);
+          x($this->getRequest()->getPost()->set('pw_senha',$login['pw_senha']));
           $this->getRequest()->getPost()->set('nm_logradouro', $endereco['nm_logradouro']);
           $this->getRequest()->getPost()->set('nm_bairro', $endereco['nm_bairro']);
           $this->getRequest()->getPost()->set('nm_complemento', $endereco['nm_complemento']);
@@ -324,7 +321,7 @@ if($idEmail){
 
           $form=new \Catequista\Form\CatequistaDetalheForm($options);
           #x($options);
-          #x($arrCatequista);
+          x($arrCatequista);
           $form->setData($arrCatequista);
           $form->setData($this->getRequest()->getPost());
       
@@ -514,7 +511,7 @@ if($idEmail){
           ##################################################### login######################
        
         $loginService = new \Login\Service\LoginService();
-        $loginService->setIdUsuario($auth->id_usuario);
+        $loginService->setIdUsuario($auth->$arr['id_usuario']);
         $loginEntity = $loginService->filtrarObjeto()->current();
 
         if (!$loginEntity) {
@@ -525,10 +522,10 @@ if($idEmail){
         }
            
            //verifica o tamanho da senha
-           if (strcasecmp(md5($post['pw_a_senha']), $loginEntity->getPwSenha()) != 0) {
+           if (strcasecmp(md5($post['pw_senha']), $loginEntity->getPwSenha()) != 0) {
 
             $this->addErrorMessage('Senha atual inválida.');
-            $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'atualizar-dados']);
+            $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'index']);
             return FALSE;
         }
         //Verifica se as novas senhas são iguais
