@@ -1,14 +1,18 @@
 <link rel="stylesheet" href="/assets/css/progress.css"/>
 
+<?php
+    $form2 = new \Responsavel\Form\ResponsavelForm();
+
+?>
 <hr/>
 <div class="row">
     <div class="col-md-12">
         <ol class="progresso" data-steps="3">
-            <li class="active">
+            <li class="done">
                 <span class="name">Catequizando</span>
                 <span class="step bg-info"><span>1</span></span>
             </li>
-            <li class="">
+            <li class="active">
                 <span class="name">Responsavél</span>
                 <span class="step"><span>2</span></span>
             </li>
@@ -21,14 +25,32 @@
 </div>
 <hr/>
 
-
 <div class="page-head">
-    <h2>Adicionar Aluno</h2>
+    <h2>Adicionar Responsáveis</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <p>Responsáveis já são Cadastrados?</p>
+               <div class="col-md-2">
+                   <label for="cad-sim">Sim:</label>
+                   <input type="radio" name="cadResp" id="cad-sim" value="S" />
+               </div>
+
+                <div class="col-md-2">
+                    <label for="cad-nao">Não:</label>
+                    <input type="radio" name="cadResp" id="cad-nao" value="N" />
+                </div>
+
+        </div>
+    </div>
 </div>
+
+
 <div class="cl-mcont">
     <div class="row">
         <div class="block-flat">
             <div class="content">
+
                 <?php
 
                 $form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
@@ -145,83 +167,19 @@
                                 </div>
                             </div>
                         </div>
-                     </div>
+                    </div>
                 </fieldset><!-- FIM DADOS PESSOAIS -->
-                <hr>
-                <fieldset>
-                    <div class="row" >
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                <?=$this->formRow($form->get('cs_necessidade_especial'))?>
-                            </div>
-                        </div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                <?=$this->formRow($form->get('cs_estudante'))?>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="row" >
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                <?=$this->formRow($form->get('arrSacramento'))?>
-                            </div>
-                        </div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                <?= $this->formRow($form->get('cs_participa_movimento_pastoral'))?>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="row" >
-                        <div class="col-sm-11">
-                            <div class="form-group">
-                                <?= $this->formRow($form->get('arrEtapa'))?>
-                            </div>
-                        </div>
 
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="row" >
-                        <div class="col-sm-11">
-                            <div class="form-group">
-                                <?= $this->formRow($form->get('tx_observacao'))?>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
-                    </div>
-                </div>
-                <?= $this->form()->closeTag(); ?>
+               
+
             </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+                </div>
+            </div>
+            <?= $this->form()->closeTag(); ?>
         </div>
     </div>
-<script type="text/javascript" language="javascript" class="init">
-    $(document).ready(function() {
-        $( "#dt_nascimento" ).datepicker(
-            { dateFormat: 'dd/mm/yy' }
-        );
-
-        $( "input#nm_cidade" ).autocomplete({
-            minLength: 4,
-            source: "/cidade-cidade/autocompletecidade"
-        });
-
-        $( "input#nm_naturalidade" ).autocomplete({
-            minLength: 4,
-            source: "/cidade-cidade/autocompletecidade"
-        });
-    });
-</script>
+</div>

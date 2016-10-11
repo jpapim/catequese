@@ -455,36 +455,40 @@ class CatequizandoController extends  AbstractCrudController{
            ## Atualizando Sacramento Catequizando
            $arrSacramento = $this->getRequest()->getPost()->get('arrSacramento');
 
-           #x($arrSacramento);
-           ## Excluido dados Antigos
-           $objSacramento = new \SacramentoCatequizando\Service\SacramentoCatequizandoService();
-           $objSacramento->setIdCatequizando($id);
-           $objSacramento->excluir();
+          if(isset($arrSacramento) && empty($arrSacramento) != false){
 
-           ### Regravando  Sacramentos já realizados pelo catequizando
-           foreach($arrSacramento as $sacramento){
-               $objS = new \SacramentoCatequizando\Service\SacramentoCatequizandoService();
-               $objS->setIdCatequizando($id);
-               $objS->setIdSacramento($sacramento);
-               $objS->salvar();
-           }
+              ## Excluido dados Antigos
+              $objSacramento = new \SacramentoCatequizando\Service\SacramentoCatequizandoService();
+              $objSacramento->setIdCatequizando($id);
+              $objSacramento->excluir();
+
+              ### Regravando  Sacramentos já realizados pelo catequizando
+              foreach($arrSacramento as $sacramento){
+                  $objS = new \SacramentoCatequizando\Service\SacramentoCatequizandoService();
+                  $objS->setIdCatequizando($id);
+                  $objS->setIdSacramento($sacramento);
+                  $objS->salvar();
+              }
+          }
 
            ## Atualizando Catequizando Etapa Cursou
            $arrEtapa = $this->getRequest()->getPost()->get('arrEtapa');
-           #x($arrEtapa);
 
-           ## Excluindo dados Antigos
-           $obEtapa = new \CatequizandoEtapaCursou\Service\CatequizandoEtapaCursouService();
-           $obEtapa->setIdCatequizando($id);
-           $obEtapa->excluir();
+            if(isset($arrEtapa) && empty($arrEtapa) != false){
 
-           ## Regravando Catequizando Etapa Cursou  já realizado pelo Catequizando
-          foreach($arrEtapa as $etapa){
-              $et =  new \CatequizandoEtapaCursou\Service\CatequizandoEtapaCursouService();
-              $et->setIdEtapa($etapa);
-              $et->setIdCatequizando($id);
-              $et->salvar();
-          }
+                ## Excluindo dados Antigos
+                $obEtapa = new \CatequizandoEtapaCursou\Service\CatequizandoEtapaCursouService();
+                $obEtapa->setIdCatequizando($id);
+                $obEtapa->excluir();
+
+                ## Regravando Catequizando Etapa Cursou  já realizado pelo Catequizando
+                foreach($arrEtapa as $etapa){
+                    $et =  new \CatequizandoEtapaCursou\Service\CatequizandoEtapaCursouService();
+                    $et->setIdEtapa($etapa);
+                    $et->setIdCatequizando($id);
+                    $et->salvar();
+                }
+            }
 
            $dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
            $dataMaioridade = new \Datetime();
@@ -518,6 +522,20 @@ class CatequizandoController extends  AbstractCrudController{
            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
            return FALSE;
        }
+
+    }
+
+
+    public function responsavelCatequizandoAction(){
+
+        $dadosView = [
+            'service' => $this->service,
+            'form' => $this->form,
+            'controller' => $this->params('controller'),
+            'atributos' =>''
+        ];
+
+        return new ViewModel($dadosView);
 
     }
 
