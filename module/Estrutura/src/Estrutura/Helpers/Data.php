@@ -443,6 +443,40 @@ class Data
         return date("Y");
     }
 
+    public static function pegarMesCorrente()
+    {
+
+        return date("m");
+    }
+
+    public static function pegarUltimoDiaDoMesCorrente()
+    {
+        return date('t/m/Y');
+    }
+
+    public static function pegarUltimoDiaDoMes($dataMysql)
+    {
+        if (isset($dataMysql) && $dataMysql) {
+            return date('t/m/Y', strtotime($dataMysql));
+        } else {
+            return '';
+        }
+    }
+
+    public static function pegarPrimeiroDiaDoMes($dataMysql)
+    {
+        if (isset($dataMysql) && $dataMysql) {
+            return "01/" . date("m", strtotime($dataMysql)) . "/" . date("Y", strtotime($dataMysql));
+        } else {
+            return '';
+        }
+    }
+
+    public static function pegarPrimeiroDiaDoMesCorrente()
+    {
+        return "01/" . date("m") . "/" . date("Y");
+    }
+
     /**
      *
      * @param Zend_Date $data
