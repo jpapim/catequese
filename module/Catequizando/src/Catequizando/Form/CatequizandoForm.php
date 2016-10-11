@@ -31,7 +31,7 @@ class CatequizandoForm extends  AbstractForm{
         $objForm->text("nr_numero")->required(true)->label("Número");
         $objForm->text("nm_complemento")->required(true)->label("Complemento");
         $objForm->text("nm_bairro")->required(true)->label("Bairro");
-        $objForm->cep("nr_cep")->required(true)->label("Cep");
+        $objForm->cep("nr_cep")->setAttribute('class', 'cep')->required(true)->label("Cep");
 
         #FK - Naturalidade
         $objForm->hidden("id_naturalidade")->required(false);
@@ -45,10 +45,10 @@ class CatequizandoForm extends  AbstractForm{
 
         #FK- Telefone Residencial
         $objForm->hidden("id_telefone_residencial")->required(false);
-        $objForm->telefone("telefone_residencial")->required(false)->label("Telefone Residencial");
+        $objForm->telefone("telefone_residencial")->setAttribute('class', 'telefone')->required(false)->label("Telefone Residencial");
 
         #FK- Telefone Celular
-        $objForm->telefone("telefone_celular")->required(false)->label("Telefone Celular");
+        $objForm->telefone("telefone_celular")->setAttribute('class', 'telefone')->required(false)->label("Telefone Celular");
         $objForm->hidden("id_telefone_celular")->required(false);
 
         # SACRAMENTOS #

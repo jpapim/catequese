@@ -134,18 +134,15 @@ class CatequizandoController extends  AbstractCrudController{
            $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('telefone_residencial')));
            $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_residencial']);
            $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
-
            $resultTelefoneResidencial = parent::gravar(
                $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
            );
-
             if($resultTelefoneResidencial){
                 # REalizando Tratamento do  Telefone Celular
                 $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_celular')));
                 $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('telefone_celular')));
                 $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_celular']);
                 $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
-
                 $resultTelefoneCelular = parent::gravar(
                     $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
                 );
@@ -312,7 +309,7 @@ class CatequizandoController extends  AbstractCrudController{
           $this->getRequest()->getPost()->set('nm_cidade', $cidade['nm_cidade']." (".$estadoCidade['sg_estado'].")");
           $this->getRequest()->getPost()->set('nm_naturalidade', $naturalidade['nm_cidade']." (".$estadoNat['sg_estado'].")");
           $this->getRequest()->getPost()->set('telefone_residencial',\Estrutura\Helpers\Telefone::telefoneMask($telResidencial['nr_ddd_telefone'].$telResidencial['nr_telefone']));
-          $this->getRequest()->getPost()->set('telefone_celular',\Estrutura\Helpers\Telefone::telefoneMask($telCelular['nr_ddd_telefone'].$telCelular['nr_telefone']));
+          $this->getRequest()->getPost()->set('telefone_celular',($telCelular['nr_ddd_telefone'].$telCelular['nr_telefone']));
 
           $options=array();
           $options['arrSacramento']=$sacramento;
@@ -420,15 +417,16 @@ class CatequizandoController extends  AbstractCrudController{
            ### Atualizando Telefone Residencial
            $objTelefone = new \Telefone\Service\TelefoneService();
            $objTelefone->setId($arr['id_telefone_residencial']);
-           $telefone = $post['telefone_residencial'];
+           $telefone =  \Estrutura\Helpers\Telefone::telefoneMask($post['telefone_residencial']);
            $objTelefone->setNrDddTelefone(\Estrutura\Helpers\Telefone::getDDD($telefone));
            $objTelefone->setNrTelefone(\Estrutura\Helpers\Telefone::getTelefone($telefone));
+           #xd($objTelefone->getNrTelefone());
            $objTelefone->salvar();
 
            ### Atualizando Telefone Celular
            $objTelefone = new \Telefone\Service\TelefoneService();
            $objTelefone->setId($arr['id_telefone_celular']);
-           $telefone = $post['telefone_celular'];
+           $telefone =  \Estrutura\Helpers\Telefone::telefoneMask($post['telefone_celular']);
            $objTelefone->setNrDddTelefone(\Estrutura\Helpers\Telefone::getDDD($telefone));
            $objTelefone->setNrTelefone(\Estrutura\Helpers\Telefone::getTelefone($telefone));
            $objTelefone->salvar();
