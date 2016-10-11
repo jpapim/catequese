@@ -3,6 +3,7 @@
 namespace Catequista\Controller;
 
 use Cidade\Service\CidadeService;
+use DOMPDFModule\View\Model\PdfModel;
 use Estrutura\Helpers\Cep;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
@@ -102,14 +103,14 @@ class CatequistaController extends AbstractCrudController
            $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_residencial')));
            $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('telefone_residencial')));
            $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_residencial']);
-           $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
-           $resultTelefoneResidencial = parent::gravar(
-               $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
-           );
-            if($resultTelefoneResidencial){
-                # REalizando Tratamento do  Telefone Celular
-                $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_celular')));
-                $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('telefone_celular')));
+        $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
+        $resultTelefoneResidencial = parent::gravar(
+            $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
+        );
+        if ($resultTelefoneResidencial) {
+            # REalizando Tratamento do  Telefone Celular
+            $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_celular')));
+            $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('telefone_celular')));
                 $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_celular']);
                 $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
                 $resultTelefoneCelular = parent::gravar(
@@ -699,9 +700,28 @@ if($idEmail){
         return parent::atualizardados($this->service, $this->form) ;
 
     }
+
+    public function gerarRelatorioPdfAction()
+    {
+        $catequizandoService = new \Catequizando\Service\CatequizandoService();
+        $arteste = $catequizandoService->fetchAll()->toArray();
+        $pdf = new PdfModel();
+        $pdf->setVariables(array(
+            'caminho_imagem'=>__DIR__,
+            'inicio_contador'=>3,
+            'teste' => $arteste,
+
+        ));
+        $pdf->setOption('filename', 'ordem_serviço_'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption("paperSize", "a4"); //Defaults to 8x11
+        $pdf->setOption("basePath", __DIR__); //Defaults to 8x11
+        #$pdf->setOption("paperOrientation", "landscape"); //Defaults to portrait
+        return $pdf;
+
+    }
+
        
-       
-       }
+}
 
 
 

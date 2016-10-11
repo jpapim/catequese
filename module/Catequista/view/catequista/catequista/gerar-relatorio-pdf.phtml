@@ -1,0 +1,84 @@
+<html>
+<body>
+<style>
+    html, body {
+        height: 100%;
+        min-height: 100%;
+    }
+
+    body {
+        font: 15px arial;
+        color: rgba(0, 0, 0, .7);
+        /*padding: ;*/
+    }
+
+    .conteudo {
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    table {
+        background-color: transparent;
+        max-width: 100%;
+    }
+
+    .table {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .tablex {
+        line-height: 1.42857;
+        padding: 10px;
+        vertical-align: top;
+    }
+
+    .bloco_pai {
+        width: 100%;
+        position: relative;
+    }
+
+    .bloco_filho_centralizado {
+        margin: 0 auto;
+        width: 50%;
+    }
+
+    .bloco_filho_direita {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+    }
+
+    .bloco_filho_esquerda {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+    }
+
+    span.titulo {
+        font-size: 11px;
+    }
+
+    span.info {
+        font-size: 16px;
+    }
+</style>
+<div class="conteudo">
+    <div style="text-align: center">
+        <h3>ORDEM DE SERVIÇO FORA DO HORARIO CONTRATADO</h3>
+        <br/>
+    </div>
+    <table border="1" class="table">
+    <?php
+    $i = $this->inicio_contador;
+    foreach($this->teste as $key =>$item) { ?>
+        <tr><td><h1>valor = <?= $item['nm_catequizando'] ?></h1></td></tr>
+    <?php $i++;
+    } ?>
+    </table>
+
+</div>
+</body>
+</html>
