@@ -528,16 +528,43 @@ class CatequizandoController extends  AbstractCrudController{
 
     public function responsavelCatequizandoAction(){
 
+        return new ViewModel();
+
+    }
+
+    public function responsavelFormCadAction(){
+
+        $form = new \Responsavel\Form\ResponsavelForm();
+
         $dadosView = [
             'service' => $this->service,
-            'form' => $this->form,
+            'form' => $form,
             'controller' => $this->params('controller'),
             'atributos' =>''
         ];
 
-        return new ViewModel($dadosView);
+
+        $view = new ViewModel($dadosView);
+
+        return $view->setTerminal(true);
 
     }
 
+    public function responsavelFormDetalheAction(){
+
+        $form = new \Responsavel\Form\ResponsavelForm();
+
+        $dadosView = [
+            'service' => $this->service,
+            'form' => $form,
+            'controller' => $this->params('controller'),
+            'atributos' =>''
+        ];
+
+        $view = new ViewModel($dadosView);
+
+        return $view->setTerminal(true);
+
+    }
 
 }

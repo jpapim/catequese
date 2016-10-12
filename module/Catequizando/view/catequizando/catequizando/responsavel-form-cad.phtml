@@ -1,0 +1,99 @@
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css" >
+<div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-xs-12 col-sm-9">
+
+            <div class="page-head">
+                <h2>Cadastro</h2>
+            </div>
+
+
+            <?php
+            $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')));
+            $form->setAttribute('method', 'post');
+            $form->setAttribute('class', 'form-horizontal');
+            $form->setAttribute('data-toggle', 'validator');
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
+            echo $this->formHidden($form->get('id'));
+            ?>
+
+            <br />
+
+
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="col-md-7">
+                        <?= $this->formRow($form->get('nm_responsavel')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="col-md-7">
+                        <?= $this->formRow($form->get('em_email')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-7">
+                        <?= $this->formRow($form->get('em_email_confirm')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <?= $this->formRow($form->get('id_sexo')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <?= $this->formRow($form->get('id_situacao')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <?= $this->formRow($form->get('id_movimento_pastoral')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <?= $this->formRow($form->get('tx_observacao')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <?= $this->formRow($form->get('cs_participa_movimento_pastoral')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+
+
+
+        <?php /*
+
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('captcha')); ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+*/?>
+        <div class="form-group">
+            <div class="col-md-7">
+                <label>
+                    <input type="checkbox" required="required" value="1">
+                    Li e concordo com o <a href="#" target="_blank">Termo de Utilização do serviço</a>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a href="<?= $this->url('navegacao', ['controller' => 'auth', 'action' => 'login']) ?>" class="btn btn-default">Voltar</a>
+            </div>
+        </div>
+        <?= $this->form()->closeTag(); ?>
+    </div>
+
+<script type="text/javascript" src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
