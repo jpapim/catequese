@@ -24,7 +24,7 @@ return array(
         'TipoUsuario',
         'SituacaoUsuario',
         'Endereco',
-        #'DOMPDFModule',
+        'DOMPDFModule',
         'Gerador',
         'Login',
         #'PhpBoletoZf2',
