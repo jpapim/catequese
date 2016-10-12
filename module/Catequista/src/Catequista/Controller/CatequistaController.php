@@ -9,7 +9,7 @@ use Estrutura\Helpers\Cript;
 use Estrutura\Helpers\Data;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
-
+use Infra;
 class CatequistaController extends AbstractCrudController
 {
    
@@ -43,7 +43,7 @@ class CatequistaController extends AbstractCrudController
 #$dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
 #$dateIngresso = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_ingresso'));
  $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_nascimento'));
-  $dataIngresso = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_ingresso'));
+ x( $dataIngresso = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_ingresso')));
 
 
 
@@ -457,7 +457,7 @@ if($idEmail){
            $arr = $this->service->buscar($id)->toArray();
 
             ### Modificando o formato da data de nascimento para inserir no banco de dados.
-           $post['dt_nascimento'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']);
+           x($post['dt_nascimento'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']));
            $post['dt_ingresso'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_ingresso']);
            ### Atualizando Email;
            $objEmail = new \Email\Service\EmailService();
@@ -521,6 +521,9 @@ if($idEmail){
             return FALSE;
         }
            
+        #verifica se os campos estao vazios
+        if($this->getRequest()->getPost()->get('pw_a_senha')!= ''){
+     
            //verifica o tamanho da senha
            if (strcasecmp(md5($post['pw_senha']), $loginEntity->getPwSenha()) != 0) {
 
@@ -532,7 +535,7 @@ if($idEmail){
         if (strcasecmp($this->getRequest()->getPost()->get('pw_senha_confirm'), $this->getRequest()->getPost()->get('pw_senha')) != 0) {
 
             $this->addErrorMessage('Senhas não correspondem.');
-            $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'atualizar-dados']);
+            $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'index']);
             return FALSE;
         }
 
@@ -540,13 +543,16 @@ if($idEmail){
         if (strcasecmp(md5($this->getRequest()->getPost()->get('pw_a_senha')), md5($this->getRequest()->getPost()->get('pw_senha'))) == 0) {
 
             $this->addErrorMessage('Nova senha igual a senha atual.');
-           $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'atualizar-dados']);
+           $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'index']);
             return FALSE;
+    }
+        //Seta a nova senha
+           $loginEntity->setPwSenha(md5(trim($this->getRequest()->getPost()->get('pw_senha'))));
+           $loginEntity->salvar();
         }
 
-        //Seta a nova senha
-        $loginEntity->setPwSenha(md5(trim($this->getRequest()->getPost()->get('pw_senha'))));
-        $loginEntity->salvar();
+     
+        
         
         
            ################################################################################################
