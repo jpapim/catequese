@@ -303,7 +303,8 @@ if($idEmail){
        $this->getRequest()->getPost()->set('em_email',$email['em_email']);
        $this->getRequest()->getPost()->set('nm_usuario',$usuario['nm_usuario']);
      
-          x($this->getRequest()->getPost()->set('pw_senha',$login['pw_senha']));
+          x($this->getRequest()->getPost()->set('pw_a_senha',$login['pw_senha']));
+          
           $this->getRequest()->getPost()->set('nm_logradouro', $endereco['nm_logradouro']);
           $this->getRequest()->getPost()->set('nm_bairro', $endereco['nm_bairro']);
           $this->getRequest()->getPost()->set('nm_complemento', $endereco['nm_complemento']);
@@ -460,6 +461,51 @@ if($idEmail){
            x($post['dt_nascimento'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']));
            $post['dt_ingresso'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_ingresso']);
            ### Atualizando Email;
+            
+
+
+
+#x($post);
+           $objUsuario = new \Usuario\Service\UsuarioService();
+           $objUsuario->setId($arr['id_usuario']);
+           $objUsuario->setNmUsuario($post['nm_usuario']);
+          
+           $objUsuario->salvar();
+          ##################################################### login######################
+      
+           $loginService=new \Login\Service\LoginService();
+           $log=$loginService->getLoginToArray($arr['id_usuario']);
+           
+           if($post['pw_a_senha']==''){
+          
+ 
+          
+               $loginService->setId($log['id_login']);
+               $loginService->setPwSenha($log['pw_senha']);
+               $ConfimSenha=$loginService->salvar();
+             
+               
+           }
+           
+             else{
+                 
+                  if($log['pw_senha']!= md5($post['pw_a_senha'])){
+               
+               $this->addErrorMessage("Senha atual inválida");
+               $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'index']);
+     
+                  }else{
+                 
+           $loginService->setId($log['id_login']);   
+           $loginService->setPwSenha(md5($post['pw_senha']));
+           $ConfimSenha=$loginService->salvar();
+       
+       
+             }} 
+ 
+ if($ConfimSenha) {
+           
+         
            $objEmail = new \Email\Service\EmailService();
            $objEmail->setId($arr['id_email']);
            $objEmail->setEmEmail($post['em_email']);
@@ -502,59 +548,7 @@ if($idEmail){
            $id_naturalidade = $cidade->getIdCidadePorNomeToArray($post['nm_naturalidade']);
            $post['id_naturalidade']= $id_naturalidade['id_cidade'];
 
-           #x($post);
-           $objUsuario = new \Usuario\Service\UsuarioService();
-           $objUsuario->setId($arr['id_usuario']);
-           $objUsuario->setNmUsuario($post['nm_usuario']);
-          
-           $objUsuario->salvar();
-          ##################################################### login######################
-       
-        $loginService = new \Login\Service\LoginService();
-        $loginService->setIdUsuario($auth->$arr['id_usuario']);
-        $loginEntity = $loginService->filtrarObjeto()->current();
-
-        if (!$loginEntity) {
-
-            $this->addErrorMessage('Usuario inválido.');
-            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha']);
-            return FALSE;
-        }
-           
-        #verifica se os campos estao vazios
-        if($this->getRequest()->getPost()->get('pw_a_senha')!= ''){
-     
-           //verifica o tamanho da senha
-           if (strcasecmp(md5($post['pw_senha']), $loginEntity->getPwSenha()) != 0) {
-
-            $this->addErrorMessage('Senha atual inválida.');
-            $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'index']);
-            return FALSE;
-        }
-        //Verifica se as novas senhas são iguais
-        if (strcasecmp($this->getRequest()->getPost()->get('pw_senha_confirm'), $this->getRequest()->getPost()->get('pw_senha')) != 0) {
-
-            $this->addErrorMessage('Senhas não correspondem.');
-            $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'index']);
-            return FALSE;
-        }
-
-        //Verifica se a senha atual é igual a senha antiga
-        if (strcasecmp(md5($this->getRequest()->getPost()->get('pw_a_senha')), md5($this->getRequest()->getPost()->get('pw_senha'))) == 0) {
-
-            $this->addErrorMessage('Nova senha igual a senha atual.');
-           $this->redirect()->toRoute('navegacao', ['controller' => 'catequista-catequista', 'action' => 'index']);
-            return FALSE;
-    }
-        //Seta a nova senha
-           $loginEntity->setPwSenha(md5(trim($this->getRequest()->getPost()->get('pw_senha'))));
-           $loginEntity->salvar();
-        }
-
-     
-        
-        
-        
+               
            ################################################################################################
            
            
@@ -590,7 +584,7 @@ if($idEmail){
 
            return  $my_service->salvar();;
 
-       }catch (\Exception $e) {
+       }}catch (\Exception $e) {
 
            $this->setPost($post);
            $this->addErrorMessage($e->getMessage());
