@@ -1,0 +1,131 @@
+
+<div class="cl-mcont">
+    <div class="row">
+        <div class="block-flat">
+            <div class="content">
+                <fieldset>
+                    <legend>Dados do Catequizando</legend>
+                    <?php if(isset($catequizando) && !empty($catequizando)){ ?>
+                        <div class="bs-callout bs-callout-info">
+                            <ul class="primary">
+                                <li><b>Catequizando:</b> <?=$catequizando->getNmCatequizando()?></li>
+                                <li><b>Idade:</b> <?=\Estrutura\Helpers\Data::calcularIdadeDoAtleta($catequizando->getDtNascimento())?></li>
+
+                            </ul>
+                        </div>
+                    <?php } ?>
+                </fieldset>
+                <?php
+                $form->setAttribute('action', '#');
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('method', 'post');
+                $form->setAttribute('data-role', 'form');
+                /* echo '<pre>';
+                 print_r($dadosPeriodoLetivo);
+                 echo '</pre>';*/
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                $form->get('id_catequizando')->setValue( \Estrutura\Helpers\Cript::enc($catequizando->getId()));
+                echo $this->formHidden($form->get('id_catequizando'));
+                ?>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <?= $this->formRow($form->get('id_responsavel')) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <?=$this->formRow($form->get('id_grau_parentesco'))?>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <?=$this->formRow($form->get('id_situacao_conjugal'))?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <a  class="btn btn-primary" href="#" id="adicionar" title="Adicionar Responsável">Adicionar Responsável</a>
+                        </div>
+                    </div>
+                </div>
+                <?= $this->form()->closeTag(); ?>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div id="responsavel-pagination"></div>
+    </div>
+
+</div>
+<script src="/assets/js/moment.js" type="text/javascript"></script>
+<script src="/assets/js/validator.min.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.mask.min.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.ui.widget.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
+
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+
+
+        //Função que faz a listagem ser paginada.
+        function carregarGridPaginadaAjax(){
+            $.ajax({
+                type: "POST",
+                dataType: "text",
+                cache: false,
+                url: '/catequizando-catequizando/catequizandoResponsavelPagination',
+                async: true,
+                data: {id_catequizando:<?=$catequizando->getId()?>},
+                beforeSend: function () {
+                    $('#responsavel-pagination').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
+                },
+                success: function (data) {
+                    $('#responsavel-pagination').html(data);
+                }
+            });
+        }
+        carregarGridPaginadaAjax(); //Chama a Paginação da listagem
+
+        /*Função Ajax que adiciona os encontros ao Banco de dados*/
+        $('#adicionar').click(function(){
+            var dados = $('#catequizandoresponsavelform').serialize();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/catequizando-catequizando/addresponsavel',
+                async: true,
+                data: dados,
+                success: function(response) {
+
+                    if(response.sucesso == true){
+                        carregarGridPaginadaAjax();
+                    }
+                }
+            });
+
+            return false;
+        });
+
+
+        /*Auto complete responsavel*/
+        $( "input#id_responsavel" ).autocomplete({
+            minLength:4,
+            source: "/catequizando-catequizando/autoCompleteResponsavel"
+        });
+    });
+</script>

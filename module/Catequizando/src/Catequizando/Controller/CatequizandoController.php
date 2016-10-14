@@ -14,6 +14,8 @@ use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cep;
 use Estrutura\Helpers\Cript;
 use Estrutura\Helpers\Data;
+use Zend\View\Helper\Json;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 
@@ -188,29 +190,32 @@ class CatequizandoController extends  AbstractCrudController{
                                 #Resgatando e inserindo manualmente na tabela catequizando_etapa_cursou as ids das etapas ja realizadas.
                                 $arrEtapa =  $this->getRequest()->getPost()->get('arrEtapa');
 
-                                foreach($arrEtapa as $etapa){
-                                    $this->getRequest()->getPost()->set('id_etapa', $etapa);
-                                    $this->getRequest()->getPost()->set('id_catequizando', $resultCatequizando);
-                                    $this->getRequest()->getPost()->set('dt_cadastro', date('Y-m-d H:m:s'));
-                                    #Chamo o metodo para gravar os dados na tabela.
-                                    parent::gravar(
-                                        $this->getServiceLocator()->get('\CatequizandoEtapaCursou\Service\CatequizandoEtapaCursouService'), new \CatequizandoEtapaCursou\Form\CatequizandoEtapaCursouForm()
-                                    );
-                                 }
-
+                               if(!empty($arrEtapa)){
+                                   foreach($arrEtapa as $etapa){
+                                       $this->getRequest()->getPost()->set('id_etapa', $etapa);
+                                       $this->getRequest()->getPost()->set('id_catequizando', $resultCatequizando);
+                                       $this->getRequest()->getPost()->set('dt_cadastro', date('Y-m-d H:m:s'));
+                                       #Chamo o metodo para gravar os dados na tabela.
+                                       parent::gravar(
+                                           $this->getServiceLocator()->get('\CatequizandoEtapaCursou\Service\CatequizandoEtapaCursouService'), new \CatequizandoEtapaCursou\Form\CatequizandoEtapaCursouForm()
+                                       );
+                                   }
+                               }
 
                                 # Resgatando e inserindo manualmente na tabela sacramento catequizando as ids  dos sacramentos e  a id catequizando
                                 #$objSacramentoCatequizandoService = new \SacramentoCatequizando\Service\SacramentoCatequizandoService();
                                 $arrSacramento =  $this->getRequest()->getPost()->get('arrSacramento');
 
-                                foreach($arrSacramento as $sacramento){
-                                    $this->getRequest()->getPost()->set('id_sacramento', $sacramento);
-                                    $this->getRequest()->getPost()->set('id_catequizando', $resultCatequizando);
-                                    $this->getRequest()->getPost()->set('dt_cadastro', date('Y-m-d H:m:s'));
+                                if(!empty($arrSacramento)){
+                                    foreach($arrSacramento as $sacramento){
+                                        $this->getRequest()->getPost()->set('id_sacramento', $sacramento);
+                                        $this->getRequest()->getPost()->set('id_catequizando', $resultCatequizando);
+                                        $this->getRequest()->getPost()->set('dt_cadastro', date('Y-m-d H:m:s'));
 
-                                    parent::gravar(
-                                      $this->getServiceLocator()->get('\SacramentoCatequizando\Service\SacramentoCatequizandoService'),new \SacramentoCatequizando\Form\SacramentoCatequizandoForm()
-                                    );
+                                        parent::gravar(
+                                            $this->getServiceLocator()->get('\SacramentoCatequizando\Service\SacramentoCatequizandoService'),new \SacramentoCatequizando\Form\SacramentoCatequizandoForm()
+                                        );
+                                    }
                                 }
                                 $status = true;
                             }
@@ -221,13 +226,19 @@ class CatequizandoController extends  AbstractCrudController{
 
 
            if ($status ) {
-               $this->addSuccessMessage('Parabéns! Catequizando cadastrado com sucesso.');
-               $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+
+               $objCatequizando = new \Catequizando\Service\CatequizandoService();
+               $arr = $objCatequizando->buscar($resultCatequizando);
+
+               if((int)(\Estrutura\Helpers\Data::calcularIdadeDoAtleta($arr->getDtNascimento())) < 18){
+                   $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'responsavelCatequizando','id' => \Estrutura\Helpers\Cript::enc($resultCatequizando)));
+               }else{
+                   $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+               }
            }
             else{
                 $this->addErrorMessage('Processo não pode ser concluido.');
                 $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
-
             }
        }
 
@@ -327,7 +338,6 @@ class CatequizandoController extends  AbstractCrudController{
           ];
 
           return new ViewModel($dadosView);
-
       }
 
         return parent::cadastro($this->service, $this->form) ;
@@ -453,36 +463,40 @@ class CatequizandoController extends  AbstractCrudController{
            ## Atualizando Sacramento Catequizando
            $arrSacramento = $this->getRequest()->getPost()->get('arrSacramento');
 
-           #x($arrSacramento);
-           ## Excluido dados Antigos
-           $objSacramento = new \SacramentoCatequizando\Service\SacramentoCatequizandoService();
-           $objSacramento->setIdCatequizando($id);
-           $objSacramento->excluir();
+          if(isset($arrSacramento) && empty($arrSacramento) != false){
 
-           ### Regravando  Sacramentos já realizados pelo catequizando
-           foreach($arrSacramento as $sacramento){
-               $objS = new \SacramentoCatequizando\Service\SacramentoCatequizandoService();
-               $objS->setIdCatequizando($id);
-               $objS->setIdSacramento($sacramento);
-               $objS->salvar();
-           }
+              ## Excluido dados Antigos
+              $objSacramento = new \SacramentoCatequizando\Service\SacramentoCatequizandoService();
+              $objSacramento->setIdCatequizando($id);
+              $objSacramento->excluir();
+
+              ### Regravando  Sacramentos já realizados pelo catequizando
+              foreach($arrSacramento as $sacramento){
+                  $objS = new \SacramentoCatequizando\Service\SacramentoCatequizandoService();
+                  $objS->setIdCatequizando($id);
+                  $objS->setIdSacramento($sacramento);
+                  $objS->salvar();
+              }
+          }
 
            ## Atualizando Catequizando Etapa Cursou
            $arrEtapa = $this->getRequest()->getPost()->get('arrEtapa');
-           #x($arrEtapa);
 
-           ## Excluindo dados Antigos
-           $obEtapa = new \CatequizandoEtapaCursou\Service\CatequizandoEtapaCursouService();
-           $obEtapa->setIdCatequizando($id);
-           $obEtapa->excluir();
+            if(isset($arrEtapa) && empty($arrEtapa) != false){
 
-           ## Regravando Catequizando Etapa Cursou  já realizado pelo Catequizando
-          foreach($arrEtapa as $etapa){
-              $et =  new \CatequizandoEtapaCursou\Service\CatequizandoEtapaCursouService();
-              $et->setIdEtapa($etapa);
-              $et->setIdCatequizando($id);
-              $et->salvar();
-          }
+                ## Excluindo dados Antigos
+                $obEtapa = new \CatequizandoEtapaCursou\Service\CatequizandoEtapaCursouService();
+                $obEtapa->setIdCatequizando($id);
+                $obEtapa->excluir();
+
+                ## Regravando Catequizando Etapa Cursou  já realizado pelo Catequizando
+                foreach($arrEtapa as $etapa){
+                    $et =  new \CatequizandoEtapaCursou\Service\CatequizandoEtapaCursouService();
+                    $et->setIdEtapa($etapa);
+                    $et->setIdCatequizando($id);
+                    $et->salvar();
+                }
+            }
 
            $dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
            $dataMaioridade = new \Datetime();
@@ -519,5 +533,267 @@ class CatequizandoController extends  AbstractCrudController{
 
     }
 
+
+    public function responsavelCatequizandoAction(){
+
+       $id_catequizando  = \Estrutura\Helpers\Cript::dec($this->params('id'));
+
+        $catequizando = $this->service->buscar($id_catequizando);
+
+        $dadosView = [
+            'controller' => $this->params('controller'),
+            'id_catequizando'=>$id_catequizando,
+            'catequizando'=>$catequizando,
+            'atributos' =>''
+        ];
+
+        return new ViewModel($dadosView);
+
+    }
+
+    #### Actions para o caso de o Responsável não  tiver sido cadastrado no Sistema
+    public function responsavelFormCadAction(){
+
+
+        $form = new \Catequizando\Form\CatequizandoResponsavelForm();
+        $catequizando = $this->service->buscar($this->params()->fromPost('id_catequizando'));
+
+        $dadosView = [
+            'service' => $this->service,
+            'form' => $form,
+            'catequizando'=>$catequizando,
+            'controller' => $this->params('controller'),
+            'atributos' =>''
+        ];
+        $view = new ViewModel($dadosView);
+
+        return $view->setTerminal(true);
+
+    }
+
+    ### Função para excluir chaves e valores de um array
+   private function unsetPersonalizadoAction($vetor ,$excluir ){
+
+        if(!is_array($vetor) ||!is_array($excluir)) {
+            throw new \Exception('Os dados devem ser um array');
+        }
+        foreach($excluir as $value):
+
+            if(array_key_exists($value,$vetor)){
+                unset($vetor[$value]);
+            }
+        endforeach;
+
+        return $vetor;
+    }
+
+    public function addResponsavelViaCadastroAction(){
+
+        if($this->getRequest()->isPost()){
+
+            try{
+                $post = $this->params()->fromPost();
+                $controller = $this->params('controller');
+
+                #xd($post);
+                ## Id do catequizando para gravar no responsavel-catequizando
+                $id_catequizando = \Estrutura\Helpers\Cript::dec($post['id_catequizando']);
+
+                $emailService = $this->getServiceLocator()->get('\Email\Service\EmailService');
+                $emailService->setEmEmail(trim($post['em_email']));
+
+                ### Verificando se email já não é cadastrado
+                if ($emailService->filtrarObjeto()->count()) {
+                    $this->addErrorMessage('Email já cadastrado.');
+                    $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'responsavelCatequizando'));
+                    return FALSE;
+                }
+                ### Gravando email e recuperando o id_email
+                 $post['id_email'] = parent::gravar(
+                     $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
+                 );
+
+                # REalizando Tratamento do  Telefone Residencial
+                $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($post['id_telefone_residencial']));
+                $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($post['id_telefone_residencial']));
+                $this->getRequest()->getPost()->set('id_tipo_telefone',$this->getConfigList()['tipo_telefone_residencial']);
+                $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
+
+                $post['id_telefone_residencial'] = parent::gravar(
+                    $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
+                );
+
+                # REalizando Tratamento do  Telefone Celular
+                $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($post['id_telefone_celular']));
+                $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($post['id_telefone_celular']));
+                $this->getRequest()->getPost()->set('id_tipo_telefone',$this->getConfigList()['tipo_telefone_celular']);
+                $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
+
+                #### passando informações para situacao_conjugal e grau_parentesco para outras variaveis
+
+                $dados['id_grau_parentesco'] =$post['id_grau_parentesco'];
+                $dados['id_situacao_conjugal'] = $post['id_situacao_conjugal'];
+
+                $post['id_telefone_celular'] = parent::gravar(
+                    $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
+                );
+
+                #### Retirando campos do array
+                $post = $this->unsetPersonalizadoAction($post, [
+                    'id_catequizando','em_email','em_email_confirm','id_situacao_conjugal','id_situacao','id_grau_parentesco']);
+
+
+                #### Gravando Dados do responsavel
+                $responsavel = new \Responsavel\Service\ResponsavelService();
+                $id_responsavel = $responsavel->getTable()->salvar($post,null);
+
+                ##### Gravando dados  na tabela responsavel_catequizando
+                $dados['id_responsavel'] = $id_responsavel;
+                $dados['id_catequizando'] = $id_catequizando;
+
+
+                $responsavel_catequizando = new \ResponsavelCatequizando\Service\ResponsavelCatequizandoService();
+                $id_inserido = $responsavel_catequizando->getTable()->salvar($dados,null);
+
+                $valuesJson = new JsonModel(array('id_inserido' => $id_inserido, 'sucesso' => true));
+                return $valuesJson;
+
+            }catch (\PDOException $e){
+                $this->addErrorMessage('Erro ao execultar gravação de responável:'.$e->getMessage());
+            }
+
+            return null;
+        }
+
+    }
+    #########################################################
+
+
+    ### Paginação dos Responsáveis do catequizando
+    public function catequizandoResponsavelPaginationAction()
+    {
+        #$this->params()->fromPost('paramname');   // From POST
+        #$this->params()->fromQuery('paramname');  // From GET
+        #$this->params()->fromRoute('paramname');  // From RouteMatch
+        #$this->params()->fromHeader('paramname'); // From header
+        #$this->params()->fromFiles('paramname');  // From file being uploaded
+
+        $filter = $this->getFilterPage();
+
+        $id_catequizando = $this->params()->fromPost('id_catequizando');
+
+        #$id_catequizando = isset($id_catequizando) && $id_catequizando ? $id_catequizando : $this->params()->fromRoute('id');
+
+        $camposFilter = [
+
+
+        ];
+
+        $paginator = $this->service->getCatequizandoResponsavelPaginator($id_catequizando, $filter, $camposFilter);
+
+        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+
+        $countPerPage = $this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        );
+
+        $paginator->setItemCountPerPage($this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        ))->setCurrentPageNumber($this->getCurrentPage());
+
+        $viewModel = new ViewModel([
+            'service' => $this->service,
+            'form' => new \Catequizando\Form\CatequizandoResponsavelForm(),
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            'id_catequizando' => $id_catequizando,
+            'atributos' => array()
+        ]);
+
+        return $viewModel->setTerminal(true);
+    }
+
+    #### Actions para o caso de o Responsável já tiver sido cadastrado no Sistema
+
+    ## Action da página responsavel-form-detalhe : página chamada via ajax
+    public function responsavelFormDetalheAction(){
+
+        $form = new \Catequizando\Form\CatequizandoResponsavelForm();
+
+        $catequizando = $this->service->buscar($this->params()->fromPost('id_catequizando'));
+
+        $dadosView = [
+            'service' => $this->service,
+            'form' => $form,
+            'catequizando'=> $catequizando,
+            'controller' => $this->params('controller'),
+            'atributos' =>''
+        ];
+
+        $view = new ViewModel($dadosView);
+        return $view->setTerminal(true);
+    }
+
+    ### Add Responsavel  , Action insere na tabela responsavel_catequizando
+    public function addresponsavelAction(){
+
+        if($this->getRequest()->isPost()){
+
+            $post = $this->params()->fromPost();
+            $post['id_catequizando']=\Estrutura\Helpers\Cript::dec($post['id_catequizando']);
+
+            ### Recuperando Id Responsavel ###
+            $resp = new \Responsavel\Service\ResponsavelService();
+            $resInfo = $resp->getFiltrarResponsavelPorNomeToArray($post['id_responsavel'])->current();
+            $post['id_responsavel'] = $resInfo['id_responsavel'];
+
+            $responsavel_catequizando = new \ResponsavelCatequizando\Service\ResponsavelCatequizandoService();
+            $id_inserido = $responsavel_catequizando->getTable()->salvar($post,null);
+
+            $valuesJson = new JsonModel(array('id_inserido' => $id_inserido, 'sucesso' => true));
+
+
+            return $valuesJson;
+        }
+
+    }
+
+    ### Autocomplete para o nome do Responsavél caso ele esteja no sistema.
+    public function autoCompleteResponsavelAction()
+    {
+        $term = $_GET['term'];
+        $responsaveis = new \Responsavel\Service\ResponsavelService();
+        $arrResponsaveis = $responsaveis->getFiltrarResponsavelPorNomeToArray($term);
+        $arrRespFiltro = array();
+        foreach($arrResponsaveis as $resp){
+
+            $arrRespFiltro[] = $resp['nm_responsavel'];
+        }
+
+        $valuesJson = new JsonModel( $arrRespFiltro);
+        return $valuesJson;
+    }
+
+    ### exclusão do responsável
+    public function excluirResponsavelCatequizandoAction()
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            return new JsonModel();
+        }
+        $id = \Estrutura\Helpers\Cript::dec($this->params('id'));
+        $objResCat = new \ResponsavelCatequizando\Service\ResponsavelCatequizandoService();
+
+        $objResCat->setId($id);
+        $objResCat->excluir();
+
+        $this->addSuccessMessage('Registro excluido com sucesso');
+
+        return $this->redirect()->toRoute('navegacao',array('controller'=>$this->params('controller'),'action'=>'responsavelCatequizando'));
+    }
 
 }

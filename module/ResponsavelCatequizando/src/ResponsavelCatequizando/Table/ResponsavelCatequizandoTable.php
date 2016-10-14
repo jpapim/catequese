@@ -12,6 +12,7 @@ class ResponsavelCatequizandoTable extends AbstractEstruturaTable{
         'id_catequizando'=>'id_catequizando',
         'id_responsavel'=>'id_responsavel',
         'id_grau_parentesco'=>'id_grau_parentesco',
+        'id_situacao_conjugal'=>'id_situacao_conjugal',
     ];
 
 }

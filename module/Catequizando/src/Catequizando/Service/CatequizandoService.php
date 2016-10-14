@@ -160,17 +160,77 @@ class CatequizandoService extends  Entity{
 
         $id_responsavel = $sql->prepareStatementForSqlObject($select)->execute()->current();
 
-        $select= $sql->select('responsavel')->columns(
-            [
-                'nm_responsavel'
-            ]
-        )
-        ->where(['responsavel.id_responsavel = ? ' =>$id_responsavel]);
+            if(!empty($id_responsavel)){
+                $select= $sql->select('responsavel')->columns(
+                    [
+                        'nm_responsavel'
+                    ]
+                )
+                    ->where(['responsavel.id_responsavel = ? ' =>$id_responsavel]);
 
-        $result = $sql->prepareStatementForSqlObject($select)->execute()->current();
+                $result = $sql->prepareStatementForSqlObject($select)->execute()->current();
 
-        return  $result['nm_responsavel'];
+                return  $result['nm_responsavel'];
+            }
+        return null;
     }
 
 
+    public function getCatequizandoResponsavelPaginator($id_catequizando, $filter = NULL, $camposFilter = NULL)
+    {
+
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+
+        $select = $sql->select('responsavel_catequizando');
+
+        $where = [
+            'id_catequizando'=>$id_catequizando,
+        ];
+
+        if (!empty($filter)) {
+
+            foreach ($filter as $key => $value) {
+
+                if ($value) {
+
+                    if (isset($camposFilter[$key]['mascara'])) {
+
+                        eval("\$value = " . $camposFilter[$key]['mascara'] . ";");
+                    }
+
+                    $where[$camposFilter[$key]['filter']] = '%' . $value . '%';
+                }
+            }
+        }
+
+        $select->where($where)->order(['id_responsavel DESC']);
+
+        return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
+    }
+
+
+    ### Actions Para os parametros do responsavel-pagination
+
+    public function grauParentesco($id){
+
+        $grauParen = new \GrauParentesco\Service\GrauParentescoService();
+        $arrParen = $grauParen->buscar($id);
+
+        return $arrParen->getNmGrauParentesco();
+    }
+
+    public function situacaoConjugal($id){
+        $sitCon = new \SituacaoConjugal\Service\SituacaoConjugalService();
+        $arrSit = $sitCon->buscar($id);
+
+        return $arrSit->getDsSituacaoConjugal();
+    }
+
+    public function responsavelCatequizando($id){
+        $resp = new \Responsavel\Service\ResponsavelService();
+
+        $arrResp = $resp->buscar($id);
+
+        return $arrResp->getNmResponsavel();
+    }
 } 
