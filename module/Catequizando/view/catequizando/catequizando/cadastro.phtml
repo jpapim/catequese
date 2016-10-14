@@ -1,3 +1,26 @@
+<link rel="stylesheet" href="/assets/css/progress.css"/>
+
+<hr/>
+<div class="row">
+    <div class="col-md-12">
+        <ol class="progresso" data-steps="3">
+            <li class="active">
+                <span class="name">Catequizando</span>
+                <span class="step bg-info"><span>1</span></span>
+            </li>
+            <li class="">
+                <span class="name">Responsavél</span>
+                <span class="step"><span>2</span></span>
+            </li>
+            <li class="">
+                <span class="name">Fim</span>
+                <span class="step"><span>3</span></span>
+            </li>
+        </ol>
+    </div>
+</div>
+<hr/>
+
 
 <div class="page-head">
     <h2>Adicionar Aluno</h2>
@@ -162,7 +185,6 @@
                                 <?= $this->formRow($form->get('arrEtapa'))?>
                             </div>
                         </div>
-
                     </div>
                 </fieldset>
                 <fieldset>
@@ -177,8 +199,13 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-10">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+                       <div class="col-md-2">
+                           <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+                       </div>
+                       <div class="col-md-1"></div>
+                       <div class="col-md-2">
+                           <button type="submit" class="btn btn-primary">Avançar</button>
+                       </div>
                     </div>
                 </div>
                 <?= $this->form()->closeTag(); ?>

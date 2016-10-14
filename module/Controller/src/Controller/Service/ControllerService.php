@@ -3,6 +3,8 @@
 namespace Controller\Service;
 
 use \Controller\Entity\ControllerEntity as Entity;
+use Zend\Db\Sql\Select;
+
 
 class ControllerService extends Entity {
 
@@ -52,7 +54,13 @@ class ControllerService extends Entity {
      * @return \Zend\Db\ResultSet\ResultSet
      */
     public function fetchAllModulos() {
-        return $this->select();
+
+        $select = new Select('controller');
+        $select->order(['nm_modulo ASC']);
+      return $this->getTable()->getTableGateway()->selectWith($select);
+
+
+
     }
 
 }

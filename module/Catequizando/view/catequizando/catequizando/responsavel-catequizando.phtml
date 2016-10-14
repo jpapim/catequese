@@ -1,0 +1,110 @@
+<link rel="stylesheet" href="/assets/css/progress.css"/>
+
+<hr/>
+<div class="row">
+    <div class="col-md-12">
+        <ol class="progresso" data-steps="3">
+            <li class="done">
+                <span class="name">Catequizando</span>
+                <span class="step bg-info"><span>1</span></span>
+            </li>
+            <li class="active">
+                <span class="name">Responsavél</span>
+                <span class="step"><span>2</span></span>
+            </li>
+            <li>
+                <span class="name">Fim</span>
+                <span class="step"><span>3</span></span>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<hr/>
+
+<div class="page-head">
+    <h2>Adicionar Responsáveis </h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <p>Responsáveis já são Cadastrados?</p>
+               <div class="col-md-3">
+                   <label for="cad-sim">Sim:</label>
+                   <input type="radio" name="cadResp" id="cad-sim" class="cad" value="S" />
+               </div>
+
+                <div class="col-md-3">
+                    <label for="cad-nao">Não:</label>
+                    <input type="radio" name="cadResp" id="cad-nao" class="cad"  value="N" />
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div id="cadastro-responsavel">
+
+    </div>
+</div>
+
+<hr/>
+<div class="row">
+    <div class="col-md-1">
+        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+    </div>
+    <div class="col-md-1"></div>
+   <div class="col-md-1">
+       <a  href="<?=$this->url('navegacao', ['controller'=>$controller,'action'=>'index'])?>" class="btn btn-primary">Avançar</a>
+   </div>
+
+</div>
+
+<script>
+
+    $(document).ready(function(){
+        $("input[name=cadResp]").click(function(){
+            buscarForm();
+        });
+
+        function buscarForm(){
+
+            var situacao = $("input[name=cadResp]:checked").val();
+
+            if(situacao !== null){
+                if(situacao =="S"){
+                    var pag = '/catequizando-catequizando/responsavelFormDetalhe';
+                }
+                else if(situacao == "N"){
+                    pag = '/catequizando-catequizando/responsavelFormCad';
+                }
+
+                ajaxForm(pag);
+            }
+        }
+
+        function ajaxForm(pag){
+
+            $.ajax({
+                type:"post",
+                dataType:"text",
+                cache:false,
+                url:pag,
+                async:true,
+                data:{id_catequizando: <?=$id_catequizando; ?>},
+
+                beforeSend: function(){
+                    $('#cadastro-responsavel').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
+                },
+                success: function(data){
+                    $('#cadastro-responsavel').html(data);
+
+                }
+            });
+        }
+
+
+    });
+</script>
