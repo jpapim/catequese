@@ -1,19 +1,16 @@
-<div class="page-head">
-    <h2>Cadastro de Responsáveis  do Catequizando</h2>
-</div>
+
 <div class="cl-mcont">
     <div class="row">
         <div class="block-flat">
             <div class="content">
                 <fieldset>
                     <legend>Dados do Catequizando</legend>
-                    <?php if(isset($dadosPeriodoLetivo) && $dadosPeriodoLetivo){ ?>
-                        <div class="bs-callout bs-callout-primary">
+                    <?php if(isset($catequizando) && !empty($catequizando)){ ?>
+                        <div class="bs-callout bs-callout-info">
                             <ul class="primary">
-                                <li><b>Código Período:</b> <?=$dadosPeriodoLetivo->getId()?></li>
-                                <li><b>Período Letivo:</b> <?=$dadosPeriodoLetivo->getDtAnoLetivo()?></li>
-                                <li><b>Data de Início:</b> <?=$dadosPeriodoLetivo->getDtInicio()?></li>
-                                <li><b>Data de Término:</b> <?=$dadosPeriodoLetivo->getDtFim()?></li>
+                                <li><b>Catequizando:</b> <?=$catequizando->getNmCatequizando()?></li>
+                                <li><b>Idade:</b> <?=\Estrutura\Helpers\Data::calcularIdadeDoAtleta($catequizando->getDtNascimento())?></li>
+
                             </ul>
                         </div>
                     <?php } ?>
@@ -28,73 +25,93 @@
                  echo '</pre>';*/
                 $form->prepare();
                 echo $this->form()->openTag($form);
-                $form->get('id')->setValue($dadosPeriodoLetivo->getId());
-                $form->get('dt_encontro')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_encontro')->getValue()));
-                echo $this->formHidden($form->get('id'));
+                $form->get('id_catequizando')->setValue( \Estrutura\Helpers\Cript::enc($catequizando->getId()));
+                echo $this->formHidden($form->get('id_catequizando'));
                 ?>
 
-                <div class="form-group">
-                    <div class="col-md-7">
-                        <div class="input-group" id="datetimepicker">
-                            <?= $this->formRow($form->get('dt_encontro')); ?></br>
-                            <a id="adicionar" class="btn btn-default" href="#" title="Adicionar data do encontro">Adicionar Encontro</a>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <?= $this->formRow($form->get('id_responsavel')) ?>
                         </div>
-                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <?=$this->formRow($form->get('id_grau_parentesco'))?>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <?=$this->formRow($form->get('id_situacao_conjugal'))?>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <!--                        <button type="submit" class="btn btn-primary">Salvar</button>-->
-                        <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro', 'id'=>Estrutura\Helpers\Cript::enc($dadosPeriodoLetivo->getId())))?>" title="Voltar">Voltar</a>
-                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Lista de Período Letivo</a>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <a  class="btn btn-primary" href="#" id="adicionar" title="Adicionar Responsável">Adicionar Responsável</a>
+                        </div>
                     </div>
                 </div>
                 <?= $this->form()->closeTag(); ?>
+
             </div>
         </div>
     </div>
-    <div class="row" id="periodoletivodetalhe-pagination"></div>
+
+
+    <div class="row">
+        <div id="responsavel-pagination"></div>
+    </div>
+
 </div>
-<script type="text/javascript" src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
+<script src="/assets/js/moment.js" type="text/javascript"></script>
+<script src="/assets/js/validator.min.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.mask.min.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.ui.widget.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
+
 <script type="text/javascript" language="javascript" class="init">
     $(document).ready(function() {
-        $( "#dt_encontro" ).datepicker(
-            { dateFormat: 'dd/mm/yy' }
-        );
+
 
         //Função que faz a listagem ser paginada.
         function carregarGridPaginadaAjax(){
             $.ajax({
-                type: "post",
+                type: "POST",
                 dataType: "text",
                 cache: false,
-                url: '/periodo_letivo-periodoletivo/detalhe-pagination',
+                url: '/catequizando-catequizando/catequizandoResponsavelPagination',
                 async: true,
-                data: { id_periodo_letivo : <?=$dadosPeriodoLetivo->getId()?>},
+                data: {id_catequizando:<?=$catequizando->getId()?>},
                 beforeSend: function () {
-                    $('#periodoletivodetalhe-pagination').html(
+                    $('#responsavel-pagination').html(
                         '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
                     );
                 },
                 success: function (data) {
-                    $('#periodoletivodetalhe-pagination').html(data);
+                    $('#responsavel-pagination').html(data);
                 }
             });
         }
         carregarGridPaginadaAjax(); //Chama a Paginação da listagem
 
         /*Função Ajax que adiciona os encontros ao Banco de dados*/
-        $('#adicionar').click(function() {
-            var dados = $('#detalheperiodoletivoform').serialize();
+        $('#adicionar').click(function(){
+            var dados = $('#catequizandoresponsavelform').serialize();
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: '/periodo_letivo-periodoletivo/adicionarperiodoletivodetalhe',
+                url: '/catequizando-catequizando/addresponsavel',
                 async: true,
                 data: dados,
                 success: function(response) {
-                    $("#dt_encontro").val("");
+
                     if(response.sucesso == true){
                         carregarGridPaginadaAjax();
                     }
@@ -104,5 +121,11 @@
             return false;
         });
 
+
+        /*Auto complete responsavel*/
+        $( "input#id_responsavel" ).autocomplete({
+            minLength:4,
+            source: "/catequizando-catequizando/autoCompleteResponsavel"
+        });
     });
 </script>

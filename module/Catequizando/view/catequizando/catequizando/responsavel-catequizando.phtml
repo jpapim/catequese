@@ -12,17 +12,18 @@
                 <span class="name">Responsavél</span>
                 <span class="step"><span>2</span></span>
             </li>
-            <li class="">
+            <li>
                 <span class="name">Fim</span>
                 <span class="step"><span>3</span></span>
             </li>
         </ol>
     </div>
 </div>
+
 <hr/>
 
 <div class="page-head">
-    <h2>Adicionar Responsáveis</h2>
+    <h2>Adicionar Responsáveis </h2>
 
     <div class="row">
         <div class="col-md-4">
@@ -41,12 +42,27 @@
     </div>
 </div>
 
-<div id="cadastro-responsavel"></div>
+<div class="row">
+    <div id="cadastro-responsavel">
+
+    </div>
+</div>
+
+<hr/>
+<div class="row">
+    <div class="col-md-1">
+        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+    </div>
+    <div class="col-md-1"></div>
+   <div class="col-md-1">
+       <a  href="<?=$this->url('navegacao', ['controller'=>$controller,'action'=>'index'])?>" class="btn btn-primary">Avançar</a>
+   </div>
+
+</div>
 
 <script>
 
     $(document).ready(function(){
-
         $("input[name=cadResp]").click(function(){
             buscarForm();
         });
@@ -57,17 +73,17 @@
 
             if(situacao !== null){
                 if(situacao =="S"){
-                    var pag = '/catequizando-catequizando/responsavel-form-detalhe';
+                    var pag = '/catequizando-catequizando/responsavelFormDetalhe';
                 }
                 else if(situacao == "N"){
-                    pag = '/catequizando-catequizando/responsavel-form-cad';
+                    pag = '/catequizando-catequizando/responsavelFormCad';
                 }
+
                 ajaxForm(pag);
             }
         }
 
         function ajaxForm(pag){
-
 
             $.ajax({
                 type:"post",
@@ -75,21 +91,20 @@
                 cache:false,
                 url:pag,
                 async:true,
-                data:{},
+                data:{id_catequizando: <?=$id_catequizando; ?>},
 
                 beforeSend: function(){
                     $('#cadastro-responsavel').html(
                         '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
                     );
                 },
-
                 success: function(data){
                     $('#cadastro-responsavel').html(data);
+
                 }
-
-
             });
         }
+
 
     });
 </script>
