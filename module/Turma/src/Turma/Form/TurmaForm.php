@@ -19,7 +19,7 @@ class TurmaForm extends AbstractForm {
        $objForm = new FormObject('turmaform',$this,$this->inputFilter);
        $objForm->hidden("id")->required(false)->label("Id");
       //##############----BUSCANDO CAMPOS FKS-- #################### 
-       $objForm->combo("id_etapa", '\Etapa\Service\EtapaService', 'id', 'nm_etapa')->required(false)->label("Etapa");
+       $objForm->combo("id_etapa", '\Etapa\Service\EtapaService', 'id', 'nm_etapa')->required(true)->label("Etapa");
       
        
       //######################################################################################### 

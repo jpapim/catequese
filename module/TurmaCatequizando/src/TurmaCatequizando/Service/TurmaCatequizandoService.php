@@ -170,6 +170,16 @@ class TurmaCatequizandoService extends Entity {
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
 
+    public function getTurmaCatequizandoIdArray($id_turma)
+    {
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+        $select = $sql->select('turma_catequizando')
+            ->where([
+                'turma_catequizando.id_turma'=> $id_turma
+            ]);
+        return $sql->prepareStatementForSqlObject($select)->execute()->current();
+    }
+    
 }
 
     
