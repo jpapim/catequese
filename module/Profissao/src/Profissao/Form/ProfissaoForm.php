@@ -17,7 +17,7 @@ class ProfissaoForm extends  AbstractForm {
 
         $objForm = new FormObject('profissaoform', $this, $this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");
-        $objForm->text("nm_profissao")->required(false)->label("Profissão");
+        $objForm->text("nm_profissao")->required(true)->label("Profissão");
 
         $this->formObject = $objForm;
     }
