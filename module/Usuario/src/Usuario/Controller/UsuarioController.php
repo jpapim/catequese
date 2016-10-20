@@ -24,21 +24,7 @@ class UsuarioController extends AbstractCrudController
 
     protected $form;
     protected $camposPendencia = [
-        'nm_estado',
-        'nm_cidade',
-        'nu_rg',
-        'nu_cpf',
-        'nm_profissao',
-        'nm_estado_civil',
-        'nm_nacionalidade',
-        'nr_agencia',
-        'id_banco',
-        'nm_logradouro',
-        'nr_numero',
-        'nm_bairro',
-        'nm_cidade',
-        'nm_estado',
-        'nr_cep',
+        'nm_funcao',
     ];
 
     public function __construct()
@@ -51,9 +37,6 @@ class UsuarioController extends AbstractCrudController
         return parent::index($this->service, $this->form);
     }
 
-
-//ALTERAR AQUI OS FILTER
-
     public function indexPaginationAction()
     {
         //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
@@ -62,27 +45,15 @@ class UsuarioController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
-                'filter' => "usuario.nm_usuario LIKE ?",
+                'filter' => "equipe.nm_equipe LIKE ?",
             ],
             '1' => [
-                'filter' => "nascimento.dt_nascimento LIKE ?",
+                'filter' => "usuario.nm_usuario LIKE ?",
             ],
-            '2' => [
-                'filter' => "rg.nu_rg LIKE ?",
+            '2' =>[
+                'filter' => "usuario.nm_funcao LIKE ?",
             ],
-            '3' => [
-                'filter' => "cpf.nu_cpf LIKE ?",
-            ],
-            '4' => [
-                'filter' => "profissao.nm_profissao LIKE ?",
-            ],
-            '5' => [
-                'filter' => "nacionalidade.nm_nacionalidade LIKE ?",
-            ],
-            '6' => [
-                'filter' => "CAST( (TO_DAYS(NOW())- TO_DAYS(dt_nascimento)) / 365.25 AS SIGNED) = ?",
-            ],
-            '7' => NULL,
+            '3' => NULL,
         ];
 
 
@@ -112,6 +83,32 @@ class UsuarioController extends AbstractCrudController
         return $viewModel->setTerminal(TRUE);
     }
 
+    public function desativarAction()
+    {
+        try {
+            $controller = $this->params('controller');
+            $id = $this->params()->fromRoute('id');  // From RouteMatch
+            $service = $this->service;
+
+            if (isset($id) && $id) {
+                $post['id'] = Cript::dec($id);
+                $post['id_situacao_usuario'] = $this->getConfigList()['situacao_usuario_inativo'];
+            }
+
+            $service->exchangeArray($post);
+            $this->addSuccessMessage('Registro desativado com sucesso!');
+            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+            $service->salvar();
+            return true;
+
+        } catch (\Exception $e) {
+
+            $this->setPost($post);
+            $this->addErrorMessage($e->getMessage());
+            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+            return false;
+        }
+    }
 
     /**
      *
@@ -133,27 +130,6 @@ class UsuarioController extends AbstractCrudController
             $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
             return FALSE;
         }
-
-
-        #/* @var $UsuarioService \Usuario\Service\UsuarioService */
-        #$usuarioService = new \Usuario\Service\UsuarioService();
-        #$usuarioService->setNuCpf(\Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_cpf')));
-
-        #Alysson - Verifica se já existe este cpf cadastrado para um usuário
-        #if ($usuarioService->filtrarObjeto()->count()) {
-
-        #    $this->addErrorMessage('Cpf já cadastrado. Faça seu login.');
-        #    $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
-        #    return FALSE;
-        #}
-
-        #$validatorCpf = new \Estrutura\Validator\Cpf();
-        #if (!$validatorCpf->isValid(\Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_cpf')))) {
-        #    $this->addErrorMessage('Cpf inválido.');
-        #    $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
-        #    return FALSE;
-        #}
-
 
         //Verifica tamanho da senha
         if (strlen(trim($this->getRequest()->getPost()->get('pw_senha'))) < 8) {
@@ -191,10 +167,8 @@ class UsuarioController extends AbstractCrudController
             if ($resultEmail) {
 
                 $this->getRequest()->getPost()->set('nm_usuario', $this->getRequest()->getPost()->get('nm_usuario'));
-                //$this->getRequest()->getPost()->set('dt_nascimento', $dateNascimento->format('Y-m-d'));
-                #$this->getRequest()->getPost()->set('nu_cpf', \Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_cpf')));
                 $this->getRequest()->getPost()->set('id_sexo', $this->getRequest()->getPost()->get('id_sexo'));
-                $this->getRequest()->getPost()->set('id_tipo_usuario', $this->getRequest()->getPost()->get('id_tipo_usuario'));
+                $this->getRequest()->getPost()->set('id_perfil', $this->getRequest()->getPost()->get('id_perfil'));
                 $this->getRequest()->getPost()->set('id_situacao_usuario', $this->getConfigList()['situacao_usuario_ativo']);
                 $this->getRequest()->getPost()->set('id_email', $resultEmail); #id_email inserido anteriormente
                 $this->getRequest()->getPost()->set('id_telefone', $resultTelefone); #id_telefone inserido anteriormente
@@ -208,8 +182,7 @@ class UsuarioController extends AbstractCrudController
                     $this->getRequest()->getPost()->set('id_usuario', $resultUsuario);
                     //Verifica se é dia 29, 30, 31
                     $this->getRequest()->getPost()->set('dt_registro', (date('d') >= 29 ? date('Y-m-' . 28 . ' H:m:s') : date('Y-m-d H:m:s')));
-                    #$this->getRequest()->getPost()->set('id_perfil', $this->getConfigList()['perfil_aluno']);
-                    $this->getRequest()->getPost()->set('id_perfil', $this->getConfigList()['perfil_professor']);
+                    $this->getRequest()->getPost()->set('id_perfil', $this->getRequest()->getPost()->get('id_perfil'));
                     $this->getRequest()->getPost()->set('pw_senha', md5($this->getRequest()->getPost()->get('pw_senha')));
                     $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_inativo']);
 
@@ -220,52 +193,48 @@ class UsuarioController extends AbstractCrudController
                     #Se cadastro realizado com sucesso, dispara um email para o usuario
                     if ($resultLogin) {
 
-                        $contaEmail = 'no-reply';
+                        #$contaEmail = 'no-reply';#
 
-                        $message = new \Zend\Mail\Message();
-                        $message->addFrom($contaEmail . '@acthosti.com.br', 'Acthos Tecnologia')
-//                    @TODO
-//                        ->addTo(trim($this->getRequest()->getPost()->get('em_email')))
-                            ->addTo('alyssontkd@gmail.com')
-                            ->addBcc('alysson.vicuna@gmail.com')
-                            ->setSubject('Confirmação de cadastro');
+//                        $message = new \Zend\Mail\Message();
+//                        $message->addFrom($contaEmail . '@hepta.com.br', 'Hepta Tecnologia')
+//                            ->addTo(trim($this->getRequest()->getPost()->get('em_email'))) #Envia para o Email que cadastrou
+//                            ->addBcc('alysson.vicuna@gmail.com')
+//                            ->setSubject('Confirmação de cadastro');
+//
+//                        $applicationService = new \Application\Service\ApplicationService();
+//                        $transport = $applicationService->getSmtpTranport($contaEmail);
+//
+//                        $htmlMessage = $applicationService->tratarModelo(
+//                            [
+//                                'BASE_URL' => BASE_URL,
+//                                'nomeUsuario' => trim($this->getRequest()->getPost()->get('nm_usuario')),
+//                                'txIdentificacao' => base64_encode(\Estrutura\Helpers\Bcrypt::hash($resultLogin)),
+//                                'email' => trim($this->getRequest()->getPost()->get('em_email')),
+//                            ], $applicationService->getModelo('cadastro'));
+//
+//                        $html = new \Zend\Mime\Part($htmlMessage);
+//                        $html->type = "text/html";
+//
+//                        $body = new \Zend\Mime\Message();
+//                        $body->addPart($html);
+//
+//                        $message->setBody($body);
+//                        $transport->send($message);
 
-                        $applicationService = new \Application\Service\ApplicationService();
-                        $transport = $applicationService->getSmtpTranport($contaEmail);
-
-                        $htmlMessage = $applicationService->tratarModelo(
-                            [
-                                'BASE_URL' => BASE_URL,
-                                'nomeUsuario' => trim($this->getRequest()->getPost()->get('nm_usuario')),
-                                'txIdentificacao' => base64_encode(\Estrutura\Helpers\Bcrypt::hash($resultLogin)),
-                                'email' => trim($this->getRequest()->getPost()->get('em_email')),
-                            ], $applicationService->getModelo('cadastro'));
-
-                        $html = new \Zend\Mime\Part($htmlMessage);
-                        $html->type = "text/html";
-
-                        $body = new \Zend\Mime\Message();
-                        $body->addPart($html);
-
-                        $message->setBody($body);
-                        $transport->send($message);
-
-                        $this->addSuccessMessage('Parabéns! Cadastro realizado com sucesso. Para confirmar seu cadastro, leia as instruções que enviamos para você por e-mail.');
-                        $this->getServiceLocator()->get('Auth\Table\MyAuth')->forgetMe();
-                        $this->getServiceLocator()->get('AuthService')->clearIdentity();
+                        $this->addSuccessMessage('Cadastro realizado com sucesso!');
+                        #$this->addSuccessMessage('Parabéns! Cadastro realizado com sucesso. Para confirmar seu cadastro, leia as instruções que enviamos para você por e-mail.');
+//                        $this->getServiceLocator()->get('Auth\Table\MyAuth')->forgetMe();
+//                        $this->getServiceLocator()->get('AuthService')->clearIdentity();
 
                     }
                 }
             }
         }
 
-        $this->redirect()->toRoute('navegacao', array('controller' => 'auth', 'action' => 'login'));
+        #$this->redirect()->toRoute('navegacao', array('controller' => 'auth', 'action' => 'login'));
+        $this->redirect()->toRoute('navegacao', array('controller' => 'usuario-usuario', 'action' => 'index'));
     }
 
-    /**
-     *
-     * @return type
-     */
     public function cadastroAction()
     {
         $usuarioService = new \Usuario\Service\UsuarioService();
@@ -292,10 +261,6 @@ class UsuarioController extends AbstractCrudController
         }
     }
 
-    /**
-     *
-     * @return type
-     */
     public function dadosPessoaisAction()
     {
 
@@ -333,30 +298,22 @@ class UsuarioController extends AbstractCrudController
         return $view->setTerminal(TRUE);
     }
 
-    /**
-     *
-     * @return ViewModel
-     */
     public function atualizarDadosAction()
     {
+        $id = $this->params()->fromRoute('id');  // From RouteMatch
+        $id = Cript::dec($id);  // From RouteMatch);
+
         $auth = $this->getServiceLocator()->get('AuthService')->getStorage()->read();
+        $usuarioService = new \Usuario\Service\UsuarioService();
 
-        /* @var $pagamentoService \Pagamento\Service\PagamentoService */
-        $pagamentoService = $this->getServiceLocator()->get('\Pagamento\Service\PagamentoService');
-
-        //Verifica se existem saques pendentes
-        $saqueComReciboEnviadoList = $pagamentoService->getSaqueComReciboEnviado($auth);
-        $temSaqueComReciboEnviado = FALSE;
-        if ($saqueComReciboEnviadoList->count()) {
-
-            $temSaqueComReciboEnviado = TRUE;
+        if($auth->id_perfil == TXT_CONST_PERFIL_ADMINISTRADOR){
+            $usuario = $usuarioService->getUsuario($id);
+        } else {
+            $usuario = $usuarioService->getUsuario($auth->id_usuario);
         }
 
-        $usuarioService = new \Usuario\Service\UsuarioService();
-        $usuario = $usuarioService->getUsuario($auth->id_usuario);
-
+        $usuario['id'] = $usuario['id_usuario'];
         $usuario['nr_telefone'] = $usuario['nr_ddd_telefone'] . $usuario['nr_telefone'];
-        $usuario['nr_cep'] = \Estrutura\Helpers\Cep::cepMask($usuario['nr_cep']);
 
         $form = new \Usuario\Form\AtualizaUsuarioForm();
         $form->setData($usuario);
@@ -368,36 +325,24 @@ class UsuarioController extends AbstractCrudController
             $form->setData($post);
         }
 
-        /* @var $contratoService \Contrato\Service\ContratoService */
-        $contratoService = $this->getServiceLocator()->get('\Contrato\Service\ContratoService');
-        $contratoEntity = $contratoService->buscar($auth->id_contrato);
-
-        $meusGanhosList = $pagamentoService->toArrayResult($pagamentoService->getMeusGanhos($auth));
-
         return new ViewModel([
             'configList' => $this->getConfigList(),
             'form' => $form,
             'controller' => $this->params('controller'),
             'usuario' => $usuario,
             'auth' => $auth,
-            'contratoEntity' => $contratoEntity,
-            'meusGanhosList' => $meusGanhosList,
-            'temSaqueComReciboEnviado' => $temSaqueComReciboEnviado,
         ]);
     }
 
-    /**
-     *
-     * @return type
-     */
     public function excluirAction()
     {
         return parent::excluir($this->service, $this->form);
     }
 
     /**
+     * Grava na base de dados as alterações realizadas na tela de cadastro
      *
-     * @return boolean
+     * @return bool
      * @throws \Exception
      */
     public function gravarAtualizacaoAction()
@@ -405,44 +350,30 @@ class UsuarioController extends AbstractCrudController
         $controller = $this->params('controller');
         $request = $this->getRequest();
 
-
         if (!$request->isPost()) {
             throw new \Exception('Dados Inválidos');
         }
 
-        $post = $request->getPost()->toArray();
+        $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
 
         try {
-
             $auth = $this->getServiceLocator()->get('AuthService')->getStorage()->read();
-
-            /* @var $pagamentoService \Pagamento\Service\PagamentoService */
-            $pagamentoService = $this->getServiceLocator()->get('\Pagamento\Service\PagamentoService');
-
-            //Verifica se existem saques pendentes
-            $saqueComReciboEnviadoList = $pagamentoService->getSaqueComReciboEnviado($auth);
-            if ($saqueComReciboEnviadoList->count()) {
-
-                $this->flashmessenger()->addInfoMessage('Quando você envia um recibo de bônus, não é possível realizar atualizações cadastrais.');
-                //$this->redirect()->toRoute('navegacao', array('controller' => 'mcnetwork-index', 'action' => 'index'));
-                //Alysson
-                $this->redirect()->toRoute('navegacao', array('controller' => 'usuario-usuario', 'action' => 'index'));
-                return FALSE;
-            }
-
+            $post['id'] = Cript::dec($post['id']);
+            $id = $post['id'];
             $usuarioService = new \Usuario\Service\UsuarioService();
-            $usuarioEntity = $usuarioService->buscar($auth->id_usuario);
-
-            $post['nu_cpf'] = $usuarioEntity->getNuCpf();
+            if($auth->id_perfil == TXT_CONST_PERFIL_ADMINISTRADOR){
+                $usuarioEntity = $usuarioService->buscar($id);
+            } else {
+                $usuarioEntity = $usuarioService->buscar($auth->id_usuario);
+            }
 
             $form = new \Usuario\Form\AtualizaUsuarioForm();
             $form->setData($post);
 
             if (!$form->isValid()) {
-
                 $this->addValidateMessages($form);
                 $this->setPost($post);
-                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'atualizar-dados'));
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'atualizar-dados', 'id' => Cript::dec($id)));
                 return FALSE;
             }
 
@@ -459,100 +390,48 @@ class UsuarioController extends AbstractCrudController
             if (!$formTelefone->isValid()) {
                 $this->addValidateMessages($formTelefone);
                 $this->setPost($post);
-                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'atualizar-dados'));
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'atualizar-dados', 'id' => Cript::dec($id)));
                 return FALSE;
             }
             $telefoneService = $this->getServiceLocator()->get('\Telefone\Service\TelefoneService');
             $telefoneService->exchangeArray($formTelefone->getData());
             $telefoneService->salvar();
 
-            // Atualiza Endereço
-            $formEndereco = new \Endereco\Form\EnderecoForm();
-            $formEndereco->setData([
-                'id' => $usuarioEntity->getIdEndereco(),
-                'nm_logradouro' => $this->getRequest()->getPost()->get('nm_logradouro'),
-                'nr_numero' => $this->getRequest()->getPost()->get('nr_numero'),
-                'nm_complemento' => $this->getRequest()->getPost()->get('nm_complemento'),
-                'nm_bairro' => $this->getRequest()->getPost()->get('nm_bairro'),
-                'nr_cep' => \Estrutura\Helpers\Cep::cepFilter($this->getRequest()->getPost()->get('nr_cep')),
-                'id_cidade' => $this->getRequest()->getPost()->get('id_cidade'),
-            ]);
-            if (!$formEndereco->isValid()) {
-                $this->addValidateMessages($formEndereco);
-                $this->setPost($post);
-                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'atualizar-dados'));
-                return FALSE;
-            }
-            $enderecoService = $this->getServiceLocator()->get('\Endereco\Service\EnderecoService');
-            $enderecoService->exchangeArray($formEndereco->getData());
-            $enderecoService->salvar();
-
             //Atualiza dados usuario
-            $usuarioEntity->setNuRg(\Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_rg')));
-            $usuarioEntity->setNuCpf(\Estrutura\Helpers\Cpf::cpfFilter($post['nu_cpf']));
-            $usuarioEntity->setNmProfissao($this->getRequest()->getPost()->get('nm_profissao'));
-            $usuarioEntity->setNmNacionalidade($this->getRequest()->getPost()->get('nm_nacionalidade'));
+            $usuarioEntity->setNmUsuario($this->getRequest()->getPost()->get('nm_usuario'));
+            $usuarioEntity->setNmFuncao($this->getRequest()->getPost()->get('nm_funcao'));
             $usuarioEntity->setIdSexo($this->getRequest()->getPost()->get('id_sexo'));
-            $usuarioEntity->setIdEstado_civil($this->getRequest()->getPost()->get('id_estado_civil'));
-            $usuarioEntity->setIdEndereco($enderecoService->getId());
+            $usuarioEntity->setIdSituacaoUsuario($this->getRequest()->getPost()->get('id_situacao_usuario'));
             $usuarioEntity->salvar();
 
-            /* @var $contaBancariaService \ContaBancaria\Service\ContaBancariaService */
-            $contaBancariaService = $this->getServiceLocator()->get('\ContaBancaria\Service\ContaBancariaService');
-            $contaBancariaEntity = $contaBancariaService->getContaBancaria($auth);
-
-            $formContaBancaria = new \ContaBancaria\Form\ContaBancariaForm();
-            $formContaBancaria->setData([
-                'id' => $contaBancariaEntity ? $contaBancariaEntity['id_conta_bancaria'] : NULL,
-                'nr_agencia' => \Estrutura\Helpers\Cnpj::cnpjFilter($this->getRequest()->getPost()->get('nr_agencia')),
-                'nr_conta' => \Estrutura\Helpers\Cnpj::cnpjFilter($this->getRequest()->getPost()->get('nr_conta')),
-                'id_situacao' => $this->getConfigList()['situacao_ativo'],
-                'id_usuario' => $usuarioEntity->getId(),
-                'id_banco' => $this->getRequest()->getPost()->get('id_banco'),
-                'id_tipo_conta' => $this->getRequest()->getPost()->get('id_tipo_conta'),
-            ]);
-            if (!$formContaBancaria->isValid()) {
-                $this->addValidateMessages($formContaBancaria);
-                $this->setPost($post);
-                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'atualizar-dados'));
-                return FALSE;
-            }
-            $contaBancariaService->exchangeArray($formContaBancaria->getData());
-            $contaBancariaService->salvar();
-
             $this->flashmessenger()->addSuccessMessage('Dados atualizado com sucesso.');
-//            $this->redirect()->toRoute('navegacao', array('controller' => 'mcnetwork-index', 'action' => 'index'));
-            //Alysson
             $this->redirect()->toRoute('navegacao', array('controller' => 'usuario-usuario', 'action' => 'index'));
             return TRUE;
         } catch (\Exception $e) {
-
             $this->setPost($post);
             $this->addErrorMessage($e->getMessage());
-            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'atualizar-dados'));
+            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'atualizar-dados', 'id' => Cript::dec($id)));
             return FALSE;
         }
     }
 
     /**
+     * Exibe a tela para alteração de senha
      *
      * @return ViewModel
      */
     public function alterarSenhaAction()
     {
-
         $auth = $this->getServiceLocator()->get('AuthService')->getStorage()->read();
+        $id = $this->params()->fromRoute('id');  // From RouteMatch
+        $id = Cript::dec($id);  // From RouteMatch);
 
         $usuarioService = new \Usuario\Service\UsuarioService();
-        $usuarioEntity = $usuarioService->buscar($auth->id_usuario);
-
-        /* @var $contratoService \Contrato\Service\ContratoService */
-        $contratoService = $this->getServiceLocator()->get('\Contrato\Service\ContratoService');
-        $contratoEntity = $contratoService->buscar($auth->id_contrato);
-
-        /* @var $pagamentoService \Pagamento\Service\PagamentoService */
-        $pagamentoService = $this->getServiceLocator()->get('\Pagamento\Service\PagamentoService');
-        $meusGanhosList = $pagamentoService->toArrayResult($pagamentoService->getMeusGanhos($auth));
+        if($auth->id_perfil == TXT_CONST_PERFIL_ADMINISTRADOR){
+            $usuarioEntity = $usuarioService->buscar($id);
+        } else {
+            $usuarioEntity = $usuarioService->buscar($auth->id_usuario);
+        }
 
         return new ViewModel([
             'configList' => $this->getConfigList(),
@@ -560,40 +439,37 @@ class UsuarioController extends AbstractCrudController
             'controller' => $this->params('controller'),
             'usuarioEntity' => $usuarioEntity,
             'auth' => $auth,
-            'contratoEntity' => $contratoEntity,
-            'meusGanhosList' => $meusGanhosList,
+            'id_usuario' => $id, //Passa o Id_usuario para aview
+
         ]);
     }
 
     /**
+     * Método que realiza a gravação da alteração de senha na base de dados
      *
+     * @return bool
      */
     public function salvarRedefinicaoSenhaAction()
     {
 
         $auth = $this->getServiceLocator()->get('AuthService')->getStorage()->read();
+        $request = $this->getRequest();
 
-        $form = new \Auth\Form\RedefinirSenhaForm();
-
-        $elementCaptch = $form->getElements()['captcha'];
-        foreach ($elementCaptch->getInputSpecification()['validators'] as $validator) {
-
-            if (!$validator->isValid($this->getRequest()->getPost()->get('captcha'))) {
-
-                $this->addErrorMessage('Captcha inválido.');
-                $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha']);
-                return FALSE;
-            }
+        if (!$request->isPost()) {
+            throw new \Exception('Dados Inválidos');
         }
 
+        $post= \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
+        $id_usuario = Cript::dec($post['id']);
+        $post['id'] = $id_usuario; //Recebe o ID ja Descriptografado.
+
         $loginService = new \Login\Service\LoginService();
-        $loginService->setIdUsuario($auth->id_usuario);
+        $loginService->setIdUsuario($id_usuario);
         $loginEntity = $loginService->filtrarObjeto()->current();
 
         if (!$loginEntity) {
-
             $this->addErrorMessage('Usuario inválido.');
-            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha']);
+            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha', 'id'=>Cript::enc($id_usuario)]);
             return FALSE;
         }
 
@@ -601,23 +477,24 @@ class UsuarioController extends AbstractCrudController
         if (strlen(trim($this->getRequest()->getPost()->get('pw_nova_senha'))) < 8) {
 
             $this->addErrorMessage('Senha deve ter no mínimo 8 caracteres.');
-            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha']);
+            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha', 'id'=>Cript::enc($id_usuario)]);
             return FALSE;
         }
 
-        //Verifica se a senha atual é válida
-        if (strcasecmp(md5($this->getRequest()->getPost()->get('pw_senha')), $loginEntity->getPwSenha()) != 0) {
-
-            $this->addErrorMessage('Senha atual inválida.');
-            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha']);
-            return FALSE;
+        #so faz esta validacao se for o usuario diferente do Administrador
+        if($auth->id_perfil != TXT_CONST_PERFIL_ADMINISTRADOR) {
+            //Verifica se a senha atual é válida
+            if (strcasecmp(md5($this->getRequest()->getPost()->get('pw_senha')), $loginEntity->getPwSenha()) != 0) {
+                $this->addErrorMessage('Senha atual inválida.');
+                $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha', 'id' => Cript::enc($id_usuario)]);
+                return FALSE;
+            }
         }
-
         //Verifica se as novas senhas são iguais
         if (strcasecmp($this->getRequest()->getPost()->get('pw_nova_senha_confirm'), $this->getRequest()->getPost()->get('pw_nova_senha')) != 0) {
 
             $this->addErrorMessage('Senhas não correspondem.');
-            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha']);
+            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha', 'id'=>Cript::enc($id_usuario)]);
             return FALSE;
         }
 
@@ -625,7 +502,7 @@ class UsuarioController extends AbstractCrudController
         if (strcasecmp(md5($this->getRequest()->getPost()->get('pw_senha')), md5($this->getRequest()->getPost()->get('pw_nova_senha'))) == 0) {
 
             $this->addErrorMessage('Nova senha igual a senha atual.');
-            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha']);
+            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-senha', 'id'=>Cript::enc($id_usuario)]);
             return FALSE;
         }
 
@@ -634,7 +511,7 @@ class UsuarioController extends AbstractCrudController
         $loginEntity->salvar();
 
         $this->addSuccessMessage('Senha alterada com sucesso.');
-        $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'atualizar-dados']);
+        $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'atualizar-dados', 'id'=>Cript::enc($id_usuario)]);
         return FALSE;
     }
 

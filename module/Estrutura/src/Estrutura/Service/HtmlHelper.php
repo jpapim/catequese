@@ -30,6 +30,11 @@ class HtmlHelper{
         return self::botaoLink($url, 'glyphicon glyphicon-edit', $attributos, $title);
     }
 
+    public static function botaoDesativar($url, $title='Desativar', $icone_bootstrap = 'glyphicon glyphicon-off', $id = 'botaodesativar'){
+        $attributos = ['class'=>'btn-desativar btn-xs', 'id'=>$id];
+        return self::botaoLink($url, $icone_bootstrap, $attributos, $title);
+    }
+
     public static function botaoAlterarCustomizado($url, $title='Modificar'){
         $attributos = ['class'=>'btn-alterar btn-xs btn-alterar-customizado', 'id'=>'botaomodificar'];
         return self::botaoLink($url, 'glyphicon glyphicon-user', $attributos, $title);

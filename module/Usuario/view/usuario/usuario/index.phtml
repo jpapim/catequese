@@ -1,20 +1,15 @@
 <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
-
-<!--<link rel="stylesheet" href="/assets/css/jquery.tablesorter.theme.bootstrap.css">-->
-<!--<link rel="stylesheet" href="/assets/css/jquery.tablesorter.pager.css">-->
-
-
 <?php
-/** @var $form \Atleta\Form\Atleta */
-/** @var $lista \Atleta\Service\Atleta[] */
+/** @var $form \Usuario\Form\Usuario */
+/** @var $lista \Usuario\Service\Usuario[] */
 ?>
 <div class="page-head">
-    <h2>Lista de Usuários</h2>
+    <h2>Lista de Colaboradores</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
         <div class="col-md-12">
-            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar um novo Usuário">Novo Usuário</a>
+            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar Colaborador">Novo Colaborador</a>
         </div>
     </div>
     <br />

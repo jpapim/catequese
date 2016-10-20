@@ -12,13 +12,23 @@
             $form->setAttribute('data-toggle', 'validator');
             $form->prepare();
             echo $this->form()->openTag($form);
+            $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($id_usuario));
+            echo $this->formHidden($form->get('id'));
+
             ?>
-            <div class="form-group">
-                <div class="col-md-12">
-                    <?= $this->formRow($form->get('pw_senha')) ?>
-                    <div class="help-block with-errors"></div>
+            <?php
+            #So mostra este item se o usuario nao for o administrador do sistema
+            if($this->Auth()->id_perfil != TXT_CONST_PERFIL_ADMINISTRADOR) {
+                ?>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <?= $this->formRow($form->get('pw_senha')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
                 </div>
-            </div>
+                <?php
+            }
+            ?>
             <div class="form-group">
                 <div class="col-md-12">
                     <?= $this->formRow($form->get('pw_nova_senha')) ?>
@@ -34,15 +44,8 @@
 
             <div class="form-group">
                 <div class="col-md-4">
-                    <?= $this->formRow($form->get('captcha')); ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-4">
                     <button type="submit" class="btn btn-primary">Redefinir senha</button>                        
-                    <a href="<?= $this->url('navegacao', ['controller' => 'usuario-usuario', 'action' => 'atualizar-dados']) ?>" class="btn btn-default">Voltar</a>                    
+                    <a href="<?= $this->url('navegacao', ['controller' => 'usuario-usuario', 'action' => 'atualizar-dados', 'id'=>Estrutura\Helpers\Cript::enc($id_usuario)]) ?>" class="btn btn-default">Voltar</a>
                 </div>
             </div>
 
@@ -51,13 +54,27 @@
             ?>
         </div>
     </div>
-    <?=
-    $this->partial('partials/menu-left', [
+
+    <?php
+    //Invoca um Template
+    /*
+    echo $this->partial('partials/menu-left', [
         'auth' => $auth,
-        'contratoEntity' => $contratoEntity,
-        'configList' => $configList,
-        'meusGanhosList' => $meusGanhosList,
+        'contratoEntity' => array(),
+        'configList' => array(),
+        'meusGanhosList' => array(),
     ]);
+    */
     ?>
 </div>
 <script type="text/javascript" src="/assets/compact-js/validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|alterar-senha.js"></script>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+        $(document).tooltip();
+        $(".cep").mask("99.999-999");
+        $(".data").mask("99/99/9999");
+        $(".datatime").mask("99/99/9999 99:99:99");
+        $(".hora").mask("99:99:99");
+        $(".telefone").mask("(99) 9999-9999");
+    });
+</script>

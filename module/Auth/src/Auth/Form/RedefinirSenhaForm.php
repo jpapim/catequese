@@ -18,13 +18,14 @@ class RedefinirSenhaForm extends AbstractForm {
                 'redefinirSenhaForm', $this, $this->inputFilter
         );
 
+        $objForm->hidden("id")->required(false)->label("Id");
         $objForm->password("pw_senha")->required(true)->label("Senha atual");
         $objForm->password("pw_nova_senha")->required(true)->label("Nova senha");
         $objForm->password("pw_nova_senha_confirm")->required(true)->label("Confirmar senha")
                 ->setAttribute('data-match', '#pw_nova_senha')
                 ->setAttribute('data-match-error', 'Senhas não correspondem');
 
-        $objForm->captcha('captcha')->required(true);
+
         $this->formObject = $objForm;
     }
 
