@@ -12,7 +12,9 @@
             $form->setAttribute('class', 'form-horizontal');
             $form->setAttribute('data-toggle', 'validator');
             $form->prepare();
-            echo $this->form()->openTag($form);
+             echo $this->form()->openTag($form);
+    $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue())); 
+    echo $this->formhidden($form->get('id'));
             ?>
            
             <br />

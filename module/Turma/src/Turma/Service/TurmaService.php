@@ -109,7 +109,21 @@ class TurmaService extends Entity {
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
 
-}
+
+        public function getTurmaToArray($id)
+    {
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+        $select = $sql->select('turma')
+            ->where([
+                'turma.id_turma'=> $id
+            ]);
+        return $sql->prepareStatementForSqlObject($select)->execute()->current();
+    }
+    
+    
+    
+    
+                    }
 
     
     

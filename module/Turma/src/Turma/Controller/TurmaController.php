@@ -66,10 +66,45 @@ class TurmaController extends AbstractCrudController
     { 
         return parent::cadastro($this->service, $this->form);
     }
-    public function excluirAction()
+   public function excluirAction($option = null)
     {
-        return parent::excluir($this->service, $this->form);
-}
+        
+        $id = Cript::dec($this->params('id'));
+        if(!empty($option)){
+            $id = Cript::dec($option);
+        }
+        if(isset($id) && $id){
+            
+            $objTurma=  new \Turma\Service\TurmaService();
+            $arrTurma =$objTurma->getTurmaToArray($id);
+            
+            $objTurmaCatequizando= new \TurmaCatequizando\Service\TurmaCatequizandoService();
+            $arrTurmaCatequizando = $objTurmaCatequizando->getTurmaCatequizandoIdArray($id_turma);
+
+         ##############Excluindo dados da tabela filha###############
+          
+            
+            $obCatequistaTurmaService = new \CatequistaTurma\Service\CatequistaTurmaService();
+            $obCatequistaTurmaService->setIdTurma($arrTurma['id_turma']);
+            $obCatequistaTurmaService->excluir();
+            
+            $obFrequenciaTurmaService = new \FrequenciaTurma\Service\FrequenciaTurmaService();
+            $obFrequenciaTurmaService->setIdTurmaCatequizando($arrTurmaCatequizando['id_turma_catequizando']);
+            $obFrequenciaTurmaService->excluir();
+            
+            
+            $objTurmaCatequizando->setIdTurma($arrTurma['id_turma']);
+            $objTurmaCatequizando->excluir();
+         
+            
+       $retornoExcluir = parent::excluir($this->service, $this->form);
+    
+        }
+
+           return $retornoExcluir;
+
+
+    }
 
  public function indexPaginationAction()
     {// funcao paginacao

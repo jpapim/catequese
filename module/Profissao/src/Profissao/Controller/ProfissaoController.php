@@ -65,10 +65,33 @@ class ProfissaoController extends  AbstractCrudController{
     public function gravarAction()
     {
 
-        $controller = $this->params('controller');
-        $this->addSuccessMessage('Registro Alterado com sucesso');
-        $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
-        return parent::gravar($this->service, $this->form);
+         $controller =  $this->params('controller');
+        #$id_profissao = Cript::dec($this->getRequest()->getPost()->get('id'));
+
+        $pos = $this->getRequest()->getPost()->toArray();
+        #$arrc = $this->service->buscar(Cript::dec($pos['id']))->toArray();
+
+        
+        /*@var $emailService \Email\Service\EmailService */
+            $Profissao = $this->getServiceLocator()->get('\Profissao\Service\ProfissaoService');
+            $Profissao->setNmProfissao(trim($this->getRequest()->getPost()->get('nm_profissao')));
+            if ($Profissao->filtrarObjeto()->count()) {
+
+                if ($Profissao->filtrarObjeto()->count()) {
+               
+                
+                $this->addErrorMessage('Profissão já cadastrada');
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+               return FALSE;
+            }}
+           
+              $this->getRequest()->getPost()->set('nm_profissao', $this->getRequest()->getPost()->get('nm_profissao'));
+             $resultLogin = parent::gravar(
+                                   $this->getServiceLocator()->get('\Profissao\Service\ProfissaoService'), new \Profissao\Form\ProfissaoForm()
+                   ); 
+                    $this->addSuccessMessage(' Profissão cadastrada com sucesso.');
+                    $this->redirect()->toRoute('navegacao', array('controller' => 'profissao-profissao', 'action' => 'index'));
+      
     }
 
     public function cadastroAction()

@@ -43,7 +43,7 @@
                                 <?php
                                 if (!is_null($campoFilter)) {
                                     ?>
-                                    <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                      <input type="search" placeholder="" class="tablesorter-filter col-md-10 col-md-push-1" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                                     <?php
                                 } else {
                                     ?>
@@ -52,6 +52,7 @@
                                 }
                                 ?>
                             </td>
+                             <td>&nbsp;</td>
                             <?php
                         }
                         ?>                            
