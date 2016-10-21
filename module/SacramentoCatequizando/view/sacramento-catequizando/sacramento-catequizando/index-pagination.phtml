@@ -41,7 +41,7 @@
             if (!empty($paginator)) {
                 ?>
                 <tbody class="">
-                <tr role="row" class="tablesorter-filter-row">
+                <tr role="row" class="tablesorter-filter-row" align="center">
                     <?php
                     foreach ($camposFilter as $key => $campoFilter) {
                         ?>
@@ -74,7 +74,7 @@
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequizando['cs_comprovante_batismo'] == 'S'? 'Sim':'Não') ?></td>
 
                         <td class="text-center">
-                                <span class="" style="width: 100px;">
+                                <span class="btn-group" >
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($sacramentocatequizando['id_sacramento_catequizando'])))) ?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($sacramentocatequizando['id_sacramento_catequizando'])))) ?>
                                 </span>

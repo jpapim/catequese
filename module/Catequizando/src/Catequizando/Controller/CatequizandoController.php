@@ -400,7 +400,7 @@ class CatequizandoController extends  AbstractCrudController{
 
        try{
 
-           x("passei aqui");
+
            $controller =  $this->params('controller');
            $post= $this->getRequest()->getPost()->toArray();
            $id = Cript::dec($post['id']);

@@ -41,9 +41,6 @@ class FormacaoController extends  AbstractCrudController {
 
         $camposFilter = [
             '0'=>[
-                'filter' => "formacao.id_formacao  LIKE ?"
-            ],
-            '1'=>[
                 'filter' => "formacao.nm_formacao  LIKE ?"
             ],
 
@@ -90,7 +87,7 @@ class FormacaoController extends  AbstractCrudController {
             $form = $this->form;
 
             if (!$request->isPost()) {
-                throw new \Exception('Dados Inválidos');
+                throw new \Exception('Dados Invï¿½lidos');
             }
 
             $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
