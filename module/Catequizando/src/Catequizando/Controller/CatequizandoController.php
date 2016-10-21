@@ -117,19 +117,7 @@ class CatequizandoController extends  AbstractCrudController{
                 return FALSE;
             }
 
-        $dataNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
-        $dataMaioridade = new \Datetime();
-        $dataMaioridade->modify('- 8 years'); #oito anos da data de hoje.
-
-        #Verifica se é menor de 18 anos
-        if ($dataNascimento > $dataMaioridade) {
-
-            $this->addErrorMessage('Catequizando deve ter idade mínima de 8 anos.');
-            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
-            return FALSE;
-        }
             $dataNascimento = Data::converterDataHoraBrazil2BancoMySQL($this->getRequest()->getPost()->get('dt_nascimento'));
-
 
            # Realizando Tratamento do Telefone Residencial
            $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_residencial')));
@@ -246,7 +234,6 @@ class CatequizandoController extends  AbstractCrudController{
     {
       $id =  \Estrutura\Helpers\Cript::dec($this->params('id'));
 
-
       if(isset($id) && $id){
           $arrCatequizando = $this->service->buscar($id)->toArray();
 
@@ -334,7 +321,8 @@ class CatequizandoController extends  AbstractCrudController{
               'service' => $this->service,
               'form' => $form,
               'controller' => $this->params('controller'),
-              'atributos' =>''
+              'atributos' =>'',
+              'id'=>$id
           ];
 
           return new ViewModel($dadosView);
@@ -409,8 +397,11 @@ class CatequizandoController extends  AbstractCrudController{
 
     public function atualizarAction(){
 
-        $controller =  $this->params('controller');
+
        try{
+
+           x("passei aqui");
+           $controller =  $this->params('controller');
            $post= $this->getRequest()->getPost()->toArray();
            $id = Cript::dec($post['id']);
            $post['id']= $id;
@@ -498,30 +489,19 @@ class CatequizandoController extends  AbstractCrudController{
                 }
             }
 
-           $dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
-           $dataMaioridade = new \Datetime();
-           $dataMaioridade->modify('- 8 years'); #oito anos da data de hoje.
-
-           #Verifica se é menor de 8 anos
-           if ($dateNascimento > $dataMaioridade) {
-
-               $this->addErrorMessage('Catequizando deve ter idade mínima de 8 anos.');
-               $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
-               return FALSE;
-           }
-
-            $post['dt_nascimento'] =  Data::converterDataHoraBrazil2BancoMySQL($dateNascimento);
-
+            $this->getRequest()->getPost()->set('dt_nascimento',Data::converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']));
 
            #xd($arr);
+
            $form = new \Catequizando\Form\CatequizandoForm();
-           $form->setData($post);
-           parent::gravar(
+          $bool = parent::gravar(
                $this->getServiceLocator()->get('\Catequizando\Service\CatequizandoService'),$form
            );
 
-           $this->addSuccessMessage('Parabéns! Catequizando cadastrado com sucesso.');
-           $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+          if($bool == true){
+              $this->addSuccessMessage('Parabéns! Catequizando cadastrado com sucesso.');
+              $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+          }
 
        }catch (\Exception $e) {
 

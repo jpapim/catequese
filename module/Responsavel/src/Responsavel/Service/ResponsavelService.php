@@ -3,6 +3,7 @@
 namespace Responsavel\Service;
 
 use Responsavel\Entity\ResponsavelEntity as Entity;
+use Zend\Db\Sql\Sql;
 
 class ResponsavelService extends Entity {
 
@@ -139,6 +140,18 @@ class ResponsavelService extends Entity {
         $select->where($where)->order(['nm_responsavel DESC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
+    }
+
+    public function getFiltrarResponsavelPorNomeToArray($responsavel){
+
+        $sql = new Sql($this->getAdapter());
+
+        $select= $sql->select('responsavel')->columns(['id_responsavel','nm_responsavel'])
+        ->where([
+            'responsavel.nm_responsavel  LIKE ?'=> '%'.$responsavel.'%'
+        ]);
+
+        return $sql->prepareStatementForSqlObject($select)->execute();
     }
 
 
