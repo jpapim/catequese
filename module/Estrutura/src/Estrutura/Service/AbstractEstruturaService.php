@@ -171,11 +171,21 @@ class AbstractEstruturaService {
         return $this->select();
     }
 
-    //Alysson
-    public function fetchAllCustom(Select $select = null) {
+    /**
+     *
+     * $select = new Select('nome_tabela');
+     * $select->order(['nome_coluna']);
+     * return $this->getTable()->getTableGateway()->selectWith($select);
+     *
+     * RETORNA UMA COLECAO
+     * @param Select|null $select
+     * @return mixed
+     */
+    public function fetchAllCustom(Select $select = null, $arColunasOrdenacao = []) {
         if (null === $select)
             $select = new Select();
         $select->from($this->table);
+        $select->order($arColunasOrdenacao);
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
         return $resultSet;
