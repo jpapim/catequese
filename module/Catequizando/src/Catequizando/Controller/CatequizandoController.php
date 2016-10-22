@@ -97,7 +97,7 @@ class CatequizandoController extends  AbstractCrudController{
     public function gravarAction()
     {
         $controller =  $this->params('controller');
-
+        $status =false;
         #$pos = $this->getRequest()->getPost()->toArray();
         #$arrc = $this->service->buscar(Cript::dec($pos['id']))->toArray();
 
@@ -213,7 +213,7 @@ class CatequizandoController extends  AbstractCrudController{
             }
 
 
-           if ($status ) {
+           if ($status) {
 
                $objCatequizando = new \Catequizando\Service\CatequizandoService();
                $arr = $objCatequizando->buscar($resultCatequizando);
@@ -308,6 +308,10 @@ class CatequizandoController extends  AbstractCrudController{
           $this->getRequest()->getPost()->set('nm_naturalidade', $naturalidade['nm_cidade']." (".$estadoNat['sg_estado'].")");
           $this->getRequest()->getPost()->set('telefone_residencial',\Estrutura\Helpers\Telefone::telefoneMask($telResidencial['nr_ddd_telefone'].$telResidencial['nr_telefone']));
           $this->getRequest()->getPost()->set('telefone_celular',($telCelular['nr_ddd_telefone'].$telCelular['nr_telefone']));
+
+          if(!empty($arrCatequizando['nm_necessidade_especial'])){
+              $this->getRequest()->getPost()->set('nm_necessidade_especial',$arrCatequizando['nm_necessidade_especial']);
+          }
 
           $options=array();
           $options['arrSacramento']=$sacramento;
