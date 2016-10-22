@@ -35,7 +35,7 @@
             if (!empty($paginator)) {
                 ?>
                 <tbody class="">
-                    <tr role="row" class="tablesorter-filter-row">
+                    <tr role="row" class="tablesorter-filter-row" align="center">
                         <?php
                         foreach ($camposFilter as $key => $campoFilter) {
                             ?>    
@@ -43,7 +43,7 @@
                                 <?php
                                 if (!is_null($campoFilter)) {
                                     ?>
-                                      <input type="search" placeholder="" class="tablesorter-filter col-md-10 col-md-push-1" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                      <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                                     <?php
                                 } else {
                                     ?>
@@ -64,7 +64,7 @@
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($turma['nm_turma']) ?></td>
                          </td>
                             <td class="text-center">
-                                <span class="btn-group" style="width: 100px;">
+                                <span class="btn-group">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($turma['id_turma'])))) ?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($turma['id_turma'])))) ?>
                                 </span>
@@ -82,7 +82,6 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
-                <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adiciona um novo sacramento">Novo Sacramento</a>
             </div>
         </div>
     </div>

@@ -35,7 +35,7 @@
             if (!empty($paginator)) {
                 ?>
                 <tbody class="">
-                    <tr role="row" class="tablesorter-filter-row">
+                    <tr role="row" class="tablesorter-filter-row"align="center">
                         <?php
                         foreach ($camposFilter as $key => $campoFilter) {
                             ?>    
@@ -63,7 +63,7 @@
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($movimento_pastoral['nm_movimento_pastoral']) ?></td>
                          </td>
                             <td class="text-center">
-                                <span class="btn-group" style="width: 100px;">
+                                <span class="btn-group">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($movimento_pastoral['id_movimento_pastoral'])))) ?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($movimento_pastoral['id_movimento_pastoral'])))) ?>
                                 </span>

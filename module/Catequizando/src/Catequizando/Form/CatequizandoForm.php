@@ -27,25 +27,25 @@ class CatequizandoForm extends  AbstractForm{
         $objForm->hidden("id")->required(false)->label("Id");
         ##### Endereço ######
         $objForm->hidden("id_endereco")->required(false);
-        $objForm->text("nm_logradouro")->required(false)->label("Logradouro");
-        $objForm->text("nr_numero")->required(true)->label("Número");
+        $objForm->text("nm_logradouro")->required(true)->label("Logradouro");
+        $objForm->text("nr_numero")->required(false)->label("Número");
         $objForm->text("nm_complemento")->required(true)->label("Complemento");
         $objForm->text("nm_bairro")->required(true)->label("Bairro");
-        $objForm->cep("nr_cep")->setAttribute('class', 'cep')->required(true)->label("Cep");
+        $objForm->cep("nr_cep")->setAttribute('class', 'cep')->required(false)->label("Cep");
 
         #FK - Naturalidade
         $objForm->hidden("id_naturalidade")->required(false);
         $objForm->text("nm_naturalidade")->required(false)->label("Naturalidade");
 
         #FK - Cidades
-        $objForm->text("nm_cidade")->required(false)->label("Cidade");
+        $objForm->text("nm_cidade")->required(true)->label("Cidade");
 
         #FK - Sexo
-        $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(false)->label("Sexo");
+        $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(true)->label("Sexo");
 
         #FK- Telefone Residencial
         $objForm->hidden("id_telefone_residencial")->required(false);
-        $objForm->telefone("telefone_residencial")->setAttribute('class', 'telefone')->required(false)->label("Telefone Residencial");
+        $objForm->telefone("telefone_residencial")->setAttribute('class', 'telefone')->required(true)->label("Telefone Residencial");
 
         #FK- Telefone Celular
         $objForm->telefone("telefone_celular")->setAttribute('class', 'telefone')->required(false)->label("Telefone Celular");
@@ -133,6 +133,11 @@ class CatequizandoForm extends  AbstractForm{
         $objForm->text("nm_matricula")
             ->required(false)
             ->label("Matricula");
+
+        ### Necessidade Especial
+        $objForm->text("nm_necessidade_especial")
+            ->required(false)
+            ->label("Necessidade Especial");
 
         ### Observação
         $objForm->textarea("tx_observacao")

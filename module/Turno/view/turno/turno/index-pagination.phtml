@@ -64,7 +64,7 @@
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($turno['nm_turno']) ?></td>
                         </td>
                         <td class="text-center">
-                                <span class="btn-group" style="width: 100px;">
+                                <span class="btn-group">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($turno['id_turno'])))) ?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($turno['id_turno'])))) ?>
                                 </span>

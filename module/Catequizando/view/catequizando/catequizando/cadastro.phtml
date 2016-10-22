@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="/assets/css/progress.css"/>
 
+<?php if(empty($id)): ?>
+ <!--Caso não exista ID essa parte do código aparece-->
 <hr/>
 <div class="row">
     <div class="col-md-12">
@@ -21,6 +23,9 @@
 </div>
 <hr/>
 
+<?php endif; ?>
+
+<div class="row" id="msg"></div>
 
 <div class="page-head">
     <h2>Adicionar Aluno</h2>
@@ -31,7 +36,7 @@
             <div class="content">
                 <?php
 
-                $form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
+                #$form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => '')));
                 $form->setAttribute('class', 'form-horizontal');
                 $form->setAttribute('data-role', 'form');
                 $form->prepare();
@@ -154,6 +159,9 @@
                             <div class="form-group">
                                 <?=$this->formRow($form->get('cs_necessidade_especial'))?>
                             </div>
+                            <div class="form-group" id="necessidade_especial">
+                                <?=$this->formRow($form->get('nm_necessidade_especial'))?>
+                            </div>
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-5">
@@ -203,26 +211,114 @@
                            <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
                        </div>
                        <div class="col-md-1"></div>
-                       <div class="col-md-2">
-                           <button type="submit" class="btn btn-primary">Avançar</button>
-                       </div>
+
                     </div>
                 </div>
                 <?= $this->form()->closeTag(); ?>
+
+                <div class="col-md-2">
+                    <?php if(isset($id)): ?>
+                        <button class="btn btn-primary" id="update">Atualizar</button>
+                    <?php else: ?>
+                        <button class="btn btn-primary" id="next">Avançar</button>
+                    <?php endif; ?>
+                </div>
+
             </div>
         </div>
     </div>
 <script type="text/javascript" language="javascript" class="init">
+
+    /*Função que calcula a idade de um catequizando*/
+    function calcIdade(){
+        var  data = $("#dt_nascimento").val();
+        data = data.split("/");
+        var nascimento =data[2]+"-"+data[1]+"-"+data[0];
+
+        var nasc = new Date(nascimento);
+        return ~~((Date.now() - nasc)/ (31557600000));
+    }
+
+    /*Função para validar o formulário*/
+    function validaForm() {
+        if (($("#em_email").val() != $("#em_email_confirm").val())) {
+            $("#msg").html(
+                '<div class="alert alert-danger"><strong>Atenção!</strong> Emails não correspondem.</div>'
+            );
+            return false;
+        }
+        if(calcIdade() < 8 ){
+            $("#msg").html(
+                '<div class="alert alert-danger"><strong>Atenção!</strong> Idade mínima de 8 anos para cadastrar catequizando.</div>'
+            );
+            return false;
+        }
+        if(!is_email($("#em_email").val())){
+            $("#msg").html(
+                '<div class="alert alert-danger"><strong>Atenção!</strong>Email não se encontra de acordo com o formato padrão.Ex: exemplo@exemplo.com</div>'
+            );
+            return false;
+        }
+            return true;
+    }
+
+    /**/
+    function is_email(email){
+        er = /^[a-zA-Z0-9][a-zA-Z0-9\._-]+@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2,3}/;
+        if( !er.exec(email) )
+        {
+           return false;
+        }
+        return true;
+    }
+
     $(document).ready(function() {
         $( "#dt_nascimento" ).datepicker(
             { dateFormat: 'dd/mm/yy' }
         );
 
+        /*Condicional que verifica se o campo nm_necessidade_especial está preenchido ou não*/
+       if($("#nm_necessidade_especial").val() == ""){
+           $("#necessidade_especial").hide();
+       }else{
+           $("#necessidade_especial").show();
+       }
+        /*Função que habilita o campo para colocar o nome da necessidade especial*/
+        $("input:radio[name=cs_necessidade_especial]").click(function(){
+
+            if($('input:radio[name=cs_necessidade_especial]:checked').val() == "S"){
+
+                $("#necessidade_especial").show();
+            }else{
+                $("#necessidade_especial").hide();
+            }
+        });
+
+        /*Função do botão Atualizar : Só funciona quando for atualizar o registro de algum catequizando*/
+        $("#update").click(function(){
+
+            if(validaForm() == true){
+                $("#catequizandoform").attr('action',"<?= $this->url('navegacao', array('controller'=>$controller,'action' => 'atualizar')) ?>");
+                $("#catequizandoform").submit();
+            }
+
+        });
+
+        /*Função do botão Avançar : Só funciona quando for cadastrar um novo catequizando*/
+        $("#next").click(function(){
+            if(validaForm() == true){
+                $("#catequizandoform").attr('action',"<?= $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')) ?>");
+                $("#catequizandoform").submit();
+            }
+        });
+
+        /*Função que faz o autocomplete da cidade*/
         $( "input#nm_cidade" ).autocomplete({
             minLength: 4,
             source: "/cidade-cidade/autocompletecidade"
         });
 
+        /*Função que faz o autocomplete da Naturalidade*/
         $( "input#nm_naturalidade" ).autocomplete({
             minLength: 4,
             source: "/cidade-cidade/autocompletecidade"
