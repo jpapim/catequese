@@ -1,22 +1,23 @@
 <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
 
+<!--<link rel="stylesheet" href="/assets/css/jquery.tablesorter.theme.bootstrap.css">-->
+<!--<link rel="stylesheet" href="/assets/css/jquery.tablesorter.pager.css">-->
+
 <div class="page-head">
     <h2>Situação Conjugal</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
-        <div class="col-md-12">
-            <a class="btn btn-default"
-               href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>"
-               title="Nova Situação Conjugal">Cadastro de Situação Conjugal</a>
+        <div class="col-md-12"><?php // botao novo sacramento?>
+            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adiciona um nova Situacao Conjugal">Nova Situacao Conjugal</a>
         </div>
     </div>
-    <br/>
-    <div class="row" id="situacao-conjugal-pagination"></div>
+    <br />
+    <div class="row" id="atleta-pagination"></div>    
 </div>
 
 <script>
-    // funcao ajax para buscar a paginacao
+    <?php // funcao ajax para buscar a paginacao?>
     $(function () {
 
         $.ajax({
@@ -25,16 +26,17 @@
             cache: false,
             url: '/situacao_conjugal-situacaoconjugal/index-pagination',
             async: true,
-            data: {},
+            data: {
+            },
             beforeSend: function () {
 
-                $('#situacao-conjugal-pagination').html(
-                    '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                );
+                $('#atleta-pagination').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                        );
             },
             success: function (data) {
 
-                $('#situacao-conjugal-pagination').html(data);
+                $('#atleta-pagination').html(data);
             }
         });
 

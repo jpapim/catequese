@@ -22,7 +22,7 @@ class SituacaoConjugalForm extends  AbstractForm {
 
         $objForm = new FormObject('situacaoconjugalform', $this, $this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");
-        $objForm->text("ds_situacao_conjugal")->required(false)->label("Situação Conjugal");
+        $objForm->text("ds_situacao_conjugal")->required(true)->label("Situação Conjugal");
 
         $this->formObject = $objForm;
     }

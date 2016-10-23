@@ -32,43 +32,7 @@ class SituacaoConjugalController extends  AbstractCrudController{
         return parent::index($this->service, $this->form);
     }
 
-    public function indexPaginationAction()
-    {
-
-        $filter = $this->getFilterPage();
-
-        $camposFilter =[
-            '0' => [
-                'filter' => "situacao_conjugal.ds_situacao_conjugal  LIKE ?"
-            ],
-            '1' => NULL,
-        ];
-
-
-        $paginator = $this->service->getSituacaoConjugalPaginator($filter, $camposFilter);
-        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
-        $countPerPage = $this->getCountPerPage(
-            current(Pagination::getCountPerPage($paginator->getTotalItemCount()))
-        );
-
-        $paginator->setItemCountPerPage($this->getCountPerPage(
-            current(Pagination::getCountPerPage($paginator->getTotalItemCount()))
-        ))->setCurrentPageNumber($this->getCurrentPage());
-
-        $viewModel = new ViewModel([
-            'service' => $this->service,
-            'form' => $this->form,
-            'paginator' => $paginator,
-            'filter' => $filter,
-            'countPerPage' => $countPerPage,
-            'camposFilter' => $camposFilter,
-            'controller' => $this->params('controller'),
-            'atributos' => array(),
-        ]);
-
-        return $viewModel->setTerminal(true);
-    }
-
+ 
     public function gravarAction()
     {
 
@@ -88,4 +52,43 @@ class SituacaoConjugalController extends  AbstractCrudController{
         return parent::excluir($this->service, $this->form);
     }
 
-} 
+     public function indexPaginationAction()
+    {// funcao paginacao
+        //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
+
+        $filter = $this->getFilterPage();
+
+        $camposFilter = [
+            '0' => [
+                'filter' => "situacao_conjugal.ds_situacao_conjugal LIKE ?",
+            ],
+
+        ];
+
+        $paginator = $this->service->getSituacaoConjugalPaginator($filter, $camposFilter);
+
+        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+
+        $countPerPage = $this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        );
+
+        $paginator->setItemCountPerPage($this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        ))->setCurrentPageNumber($this->getCurrentPage());
+
+        $viewModel = new ViewModel([
+            'service' => $this->service,
+            'form' => $this->form,
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            'atributos' => array()
+        ]);
+
+        return $viewModel->setTerminal(TRUE);
+    }
+
+}
