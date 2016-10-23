@@ -37,9 +37,33 @@ class GrauParentescoController extends AbstractCrudController
     
     public function gravarAction(){
         
-        $this->addSuccessMessage('Registro Inserido/Alterado com sucesso');
-        $this->redirect()->toRoute('navegacao', array('controller' => 'grau_parentesco-grauparentesco', 'action' => 'index'));
-        return parent::gravar($this->service, $this->form);
+        $controller =  $this->params('controller');
+     
+
+        $pos = $this->getRequest()->getPost()->toArray();
+       
+
+        
+        
+            $Grau = $this->getServiceLocator()->get('\GrauParentesco\Service\GrauParentescoService');
+            $Grau->setNmGrauParentesco(trim($this->getRequest()->getPost()->get('nm_grau_parentesco')));
+            if ($Grau->filtrarObjeto()->count()) {
+
+                if ($Grau->filtrarObjeto()->count()) {
+               
+                
+                $this->addErrorMessage('Grau Parentesco já cadastrada');
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+               return FALSE;
+            }}
+           
+              $this->getRequest()->getPost()->set('nm_grau_parentesco', $this->getRequest()->getPost()->get('nm_grau_parentesco'));
+             $result = parent::gravar(
+                                   $this->getServiceLocator()->get('\GrauParentesco\Service\GrauParentescoService'), new \GrauParentesco\Form\GrauParentescoForm()
+                   ); 
+                    $this->addSuccessMessage(' Grau Parentesco cadastrada com sucesso.');
+                    $this->redirect()->toRoute('navegacao', array('controller' => 'grau_parentesco-grauparentesco', 'action' => 'index'));
+      
     }
 
     public function cadastroAction()
