@@ -35,27 +35,32 @@
             if (!empty($paginator)) {
                 ?>
                 <tbody class="">
-                    <tr role="row" class="tablesorter-filter-row" align="center">
+                    <tr role="row" class="tablesorter-filter-row">
                         <?php
                         foreach ($camposFilter as $key => $campoFilter) {
                             ?>    
-                            <td>
-                                <?php
-                                if (!is_null($campoFilter)) {
-                                    ?>
-                                    <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                                    <?php
-                                } else {
-                                    ?>
-                                    &nbsp;                                        
-                                    <?php
-                                }
-                                ?>
-                            </td>
+                       <td style="background-color: #e3e3e3;">
                             <?php
-                        }
-                        ?>                            
+                            if (!is_null($campoFilter)) {
+                                ?>
+                                  <input type="search" placeholder="" class=" col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                    
+                                <?php
+                            } else {
+                                ?>
+                                <!--&nbsp;-->
+                                <?php
+                            }
+                            ?>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                         <td>&nbsp;</td>
+                        
+                </tr>                           
                     </tr>
+                     
                     <?php
                     foreach ($paginator as $key => $etapa) {
                         ?>
@@ -63,7 +68,7 @@
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($etapa['nm_etapa']) ?></td>
                          </td>
                             <td class="text-center">
-                                <span class="btn-group">
+                                <span class="btn-group" style="width: 100px;">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($etapa['id_etapa'])))) ?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($etapa['id_etapa'])))) ?>
                                 </span>
