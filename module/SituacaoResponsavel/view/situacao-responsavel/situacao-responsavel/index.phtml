@@ -4,20 +4,20 @@
 <!--<link rel="stylesheet" href="/assets/css/jquery.tablesorter.pager.css">-->
 
 <div class="page-head">
-    <h2>Situação do Responsável</h2>
+    <h2>Situação Responsável</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
-        <div class="col-md-12">
-            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Nova Situação do Responsável">Cadastro Situação Responsável</a>
+        <div class="col-md-12"><?php // botao novo ?>
+            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adiciona um nova Situacao Responsavel">Nova Situação Responsável</a>
         </div>
     </div>
     <br />
-    <div class="row" id="situacao-responsavel-pagination"></div>
+    <div class="row" id="atleta-pagination"></div>    
 </div>
 
 <script>
-    // funcao ajax para buscar a paginacao
+    <?php // funcao ajax para buscar a paginacao?>
     $(function () {
 
         $.ajax({
@@ -26,16 +26,17 @@
             cache: false,
             url: '/situacao_responsavel-situacaoresponsavel/index-pagination',
             async: true,
-            data: {},
+            data: {
+            },
             beforeSend: function () {
 
-                $('#situacao-responsavel-pagination').html(
-                    '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                );
+                $('#atleta-pagination').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                        );
             },
             success: function (data) {
 
-                $('#situacao-responsavel-pagination').html(data);
+                $('#atleta-pagination').html(data);
             }
         });
 

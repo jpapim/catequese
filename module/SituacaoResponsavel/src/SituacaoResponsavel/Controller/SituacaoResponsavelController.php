@@ -32,6 +32,26 @@ class SituacaoResponsavelController extends  AbstractCrudController {
         return parent::index($this->service, $this->form);
     }
 
+    
+
+    public function gravarAction()
+    {
+
+        $controller = $this->params('controller');
+        $this->addSuccessMessage('Registro Alterado com sucesso');
+        $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+        return parent::gravar($this->service, $this->form);
+    }
+
+    public function cadastroAction()
+    { //função de alterar
+        return parent::cadastro($this->service, $this->form);
+    }
+
+    public function excluirAction()
+    {
+        return parent::excluir($this->service, $this->form);
+    }
     public function indexPaginationAction()
     {
 
@@ -44,8 +64,8 @@ class SituacaoResponsavelController extends  AbstractCrudController {
             '1' => [
                 'filter' => "situacao_responsavel.cs_pai_mae  LIKE ?"
             ],
-
-            '2' => NULL,
+            
+            
         ];
 
 
@@ -72,23 +92,7 @@ class SituacaoResponsavelController extends  AbstractCrudController {
 
         return $viewModel->setTerminal(true);
     }
-
-    public function gravarAction()
-    {
-
-        $controller = $this->params('controller');
-        $this->addSuccessMessage('Registro Alterado com sucesso');
-        $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
-        return parent::gravar($this->service, $this->form);
-    }
-
-    public function cadastroAction()
-    { //função de alterar
-        return parent::cadastro($this->service, $this->form);
-    }
-
-    public function excluirAction()
-    {
-        return parent::excluir($this->service, $this->form);
-    }
+    
+    
+    
 } 

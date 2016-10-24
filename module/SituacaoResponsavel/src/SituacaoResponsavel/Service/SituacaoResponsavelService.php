@@ -19,7 +19,21 @@ use SituacaoResponsavel\Entity\SituacaoResponsavelEntity as Entity;
 class SituacaoResponsavelService  extends  Entity{
 
 
-    public function getSituacaoResponsavelPaginator($filter = NULL, $camposFilter = NULL)
+    
+    public function getSituacaoResponsavelToArray($id)
+    {
+
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+
+        $select = $sql->select('situacao_responsavel')
+            ->where([
+                'situacao_responsavel.id_situacao_responsavel'=> $id
+            ]);
+
+        return $sql->prepareStatementForSqlObject($select)->execute()->current();
+    }
+    
+     public function getSituacaoResponsavelPaginator($filter = NULL, $camposFilter = NULL)
     {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
@@ -49,7 +63,7 @@ class SituacaoResponsavelService  extends  Entity{
             }
         }
 
-        $select->where($where)->order(['id_situacao_responsavel DESC']);
+        $select->where($where)->order(['id_situacao_responsavel ASC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
@@ -67,7 +81,7 @@ class SituacaoResponsavelService  extends  Entity{
                 ->or
                 ->like('ds_situacao_responsavel', "%{$like}%")
                 ->or
-                ->like('cs_pai_mae',"%{$like}%");
+                ->like('cs_pai_mae', "%{$like}%");
         }
 
         $resultSet = new HydratingResultSet(new Reflection(), new Entity());
@@ -82,19 +96,6 @@ class SituacaoResponsavelService  extends  Entity{
             ->setCurrentPageNumber((int)$pagina)
             ->setItemCountPerPage((int)$itensPagina)
             ->setPageRange((int)$itensPaginacao);
-    }
-
-    public function getSituacaoResponsavelToArray($id)
-    {
-
-        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
-
-        $select = $sql->select('situacao_responsavel')
-            ->where([
-                'situacao_responsavel.id_situacao_responsavel'=> $id
-            ]);
-
-        return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
 
