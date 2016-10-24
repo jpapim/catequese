@@ -38,18 +38,19 @@
                 ?>
                 <tbody class="">
                 <tr role="row" class="tablesorter-filter-row" align="center">
-                    <?php
+                     <?php
                     foreach ($camposFilter as $key => $campoFilter) {
                         ?>
-                        <td>
+                       
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
-                                <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                     <td style="background-color: #e3e3e3;">
+                                <input type="search" placeholder="" class=" col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                                 <?php
                             } else {
                                 ?>
-<!--                                &nbsp;-->
+                                <!--&nbsp;-->
                                 <?php
                             }
                             ?>
@@ -57,6 +58,7 @@
                         <?php
                     }
                     ?>
+                        <td>&nbsp;</td>
                 </tr>
                 <?php
                 foreach ($paginator as $key => $paroquia) {
