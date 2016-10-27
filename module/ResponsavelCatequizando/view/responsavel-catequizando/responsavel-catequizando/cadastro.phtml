@@ -14,6 +14,8 @@
             $form->setAttribute('data-role', 'form');
             $form->prepare();
             echo $this->form()->openTag($form);
+            $form->get('id')->setValue(\Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
+            echo $this->formHidden($form->get('id'));
             ?>
 
             <br/>

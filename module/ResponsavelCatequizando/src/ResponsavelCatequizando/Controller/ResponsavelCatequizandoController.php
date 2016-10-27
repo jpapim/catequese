@@ -10,7 +10,9 @@ use Zend\View\Model\JsonModel;
 
 class ResponsavelCatequizandoController extends AbstractCrudController
 {
-
+    /**
+     * @var \ResponsavelCatequizando\Service\ResponsavelCatequizandoService
+     */
     protected $service;
 
 
@@ -40,19 +42,16 @@ class ResponsavelCatequizandoController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
-                'filter' => "responsavel_catequizando.id_responsavel_catequizando LIKE ?",
+                'filter' => "catequizando.nm_catequizando  LIKE ?",
             ],
             '1' => [
-                'filter' => "catequizando.nm_catequizando LIKE ?",
-            ],
-            '2' => [
                 'filter' => "responsavel.nm_responsavel LIKE ?",
             ],
-
-            '3' => [
+            '2' => [
                 'filter' => "grau_parentesco.nm_grau_parentesco LIKE ?",
             ],
-            '4' => NULL,
+
+            '3' => NULL,
 
         ];
 
@@ -85,6 +84,10 @@ class ResponsavelCatequizandoController extends AbstractCrudController
     public function gravarAction()
     {
 
+        if(Cript::dec($this->getRequest()->getPost()->get('id'))){
+            $this->atualizarAction();
+        }
+
         $controller = $this->params('controller');
         $this->addSuccessMessage('Registro Alterado com sucesso');
         $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
@@ -99,6 +102,26 @@ class ResponsavelCatequizandoController extends AbstractCrudController
     public function excluirAction()
     {
         return parent::excluir($this->service, $this->form);
+    }
+
+    public function atualizarAction(){
+
+       try{
+
+           $post= $this->getRequest()->getPost();
+           #xd($post);
+           $objService = new \ResponsavelCatequizando\Service\ResponsavelCatequizandoService();
+           $objService->setId(\Estrutura\Helpers\Cript::dec($post['id']));
+           $objService->setIdCatequizando($post['id_catequizando']);
+           $objService->setIdResponsavel($post['id_responsavel']);
+           $objService->setIdSituacaoConjugal($post['id_situacao_conjugal']);
+           $objService->setIdGrauParentesco($post['id_grau_parentesco']);
+           $objService->salvar();
+           #$objService->setIdResponsavel($post[''])
+
+       }catch (\PDOException $e){
+           $this->addErrorMessage("Erro ao atualizar dados:".$e->getMessage());
+       }
     }
 
     //    public function gravarAction()

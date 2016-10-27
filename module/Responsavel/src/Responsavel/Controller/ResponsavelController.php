@@ -37,59 +37,66 @@ class ResponsavelController extends AbstractCrudController
     
     public function gravarAction(){
    
-// FORMATANDO AS DATAS RECEBIDAS     
-$dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
-$dateIngresso = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_ingresso'));
+// FORMATANDO AS DATAS RECEBIDAS
 
-
-###########################- GRAVANDO EMAIL -#######################################################################
- 
-      //##############################################################################################
         //GRAVANDO TABELA EMAIL
  $form = new \Responsavel\Form\ResponsavelForm();
         /* @var $emailService \Email\Service\EmailService */
         $emailService = $this->getServiceLocator()->get('\Email\Service\EmailService');
         $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('em_email')));
-        $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('id_situacao')));
         #Alysson - Verifica se já existe este emaill cadastrado para um usuário
         if ($emailService->filtrarObjeto()->count()) {
             $this->addErrorMessage('Email já cadastrado. Faça seu login.');
            
             return FALSE;
         }
+        $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
            $resultEmail = parent::gravar(
                 $this->getServiceLocator()->get('\Email\Service\EmailService'), new \Email\Form\EmailForm()
             );
 
 
+
 if($resultEmail){
- 
-  // INSERINDO CAMPOS COM FKS DA TABELA RESPONSAVEL
-       $this->getRequest()->getPost()->set('id_sexo', $this->getRequest()->getPost()->get('id_sexo'));
-      
-        $this->getRequest()->getPost()->set('id_email', $resultEmail);
-       
-        $this->getRequest()->getPost()->set('id_email', $resultEmail);
-        
-        $this->getRequest()->getPost()->set('id_movimento_pastoral', $this->getRequest()->getPost()->get('id_movimento_pastoral'));
-        
-        ///INSERINDO CAMPOS DA TABELA RESPONSAVEL
-        $this->getRequest()->getPost()->set('nm_responsavel', $this->getRequest()->getPost()->get('nm_responsavel'));
-        $this->getRequest()->getPost()->set('tx_observacao', $this->getRequest()->getPost()->get('tx_observacao'));
- 
-        
-        $this->getRequest()->getPost()->set('cs_participa_movimento_pastoral', $this->getRequest()->getPost()->get('cs_participa_movimento_pastoral'));
-        
-        
+
+    # REalizando Tratamento do  Telefone Celular
+    $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_residencial')));
+    $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_residencial')));
+    $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_celular']);
+    $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
+    $resultTelefoneResidencial = parent::gravar(
+        $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
+    );
+    if($resultTelefoneResidencial){
+
+        # REalizando Tratamento do  Telefone Celular
+        $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_celular')));
+        $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_celular')));
+        $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_celular']);
+        $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
+        $resultTelefoneCelular = parent::gravar(
+            $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
+        );
+
+        if($resultTelefoneCelular){
+
+            // INSERINDO CAMPOS COM FKS DA TABELA RESPONSAVEL
+            $this->getRequest()->getPost()->set('id_email', $resultEmail);
+            $this->getRequest()->getPost()->set('id_telefone_residencial', $resultTelefoneResidencial);
+            $this->getRequest()->getPost()->set('id_telefone_celular',$resultTelefoneCelular);
+
            parent::gravar(
-                            $this->getServiceLocator()->get('\Responsavel\Service\ResponsavelService'), new \Responsavel\Form\ResponsavelDetalheForm()
-            );
-    
+               $this->getServiceLocator()->get('\Responsavel\Service\ResponsavelService'), new \Responsavel\Form\ResponsavelForm()
+           );
+
     $this->addSuccessMessage('Registro Inserido/Alterado com sucesso');
     $this->redirect()->toRoute('navegacao', array('controller' => 'responsavel-responsavel', 'action' => 'index'));
-        
+            }
+
+        }
    
-    }}
+    }
+}
 
   public function cadastroAction()
     { // funnção alterar
@@ -110,14 +117,17 @@ if($resultEmail){
             '0' => [
                 'filter' => "responsavel.nm_responsavel LIKE ?",
             ],
+
+            '1' => NULL,
+
+            '2' => NULL,
             
-            
-             '1' => [
-                'filter' => "responsavel.tx_observacao LIKE ?",
+             '3' => [
+                'filter' => "email.em_email LIKE ?",
             ],
             
-             '2' => [
-                'filter' => "responsavel.cs_participa_movimento_pastoral LIKE ?",
+             '4' => [
+                'filter' => "profissao.nm_profissao LIKE ?",
             ],
 
         ];

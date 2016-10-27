@@ -113,10 +113,15 @@ class ResponsavelService extends Entity {
 
         $select = $sql->select('responsavel')->columns([
                     'id_responsavel',
-                    'nm_responsavel', 
-                    'tx_observacao', 
-                    'cs_participa_movimento_pastoral', 
-        ]);
+                    'nm_responsavel',
+                    'id_telefone_residencial',
+                    'id_telefone_celular',
+                    'id_email',
+                    'id_profissao',
+
+        ])
+            ->join('email','email.id_email = responsavel.id_email',['em_email'])
+            ->join('profissao','profissao.id_profissao = responsavel.id_profissao',['nm_profissao']);
 
         $where = [
         ];
@@ -154,6 +159,20 @@ class ResponsavelService extends Entity {
         return $sql->prepareStatementForSqlObject($select)->execute();
     }
 
+    public static function responsavelNome($id){
+        $resp = new \Responsavel\Service\ResponsavelService();
+
+        $arrResp = $resp->buscar($id);
+
+        return $arrResp->getNmResponsavel();
+    }
+
+    public function getTelefone($id){
+        $objTelefone = new \Telefone\Service\TelefoneService();
+        $arr = $objTelefone->buscar($id)->toArray();
+
+        return '('.$arr['nr_ddd_telefone'].') '.\Estrutura\Helpers\Telefone::telefoneMask($arr['nr_telefone']);
+    }
 
 }
 
