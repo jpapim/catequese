@@ -41,23 +41,28 @@
                         <?php
                         foreach ($camposFilter as $key => $campoFilter) {
                             ?>    
-                            <td>
-                                <?php
-                                if (!is_null($campoFilter)) {
-                                    ?>
-                                    <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                                    <?php
-                                } else {
-                                    ?>
-                                    &nbsp;                                        
-                                    <?php
-                                }
-                                ?>
-                            </td>
+                       <td style="background-color: #e3e3e3;">
                             <?php
-                        }
-                        ?>                            
+                            if (!is_null($campoFilter)) {
+                                ?>
+                                  <input type="search" placeholder="" class=" col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                    
+                                <?php
+                            } else {
+                                ?>
+                                <!--&nbsp;-->
+                                <?php
+                            }
+                            ?>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                         <td>&nbsp;</td>
+                        
+                </tr>                           
                     </tr>
+                     
                     <?php
                     foreach ($paginator as $key => $detalhe_formacao) { #xd($detalhe_formacao);
                         ?>
