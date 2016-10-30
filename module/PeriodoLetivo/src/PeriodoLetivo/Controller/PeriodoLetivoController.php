@@ -147,11 +147,42 @@ class PeriodoLetivoController extends AbstractCrudController
         }
     }
 
-    public function excluirAction()
+   
+    public function excluirAction($option = null)
     {
-        return parent::excluir($this->service, $this->form);
-    }
+       
+        $id = Cript::dec($this->params('id'));
+        if(!empty($option)){
+            $id = Cript::dec($option);
+        }
+        if(isset($id) && $id){
+            $obPeriodo=  new \PeriodoLetivo\Service\PeriodoLetivoService();
+            $arrPeriodo =$obPeriodo->getPeriodoLetivoToArray($id);
+       
 
+         ##############Excluindo dados da tabela filha###############
+            $obTurmaCatequizando = new \TurmaCatequizando\Service\TurmaCatequizandoService();
+            $obTurmaCatequizando->setIdPeriodoLetivo($arrPeriodo['id_periodo_letivo']);
+            $obTurmaCatequizando->excluir();
+            
+            $obDetalhePeriodo = new \DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService();
+            $id_detalhe_periodo=$obDetalhePeriodo->getDetalhePeriodoToArray($arrPeriodo['id_periodo_letivo']);
+            foreach ($id_detalhe_periodo as $id_detalhe ){
+            
+            $obFrequenciaTurma = new \FrequenciaTurma\Service\FrequenciaTurmaService();
+            $obFrequenciaTurma->setIdDetalhePeriodoLetivo($id_detalhe['id_detalhe_periodo_letivo']);
+            $obTurmaCatequizando->excluir();
+                
+            }
+            $obDetalhePeriodo->setIdPeriodoLetivo($arrPeriodo['id_periodo_letivo']);
+            $obDetalhePeriodo->excluir();
+            
+            
+        $retornoExcluir = parent::excluir($this->service, $this->form);
+        
+        }
+         return $retornoExcluir;
+}
     public function cadastroAction()
     {
         return parent::cadastro($this->service, $this->form);

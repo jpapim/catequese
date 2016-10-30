@@ -59,6 +59,14 @@
 <script type="text/javascript" src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
 <script type="text/javascript" language="javascript" class="init">
     $(document).ready(function() {
+         function validaForm() {
+        if (($("#dt_fim").val() < $("#dt_inicio").val())) {
+            $("#msg").html(
+                '<div class="alert alert-danger"><strong>Atenção!</strong> Data inválida</div>'
+            );
+            return false;
+        }}
+        
         $( "#dt_inicio" ).datepicker(
             { dateFormat: 'dd/mm/yy' }
         );
