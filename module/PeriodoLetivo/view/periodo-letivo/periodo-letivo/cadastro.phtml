@@ -8,7 +8,7 @@
                 <?php
 
 
-                $form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
+                #$form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
                 $form->setAttribute('class', 'form-horizontal');
                 $form->setAttribute('method', 'post');
                 $form->setAttribute('data-role', 'form');
@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-10">
-                        <button type="submit" class="btn btn-primary">Avançar</button>
+                        <button type="submit" class="btn btn-primary" onclick="checarDatas()"id="avancar">Avançar</button>
                         <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Cancelar</a>
                     </div>
                 </div>
@@ -56,16 +56,11 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
+
 <script type="text/javascript" language="javascript" class="init">
     $(document).ready(function() {
-         function validaForm() {
-        if (($("#dt_fim").val() < $("#dt_inicio").val())) {
-            $("#msg").html(
-                '<div class="alert alert-danger"><strong>Atenção!</strong> Data inválida</div>'
-            );
-            return false;
-        }}
+        
+     
         
         $( "#dt_inicio" ).datepicker(
             { dateFormat: 'dd/mm/yy' }
@@ -75,4 +70,25 @@
         );
 
     });
+      function checarDatas(){
+
+var data_1 = $("#dt_inicio").val();
+var data_2 = $("#dt_fim").val();;
+var Compara01 = parseInt(data_1.split("/")[2].toString() + data_1.split("/")[1].toString() + data_1.split("/")[0].toString());
+var Compara02 = parseInt(data_2.split("/")[2].toString() + data_2.split("/")[1].toString() + data_2.split("/")[0].toString());
+
+if (Compara01 > Compara02) {
+   alert("Data inicio maior que a data final ");
+   return false;
+}
+
+ }
+ $("#avancar").click(function(){
+            if(checarDatas() == true){
+                $("#periodoletivoform").attr('action',"<?= $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')) ?>");
+                $("#periodoletivoform").submit();
+            }
+        });
+ 
+ 
 </script>

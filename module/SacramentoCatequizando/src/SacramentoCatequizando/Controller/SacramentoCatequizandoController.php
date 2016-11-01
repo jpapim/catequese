@@ -36,22 +36,20 @@ class SacramentoCatequizandoController extends AbstractCrudController
 
         $filter = $this->getFilterPage();
         $camposFilter = [
+          
             '0' => [
-                'filter' => "sacramento_catequizando.id_sacramento_catequizando LIKE ?",
-            ],
-            '1' => [
                 'filter' => "catequizando.nm_catequizando LIKE ?",
             ],
-            '2' => [
+            '1' => [
                 'filter' => "sacramento.nm_sacramento LIKE ?",
             ],
-            '3' => [
+            '2' => [
                 'filter' => "paroquia.nm_paroquia LIKE ?",
             ],
-            '4' => [
-                'filter' => "sacramento_catequizando.cs_comprovante_bastimo LIKE ?",
+            '3' => [
+                'filter' => "sacramento_catequizando.cs_comprovante_batismo LIKE ?",
             ],
-            '5' => NULL,
+          
 
         ];
 

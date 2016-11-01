@@ -5,7 +5,7 @@
         <table class="table table-striped" id="tablesorterSacramentoCatequizando">
             <thead>
             <tr>
-                <th class="text-center">Identificador</th>
+                
                 <th class="text-center">Catequizando</th>
                 <th class="text-center">Sacramento</th>
                 <th class="text-center">Paróquia</th>
@@ -15,7 +15,7 @@
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">Identificador</th>
+                
                 <th class="text-center">Catequizando</th>
                 <th class="text-center">Sacramento</th>
                 <th class="text-center">Paróquia</th>
@@ -42,32 +42,38 @@
                 ?>
                 <tbody class="">
                 <tr role="row" class="tablesorter-filter-row" align="center">
-                    <?php
+                        <?php
                     foreach ($camposFilter as $key => $campoFilter) {
                         ?>
-                        <td>
+                        
                             <?php
-                            if (!is_null($campoFilter)) {
+                            if(!is_null($campoFilter)) {
+                                
                                 ?>
-                                <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>"
-                                       value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                                <?php
-                            } else {
+                    <td style="background-color: #e3e3e3;">
+                                <input type="search" placeholder="" class="tablesorter-filter col-md-10 col-md-push-1" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                            <?php
+                            } else{
                                 ?>
-                                <!--&nbsp;-->
-                                <?php
+                                &nbsp;
+                            <?php
                             }
                             ?>
                         </td>
-                        <?php
+                     
+                            
+                            <?php
+                            
                     }
+                    
                     ?>
+                               <td>&nbsp;</td>
                 </tr>
                 <?php
                 foreach ($paginator as $key => $sacramentocatequizando) {
                     ?>
                     <tr>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequizando['id_sacramento_catequizando']) ?></td>
+                       
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequizando['nm_catequizando']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequizando['nm_sacramento']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramentocatequizando['nm_paroquia']) ?></td>
