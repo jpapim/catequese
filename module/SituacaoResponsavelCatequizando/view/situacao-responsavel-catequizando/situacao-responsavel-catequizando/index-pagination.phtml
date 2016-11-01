@@ -31,7 +31,7 @@
                                 $paginator, 'Sliding', 'partials/pagination.phtml', [
                             'urlPagination' => '/situacao_responsavel_catequizando-situacaoresponsavelcatequizando/index-pagination',
                             'countPerPage' => $countPerPage,
-                            'divData' => '#SituacaoResponsavelCatequizando-pagination',
+                            'divData' => '#atleta-pagination',
                                 ]
                         );
                         ?>  
@@ -44,27 +44,29 @@
                 ?>
                 <tbody class="">
                     <tr role="row" class="tablesorter-filter-row" align="center">
-                        <?php
-                        foreach ($camposFilter as $key => $campoFilter) {
-                            ?>    
-                            <td>
-                                <?php
-                                if (!is_null($campoFilter)) {
-                                    ?>
-                                    <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                                    <?php
-                                } else {
-                                    ?>
-                                    &nbsp;                                        
-                                    <?php
-                                }
-                                ?>
-                            </td>
+                         <?php
+                    foreach ($camposFilter as $key => $campoFilter) {
+                        ?>
+                       
                             <?php
-                        }
-                        ?>                            
-                    </tr>
-                    <?php
+                            if (!is_null($campoFilter)) {
+                                ?>
+                     <td style="background-color: #e3e3e3;">
+                                <input type="search" placeholder="" class=" col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                <?php
+                            } else {
+                                ?>
+                                <!--&nbsp;-->
+                                <?php
+                            }
+                            ?>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                        <td>&nbsp;</td>
+                </tr>
+                <?php
                     foreach ($paginator as $key => $situacao_responsavel_catequizando) {
                         ?>
                         <tr>

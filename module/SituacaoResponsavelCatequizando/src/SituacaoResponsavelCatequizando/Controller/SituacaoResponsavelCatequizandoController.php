@@ -65,11 +65,11 @@ class SituacaoResponsavelCatequizandoController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
-                'filter' => "responsavel.ds_situacao_responsavel LIKE ?",
+                'filter' => "catequizando.nm_catequizando LIKE ?",
             ],
             
              '1' => [
-                'filter' => "catequizando.nm_catequizando LIKE ?",
+                'filter' => "situacao_responsavel.ds_situacao_responsavel LIKE ?" ,
             ],
          
         ];
