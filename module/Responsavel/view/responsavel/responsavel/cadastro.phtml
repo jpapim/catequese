@@ -1,80 +1,100 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css" >           
 <div class="row row-offcanvas row-offcanvas-right">
-    <div class="col-xs-12 col-sm-9">
-        <div class="well">
-            <div class="page-head">
-                <h2>Cadastro</h2>
-            </div>
-
-           
-            <?php
-            $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')));
-            $form->setAttribute('method', 'post');
-            $form->setAttribute('class', 'form-horizontal');
-            $form->setAttribute('data-toggle', 'validator');
-            $form->prepare();
-            echo $this->form()->openTag($form);
-            $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
-            echo $this->formHidden($form->get('id'));
-            ?>
-            <div class="bs-callout bs-callout-info">
-          
-            </div>
-            <br />
+    <div class="col-md-12">
+        <div class="page-head">
+            <h2>Cadastro</h2>
+        </div>
 
 
-            <div class="form-group">
-           <div class="form-group">
-              <div class="col-md-7">
-                    <?= $this->formRow($form->get('nm_responsavel')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-     <div class="col-md-7">
-                    <?= $this->formRow($form->get('em_email')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>                    
-            </div>
-            <div class="form-group">
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('em_email_confirm')) ?>
-                    <div class="help-block with-errors"></div>
+        <?php
+        $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')));
+        $form->setAttribute('method', 'post');
+        $form->setAttribute('class', 'form-horizontal');
+        $form->setAttribute('data-toggle', 'validator');
+        $form->prepare();
+        echo $this->form()->openTag($form);
+        $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
+        echo $this->formHidden($form->get('id'));
+        ?>
+         <br />
+
+
+        <div class="form-group">
+           <div class="row">
+               <div class="form-group">
+                   <div class="col-md-5">
+                       <?= $this->formRow($form->get('nm_responsavel')) ?>
+                       <div class="help-block with-errors"></div>
+                   </div>
+                   <div class="col-md-1"></div>
+                   <div class="col-md-5">
+                       <?= $this->formRow($form->get('id_sexo')) ?>
+                       <div class="help-block with-errors"></div>
+                   </div>
+               </div>
+           </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <?= $this->formRow($form->get('em_email')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <?= $this->formRow($form->get('em_email_confirm')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+
                 </div>
-
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_sexo')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-                
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_situacao')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-                
-                  <div class="col-md-7">
-                    <?= $this->formRow($form->get('id_movimento_pastoral')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-               
-                <div class="col-md-7">
-                    <?= $this->formRow($form->get('tx_observacao')) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-                
-                   <div class="col-md-7">
-                    <?= $this->formRow($form->get('cs_participa_movimento_pastoral')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>                    
             </div>
-                
 
-                         
-                    <div class="help-block with-errors"></div>
-                    
-                    
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <?= $this->formRow($form->get('id_telefone_residencial')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <?= $this->formRow($form->get('id_telefone_celular')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <?= $this->formRow($form->get('id_profissao')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
                 </div>
-            </div>    
-               
+            </div>
 
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <?= $this->formRow($form->get('id_movimento_pastoral')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <?= $this->formRow($form->get('cs_participa_movimento_pastoral')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <?= $this->formRow($form->get('tx_observacao')) ?>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="help-block with-errors"></div>
+
+
+        </div>
 
 <?php /*
 

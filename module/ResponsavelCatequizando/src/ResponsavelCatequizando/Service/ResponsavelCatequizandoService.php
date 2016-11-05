@@ -14,25 +14,13 @@ class ResponsavelCatequizandoService extends Entity
 
         $select = $sql->select('responsavel_catequizando')->columns([
             'id_responsavel_catequizando',
-     #----------------------
-            # Aguardando implementar o Modulo Responsável,
-            # Após implementado, excluir a linha abaixo ('id_responsavel',)
-            'id_responsavel',
-     #----------------------
         ])
             ->join(
                 'catequizando', 'catequizando.id_catequizando = responsavel_catequizando.id_catequizando'
             )
-     #----------------------
-            # Após implementar o Modulo Responsavel retirar a linha abaixo do comentário
-
-            //->join(
-            //  'responsavel', 'responsavel.id_responsavel = responsavel_catequizando.id_responsavel'
-            // )
-     #----------------------
-
+            ->join('responsavel','responsavel.id_responsavel = responsavel_catequizando.id_responsavel',['nm_responsavel'])
             ->join(
-                'grau_parentesco', 'grau_parentesco.id_grau_parentesco = responsavel_catequizando.id_grau_parentesco'
+                'grau_parentesco', 'grau_parentesco.id_grau_parentesco = responsavel_catequizando.id_grau_parentesco',['nm_grau_parentesco']
             );
 
         $where = [
@@ -113,8 +101,10 @@ class ResponsavelCatequizandoService extends Entity
                 'responsavel_catequizando.id_responsavel_catequizando = ?' => $id,
             ]);
 
+
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
+
 
 
 }

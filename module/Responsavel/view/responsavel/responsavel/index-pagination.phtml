@@ -6,17 +6,20 @@
             <thead>
                 <tr>
                       <th class="text-center">Nome</th>
-                    <th class="text-center">Observação</th>
-                    <th class="text-center">Movimento Pastoral</th>
+                      <th class="text-center">Telefone Residencial</th>
+                      <th class="text-center">Telefone Celular</th>
+                      <th class="text-center">Email</th>
+                      <th class="text-center">Profissão</th>
                      <th class="text-center">Ações</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                    <th class="text-center">Nome </th>
-                    <th class="text-center">Observação</th>
-                    <th class="text-center">Movimento Pastoral</th>
-                     <th class="text-center">Ações</th>
+                    <th class="text-center">Nome</th>
+                    <th class="text-center">Telefone Residencial</th>
+                    <th class="text-center">Telefone Celular</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Profissão</th>
                 
                 </tr>
                 <tr>
@@ -61,11 +64,14 @@
                     </tr>
                     <?php
                     foreach ($paginator as $key => $responsavel) {
+
                         ?>
                     <tr>
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['nm_responsavel']) ?></td>
-                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['tx_observacao']) ?></td>
-                          <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['cs_participa_movimento_pastoral']) ?></td>
+                        <td class="text-center"><?= $service->getTelefone($responsavel['id_telefone_residencial'])?></td>
+                        <td class="text-center"><?= $service->getTelefone($responsavel['id_telefone_celular'])?></td>
+                        <td class="text-center"><?= $responsavel['em_email']?></td>
+                          <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['nm_profissao']) ?></td>
                              
                             <td class="text-center">
                                 <span class="btn-group">

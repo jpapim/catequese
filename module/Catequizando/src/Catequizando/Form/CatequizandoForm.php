@@ -44,12 +44,10 @@ class CatequizandoForm extends  AbstractForm{
         $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(true)->label("Sexo");
 
         #FK- Telefone Residencial
-        $objForm->hidden("id_telefone_residencial")->required(false);
-        $objForm->telefone("telefone_residencial")->setAttribute('class', 'telefone')->required(true)->label("Telefone Residencial");
+        $objForm->telefone("id_telefone_residencial")->setAttribute('class', 'telefone')->required(true)->label("Telefone Residencial");
 
         #FK- Telefone Celular
-        $objForm->telefone("telefone_celular")->setAttribute('class', 'telefone')->required(false)->label("Telefone Celular");
-        $objForm->hidden("id_telefone_celular")->required(false);
+        $objForm->telefone("id_telefone_celular")->setAttribute('class', 'telefone')->required(false)->label("Telefone Celular");
 
         # SACRAMENTOS #
         #Resgatando as informações da tabela sacaramento

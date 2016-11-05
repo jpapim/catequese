@@ -29,7 +29,6 @@ class ResponsavelCatequizandoForm extends AbstractForm
 
         ########################################################
 
-
         $this->formObject = $objForm;
     }
 

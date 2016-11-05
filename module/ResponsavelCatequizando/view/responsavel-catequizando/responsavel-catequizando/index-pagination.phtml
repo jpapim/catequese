@@ -5,7 +5,6 @@
         <table class="table table-striped" id="tablesorterResponsavelCatequizando">
             <thead>
             <tr>
-                <th class="text-center">Identificador</th>
                 <th class="text-center">Nome do Catequizando</th>
                 <th class="text-center">ID/Nome do Responsável</th>
                 <th class="text-center">Grau de Parentesco</th>
@@ -16,7 +15,6 @@
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">Identificador</th>
                 <th class="text-center">Nome do Catequizando</th>
                 <th class="text-center">ID/Nome do Responsável</th>
                 <th class="text-center">Grau de Parentesco</th>
@@ -66,16 +64,11 @@
                 </tr>
                 <?php
                 foreach ($paginator as $key => $responsavel_catequizando) {
+
                     ?>
                     <tr>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel_catequizando['id_responsavel_catequizando']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel_catequizando['nm_catequizando']) ?></td>
-
-     <!-- ########################-->
-                        <!-- Quando o modulo Responsável for implementado alterar na linha abaixo de id_responsavel para nm_responsavel-->
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel_catequizando['id_responsavel']) ?></td>
-     <!-- ########################-->
-
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel_catequizando['nm_responsavel']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel_catequizando['nm_grau_parentesco']) ?></td>
 
                         </td>
