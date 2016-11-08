@@ -1,0 +1,133 @@
+<div class="page-head">
+    <h2>Frequência</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="block-flat">
+            <div class="content">
+                <?php
+                $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')));
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('data-role', 'form');
+                $form->prepare();
+                echo $this->form()->openTag($form);
+
+                ?>
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                        <?= $this->formRow($form->get('etapa')) ?>
+                    </div>
+                    <div class="col-md-4 turma_select">
+                        <?= $this->formRow($form->get('turma')) ?>
+                    </div>
+                </div>
+
+                <?= $this->form()->closeTag(); ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal fade carregando" role="dialog" id="myModal">
+        <div class="modal-dialog" style="width: 200px; height: 200px;">
+            <div class="modal-content">
+                    <div class="">
+                        <p><img class="img-responsive"  src="/assets/img/carregando5.gif"><p>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="" id="lista-catequizando"></div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+
+        function carregarListaCatequinzadosAjax(etapa, turma){
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                cache: false,
+                url: '/frequencia_turma-frequenciaturma/listar-turma-catequizando',
+                async: true,
+                data: {
+                    id_etapa: etapa,
+                },
+                beforeSend: function () {
+                    $('#lista-catequizando').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
+                },
+                success: function (data) {
+                    $('#lista-catequizando').html(data);
+                }
+            });
+        }
+
+        //Realiza a chamada Ajax para carregar o campo turma, caso o campo etapa esteja preenchido
+        $('#etapa').change(function() {
+           if($(this).val()){
+               $('.turma_select').hide()
+               $('.carregando').modal('show');
+
+               $.ajax({
+                   type:'post',
+                   dataType:'json',
+                   url:'/frequencia_turma-frequenciaturma/carregar-combo-turmas-ajax',
+                   cache:false,
+                   async:true,
+                   data:{
+                       id_etapa:$(this).val()
+                   },
+                   success: function(response){
+                       if(response.sucesso == true){
+                           var options = '<option value="">Selecione...</option>';
+                           $.each(response.ar_turmas, function(i, item){
+                              options += '<option value="'+ response.ar_turmas[i].id+'">'+ response.ar_turmas[i].nm_turma +'</option>';
+                           });
+                           $('#turma').html(options);
+                           $('.turma_select').show();
+                           $('.carregando').modal('hide');
+                       }else{
+                           $('#turma').html('<option value="">-- Erro ao carregar as Turmas --</option>');
+                       }
+                   }
+
+               });
+           }else{
+               $('#turma').html('<option value=""></option>');
+           }
+        });
+
+        //Realiza a chamada Ajax, caso os dois combos estejam preenchidos
+        $('#turma').change(function() {
+          if($(this).val()){
+              $.ajax({
+                  type:'POST',
+                  dataType:'text',
+                  url:'/frequencia_turma-frequenciaturma/listar-turma-catequizando',
+                  cache:false,
+                  async: true,
+                  data:{
+                        id_turma: $(this).val()
+                    },
+
+                    beforeSend : function (){
+                        $('#lista-catequizando').html(
+                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                        );
+                    },
+                    success: function (data){
+                        $('#lista-catequizando').html(data);
+                    }
+            });
+          }
+        });
+
+
+    });
+</script>

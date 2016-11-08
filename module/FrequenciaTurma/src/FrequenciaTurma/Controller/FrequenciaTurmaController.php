@@ -89,5 +89,77 @@ class FrequenciaTurmaController extends AbstractCrudController
         return parent::excluir($this->service, $this->form);
     }
 
+    public function frequenciaAction(){
+
+        $dados=[
+            'form'=> new \FrequenciaTurma\Form\FrequenciaForm(),
+            'service'=>$this->service,
+            'controller'=>$this->params('controller')
+        ];
+        $view = new ViewModel($dados);
+        return $view;
+    }
+
+    public function listarTurmaCatequizandoAction(){
+
+        if($this->getRequest()->isPost()){
+           $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim',$this->params()->fromPost());
+
+            $turCatServ = new \TurmaCatequizando\Service\TurmaCatequizandoService();
+            $arrTurCat = $turCatServ->fetchAllById(['id_turma = ?'=>$post['id_turma']]);
+            $arrTurCat = array_unique($arrTurCat, SORT_REGULAR);
+
+            /** @var $catServ \Catequizando\Service\CatequizandoService */
+            $catServ= $this->getServiceLocator()->get('\Catequizando\Service\CatequizandoService');
+            $listaCatequizandos = [];
+            foreach($arrTurCat as  $key => $item){
+                $listaCatequizandos[$key] = $catServ->buscar($item['id_catequizando'])->toArray();
+            }
+            /** @var $obDetPeriodoLetivo \DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService */
+            $obDetPeriodoLetivo= new \DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService();
+            $encontros = $obDetPeriodoLetivo->fetchAllById(['id_periodo_letivo = ? ORDER BY (dt_encontro) ASC'=>$arrTurCat[0]['id_periodo_letivo']]);
+
+            $dados=[
+                'lista'=>$listaCatequizandos,
+                'encontros'=>$encontros,
+                'controller'=>$this->params('controller'),
+            ];
+
+            $view = new ViewModel($dados);
+
+            return $view->setTerminal(true);
+        }
+    }
+
+    public function carregarComboTurmasAjaxAction(){
+
+        if(!$this->getRequest()->isPost()){
+            throw new \Exception('Dados inválidos');
+        }
+
+        $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim',$this->params()->fromPost());
+        $id_etapa = $post['id_etapa'];
+
+        #
+        $turmaServ = new \Turma\Service\TurmaService();
+        $arrTurma = $turmaServ->fetchAllById(['id_etapa = ?'=>$post['id_etapa']]);
+
+        $arrTurma = array_unique($arrTurma,SORT_REGULAR);
+        $arrTurmaCombo =[];
+        foreach($arrTurma as $key => $item){
+            $arrTurmaCombo[$key]['id']= $item['id_turma'];
+            $arrTurmaCombo[$key]['nm_turma'] = $item['nm_turma'];
+        }
+
+        if(count($arrTurmaCombo) >0){
+            $valueJson = new JsonModel(['ar_turmas'=>$arrTurmaCombo,'sucesso'=>true,]);
+        }else{
+            $arrTurmaCombo[0]['id']="";
+            $arrTurmaCombo[0]['nm_turma']='Não existe turma nessa etapa.';
+            $valueJson = new JsonModel(['ar_turmas'=>$arrTurmaCombo,'sucesso'=>true,]);
+        }
+        #xd($valueJson);
+        return $valueJson;
+    }
 
 }
