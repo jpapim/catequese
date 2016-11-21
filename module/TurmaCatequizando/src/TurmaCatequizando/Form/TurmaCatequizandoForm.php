@@ -25,10 +25,7 @@ class TurmaCatequizandoForm extends AbstractForm
         # TODO: $objForm->combo("id_catequizando", '\Catequizando\Service\CatequizandoService', 'id', 'nm_catequizando')->required(false)->label("catequizando");
         #$objForm->hidden("id_catequizando")->required(false)->label("Catequizando");
         $objForm->text("id_catequizando")->required(true)->label("Catequizando");
-       $objForm->radio("cs_aprovado",['S'=>'Aprovado','N'=>'Reprovado'])
-            ->setAttribute('style',' text-transform: uppercase')
-            ->required(true)
-            ->label("Situacao");
+      
 
         $objForm->hidden("id_usuario")->required(false)->label("Identificacao do Usuario");
         $objForm->combo("id_periodo_letivo", '\PeriodoLetivo\Service\PeriodoLetivoService', 'id', 'dt_ano_letivo')->required(false)->label("Período Letivo");
@@ -36,35 +33,37 @@ class TurmaCatequizandoForm extends AbstractForm
         //#########################################################################################
         $objForm->textareaHtml("tx_observacoes")->required(true)->label("Observações");
 
-        $oTurmaCatequizando =  new \TurmaCatequizando\Service\TurmaCatequizandoService();
-        $colecaoTurmaCatequizando = $oTurmaCatequizando->fetchAll();
-        $arrTurmaCatequizando=[];
+       # $oTurmaCatequizando =  new \TurmaCatequizando\Service\TurmaCatequizandoService();
+        #$colecaoTurmaCatequizando = $oTurmaCatequizando->fetchAll();
+        #$arrTurmaCatequizando=[];
 
-        if(isset($options['arrTurmaCatequizando']) && $options['arrTurmaCatequizando']){
-            foreach($colecaoTurmaCatequizando as $key => $obTurmaCatequizando){
-                $arrTurmaCatequizando[]=[
-                    'value'=>$obTurmaCatequizando->getId(),
-                    'name'=>'turma_tatequizando',
-                    'label'=>$obTurmaCatequizando->getCsAprovado(),
-                    'selected'=>in_array($obTurmaCatequizando->getId(),$options['arrTurmaCatequizando'])? true: false,
-                ];
-            }
+        #if(isset($options['arrTurmaCatequizando']) && $options['arrTurmaCatequizando']){
+         #   foreach($colecaoTurmaCatequizando as $key => $obTurmaCatequizando){
+          #      $arrTurmaCatequizando[]=[
+           #         'value'=>$obTurmaCatequizando->getId(),
+            #        'name'=>'turma_tatequizando',
+             #       'label'=>$obTurmaCatequizando->getCsAprovado(),
+              #      'selected'=>in_array($obTurmaCatequizando->getId(),$options['arrTurmaCatequizando'])? true: false,
+               # ];
+            #}
 
-        }else{
+        #}else{
 
-            foreach($colecaoTurmaCatequizando as $key => $obTurmaCatequizando){
-                $arrTurmaCatequizando[]=[
-                    'value'=>$obTurmaCatequizando->getId(),
-                    'name'=>'turma_catequizando',
-                    'label'=>$obTurmaCatequizando->getCsAprovado(),
+         #   foreach($colecaoTurmaCatequizando as $key => $obTurmaCatequizando){
+          #      $arrTurmaCatequizando[]=[
+           #         'value'=>$obTurmaCatequizando->getId(),
+            #        'name'=>'turma_catequizando',
+             #       'label'=>$obTurmaCatequizando->getCsAprovado(),
 
-                ];
-            }
-        }
+              #  ];
+            #}
+        #}
 
+$objForm->multicheckbox("cs_aprovado",['S'=>'Aprovado','N'=>'Reprovado'])
+            ->setAttribute('style',' text-transform: uppercase')
+            ->required(true);
 
-
-        $objForm->radio('arrTurmaCatequizando', $arrTurmaCatequizando)->required(false)->label('Aprovacao');
+        #$objForm->radio('arrTurmaCatequizando', $arrTurmaCatequizando)->required(false)->label('Aprovacao');
         
         
         

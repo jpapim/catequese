@@ -1,12 +1,19 @@
 <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
-
+<?php $form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('data-role', 'form');
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
+                echo $this->formHidden($form->get('id'));       ?>
 <div class="col-md-12">
+             
     <div class="table-responsive">
         <table class="table table-striped" id="tablesorterDetalhes">
             <thead>
             <tr>
                 <th class="text-center">Catequizando</th>
-                <th class="text-center">Situacao</th>
+                <th class="text-center">Situação</th>
                 
 
             </tr>
@@ -14,7 +21,7 @@
             <tfoot>
             <tr>
                 <th class="text-center">Catequizando</th>
-                <th class="text-center">Situacao</th>
+               <th class="text-center">Situação</th>
                 
 
             </tr>
@@ -41,59 +48,68 @@
                     <?php
                     foreach ($camposFilter as $key => $campoFilter) {
                         ?>
-                        <td>
+                        <td style="background-color: #e3e3e3;">
                             <?php
-                            if (!is_null($campoFilter)) {
+                            if(!is_null($campoFilter)) {
                                 ?>
-                                <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>"
-                                       value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                                <?php
-                            } else {
+                                <input type="search" placeholder="" class="tablesorter-filter col-md-10 col-md-push-1" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                            <?php
+                            } else{
                                 ?>
                                 &nbsp;
-                                <?php
+                            <?php
                             }
                             ?>
                         </td>
-                        <?php
+                        <td>&nbsp;</td>
+                            
+                            <?php
                     }
                     ?>
                 </tr>
                 <?php
                 foreach ($paginator as $key => $turma_catequizando) {
+                    
+                
                    
                     ?>
                     <tr>
                         
                         
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeTudoMaiusculo($turma_catequizando['nm_catequizando']) ?></td>
-                        <td class="text-center"><?#=$this->formRow($form->get('arrTurmaCatequizando'))?></td>
-                        <td class="text-center">
-                                <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('turma_catequizando', array('controller' => 'turma_catequizando-turmacatequizando', 'action' => 'excluir-catequizando-turma', 'id_turma' => Estrutura\Helpers\Cript::enc($turma_catequizando['id_turma']), 'id_periodo_letivo' => Estrutura\Helpers\Cript::enc($turma_catequizando['id_periodo_letivo']), 'id_turma_catequizando' => Estrutura\Helpers\Cript::enc($turma_catequizando['id_turma_catequizando']) ))) ?>
-                                </span>
-                        </td>
+                <td class="text-center"><?= \Estrutura\Helpers\String::nomeTudoMaiusculo($turma_catequizando['nm_catequizando']) ?></td>
+                        <td class="text-center" id="cs_aprovado"><?=$this->formRow($form->get('cs_aprovado'))?></td><?php }?>
+                        
                     </tr>
                     <?php
                 }
                 ?>
                 </tbody>
                 <?php
-            }
+            
             ?>
-
+         
         </table>
         <div class="row">
-            <div class="col-md-12">
+            
+              
                 <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>"
-                   class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                   class="btn btn-primary" title="Retorna para a Página Principal">Home</a>  
+         
                 <a class="btn btn-default"
                    href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'index')) ?>"
                    title="Adiciona um novo sacramento">Lista de Turmas</a>
             </div>
+          <div class="col-md-10 col-md-push-11"> <!-- Lado Direito -->
+                               
+                
+                  <a id="enturmar_aluno" class="btn btn-primary" href="#" title="Adicionar data do encontro">Salvar</a>
+            </div>
+                                
+   
         </div>
     </div>
 </div>
+
 <!--<script src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript"></script>-->
 <script src="/assets/js/moment.js" type="text/javascript"></script>
 <script src="/assets/js/validator.min.js" type="text/javascript"></script>
