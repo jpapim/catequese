@@ -23,7 +23,8 @@ class FrequenciaForm extends  AbstractForm
         $objForm = new FormObject('frequenciaform',$this,$this->inputFilter);
 
         $objForm->combo('etapa','\Etapa\Service\EtapaService','id','nm_etapa')->required(false)->label('Etapa:');
-        $objForm->select('turma',[''=>'Selecione uma turma'])->required(false)->label('Turma:');
+        $objForm->select('turma',[''=>'Selecione uma turma'])
+            ->required(false)->label('Turma:');
 
         $this->formObject = $objForm;
     }

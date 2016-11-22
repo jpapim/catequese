@@ -7,3 +7,4 @@ LIMIT 0, 1000
 INSERT INTO `action` (`nm_action`) VALUES ('frequencia');
 INSERT INTO `action` (`nm_action`) VALUES ('listar-turma-catequizando');
 INSERT INTO `action` (`nm_action`) VALUES ('carregar-combo-turmas-ajax');
+INSERT INTO `action` (`nm_action`) VALUES ('gravar-presenca');

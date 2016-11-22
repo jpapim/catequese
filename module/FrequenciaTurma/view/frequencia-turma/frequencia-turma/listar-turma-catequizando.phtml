@@ -1,10 +1,15 @@
 <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
 
 <div class="col-md-12">
+    <div class="alert alert-danger alert-dismissable" id="msg" style="display: none;">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Error!</strong> <span id="msg-info"></span>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped" id="tablesorterFrequencia" >
             <thead>
             <tr>
+
                 <th class="text-center">Nome Catequizando</th>
                 <?php  foreach($encontros as $encontro): ?>
                     <th class="text-center"><?=$encontro['dt_encontro']?></th>
@@ -25,11 +30,11 @@
                 <tr role="row" class="tablesorter-filter-row" align="center">
 
                 </tr>
-                <?php foreach ($lista as $item): ?>
+                <?php foreach ($lista as $item): #xd($item) ?>
                     <tr>
                         <td><?= $item['nm_catequizando']?></td>
                         <?php  foreach($encontros as $encontro): ?>
-                            <td align="center"><input type="checkbox" ></td>
+                            <td align="center"><input type="checkbox" value="<?= $item['id_turma_catequizado']."_".$encontro['id_detalhe_periodo_letivo']?>" class="falta"></td>
                         <?php endforeach; ?>
 
                     </tr>
@@ -38,10 +43,28 @@
 
 
         </table>
+
         <div class="row">
             <div class="col-md-12">
-                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                <div class="col-md-2">
+                    <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                </div>
+                <div class="col-md-2 col-md-push-9">
+                    <button id="gravar" class="btn btn-primary">Gravar</button>
+                </div>
 
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal fade carregando" role="dialog" id="myModal">
+    <div class="modal-dialog" style="width: 200px; height: 200px;">
+        <div class="modal-content">
+            <div class="">
+                <p><img class="img-responsive"  src="/assets/img/carregando5.gif"><p>
             </div>
         </div>
     </div>
@@ -57,6 +80,42 @@
 
 <script type="text/javascript" language="javascript" >
     $(function () {
+            // Alert de erro...
+
+            $("#gravar").on('click',function(){
+                var faltas = new Array();
+
+                $("input.falta[type=checkbox]:checked").each(function(){
+                    faltas.push($(this).val());
+                });
+
+                $.ajax({
+                    type:'post',
+                    dataType:'json',
+                    url:'/frequencia_turma-frequenciaturma/gravar-presenca',
+                    cache:false,
+                    async:true,
+                    data:{
+                        form:faltas
+                    },
+
+                    beforeSend: function(){
+                            $("#myModal").modal('show');
+                    },
+
+                    success : function(response){
+                        $("#myModal").modal('hide');
+
+                        if(response.sucesso == true){
+                            window.location ='/frequencia_turma-frequenciaturma';
+                        }else{
+                            $('#msg-info').html(response.msg);
+                            $('#msg').fadeIn('slow');
+                        }
+                    }
+
+                });
+            });
 
         // NOTE: $.tablesorter.theme.bootstrap is ALREADY INCLUDED in the jquery.tablesorter.widgets.js
         // file; it is included here to show how you can modify the default classes

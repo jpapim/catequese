@@ -108,21 +108,32 @@ class FrequenciaTurmaController extends AbstractCrudController
             $turCatServ = new \TurmaCatequizando\Service\TurmaCatequizandoService();
             $arrTurCat = $turCatServ->fetchAllById(['id_turma = ?'=>$post['id_turma']]);
             $arrTurCat = array_unique($arrTurCat, SORT_REGULAR);
-
+            #xd($arrTurCat);
             /** @var $catServ \Catequizando\Service\CatequizandoService */
             $catServ= $this->getServiceLocator()->get('\Catequizando\Service\CatequizandoService');
             $listaCatequizandos = [];
             foreach($arrTurCat as  $key => $item){
                 $listaCatequizandos[$key] = $catServ->buscar($item['id_catequizando'])->toArray();
+                $listaCatequizandos[$key]['id_turma_catequizado']=$item['id_turma_catequizando'];
             }
             /** @var $obDetPeriodoLetivo \DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService */
             $obDetPeriodoLetivo= new \DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService();
             $encontros = $obDetPeriodoLetivo->fetchAllById(['id_periodo_letivo = ? ORDER BY (dt_encontro) ASC'=>$arrTurCat[0]['id_periodo_letivo']]);
 
+            $encontroFiltrado = [];
+            foreach($encontros as $key => $encontro){
+                $encontro['dt_encontro'] = \Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($encontro['dt_encontro']);
+                $encontroFiltrado[$key] =$encontro;
+            }
+
+            #xd($listaCatequizandos);
+            #xd($encontroFiltrado);
             $dados=[
                 'lista'=>$listaCatequizandos,
-                'encontros'=>$encontros,
+                'encontros'=>$encontroFiltrado,
                 'controller'=>$this->params('controller'),
+
+
             ];
 
             $view = new ViewModel($dados);
@@ -160,6 +171,53 @@ class FrequenciaTurmaController extends AbstractCrudController
         }
         #xd($valueJson);
         return $valueJson;
+    }
+
+    public function gravarPresencaAction(){
+        if($this->getRequest()->isPost()){
+            try{
+                $value=null;
+                $post = $this->params()->fromPost('form');
+
+                if(empty($post)){
+                   $value = new JsonModel(['sucesso'=>false, 'msg'=>'Não foi possível gravar a lista de presença (lista vazia).']);
+                    return $value;
+                }
+
+                $cate_faltas=[];
+                foreach($post as $key => $p):
+                    $p = explode('_',$p);
+                    $cate_faltas[$key]=[
+                        'id_turma_catequizando'=>$p[0],
+                        'id_detalhe_periodo_letivo'=>$p[1]
+                    ];
+                endforeach;
+
+                $bool =[];
+                foreach($cate_faltas as $freq):
+                    $this->getRequest()->getPost()->set('id_turma_catequizando',$freq['id_turma_catequizando']);
+                    $this->getRequest()->getPost()->set('id_detalhe_periodo_letivo',$freq['id_detalhe_periodo_letivo']);
+
+                 $bool[]=   parent::gravar(
+                        $this->service,$this->form
+                    );
+                endforeach;
+
+                if($bool){
+                    $value = new JsonModel([
+                        'sucesso'=>true,
+                    ]);
+
+                }
+            }catch (\Exception $e){
+                $value = new JsonModel([
+                    'sucesso'=>false,
+                    'msg'=>'Não foi possível gravar a lista de presença:'.$e->getMessage()
+                ]);
+
+            }
+            return $value;
+        }
     }
 
 }
