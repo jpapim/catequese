@@ -1,21 +1,61 @@
 <footer>
-    <div class="row">
-        <div class="col-md-2">&nbsp;</div>
-        <div class="col-md-8 text-center">
-            <a href="#" data-toggle="modal" data-target="#myModalPoliticas">Política de Privacidade</a> | <a href="#" data-toggle="modal" data-target="#myModalTermos">Termos de Utilização</a> | <a href="#" data-toggle="modal" data-target="#myModalDeclaracao">Declaração de Segurança</a>
-            <br>
-            <img src="/assets/img/logo/logo-menu.png" />
-        </div>
-        <div class="col-md-2">&nbsp;</div>
-    </div>
+    <table align="center" border="0">
+        <tr>
+            <td rowspan="3"><img src="/assets/img/logo/logo-fabrica.jpg" width=" 70px" height="70px"
+                                 align="center"/></td>
+            <td>
+                <div class="col-md-12">
+                    <a href="#" data-toggle="modal" data-target="#myModalPoliticas" style="color:#428BCA">Política de
+                        Privacidade</a> |
+                    <a href="#" data-toggle="modal" data-target="#myModalTermos" style="color:#428BCA">Termos de
+                        Utilização</a> |
+                    <a href="#" data-toggle="modal" data-target="#myModalDeclaracao" style="color:#428BCA">Declaração de
+                        Segurança</a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="col-md-12">
+                    <a href="#" data-toggle="modal" data-target="#myModalProjecao">Um produto desenvolvido pela fabrica
+                        de software do <b><span style="color:#A70D05;
+            font-family: 'Segoe Script'">Uni</span><span style="color:#302F53;
+            font-family: 'cambria'">Projeção</span></a></b></div>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <div class="col-md-12"><?php $obVersionamento = new \Estrutura\View\Helper\Versionamento(); ?>
+                    <div class="versao"><?php echo $obVersionamento->getGitFullVersion(); ?></div>
+                </div>
+            </td>
+        </tr>
+
+
+    </table>
     <br>
-    <div class="row">
-        <div class="col-md-12">
-            <?php $obVersionamento = new \Estrutura\View\Helper\Versionamento(); ?>
-            <div class="versao" style="text-align: center;"><?php echo $obVersionamento->getGitFullVersion() ; ?></div>
+</footer>
+<!-- Modal -->
+<div class="modal fade" id="myModalProjecao" tabindex="-1" role="dialog" aria-labelledby="myModalProjecaoLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalProjecaoLabel">Fábrica de Software</h4>
+            </div>
+            <div class="modal-body">
+
+                <h3> A fábrica </h3>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
         </div>
     </div>
-</footer>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="myModalPoliticas" tabindex="-1" role="dialog" aria-labelledby="myModalPoliticasLabel">
