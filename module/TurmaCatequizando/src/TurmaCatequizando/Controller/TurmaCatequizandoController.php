@@ -99,6 +99,11 @@ class TurmaCatequizandoController extends AbstractCrudController
     {
         return parent::excluir($this->service, $this->form);
     }
+    
+      public function aprovacaoAction()
+    {
+        return parent::cadastro($this->service, $this->form);
+    }
 
     public function indexPaginationAction()
     {// funcao paginacao
@@ -253,8 +258,68 @@ class TurmaCatequizandoController extends AbstractCrudController
 
         return parent::excluir($this->service, $this->form);
     }
+    
+    public function aprovacaoPaginationAction()
+    {
+        $filter = $this->getFilterPage();
 
+        $id_turma = $this->params()->fromPost('id_turma');
+        $id_etapa = $this->params()->fromPost('id_etapa');
+
+        $camposFilter = [
+            '0' => [
+                'filter' => "catequizando.nm_catequizando LIKE ?",
+            ],
+            
+            
+
+        ];
+
+        #xd($id_turma);
+        $paginator = $this->service->getAprovacaoCatequizandoPaginator($id_turma, $id_etapa, $filter, $camposFilter);
+
+        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+
+        $countPerPage = $this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        );
+
+        $paginator->setItemCountPerPage($this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        ))->setCurrentPageNumber($this->getCurrentPage());
+
+        $viewModel = new ViewModel([
+            'service' => $this->service,
+            'form' => new \TurmaCatequizando\Form\TurmaCatequizandoForm(),
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            'id_turma' => $id_turma,
+            'id_etapa' => $id_etapa,
+            'atributos' => array()
+        ]);
+
+        return $viewModel->setTerminal(TRUE);
+} 
+public function listarAprovadoAction(){
+     return parent::cadastro($this->service, $this->form);
+     
+        }
+    
+   
+    
 }
+    
+    
+
+
+    
+
+    
+
+    
 
 
     

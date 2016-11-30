@@ -1,0 +1,167 @@
+<div class="page-head">
+    <h2>Aprovacao de Alunos</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="block-flat">
+            <div class="content">
+                <?php
+                $form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('data-role', 'form');
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
+                echo $this->formHidden($form->get('id'));
+                #$form->get('dt_nascimento')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_nascimento')->getValue()));
+              
+                ?>
+                <!--DADOS PESSOAIS -->
+                <hr>
+                <fieldset>
+
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="col-md-5 col-md-push-1"><!--Lado Esquerdo -->
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?= $this->formRow($form->get('id_turma')) ?>
+                                    </div>
+                                </div>
+                                 
+                          
+                                
+                               </div>
+
+                            <div class="col-md-4 col-md-push-2"> <!-- Lado Direito -->
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <?=$this->formRow($form->get('id_etapa'))?>
+                                    
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+                            
+                            
+                            </div>
+                        </div>
+                </fieldset><!-- FIM DADOS PESSOAIS -->
+            
+                
+            
+                
+                 
+              
+               </div>
+               
+                </div>
+             <div class="row" id="turmacatequizando-pagination"></div>
+                <?= $this->form()->closeTag(); ?>
+            </div>
+        </div>
+    </div>
+
+
+<script type="text/javascript"
+        src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function () {
+        $('#enturmar_aluno').hide();
+        function carregaralunosTurmaAposInserir() {
+            <?php
+            if( (isset($id_turma) && $id_turma) && (isset($id_etapa) && $id_etapa) ) { ?>
+            id_turma = <?=$id_turma?>;
+            id_etapa = <?=$id_etapa?>;
+            if (id_turma && id_etap) {
+                carregarListaCatequizandosTurmaAjax(id_turma, id_etapa); //Chama a Pagina��o da listagem
+            }
+            <?php
+            }
+            ?>
+        }
+
+        //Função que faz a listagem ser paginada.
+        function carregarListaCatequizandosTurmaAjax(id_turma, id_etapa) {
+            $('#Buscar').show();
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                cache: false,
+                url: '/turma_catequizando-turmacatequizando/aprovacao-pagination',
+                async: true,
+                data: {
+                    id_turma: id_turma,
+                    id_etapa: id_etapa
+                },
+                beforeSend: function () {
+                    $('#turmacatequizando-pagination').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
+                },
+                success: function (data) {
+                    $('#turmacatequizando-pagination').html(data);
+                }
+            });
+        }
+
+        //Realiza a chamada Ajax, caso os dois combos estejam preenchidos
+        $('#id_turma').change(function () {
+            id_turma = $(this).val();
+            id_etapa = $('#id_etapa').val();
+            if (id_turma && id_etapa) {
+                carregarListaCatequizandosTurmaAjax(id_turma, id_etapa);//Chama a Pagina��o da listagem
+            } else {
+                $('#turmacatequizando-pagination').html(
+                    '<div class="row"><div class="col-md-12 text-center"></div></div>'
+                );
+            }
+        });
+
+        //Realiza a chamada Ajax, caso os dois combos estejam preenchidos
+        $('#id_etapa').change(function () {
+            id_turma = $('#id_turma').val();
+            id_etapa = $(this).val();
+            if (id_turma && id_etapa) {
+                carregarListaCatequizandosTurmaAjax(id_turma, id_etapa);//Chama a Pagina��o da listagem
+            } else {
+                $('#turmacatequizando-pagination').html(
+                    '<div class="row"><div class="col-md-12 text-center"></div></div>'
+                );
+            }
+        });
+
+        //Fun��o Ajax que adiciona alunos a uma determinada turma
+        $('#Buscar').click(function () {
+            var dados = $('#turmacatequizandoform').serialize();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/turma_catequizando-turmacatequizando/aprovacao-pagination',
+                async: true,
+                data: dados,
+                success: function (response) {
+                    $("#id_turma").val("");
+                    $("#id_etapa").val("");
+                    //$("#id_catequizando").val(""); //Alysson - TODO: remover o comentario depois que o catequista estiver Implementado
+                    $("#tx_observacoes").val("");
+
+                    //Caso a insersao tenha sido realizada com sucesso
+                    if (response.sucesso == true) {
+                        //carrego a lista apenas com os alunos da turma
+                        carregarListaCatequizandosTurmaAjax(response.id_turma, response.id_etapa);//Chama a Pagina��o da listagem
+                        $("#id_turma").val(response.id_turma); //Deixo setado a turma
+                        $("#id_etapa").val(response.id_etapa); //Deixo setado o periodo letivo
+                    }
+                }
+            });
+
+            return false;
+        });
+
+        carregaralunosTurmaAposInserir();
+    });
+</script>

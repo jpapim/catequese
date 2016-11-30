@@ -179,6 +179,59 @@ class TurmaCatequizandoService extends Entity {
             ]);
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
+     
+    public function getAprovacaoCatequizandoPaginator($id_turma, $id_etapa, $filter = NULL, $camposFilter = NULL)
+    {
+
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+
+        $select = $sql->select('turma_catequizando')->columns([
+            'id_turma_catequizando',
+            'id_turma',
+            'id_catequizando',
+            'id_usuario',
+            'id_periodo_letivo',
+            'dt_cadastro',
+            'cs_aprovado',
+            'ds_motivo_reprovacao',
+            'tx_observacoes',
+      
+            
+        ])->join('turma', 'turma.id_turma = turma_catequizando.id_turma', [
+            'nm_turma','id_etapa'
+        ])    
+        ->join('catequizando', 'catequizando.id_catequizando = turma_catequizando.id_catequizando', [
+            'nm_catequizando'
+        ]);
+
+        $where = [
+            'turma_catequizando.id_turma'=>$id_turma,
+            'turma.id_etapa'=>$id_etapa,
+        ];
+
+        if (!empty($filter)) {
+
+            foreach ($filter as $key => $value) {
+
+                if ($value) {
+
+                    if (isset($camposFilter[$key]['mascara'])) {
+
+                        eval("\$value = " . $camposFilter[$key]['mascara'] . ";");
+                    }
+
+                    $where[$camposFilter[$key]['filter']] = '%' . $value . '%';
+                }
+            }
+        }
+
+        $select->where($where)->order(['id_catequizando DESC']);
+
+        return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
+    }
+    
+    
+    
     
 }
 
