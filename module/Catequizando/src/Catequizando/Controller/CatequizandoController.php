@@ -538,7 +538,6 @@ class CatequizandoController extends  AbstractCrudController{
     #### Actions para o caso de o Responsável não  tiver sido cadastrado no Sistema
     public function responsavelFormCadAction(){
 
-
         $form = new \Catequizando\Form\CatequizandoResponsavelForm();
         $catequizando = $this->service->buscar($this->params()->fromPost('id_catequizando'));
 

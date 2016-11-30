@@ -68,16 +68,15 @@ class CatequistaController extends AbstractCrudController
         /* @var $emailService \Email\Service\EmailService */
             $emailService = $this->getServiceLocator()->get('\Email\Service\EmailService');
             $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('em_email')));
-            if ($emailService->filtrarObjeto()->count()) {
 
-                if ($emailService->filtrarObjeto()->count()) {
+            if ($emailService->filtrarObjeto()->count()) {
 
                 $this->addErrorMessage('Email já cadastrado. Faça seu login.');
                 $this->redirect()->toRoute('navegacao', array('catequista-catequista' => $controller, 'action' => 'index'));
                 return FALSE;
             }
 
-            }
+
             
              //Verifica tamanho da senha
         if (strlen(trim($this->getRequest()->getPost()->get('pw_senha'))) < 8) {

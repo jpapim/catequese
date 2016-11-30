@@ -110,7 +110,7 @@ class TurmaService extends Entity {
     }
 
 
-        public function getTurmaToArray($id)
+    public function getTurmaToArray($id)
     {
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
         $select = $sql->select('turma')
@@ -122,8 +122,7 @@ class TurmaService extends Entity {
     
     
     
-    
-                    }
+}
 
     
     
