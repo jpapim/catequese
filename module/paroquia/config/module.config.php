@@ -8,6 +8,7 @@ return array(
                 'options' => array(
                     'route'    => '/:controller[/:action[/:id]]',
                     'defaults' => array(
+                        'controller'=>'paroquia',
                         'action'     => 'index',
                     ),
                 ),

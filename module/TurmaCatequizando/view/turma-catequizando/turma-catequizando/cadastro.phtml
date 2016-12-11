@@ -75,6 +75,7 @@
 <script type="text/javascript" language="javascript" class="init">
     $(document).ready(function () {
         $('#enturmar_aluno').hide();
+        $("#id_catequizando").val("");
         function carregaralunosTurmaAposInserir() {
             <?php
             if( (isset($id_turma) && $id_turma) && (isset($id_periodo_letivo) && $id_periodo_letivo) ) { ?>
@@ -91,6 +92,7 @@
         //Função que faz a listagem ser paginada.
         function carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo) {
             $('#enturmar_aluno').show();
+
             $.ajax({
                 type: "post",
                 dataType: "text",
@@ -167,5 +169,13 @@
         });
 
         carregaralunosTurmaAposInserir();
+
+        /*Autocomplete Catequiizandos - Igor*/
+        $("#id_catequizando").autocomplete({
+            minLength:4,
+            source:"/catequizando-catequizando/autocomplete"
+        });
+
+
     });
 </script>

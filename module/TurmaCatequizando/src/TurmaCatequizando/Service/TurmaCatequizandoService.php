@@ -121,7 +121,7 @@ class TurmaCatequizandoService extends Entity {
     }
 
 
-    public function getTurmaCatequizandoInternoPaginator($id_turma, $id_periodo_letivo, $filter = NULL, $camposFilter = NULL)
+    public function getTurmaCatequizandoInternoPaginator($id_turma=null, $id_periodo_letivo = null, $filter = NULL, $camposFilter = NULL)
     {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
@@ -144,10 +144,16 @@ class TurmaCatequizandoService extends Entity {
             'nm_catequizando'
         ]);
 
-        $where = [
-            'turma_catequizando.id_turma'=>$id_turma,
-            'turma_catequizando.id_periodo_letivo'=>$id_periodo_letivo,
-        ];
+        if(!empty($id_turma) && !empty($id_periodo_letivo)){
+            $where = [
+                 'turma_catequizando.id_turma'=>$id_turma,
+                'turma_catequizando.id_periodo_letivo'=>$id_periodo_letivo,
+            ];
+        }else{
+            $where = [
+               
+            ];
+        }
 
         if (!empty($filter)) {
 
@@ -161,6 +167,7 @@ class TurmaCatequizandoService extends Entity {
                     }
 
                     $where[$camposFilter[$key]['filter']] = '%' . $value . '%';
+
                 }
             }
         }

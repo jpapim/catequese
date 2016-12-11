@@ -166,6 +166,7 @@ class TurmaCatequizandoController extends AbstractCrudController
         #xd($id_turma);
         $paginator = $this->service->getTurmaCatequizandoInternoPaginator($id_turma, $id_periodo_letivo, $filter, $camposFilter);
 
+
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
         $countPerPage = $this->getCountPerPage(
@@ -175,6 +176,7 @@ class TurmaCatequizandoController extends AbstractCrudController
         $paginator->setItemCountPerPage($this->getCountPerPage(
             current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
         ))->setCurrentPageNumber($this->getCurrentPage());
+
 
         $viewModel = new ViewModel([
             'service' => $this->service,
@@ -199,14 +201,24 @@ class TurmaCatequizandoController extends AbstractCrudController
             $id_turma = $this->params()->fromPost('id_turma');
             $id_periodo_letivo = $this->params()->fromPost('id_periodo_letivo');
             $id_catequizando = $this->params()->fromPost('id_catequizando');
+
+            $cateService = new \Catequizando\Service\CatequizandoService();
+            $id_catequizando = $cateService->getFiltrarCatequizandoPorNomeToArray($id_catequizando)->current();
+
+
+            #xd($id_catequizando);
             $id_usuario = $this->params()->fromPost('id_usuario');
             $tx_observacoes = $this->params()->fromPost('tx_observacoes');
 
             $obj_turma_catequizando = new \TurmaCatequizando\Service\TurmaCatequizandoService();
-
+            $obj_turma_catequizando->setIdCatequizando($id_catequizando['id_catequizando']);
+            if($obj_turma_catequizando->filtrarObjeto()->count() > 0){
+                $this->addInfoMessage('Catequizando já está enturmado');
+                return false;
+            }
 
             $arDadosGravar = array(
-                'id_catequizando' => $id_catequizando,
+                'id_catequizando' => $id_catequizando['id_catequizando'],
                 'id_periodo_letivo' => $id_periodo_letivo,
                 'id_turma' => $id_turma,
                 'id_usuario' => $id_usuario,

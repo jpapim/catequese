@@ -779,4 +779,17 @@ class CatequizandoController extends  AbstractCrudController{
         return $this->redirect()->toRoute('navegacao',array('controller'=>$this->params('controller'),'action'=>'responsavelCatequizando'));
     }
 
+    public function autocompleteAction(){
+        $term =  $_GET['term'];
+        $arr = $this->service->getFiltrarCatequizandoPorNomeToArray($term);
+        $arrFiltrado =[];
+
+        foreach($arr as $cate){
+           $arrFiltrado[]=$cate['nm_catequizando'];
+        }
+        $value = new JsonModel($arrFiltrado);
+        return $value;
+
+    }
+
 }
