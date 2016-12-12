@@ -307,6 +307,61 @@ public function listarAprovadoAction(){
      return parent::cadastro($this->service, $this->form);
      
         }
+        
+          public function gravarAprovacaoAction(){
+        if($this->getRequest()->isPost()){
+            try{
+                $value=null;
+                $post = $this->params()->fromPost('form');
+
+                if(empty($post)){
+                   $value = new JsonModel(['sucesso'=>false, 'msg'=>'Não foi possível gravar a lista de presença (lista vazia).']);
+                    return $value;
+                }
+
+                $cate_faltas=[];
+                foreach($post as $key => $p):
+                    $p = explode('_',$p);
+                    $cate_faltas[$key]=[
+                        'id_turma_catequizando'=>$p[0],
+                        #'id_catequizando'=>$p[1],
+                        'cs_aprovado'=>$p[1]
+                    ];
+                endforeach;
+
+                $bool =[];
+                foreach($cate_faltas as $freq){
+                  $this->getRequest()->getPost()->set('id',$freq['id_turma_catequizando']);
+                 $this->getRequest()->getPost()->set('id_turma_catequizando',$freq['id_turma_catequizando']);
+                   #$this->getRequest()->getPost()->set('id_catequizando',$freq['id_catequizando']);
+                    $this->getRequest()->getPost()->set('cs_aprovado',$freq['cs_aprovado']);
+
+                 $bool[]=   parent::gravar(
+                       $this->getServiceLocator()->get('\TurmaCatequizando\Service\TurmaCatequizandoService'),new \TurmaCatequizando\Form\TurmaCatequizandoAprovacaoForm()
+                    );
+                    }
+                    
+                    
+
+                if($bool){
+                    $value = new JsonModel([
+                    'sucesso'=>TRUE,
+                   
+                ]);
+
+
+                }
+            }catch (\Exception $e){
+                $value = new JsonModel([
+                    'sucesso'=>false,
+                    'msg'=>'Não foi possível gravar a lista de presença:'.$e->getMessage()
+                ]);
+
+            }
+            return $value;
+        }
+    }
+        
     
    
     

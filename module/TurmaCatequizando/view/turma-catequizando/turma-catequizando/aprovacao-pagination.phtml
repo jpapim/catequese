@@ -1,11 +1,9 @@
 <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
-<?php $form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
-                $form->setAttribute('class', 'form-horizontal');
-                $form->setAttribute('data-role', 'form');
-                $form->prepare();
-                echo $this->form()->openTag($form);
-                $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
-                echo $this->formHidden($form->get('id'));       ?>
+<?php
+
+            ?>
+
+?>
 <div class="col-md-12">
              
     <div class="table-responsive">
@@ -70,14 +68,20 @@
                 <?php
                 foreach ($paginator as $key => $turma_catequizando) {
                     
-                
+          
+                 echo $this->form()->openTag($form);
+; 
+   
+                $form->get('id')->setValue($turma_catequizando['id_turma_catequizando']); 
+                echo $this->formhidden($form->get('id'));
+               # echo $this->formHidden($turma_catequizando['id_turma_catequizando']);
                    
                     ?>
                     <tr>
                         
                         
                 <td class="text-center"><?= \Estrutura\Helpers\String::nomeTudoMaiusculo($turma_catequizando['nm_catequizando']) ?></td>
-                        <td class="text-center" id="cs_aprovado"><?=$this->formRow($form->get('cs_aprovado'))?></td><?php }?>
+                <td class="text-center" id="cs_aprovado"value=""><?= $turma_catequizando['id_turma_catequizando']?><input type="checkbox" value="<?=$turma_catequizando['id_turma_catequizando']."_".$aprovacao=1?>" class="falta"></td><?php }?>
                         
                     </tr>
                     <?php
@@ -87,29 +91,33 @@
                 <?php
             
             ?>
-         
         </table>
+
         <div class="row">
-            
-              
-                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>"
-                   class="btn btn-primary" title="Retorna para a Página Principal">Home</a>  
-         
-                <a class="btn btn-default"
-                   href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'index')) ?>"
-                   title="Adiciona um novo sacramento">Lista de Turmas</a>
+            <div class="col-md-12">
+                <div class="col-md-2">
+                    <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                </div>
+                <div class="col-md-2 col-md-push-9">
+                    <button id="gravar" class="btn btn-primary">Gravar</button>
+                </div>
+
             </div>
-          <div class="col-md-10 col-md-push-11"> <!-- Lado Direito -->
-                               
-                
-                  <a id="enturmar_aluno" class="btn btn-primary" href="#" title="Adicionar data do encontro">Salvar</a>
-            </div>
-                                
-   
         </div>
+
     </div>
 </div>
 
+<!-- MODAL -->
+<div class="modal fade carregando" role="dialog" id="myModal">
+    <div class="modal-dialog" style="width: 200px; height: 200px;">
+        <div class="modal-content">
+            <div class="">
+                <p><img class="img-responsive"  src="/assets/img/carregando5.gif"><p>
+            </div>
+        </div>
+    </div>
+</div>
 <!--<script src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript"></script>-->
 <script src="/assets/js/moment.js" type="text/javascript"></script>
 <script src="/assets/js/validator.min.js" type="text/javascript"></script>
@@ -119,8 +127,47 @@
 <script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
 <script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 
-<script type="text/javascript" language="javascript">
+<script type="text/javascript" language="javascript" >
     $(function () {
+            // Alert de erro...
+
+            $("#gravar").on('click',function(){
+                var faltas = new Array();
+
+                $("input.falta[type=checkbox]:checked").each(function(){
+                    faltas.push($(this).val());
+                });
+
+                $.ajax({
+                    type:'post',
+                    dataType:'json',
+                    url:'/turma_catequizando-turmacatequizando/gravar-aprovacao',
+                    cache:false,
+                    async:true,
+                    data:{
+                        form:faltas
+                    },
+
+                    beforeSend: function(){
+                            $("#myModal").modal('show');
+                    },
+
+                    success : function(response){
+                        $("#myModal").modal('hide');
+
+                        if(response.sucesso == true){
+                            window.location ='/turma_catequizando-turmacatequizando/aprovacao';
+                        }else{
+                            $('#msg-info').html(response.msg);
+                            $('#msg').fadeIn('slow');
+                        }
+                    }
+
+                });
+            });
+        
+        
+        
 
         // NOTE: $.tablesorter.theme.bootstrap is ALREADY INCLUDED in the jquery.tablesorter.widgets.js
         // file; it is included here to show how you can modify the default classes
