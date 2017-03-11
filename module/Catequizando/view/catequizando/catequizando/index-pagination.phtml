@@ -5,24 +5,24 @@
         <table class="table table-striped" id="tablesorterCatequizando" >
             <thead>
             <tr>
-
-                <th class="text-center">Usuario</th>
-                <th class="text-center">Responsável</th>
-                <th class="text-center">Telefone Residencial</th>
-                <th class="text-center">Email</th>
-                <th class="text-center">Turma</th>
-                <th class="text-center">Ações</th>
-            </tr>
-            </thead>
-            <tfoot>
-            <tr>
-
+                <th class="text-center" style="width: 5%;">#</th>
                 <th class="text-center">Nome</th>
                 <th class="text-center">Responsável</th>
                 <th class="text-center">Telefone Residencial</th>
                 <th class="text-center">Email</th>
                 <th class="text-center">Turma</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center" style="width: 15%;">Ações</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th class="text-center" style="width: 5%;">#</th>
+                <th class="text-center">Nome</th>
+                <th class="text-center">Responsável</th>
+                <th class="text-center">Telefone Residencial</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Turma</th>
+                <th class="text-center" style="width: 15%;">Ações</th>
             <tr>
                 <th colspan="6" class="ts-pager form-horizontal">
                     <?php
@@ -43,7 +43,7 @@
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
             if (!empty($paginator)) {
                 ?>
-                <tbody class="">
+                <tbody class="" align="center">
                 <tr role="row" class="tablesorter-filter-row">
                     <?php
                     foreach ($camposFilter as $key => $campoFilter) {
@@ -52,16 +52,16 @@
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
-                                <input type="search" placeholder="" class="tablesorter-filter col-md-12" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                            <?php
+                                <input type="search" placeholder="" class=" col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                <?php
                             } else {
                                 ?>
                                 &nbsp;
-                            <?php
+                                <?php
                             }
                             ?>
                         </td>
-                    <?php
+                        <?php
                     }
                     ?>
                 </tr>
@@ -72,6 +72,7 @@
                     ?>
                     <tr>
 
+                        <td class="text-center"><?=$item['id_catequizando']?></td>
                         <td class="text-center"><?=$item['nm_catequizando']?></td>
                         <td class="text-center"><?=$service->getCatequizandoResponsavel($item['id_catequizando'])?></td>
                         <td class="text-center"><?= '('.$item['nr_ddd_telefone'].') '.Estrutura\Helpers\Telefone::telefoneMask($item['nr_telefone'])?></td>

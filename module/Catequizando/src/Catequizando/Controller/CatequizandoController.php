@@ -44,23 +44,23 @@ class CatequizandoController extends  AbstractCrudController{
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0' => [
+            '0' => NULL,
+            '1' => [
                 'filter' => "catequizando.nm_catequizando LIKE ?",
             ],
-            '1' =>  [
+            '2' =>  [
                 'filter' => "responsavel.nm_responsavel LIKE ?",
             ],
 
-            '2' => NULL,
+            '3' => NULL,
 
-            '3' => [
+            '4' => [
                 'filter' => "email.em_email LIKE ?",
             ],
-            '4' => [
+            '5' => [
                 'filter' => "turma.nm_turma LIKE ?",
             ],
-
-            '5' => NULL,
+            '6' => NULL,
         ];
 
         $paginator = $this->service->getCatequizandoPaginator($filter, $camposFilter);

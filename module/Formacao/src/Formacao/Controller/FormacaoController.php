@@ -40,7 +40,8 @@ class FormacaoController extends  AbstractCrudController {
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0'=>[
+            '0' => NULL,
+            '1'=>[
                 'filter' => "formacao.nm_formacao  LIKE ?"
             ],
 

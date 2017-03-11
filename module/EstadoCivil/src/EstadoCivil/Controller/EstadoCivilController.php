@@ -17,7 +17,8 @@ class EstadoCivilController extends AbstractCrudController
      */
     protected $form;
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::init();
     }
 
@@ -31,9 +32,7 @@ class EstadoCivilController extends AbstractCrudController
 
         $filter = $this->getFilterPage();
         $camposFilter = [
-            '0' => [
-                'filter' => "estado_civil.id_estado_civil LIKE ?",
-            ],
+            '0' => NULL,
             '1' => [
                 'filter' => "estado_civil.nm_estado_civil LIKE ?",
             ],
@@ -62,7 +61,9 @@ class EstadoCivilController extends AbstractCrudController
         return $viewModel->setTerminal(TRUE);
     }
 
-    public function gravarAction(){
+    public function gravarAction()
+    {
+
         $controller = $this->params('controller');
         $this->addSuccessMessage('Registro Alterado com sucesso');
         $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));

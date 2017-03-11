@@ -5,19 +5,19 @@
         <table class="table table-striped" id="tablesorterEstadoCivil">
             <thead>
             <tr>
-                <th class="text-center">Identificador</th>
+                <th class="text-center" style="width: 10%;">#</th>
                 <th class="text-center">Estado Civil</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center" style="width: 15%;">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">Identificador</th>
+                <th class="text-center" style="width: 10%;">#</th>
                 <th class="text-center">Estado Civil</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center" style="width: 15%;">Ações</th>
             </tr>
             <tr>
-                <th colspan="6" class="ts-pager form-horizontal">
+                <th colspan="3" class="ts-pager form-horizontal">
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
@@ -43,12 +43,11 @@
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
-                                <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>"
-                                       value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                <input type="search" placeholder="" class=" col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                                 <?php
                             } else {
                                 ?>
-                                <!--&nbsp;-->
+                                &nbsp;
                                 <?php
                             }
                             ?>
@@ -61,8 +60,8 @@
                 foreach ($paginator as $key => $item) {
                     ?>
                     <tr>
-                        <td class="text-center"><?= $item['id_estado_civil']?></td>
-                        <td class="text-center"><?= $item['nm_estado_civil']?></td>
+                        <td class="text-center"><?= $item['id_estado_civil'] ?></td>
+                        <td class="text-center"><?= $item['nm_estado_civil'] ?></td>
 
                         <td class="text-center">
                                 <span class="" style="width: 100px;">
@@ -99,7 +98,7 @@
 <script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
 <script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 
-<script type="text/javascript" language="javascript" >
+<script type="text/javascript" language="javascript">
     $(function () {
 
         // NOTE: $.tablesorter.theme.bootstrap is ALREADY INCLUDED in the jquery.tablesorter.widgets.js

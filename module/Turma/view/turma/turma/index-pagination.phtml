@@ -2,77 +2,79 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterAtletas" >
+        <table class="table table-striped" id="tablesorterTurmas">
             <thead>
-                <tr>
-                    <th class="text-center">Nome da Turma</th>
-                    <th class="text-center">Ações</th>
-                  
-                </tr>
+            <tr>
+                <th class="text-center" style="width: 5%;">#</th>
+                <th class="text-center">Nome da Turma</th>
+                <th class="text-center" style="width: 15%;">Ações</th>
+
+            </tr>
             </thead>
             <tfoot>
-                <tr>
-                    <th class="text-center">Nome da Turma</th>
-                     <th class="text-center">Ações</th>
-                
-                </tr>
-                <tr>
-                    <th colspan="6" class="ts-pager form-horizontal">
-                        <?php
+            <tr>
+                <th class="text-center" style="width: 5%;">#</th>
+                <th class="text-center">Nome da Turma</th>
+                <th class="text-center" style="width: 15%;">Ações</th>
+
+            </tr>
+            <tr>
+                <th colspan="3" class="ts-pager form-horizontal">
+                    <?php
                     echo $this->paginationControl(
-                                $paginator, 'Sliding', 'partials/pagination.phtml', [
+                        $paginator, 'Sliding', 'partials/pagination.phtml', [
                             'urlPagination' => '/turma-turma/index-pagination',
                             'countPerPage' => $countPerPage,
                             'divData' => '#atleta-pagination',
-                                ]
-                        );
-                        ?>  
-                    </th>
-                </tr>
+                        ]
+                    );
+                    ?>
+                </th>
+            </tr>
             </tfoot>
             <?php
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
             if (!empty($paginator)) {
                 ?>
-                <tbody class="">
-                    <tr role="row" class="tablesorter-filter-row" align="center">
-                        <?php
-                        foreach ($camposFilter as $key => $campoFilter) {
-                            ?>    
-                            <td>
-                                <?php
-                                if (!is_null($campoFilter)) {
-                                    ?>
-                                      <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                                    <?php
-                                } else {
-                                    ?>
-                                    &nbsp;                                        
-                                    <?php
-                                }
-                                ?>
-                            </td>
-                             <td>&nbsp;</td>
-                            <?php
-                        }
-                        ?>                            
-                    </tr>
+                <tbody class="" align="center">
+                <tr role="row" class="tablesorter-filter-row">
                     <?php
-                    foreach ($paginator as $key => $turma) {
+                    foreach ($camposFilter as $key => $campoFilter) {
                         ?>
-                        <tr>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($turma['nm_turma']) ?></td>
-                         </td>
-                            <td class="text-center">
+                        <td>
+                            <?php
+                            if (!is_null($campoFilter)) {
+                                ?>
+                                <input type="search" placeholder="" class=" col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                <?php
+                            } else {
+                                ?>
+                                &nbsp;
+                                <?php
+                            }
+                            ?>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+                foreach ($paginator as $key => $turma) {
+                    ?>
+                    <tr>
+                        <td class="text-center"><?= $turma['id_turma'] ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($turma['nm_turma']) ?></td>
+                        </td>
+                        <td class="text-center">
                                 <span class="btn-group">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($turma['id_turma'])))) ?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($turma['id_turma'])))) ?>
                                 </span>
-                            </td>
-                        </tr>                    
-                        <?php
-                    }
-                    ?>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
                 </tbody>
                 <?php
             }
@@ -81,7 +83,8 @@
         </table>
         <div class="row">
             <div class="col-md-12">
-                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>"
+                   class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
             </div>
         </div>
     </div>
@@ -94,7 +97,7 @@
 <script src="/assets/js/jquery.tablesorter.js" type="text/javascript"></script>
 <script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
 <script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
-<script type="text/javascript" language="javascript" >
+<script type="text/javascript" language="javascript">
     $(function () {
 
         // NOTE: $.tablesorter.theme.bootstrap is ALREADY INCLUDED in the jquery.tablesorter.widgets.js
@@ -119,7 +122,7 @@
         };
 
         // call the tablesorter plugin and apply the uitheme widget
-        $("#tablesorterAtletas").tablesorter({
+        $("#tablesorterTurmas").tablesorter({
             // this will apply the bootstrap theme if "uitheme" widget is included
             // the widgetOptions.uitheme is no longer required to be set
             theme: "bootstrap",
@@ -136,9 +139,9 @@
                 // reset filters button
                 filter_reset: ".reset"
 
-                        // set the uitheme widget to use the bootstrap theme class names
-                        // this is no longer required, if theme is set
-                        // ,uitheme : "bootstrap"
+                // set the uitheme widget to use the bootstrap theme class names
+                // this is no longer required, if theme is set
+                // ,uitheme : "bootstrap"
 
             },
             headers: {
@@ -146,84 +149,5 @@
             }
         });
 
-        $('#filtrarRelatorioSaquesPagos').click(function () {
-
-            $.ajax({
-                type: "post",
-                dataType: "text",
-                cache: false,
-                url: '/mcnetwork-relatorio/relatorio-saques-pagos',
-                async: true,
-                data: {
-                    dt_inicio: $('#dt_inicio').val(),
-                    dt_fim: $('#dt_fim').val()
-                },
-                beforeSend: function () {
-
-                    $('#modal-relatorio-body-3').html(
-                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                            );
-                },
-                success: function (data) {
-
-                    $('#modal-relatorio-body-3').html(data);
-                }
-            });
-        });
-
-   
-
-     
-
-        $('.relatorio-recusar-recibo').off('click').on('click', function () {
-
-            var idPagamento = $(this).attr('rel');
-
-            $.ajax({
-                type: "post",
-                dataType: "text",
-                cache: false,
-                url: '/pagamento-pagamento/recusar-recibo',
-                async: true,
-                beforeSend: function () {
-
-                    $('#modal-relatorio-body-3').html(
-                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                            );
-                },
-                data: {
-                    id_saque: idPagamento
-                },
-                success: function () {
-
-                    $.ajax({
-                        type: "post",
-                        dataType: "text",
-                        cache: false,
-                        url: '/mcnetwork-relatorio/relatorio-saques-pagos',
-                        async: true,
-                        data: {},
-                        success: function (data) {
-
-                            $('#modal-relatorio-body-3').html(data);
-                        }
-                    });
-                }
-            });
-        });
-
-        $("#imprimirRelatorioSaquesPagos").click(function () {
-
-            var modalPrint = $('.modalPrint');
-            modalPrint.removeClass('modal');
-            $('.form-inline').hide();
-            $('#printSection').addClass('printSection');
-            $('#printSection').html(modalPrint.html());
-            window.print();
-            modalPrint.addClass('modal');
-            $('.form-inline').show();
-            $('#printSection').removeClass('printSection');
-            $('#printSection').html('');
-        });
     });
 </script>

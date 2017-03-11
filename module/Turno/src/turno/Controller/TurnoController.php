@@ -59,9 +59,11 @@ class TurnoController extends AbstractCrudController
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0' => [
+            '0' => NULL,
+            '1' => [
                 'filter' => "turno.nm_turno LIKE ?",
             ],
+            '2' => NULL,
 
         ];
 
