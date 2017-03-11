@@ -38,7 +38,7 @@ return array(
         'Controller',
         'Action',
         'Permissao',
-        #'Paroquia',
+        'Paroquia',
         'PerfilControllerAction',
         'Catequista',
         'Catequizando',
