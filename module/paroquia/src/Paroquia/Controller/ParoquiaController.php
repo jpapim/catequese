@@ -37,13 +37,14 @@ class ParoquiaController extends AbstractCrudController
 
         $filter = $this->getFilterPage();
         $camposFilter = [
-            '0' => [
+            '0' => NULL,
+            '1' => [
                 'filter' => "paroquia.nm_paroquia LIKE ?",
             ],
-            '1' => [
+            '2' => [
                 'filter' => "cidade.nm_cidade LIKE ?",
             ],
-            '2' => NULL,
+            '3' => NULL,
 
         ];
 

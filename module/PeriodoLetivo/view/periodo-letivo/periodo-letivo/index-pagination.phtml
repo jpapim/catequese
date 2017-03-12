@@ -5,20 +5,20 @@
         <table class="table table-striped" id="tablesorterPeriodoLetivo" >
             <thead>
             <tr>
-                <th class="text-center">ID Período Letivo</th>
+                <th class="text-center" style="width: 5%;">#</th>
+                <th class="text-center">Ano Letivo</th>◘
                 <th class="text-center">Data Início</th>
                 <th class="text-center">Data Término</th>
-                <th class="text-center">Ano Letivo</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center" style="width: 15%;">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">ID Período Letivo</th>
+                <th class="text-center" style="width: 5%;">#</th>
+                <th class="text-center">Ano Letivo</th>
                 <th class="text-center">Data Início</th>
                 <th class="text-center">Data Término</th>
-                <th class="text-center">Ano Letivo</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center" style="width: 15%;">Ações</th>
             </tr>
             <tr>
                 <th colspan="6" class="ts-pager form-horizontal">
@@ -69,9 +69,9 @@
                     ?>
                     <tr>
                         <td><?= $item['id_periodo_letivo']?></td>
+                        <td><?= $item['dt_ano_letivo']?></td>
                         <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_inicio'])?></td>
                         <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_fim'])?></td>
-                        <td><?= $item['dt_ano_letivo']?></td>
 
                         <td class="text-center">
                            <span class="btn-group">

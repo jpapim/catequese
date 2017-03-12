@@ -5,21 +5,23 @@
         <table class="table table-striped" id="tablesorterAtletas">
             <thead>
             <tr>
+                <th class="text-center" style="width: 5%;">#</th>
                 <th class="text-center">Nome da Paróquia</th>
                 <th class="text-center">Cidade</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center" style="width: 15%;">Ações</th>
 
             </tr>
             </thead>
             <tfoot>
             <tr>
+                <th class="text-center" style="width: 5%;">#</th>
                 <th class="text-center">Nome da Paróquia</th>
                 <th class="text-center">Cidade</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center" style="width: 15%;">Ações</th>
 
             </tr>
             <tr>
-                <th colspan="6" class="ts-pager form-horizontal">
+                <th colspan="4" class="ts-pager form-horizontal">
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
@@ -36,35 +38,33 @@
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
             if (!empty($paginator)) {
                 ?>
-                <tbody class="">
-                <tr role="row" class="tablesorter-filter-row" align="center">
+                <tbody class="" align="center">
+                <tr role="row" class="tablesorter-filter-row">
                     <?php
                     foreach ($camposFilter as $key => $campoFilter) {
                         ?>
-
-                        <?php
-                        if (!is_null($campoFilter)) {
-                            ?>
-                            <td style="background-color: #e3e3e3;">
-                            <input type="search" placeholder="" class=" col-md-12 tablesorter-filter"
-                                   data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                        <td>
                             <?php
-                        } else {
+                            if (!is_null($campoFilter)) {
+                                ?>
+                                <input type="search" placeholder="" class=" col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                <?php
+                            } else {
+                                ?>
+                                &nbsp;
+                                <?php
+                            }
                             ?>
-                            <!--&nbsp;-->
-                            <?php
-                        }
-                        ?>
                         </td>
                         <?php
                     }
                     ?>
-                    <td>&nbsp;</td>
                 </tr>
                 <?php
                 foreach ($paginator as $key => $paroquia) {
                     ?>
                     <tr>
+                        <td class="text-center"><?= $paroquia['id_paroquia'] ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($paroquia['nm_paroquia']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($paroquia['nm_cidade']) ?></td>
 

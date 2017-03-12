@@ -7,8 +7,7 @@
             <div class="content">
                 <?php
 
-
-                #$form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
+                #$form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')));
                 $form->setAttribute('class', 'form-horizontal');
                 $form->setAttribute('method', 'post');
                 $form->setAttribute('data-role', 'form');
@@ -42,13 +41,13 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-4">
-                        <?=$this->formRow($form->get('dt_ano_letivo'))?>
+                        <?= $this->formRow($form->get('dt_ano_letivo')) ?>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-10">
-                        <button type="submit" class="btn btn-primary" onclick="checarDatas()"id="avancar">Avançar</button>
-                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Cancelar</a>
+                        <button type="submit" class="btn btn-primary" onclick="checarDatas()" id="avancar">Avançar</button>
+                        <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Cancelar</a>
                     </div>
                 </div>
                 <?= $this->form()->closeTag(); ?>
@@ -58,37 +57,43 @@
 </div>
 
 <script type="text/javascript" language="javascript" class="init">
-    $(document).ready(function() {
-        
-     
-        
-        $( "#dt_inicio" ).datepicker(
-            { dateFormat: 'dd/mm/yy' }
-        );
-        $( "#dt_fim" ).datepicker(
-            { dateFormat: 'dd/mm/yy' }
+    $(document).ready(function () {
+
+
+        $("#dt_inicio").datepicker(
+            {dateFormat: 'dd/mm/yy'}
         );
 
-    });
-      function checarDatas(){
+        $("#dt_fim").datepicker(
+            {dateFormat: 'dd/mm/yy'}
+        );
 
-var data_1 = $("#dt_inicio").val();
-var data_2 = $("#dt_fim").val();;
-var Compara01 = parseInt(data_1.split("/")[2].toString() + data_1.split("/")[1].toString() + data_1.split("/")[0].toString());
-var Compara02 = parseInt(data_2.split("/")[2].toString() + data_2.split("/")[1].toString() + data_2.split("/")[0].toString());
 
-if (Compara01 > Compara02) {
-   alert("Data inicio maior que a data final ");
-   return false;
-}
+        function checarDatas() {
 
- }
- $("#avancar").click(function(){
-            if(checarDatas() == true){
-                $("#periodoletivoform").attr('action',"<?= $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')) ?>");
+            var data_1 = $("#dt_inicio").val();
+            var data_2 = $("#dt_fim").val();
+
+            var Compara01 = parseInt(data_1.split("/")[2].toString() + data_1.split("/")[1].toString() + data_1.split("/")[0].toString());
+            var Compara02 = parseInt(data_2.split("/")[2].toString() + data_2.split("/")[1].toString() + data_2.split("/")[0].toString());
+
+            if (Compara01 > Compara02) {
+                alert("Data inicio maior que a data final ");
+                return false;
+            }
+
+            return true;
+        }
+
+        $("#avancar").click(function () {
+            if (checarDatas() == true) {
+                var url = "<?= $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')) ?>";
+                alert(url);
+                $("#periodoletivoform").attr('action', "<?= $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')) ?>");
                 $("#periodoletivoform").submit();
             }
         });
- 
- 
+
+    });
+
 </script>

@@ -48,7 +48,7 @@ CREATE TABLE `action` (
   `id_action` int(11) NOT NULL AUTO_INCREMENT,
   `nm_action` varchar(200) DEFAULT NULL COMMENT '{"label":"Ação"}',
   PRIMARY KEY (`id_action`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,7 +57,7 @@ CREATE TABLE `action` (
 
 LOCK TABLES `action` WRITE;
 /*!40000 ALTER TABLE `action` DISABLE KEYS */;
-INSERT INTO `action` VALUES (1,'index'),(6,'cadastro'),(7,'gravar'),(8,'excluir'),(9,'upload'),(14,'dados-pessoais'),(15,'atualizar-dados'),(17,'gravar-atualizacao'),(27,'enviar-id'),(30,'ativar-id'),(35,'negar-id'),(36,'alterar-senha'),(37,'salvar-redefinicao-senha'),(51,'index-pagination'),(52,'cadastroperiodoletivodetalhe'),(53,'detalhe-pagination'),(54,'adicionarperiodoletivodetalhe'),(55,'excluirvialistagemperiodoletivo'),(56,'teste-teste'),(57,'listar-permissoes-acoes'),(58,'cadastrodetalheformacao'),(59,'adicionardetalheformacao'),(60,'excluirvialistagemdetalheformacao'),(61,'enturmar-aluno'),(62,'excluir-catequizando-turma'),(63,'gerar-relatorio-pdf'),(64,'desativar');
+INSERT INTO `action` VALUES (1,'index'),(6,'cadastro'),(7,'gravar'),(8,'excluir'),(9,'upload'),(14,'dados-pessoais'),(15,'atualizar-dados'),(17,'gravar-atualizacao'),(27,'enviar-id'),(30,'ativar-id'),(35,'negar-id'),(36,'alterar-senha'),(37,'salvar-redefinicao-senha'),(51,'index-pagination'),(52,'cadastroperiodoletivodetalhe'),(53,'detalhe-pagination'),(54,'adicionarperiodoletivodetalhe'),(55,'excluirvialistagemperiodoletivo'),(56,'teste-teste'),(57,'listar-permissoes-acoes'),(58,'cadastrodetalheformacao'),(59,'adicionardetalheformacao'),(60,'excluirvialistagemdetalheformacao'),(61,'enturmar-aluno'),(62,'excluir-catequizando-turma'),(63,'gerar-relatorio-pdf'),(64,'desativar'),(65,'autocompletecidade'),(66,'frequencia'),(67,'carregar-combo-turmas-ajax'),(68,'listar-turma-catequizando');
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,10 +148,10 @@ CREATE TABLE `catequista_etapa_atuacao` (
   `id_etapa` int(11) DEFAULT NULL,
   `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_catequista_etapa_atuacao`),
-  KEY `FK_Reference_78` (`id_catequista`),
-  KEY `FK_Reference_79` (`id_etapa`),
-  CONSTRAINT `FK_Reference_78` FOREIGN KEY (`id_catequista`) REFERENCES `catequista` (`id_catequista`),
-  CONSTRAINT `FK_Reference_79` FOREIGN KEY (`id_etapa`) REFERENCES `etapa` (`id_etapa`)
+  KEY `FK_catequista_etapa_atuacao_catequista` (`id_catequista`),
+  KEY `FK_catequista_etapa_atuacao_etapa` (`id_etapa`),
+  CONSTRAINT `FK_catequista_etapa_atuacao_catequista` FOREIGN KEY (`id_catequista`) REFERENCES `catequista` (`id_catequista`),
+  CONSTRAINT `FK_catequista_etapa_atuacao_etapa` FOREIGN KEY (`id_etapa`) REFERENCES `etapa` (`id_etapa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -176,10 +176,10 @@ CREATE TABLE `catequista_turma` (
   `id_turma` int(11) DEFAULT NULL,
   `id_catequista` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_catequista_turma`),
-  KEY `FK_Reference_125` (`id_turma`),
-  KEY `FK_Reference_126` (`id_catequista`),
-  CONSTRAINT `FK_Reference_125` FOREIGN KEY (`id_turma`) REFERENCES `turma` (`id_turma`),
-  CONSTRAINT `FK_Reference_126` FOREIGN KEY (`id_catequista`) REFERENCES `catequista` (`id_catequista`)
+  KEY `FK_catequista_turma_turma` (`id_turma`),
+  KEY `FK_catequista_turma_catequista` (`id_catequista`),
+  CONSTRAINT `FK_catequista_turma_catequista` FOREIGN KEY (`id_catequista`) REFERENCES `catequista` (`id_catequista`),
+  CONSTRAINT `FK_catequista_turma_turma` FOREIGN KEY (`id_turma`) REFERENCES `turma` (`id_turma`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Armazena os Catequistas Responsaveis por uma turma';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -221,25 +221,25 @@ CREATE TABLE `catequizando` (
   `cs_estudante` char(1) DEFAULT NULL,
   `cs_participa_movimento_pastoral` char(1) DEFAULT NULL,
   PRIMARY KEY (`id_catequizando`),
-  KEY `FK_Reference_103` (`id_movimento_pastoral`),
-  KEY `FK_Reference_90` (`id_sexo`),
-  KEY `FK_Reference_91` (`id_endereco`),
-  KEY `FK_Reference_92` (`id_naturalidade`),
-  KEY `FK_Reference_94` (`id_telefone_residencial`),
-  KEY `FK_Reference_95` (`id_telefone_celular`),
-  KEY `FK_Reference_96` (`id_email`),
-  KEY `FK_Reference_97` (`id_situacao`),
-  KEY `FK_Reference_98` (`id_turno`),
-  CONSTRAINT `FK_Reference_103` FOREIGN KEY (`id_movimento_pastoral`) REFERENCES `movimento_pastoral` (`id_movimento_pastoral`),
-  CONSTRAINT `FK_Reference_90` FOREIGN KEY (`id_sexo`) REFERENCES `sexo` (`id_sexo`),
-  CONSTRAINT `FK_Reference_91` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id_endereco`),
-  CONSTRAINT `FK_Reference_92` FOREIGN KEY (`id_naturalidade`) REFERENCES `cidade` (`id_cidade`),
-  CONSTRAINT `FK_Reference_94` FOREIGN KEY (`id_telefone_residencial`) REFERENCES `telefone` (`id_telefone`),
-  CONSTRAINT `FK_Reference_95` FOREIGN KEY (`id_telefone_celular`) REFERENCES `telefone` (`id_telefone`),
-  CONSTRAINT `FK_Reference_96` FOREIGN KEY (`id_email`) REFERENCES `email` (`id_email`),
-  CONSTRAINT `FK_Reference_97` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`),
-  CONSTRAINT `FK_Reference_98` FOREIGN KEY (`id_turno`) REFERENCES `turno` (`id_turno`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  KEY `FK_catequizando_movimento_pastoral` (`id_movimento_pastoral`),
+  KEY `FK_catequizando_sexo` (`id_sexo`),
+  KEY `FK_catequizando_endereco` (`id_endereco`),
+  KEY `FK_catequizando_naturalidade` (`id_naturalidade`),
+  KEY `FK_catequizando_telefone_residencial` (`id_telefone_residencial`),
+  KEY `FK_catequizando_telefone_celular` (`id_telefone_celular`),
+  KEY `FK_catequizando_email` (`id_email`),
+  KEY `FK_catequizando_situacao` (`id_situacao`),
+  KEY `FK_catequizando_turno` (`id_turno`),
+  CONSTRAINT `FK_catequizando_email` FOREIGN KEY (`id_email`) REFERENCES `email` (`id_email`),
+  CONSTRAINT `FK_catequizando_endereco` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id_endereco`),
+  CONSTRAINT `FK_catequizando_movimento_pastoral` FOREIGN KEY (`id_movimento_pastoral`) REFERENCES `movimento_pastoral` (`id_movimento_pastoral`),
+  CONSTRAINT `FK_catequizando_naturalidade` FOREIGN KEY (`id_naturalidade`) REFERENCES `cidade` (`id_cidade`),
+  CONSTRAINT `FK_catequizando_sexo` FOREIGN KEY (`id_sexo`) REFERENCES `sexo` (`id_sexo`),
+  CONSTRAINT `FK_catequizando_situacao` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`),
+  CONSTRAINT `FK_catequizando_telefone_celular` FOREIGN KEY (`id_telefone_celular`) REFERENCES `telefone` (`id_telefone`),
+  CONSTRAINT `FK_catequizando_telefone_residencial` FOREIGN KEY (`id_telefone_residencial`) REFERENCES `telefone` (`id_telefone`),
+  CONSTRAINT `FK_catequizando_turno` FOREIGN KEY (`id_turno`) REFERENCES `turno` (`id_turno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,7 +248,6 @@ CREATE TABLE `catequizando` (
 
 LOCK TABLES `catequizando` WRITE;
 /*!40000 ALTER TABLE `catequizando` DISABLE KEYS */;
-INSERT INTO `catequizando` VALUES (2,1,1,1,1,1,1,1,1,1,'Dinoite meu Brother','32323','2016-01-02 02:00:00','2016-01-02 02:00:00','xxxx yyyy ','A','N',NULL,'S','S'),(3,2,1,3,5,6,4,1,3,3,'Pluto de Oliveira','66587','2016-01-10 02:00:00','2016-01-20 02:00:00','rjfbkjrebfiuy3bkbiuyfgbrf','A','N',NULL,'S','S'),(4,3,2,5,3,7,8,1,2,1,'Cachorrinha Felina','85474','2014-07-13 03:00:00','2014-06-11 03:00:00','nrtjthjtyjyjytjt','A','N',NULL,'S','N'),(5,2,2,4,2,8,6,1,1,2,'Pretinha Desconfiada','62582','2015-03-21 03:00:00','2014-06-13 03:00:00','liulolololilililoi','A','N',NULL,'S','N');
 /*!40000 ALTER TABLE `catequizando` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,10 +264,10 @@ CREATE TABLE `catequizando_etapa_cursou` (
   `id_catequizando` int(11) DEFAULT NULL,
   `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_catequizando_etapa_cursou`),
-  KEY `FK_Reference_104` (`id_etapa`),
-  KEY `FK_Reference_105` (`id_catequizando`),
-  CONSTRAINT `FK_Reference_104` FOREIGN KEY (`id_etapa`) REFERENCES `etapa` (`id_etapa`),
-  CONSTRAINT `FK_Reference_105` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`)
+  KEY `FK_catequizando_etapa_cursou_etapa` (`id_etapa`),
+  KEY `FK_catequizando_etapa_cursou_catequizando` (`id_catequizando`),
+  CONSTRAINT `FK_catequizando_etapa_cursou_catequizando` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`),
+  CONSTRAINT `FK_catequizando_etapa_cursou_etapa` FOREIGN KEY (`id_etapa`) REFERENCES `etapa` (`id_etapa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -294,8 +293,7 @@ CREATE TABLE `cidade` (
   `nm_cidade` varchar(150) DEFAULT NULL COMMENT '{"label":"Cidade"}',
   PRIMARY KEY (`id_cidade`),
   KEY `ix_cidades_estados` (`id_estado`),
-  CONSTRAINT `FK_Reference_25` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id_estado`),
-  CONSTRAINT `fk_cidades_estados1` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id_estado`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_cidades_estados` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id_estado`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=9715 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -347,7 +345,7 @@ CREATE TABLE `controller` (
   `nm_modulo` varchar(50) DEFAULT NULL,
   `cs_exibir_combo` char(1) DEFAULT 'N',
   PRIMARY KEY (`id_controller`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -356,7 +354,7 @@ CREATE TABLE `controller` (
 
 LOCK TABLES `controller` WRITE;
 /*!40000 ALTER TABLE `controller` DISABLE KEYS */;
-INSERT INTO `controller` VALUES (3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(24,'permissao-permissao','Gerenciador de Permissao','S'),(25,'controller-controller','Controller','S'),(26,'action-action','Action','S'),(28,'periodo_letivo-periodoletivo','Periodo Letivo','S'),(29,'sacramento-sacramento','Sacramento','S'),(30,'movimento_pastoral-movimentopastoral','Movimento Pastoral','S'),(31,'detalhe_periodo_letivo-detalheperiodoletivo1','Detalhe do Periodo Letivo','N'),(32,'detalhe_periodo_letivo','Nome da Controller Periodo Letivo','S'),(33,'paroquia-paroquia','Paroquias','S'),(34,'catequista-catequista','Catequista','S'),(35,'infra-infra','Infraestrutura','S'),(36,'formacao-formacao','Formaçao Academica','S'),(37,'detalhe_formacao-detalheformacao','Detalhe Formaçao Academica','S'),(38,'turma-turma','Turmas','S'),(39,'etapa-etapa','Etapas','S'),(40,'turma_catequizando-turmacatequizando','Enturmar Aluno','S'),(41,'responsavel_catequizando-responsavelcatequizando','Responsaveis dos Alunos','S'),(42,'grau_parentesco-grauparentesco','Grau de Parentesco','S'),(44,'sacramento_catequizando-sacramentocatequizando','Sacramento Catequizando','S'),(45,'catequizando-catequizando','Catequizando','S'),(46,'profissao-profissao','Profissões','S'),(47,'situacao_responsavel-situacaoresponsavel','Situação Responsável','S'),(48,'situacao_conjugal-situacaoconjugal','Situação Conjugal','S'),(49,'turno-turno','Turnos','S'),(50,'situacao_responsavel_catequizando-situacaoresponsavelcatequizando','Situação Responsável Catequizando','S'),(51,'estado_civil-estadocivil','Estado Civil','S'),(52,'responsavel-responsavel','Responsavel','S'),(53,'frequencia_turma-frequenciaturma','Frequencia da Turma','S');
+INSERT INTO `controller` VALUES (3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(24,'permissao-permissao','Gerenciador de Permissao','S'),(25,'controller-controller','Controller','S'),(26,'action-action','Action','S'),(28,'periodo_letivo-periodoletivo','Periodo Letivo','S'),(29,'sacramento-sacramento','Sacramento','S'),(30,'movimento_pastoral-movimentopastoral','Movimento Pastoral','S'),(31,'detalhe_periodo_letivo-detalheperiodoletivo1','Detalhe do Periodo Letivo','N'),(32,'detalhe_periodo_letivo','Nome da Controller Periodo Letivo','S'),(33,'paroquia-paroquia','Paroquias','S'),(34,'catequista-catequista','Catequista','S'),(35,'infra-infra','Infraestrutura','S'),(36,'formacao-formacao','Formaçao Academica','S'),(37,'detalhe_formacao-detalheformacao','Detalhe Formaçao Academica','S'),(38,'turma-turma','Turmas','S'),(39,'etapa-etapa','Etapas','S'),(40,'turma_catequizando-turmacatequizando','Enturmar Aluno','S'),(41,'responsavel_catequizando-responsavelcatequizando','Responsaveis dos Alunos','S'),(42,'grau_parentesco-grauparentesco','Grau de Parentesco','S'),(44,'sacramento_catequizando-sacramentocatequizando','Sacramento Catequizando','S'),(45,'catequizando-catequizando','Catequizando','S'),(46,'profissao-profissao','Profissões','S'),(47,'situacao_responsavel-situacaoresponsavel','Situação Responsável','S'),(48,'situacao_conjugal-situacaoconjugal','Situação Conjugal','S'),(49,'turno-turno','Turnos','S'),(50,'situacao_responsavel_catequizando-situacaoresponsavelcatequizando','Situação Responsável Catequizando','S'),(51,'estado_civil-estadocivil','Estado Civil','S'),(52,'responsavel-responsavel','Responsavel','S'),(53,'frequencia_turma-frequenciaturma','Frequencia da Turma','S'),(54,'cidade-cidade','Cidades','S'),(55,'estado-estado','Estado','S');
 /*!40000 ALTER TABLE `controller` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,9 +370,9 @@ CREATE TABLE `detalhe_formacao` (
   `id_formacao` int(11) DEFAULT NULL,
   `ds_detalhe_formacao` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_detalhe_formacao`),
-  KEY `FK_Reference_88` (`id_formacao`),
-  CONSTRAINT `FK_Reference_88` FOREIGN KEY (`id_formacao`) REFERENCES `formacao` (`id_formacao`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='Armazena os detalhes da formação, como o nome do curso de gr';
+  KEY `FK_detalhe_formacao_formacao` (`id_formacao`),
+  CONSTRAINT `FK_detalhe_formacao_formacao` FOREIGN KEY (`id_formacao`) REFERENCES `formacao` (`id_formacao`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Armazena os detalhes da formação, como o nome do curso de gr';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -383,7 +381,7 @@ CREATE TABLE `detalhe_formacao` (
 
 LOCK TABLES `detalhe_formacao` WRITE;
 /*!40000 ALTER TABLE `detalhe_formacao` DISABLE KEYS */;
-INSERT INTO `detalhe_formacao` VALUES (9,1,'Ciencia da Computaçao'),(12,3,'Análise e Desenvolvimento de Sistemas'),(13,3,'Rede de Computadores');
+INSERT INTO `detalhe_formacao` VALUES (1,1,'Ciencia da Computaçao'),(2,3,'Análise e Desenvolvimento de Sistemas'),(3,3,'Rede de Computadores');
 /*!40000 ALTER TABLE `detalhe_formacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,9 +397,9 @@ CREATE TABLE `detalhe_periodo_letivo` (
   `id_periodo_letivo` int(11) DEFAULT NULL,
   `dt_encontro` date DEFAULT NULL,
   PRIMARY KEY (`id_detalhe_periodo_letivo`),
-  KEY `FK_Reference_124` (`id_periodo_letivo`),
-  CONSTRAINT `FK_Reference_124` FOREIGN KEY (`id_periodo_letivo`) REFERENCES `periodo_letivo` (`id_periodo_letivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='Data que qirão compor o periodo letivo';
+  KEY `FK_detalhe_periodo_letivo_periodo_letivo` (`id_periodo_letivo`),
+  CONSTRAINT `FK_detalhe_periodo_letivo_periodo_letivo` FOREIGN KEY (`id_periodo_letivo`) REFERENCES `periodo_letivo` (`id_periodo_letivo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Data que qirão compor o periodo letivo';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -410,7 +408,6 @@ CREATE TABLE `detalhe_periodo_letivo` (
 
 LOCK TABLES `detalhe_periodo_letivo` WRITE;
 /*!40000 ALTER TABLE `detalhe_periodo_letivo` DISABLE KEYS */;
-INSERT INTO `detalhe_periodo_letivo` VALUES (1,14,'2016-06-13'),(2,15,'0000-00-00'),(3,15,'0000-00-00'),(4,15,'0000-00-00'),(5,15,'0000-00-00'),(6,15,'0000-00-00'),(7,15,'0000-00-00'),(8,15,'0000-00-00'),(12,16,'0000-00-00'),(13,16,'0000-00-00'),(14,14,'2016-06-08'),(15,14,'2016-06-23'),(16,14,'2016-06-23'),(18,12,'2016-06-20'),(20,12,'2016-06-17'),(22,20,'2016-06-17'),(24,20,'2016-06-15'),(25,20,'2016-06-25'),(26,21,'2016-03-01'),(27,21,'2016-03-05'),(28,NULL,'1969-12-31'),(29,22,'2016-10-10'),(30,22,'2016-10-12');
 /*!40000 ALTER TABLE `detalhe_periodo_letivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,9 +424,8 @@ CREATE TABLE `email` (
   `id_situacao` int(11) NOT NULL,
   PRIMARY KEY (`id_email`),
   KEY `ix_emails_situacao` (`id_situacao`),
-  CONSTRAINT `FK_Reference_32` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`),
   CONSTRAINT `fk_emails_situacao` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -438,7 +434,7 @@ CREATE TABLE `email` (
 
 LOCK TABLES `email` WRITE;
 /*!40000 ALTER TABLE `email` DISABLE KEYS */;
-INSERT INTO `email` VALUES (1,'administrador@gmail.com',1),(2,'alyssontkd@gmail.com',1),(4,'teste002@gmail.com',1),(6,'teste004@gmail.com',1),(7,'central.millenium@gmail.com',1),(8,'alysson.vicuna@gmail.com',1),(9,'yuri.carvalhomarques@gmail.com',1),(10,'vanessa.coelho@projecao.br',1);
+INSERT INTO `email` VALUES (1,'administrador@gmail.com',1),(2,'alyssontkd@gmail.com',1);
 /*!40000 ALTER TABLE `email` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -460,7 +456,7 @@ CREATE TABLE `endereco` (
   PRIMARY KEY (`id_endereco`),
   KEY `ix_endereco_cidades` (`id_cidade`),
   CONSTRAINT `fk_endereco_cidades1` FOREIGN KEY (`id_cidade`) REFERENCES `cidade` (`id_cidade`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -469,7 +465,7 @@ CREATE TABLE `endereco` (
 
 LOCK TABLES `endereco` WRITE;
 /*!40000 ALTER TABLE `endereco` DISABLE KEYS */;
-INSERT INTO `endereco` VALUES (1,'Rua sem nome casa S/N','08','Perto do Terminal','Estrutural','00788978',4),(2,'Rua com nome e casa C/N','68','Longe do Terminal','Samambaia','87458741',6),(3,'Avenida da Misericordia','98','nada...','Aguas Claras','74125987',4),(4,'Rua 07 Quadra 03','70','Piracema','Jardim Piracema','78600454',5),(5,'Rua 02 Quadra 45','89','...','Piracema','78954784',5);
+INSERT INTO `endereco` VALUES (1,'Rua sem nome casa S/N','08','Perto do Terminal','Estrutural','00788978',4),(2,'Rua com nome e casa C/N','68','Longe do Terminal','Samambaia','87458741',6);
 /*!40000 ALTER TABLE `endereco` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -678,14 +674,11 @@ CREATE TABLE `login` (
   KEY `ix_Login_emails` (`id_email`),
   KEY `ix_Login_situacao` (`id_situacao`),
   KEY `ix_Login_perfil` (`id_perfil`),
-  CONSTRAINT `FK_Reference_26` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`),
-  CONSTRAINT `FK_Reference_31` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`),
-  CONSTRAINT `FK_Reference_39` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
   CONSTRAINT `fk_Login_emails` FOREIGN KEY (`id_email`) REFERENCES `email` (`id_email`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Login_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Login_situacao` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Login_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -694,7 +687,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (1,'e10adc3949ba59abbe56e057f20f883e',1,'2014-08-27 21:53:33','2014-08-27 21:53:37',1,1,1,1),(2,'e10adc3949ba59abbe56e057f20f883e',NULL,NULL,'2015-01-30 15:01:11',2,2,1,1),(10,'25d55ad283aa400af464c76d713c07ad',NULL,NULL,'2016-10-22 13:10:39',14,10,2,2);
+INSERT INTO `login` VALUES (1,'e10adc3949ba59abbe56e057f20f883e',1,'2014-08-27 21:53:33','2014-08-27 21:53:37',1,1,1,1),(2,'e10adc3949ba59abbe56e057f20f883e',NULL,NULL,'2015-01-30 15:01:11',2,2,1,1);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -734,9 +727,9 @@ CREATE TABLE `paroquia` (
   `id_cidade` int(11) DEFAULT NULL,
   `nm_paroquia` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_paroquia`),
-  KEY `FK_Reference_102` (`id_cidade`),
-  CONSTRAINT `FK_Reference_102` FOREIGN KEY (`id_cidade`) REFERENCES `cidade` (`id_cidade`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Armazena os dados da paróquia onde o catequizando realizou o';
+  KEY `FK_paroquia_cidade` (`id_cidade`),
+  CONSTRAINT `FK_paroquia_cidade` FOREIGN KEY (`id_cidade`) REFERENCES `cidade` (`id_cidade`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Armazena os dados da paróquia onde o catequizando realizou o';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -745,7 +738,7 @@ CREATE TABLE `paroquia` (
 
 LOCK TABLES `paroquia` WRITE;
 /*!40000 ALTER TABLE `paroquia` DISABLE KEYS */;
-INSERT INTO `paroquia` VALUES (2,38,'Teste');
+INSERT INTO `paroquia` VALUES (1,38,'Teste');
 /*!40000 ALTER TABLE `paroquia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -760,7 +753,7 @@ CREATE TABLE `perfil` (
   `id_perfil` int(11) NOT NULL AUTO_INCREMENT COMMENT '{"label":"Id Perfil"}',
   `nm_perfil` varchar(100) NOT NULL COMMENT '{''label'':"Perfil"}',
   PRIMARY KEY (`id_perfil`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -769,7 +762,7 @@ CREATE TABLE `perfil` (
 
 LOCK TABLES `perfil` WRITE;
 /*!40000 ALTER TABLE `perfil` DISABLE KEYS */;
-INSERT INTO `perfil` VALUES (1,'Administrador'),(2,'Professor'),(3,'Aluno'),(4,'Auxiliar');
+INSERT INTO `perfil` VALUES (1,'Administrador'),(2,'Professor'),(3,'Auxiliar');
 /*!40000 ALTER TABLE `perfil` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -792,7 +785,7 @@ CREATE TABLE `perfil_controller_action` (
   CONSTRAINT `fk_perfil_controller_action_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id_action`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_controller` FOREIGN KEY (`id_controller`) REFERENCES `controller` (`id_controller`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=431 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=463 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -801,7 +794,7 @@ CREATE TABLE `perfil_controller_action` (
 
 LOCK TABLES `perfil_controller_action` WRITE;
 /*!40000 ALTER TABLE `perfil_controller_action` DISABLE KEYS */;
-INSERT INTO `perfil_controller_action` VALUES (4,4,1,1),(32,3,1,2),(33,4,1,2),(49,3,7,2),(53,3,14,2),(59,3,15,2),(82,3,36,2),(84,3,37,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(93,11,1,1),(163,25,1,1),(164,25,6,1),(165,25,7,1),(166,25,8,1),(167,25,51,1),(168,26,1,1),(169,26,6,1),(170,26,7,1),(171,26,8,1),(172,26,51,1),(173,24,1,1),(174,24,6,1),(175,24,7,1),(176,24,8,1),(177,24,51,1),(178,28,1,1),(179,28,6,1),(180,28,7,1),(181,28,8,1),(182,28,51,1),(183,29,1,1),(184,29,6,1),(185,29,7,1),(186,29,8,1),(187,29,51,1),(188,30,1,1),(189,30,6,1),(190,30,7,1),(191,30,8,1),(192,30,51,1),(193,28,52,1),(194,28,53,1),(195,28,54,1),(196,31,55,1),(197,32,55,1),(198,33,1,1),(199,33,6,1),(200,33,7,1),(201,33,8,1),(202,33,51,1),(204,24,57,1),(215,35,1,1),(247,36,1,1),(248,36,6,1),(249,36,7,1),(250,36,8,1),(251,36,51,1),(252,36,53,1),(253,36,58,1),(254,36,59,1),(255,36,60,1),(256,37,1,1),(257,37,6,1),(258,37,7,1),(259,37,8,1),(260,37,60,1),(261,38,1,1),(262,38,6,1),(263,38,7,1),(264,38,8,1),(265,38,51,1),(266,39,1,1),(267,39,6,1),(268,39,7,1),(269,39,8,1),(270,39,51,1),(297,41,1,1),(298,41,6,1),(299,41,7,1),(300,41,8,1),(301,41,51,1),(302,42,1,1),(303,42,6,1),(304,42,7,1),(305,42,8,1),(306,42,51,1),(342,40,1,1),(343,40,6,1),(344,40,7,1),(345,40,8,1),(346,40,51,1),(347,40,53,1),(348,40,61,1),(349,40,62,1),(351,44,1,1),(352,44,6,1),(353,44,7,1),(354,44,8,1),(355,44,51,1),(356,12,1,1),(357,12,6,1),(358,12,7,1),(359,12,8,1),(360,12,51,1),(361,11,1,2),(362,11,1,3),(363,11,1,4),(364,45,1,1),(365,45,6,1),(366,45,7,1),(367,45,8,1),(368,45,51,1),(369,46,1,1),(370,46,6,1),(371,46,7,1),(372,46,9,1),(373,46,51,1),(374,47,1,1),(375,47,6,1),(376,47,7,1),(377,47,8,1),(378,47,51,1),(379,49,1,1),(380,49,6,1),(381,49,7,1),(382,49,8,1),(383,49,51,1),(384,48,1,1),(385,48,6,1),(386,48,7,1),(387,48,8,1),(388,48,51,1),(389,50,1,1),(390,50,6,1),(391,50,7,1),(392,50,8,1),(393,50,9,1),(394,50,51,1),(395,51,1,1),(396,51,6,1),(397,51,7,1),(398,51,8,1),(399,51,9,1),(400,51,51,1),(401,52,1,1),(402,52,6,1),(403,52,7,1),(404,52,8,1),(405,52,9,1),(406,52,51,1),(407,53,1,1),(408,53,6,1),(409,53,7,1),(410,53,8,1),(411,53,9,1),(412,53,51,1),(413,34,1,1),(414,34,6,1),(415,34,7,1),(416,34,8,1),(417,34,51,1),(418,34,63,1),(419,3,1,1),(420,3,6,1),(421,3,7,1),(422,3,8,1),(423,3,14,1),(424,3,15,1),(425,3,17,1),(427,3,36,1),(428,3,37,1),(429,3,51,1),(430,3,64,1);
+INSERT INTO `perfil_controller_action` VALUES (4,4,1,1),(32,3,1,2),(33,4,1,2),(49,3,7,2),(53,3,14,2),(59,3,15,2),(82,3,36,2),(84,3,37,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(93,11,1,1),(163,25,1,1),(164,25,6,1),(165,25,7,1),(166,25,8,1),(167,25,51,1),(168,26,1,1),(169,26,6,1),(170,26,7,1),(171,26,8,1),(172,26,51,1),(173,24,1,1),(174,24,6,1),(175,24,7,1),(176,24,8,1),(177,24,51,1),(178,28,1,1),(179,28,6,1),(180,28,7,1),(181,28,8,1),(182,28,51,1),(183,29,1,1),(184,29,6,1),(185,29,7,1),(186,29,8,1),(187,29,51,1),(188,30,1,1),(189,30,6,1),(190,30,7,1),(191,30,8,1),(192,30,51,1),(193,28,52,1),(194,28,53,1),(195,28,54,1),(196,31,55,1),(197,32,55,1),(198,33,1,1),(199,33,6,1),(200,33,7,1),(201,33,8,1),(202,33,51,1),(204,24,57,1),(215,35,1,1),(247,36,1,1),(248,36,6,1),(249,36,7,1),(250,36,8,1),(251,36,51,1),(252,36,53,1),(253,36,58,1),(254,36,59,1),(255,36,60,1),(256,37,1,1),(257,37,6,1),(258,37,7,1),(259,37,8,1),(260,37,60,1),(261,38,1,1),(262,38,6,1),(263,38,7,1),(264,38,8,1),(265,38,51,1),(266,39,1,1),(267,39,6,1),(268,39,7,1),(269,39,8,1),(270,39,51,1),(297,41,1,1),(298,41,6,1),(299,41,7,1),(300,41,8,1),(301,41,51,1),(302,42,1,1),(303,42,6,1),(304,42,7,1),(305,42,8,1),(306,42,51,1),(342,40,1,1),(343,40,6,1),(344,40,7,1),(345,40,8,1),(346,40,51,1),(347,40,53,1),(348,40,61,1),(349,40,62,1),(351,44,1,1),(352,44,6,1),(353,44,7,1),(354,44,8,1),(355,44,51,1),(356,12,1,1),(357,12,6,1),(358,12,7,1),(359,12,8,1),(360,12,51,1),(361,11,1,2),(362,11,1,3),(363,11,1,4),(364,45,1,1),(365,45,6,1),(366,45,7,1),(367,45,8,1),(368,45,51,1),(369,46,1,1),(370,46,6,1),(371,46,7,1),(372,46,9,1),(373,46,51,1),(374,47,1,1),(375,47,6,1),(376,47,7,1),(377,47,8,1),(378,47,51,1),(379,49,1,1),(380,49,6,1),(381,49,7,1),(382,49,8,1),(383,49,51,1),(384,48,1,1),(385,48,6,1),(386,48,7,1),(387,48,8,1),(388,48,51,1),(389,50,1,1),(390,50,6,1),(391,50,7,1),(392,50,8,1),(393,50,9,1),(394,50,51,1),(395,51,1,1),(396,51,6,1),(397,51,7,1),(398,51,8,1),(399,51,9,1),(400,51,51,1),(401,52,1,1),(402,52,6,1),(403,52,7,1),(404,52,8,1),(405,52,9,1),(406,52,51,1),(413,34,1,1),(414,34,6,1),(415,34,7,1),(416,34,8,1),(417,34,51,1),(418,34,63,1),(419,3,1,1),(420,3,6,1),(421,3,7,1),(422,3,8,1),(423,3,14,1),(424,3,15,1),(425,3,17,1),(427,3,36,1),(428,3,37,1),(429,3,51,1),(430,3,64,1),(431,54,65,1),(432,54,65,2),(451,53,67,2),(452,53,66,2),(453,53,68,2),(454,53,6,1),(455,53,67,1),(456,53,8,1),(457,53,66,1),(458,53,7,1),(459,53,1,1),(460,53,51,1),(461,53,68,1),(462,53,9,1);
 /*!40000 ALTER TABLE `perfil_controller_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -818,7 +811,7 @@ CREATE TABLE `periodo_letivo` (
   `dt_fim` datetime DEFAULT NULL,
   `dt_ano_letivo` char(40) DEFAULT NULL,
   PRIMARY KEY (`id_periodo_letivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='Armazena informações sobre inicio e término do periodo letiv';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Armazena informações sobre inicio e término do periodo letiv';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -827,7 +820,6 @@ CREATE TABLE `periodo_letivo` (
 
 LOCK TABLES `periodo_letivo` WRITE;
 /*!40000 ALTER TABLE `periodo_letivo` DISABLE KEYS */;
-INSERT INTO `periodo_letivo` VALUES (12,'2016-10-01 00:00:00','2016-10-31 00:00:00','ANO1'),(13,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO2'),(14,'0000-00-00 00:00:00','0000-00-00 00:00:00','ANO3'),(15,'1969-12-10 00:00:00','1969-12-08 00:00:00','ANO4'),(16,'2016-06-22 00:00:00','2016-06-13 00:00:00','ANO5'),(17,'2016-06-15 00:00:00','2016-06-30 00:00:00','ANO6'),(18,'2016-06-23 00:00:00','2016-06-17 00:00:00','ANO7'),(19,'2016-06-01 00:00:00','2016-06-15 00:00:00','ANO8'),(20,'2016-06-08 00:00:00','2016-06-30 00:00:00','ANO9'),(21,'2016-03-01 00:00:00','2016-11-30 00:00:00','2016'),(22,'2016-10-03 00:00:00','2016-10-31 00:00:00','2016'),(23,'2016-10-05 00:00:00','2016-12-31 00:00:00','02/2016');
 /*!40000 ALTER TABLE `periodo_letivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -874,18 +866,18 @@ CREATE TABLE `responsavel` (
   `tx_observacao` text,
   `cs_participa_movimento_pastoral` char(1) DEFAULT NULL,
   PRIMARY KEY (`id_responsavel`),
-  KEY `FK_Reference_106` (`id_sexo`),
-  KEY `FK_Reference_107` (`id_telefone_celular`),
-  KEY `FK_Reference_108` (`id_telefone_residencial`),
-  KEY `FK_Reference_109` (`id_email`),
-  KEY `FK_Reference_110` (`id_profissao`),
-  KEY `FK_Reference_111` (`id_movimento_pastoral`),
-  CONSTRAINT `FK_Reference_106` FOREIGN KEY (`id_sexo`) REFERENCES `sexo` (`id_sexo`),
-  CONSTRAINT `FK_Reference_107` FOREIGN KEY (`id_telefone_celular`) REFERENCES `telefone` (`id_telefone`),
-  CONSTRAINT `FK_Reference_108` FOREIGN KEY (`id_telefone_residencial`) REFERENCES `telefone` (`id_telefone`),
-  CONSTRAINT `FK_Reference_109` FOREIGN KEY (`id_email`) REFERENCES `email` (`id_email`),
-  CONSTRAINT `FK_Reference_110` FOREIGN KEY (`id_profissao`) REFERENCES `profissao` (`id_profissao`),
-  CONSTRAINT `FK_Reference_111` FOREIGN KEY (`id_movimento_pastoral`) REFERENCES `movimento_pastoral` (`id_movimento_pastoral`)
+  KEY `FK_responsavel_sexo` (`id_sexo`),
+  KEY `FK_responsavel_telefone_celular` (`id_telefone_celular`),
+  KEY `FK_responsavel_telefone_residencial` (`id_telefone_residencial`),
+  KEY `FK_responsavel_email` (`id_email`),
+  KEY `FK_responsavel_profissao` (`id_profissao`),
+  KEY `FK_responsavel_movimento_pastoral` (`id_movimento_pastoral`),
+  CONSTRAINT `FK_responsavel_email` FOREIGN KEY (`id_email`) REFERENCES `email` (`id_email`),
+  CONSTRAINT `FK_responsavel_movimento_pastoral` FOREIGN KEY (`id_movimento_pastoral`) REFERENCES `movimento_pastoral` (`id_movimento_pastoral`),
+  CONSTRAINT `FK_responsavel_profissao` FOREIGN KEY (`id_profissao`) REFERENCES `profissao` (`id_profissao`),
+  CONSTRAINT `FK_responsavel_sexo` FOREIGN KEY (`id_sexo`) REFERENCES `sexo` (`id_sexo`),
+  CONSTRAINT `FK_responsavel_telefone_celular` FOREIGN KEY (`id_telefone_celular`) REFERENCES `telefone` (`id_telefone`),
+  CONSTRAINT `FK_responsavel_telefone_residencial` FOREIGN KEY (`id_telefone_residencial`) REFERENCES `telefone` (`id_telefone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Analogo a tabela pessoa e armazena todos os dados de uma pes';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -912,14 +904,14 @@ CREATE TABLE `responsavel_catequizando` (
   `id_grau_parentesco` int(11) DEFAULT NULL,
   `id_situacao_conjugal` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_responsavel_catequizando`),
-  KEY `FK_Reference_114` (`id_responsavel`),
-  KEY `FK_Reference_115` (`id_catequizando`),
-  KEY `FK_Reference_116` (`id_grau_parentesco`),
-  KEY `FK_resp_cateq_sut_conjugal` (`id_situacao_conjugal`),
-  CONSTRAINT `FK_Reference_114` FOREIGN KEY (`id_responsavel`) REFERENCES `responsavel` (`id_responsavel`),
-  CONSTRAINT `FK_Reference_115` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`),
-  CONSTRAINT `FK_Reference_116` FOREIGN KEY (`id_grau_parentesco`) REFERENCES `grau_parentesco` (`id_grau_parentesco`),
-  CONSTRAINT `FK_resp_cateq_sut_conjugal` FOREIGN KEY (`id_situacao_conjugal`) REFERENCES `situacao_conjugal` (`id_situacao_conjugal`)
+  KEY `FK_responsavel_catequizando_responsavel` (`id_responsavel`),
+  KEY `FK_responsavel_catequizando_catequizando` (`id_catequizando`),
+  KEY `FK_responsavel_catequizando_grau_parentesco` (`id_grau_parentesco`),
+  KEY `FK_responsavel_catequizando_situacao_conjugal` (`id_situacao_conjugal`),
+  CONSTRAINT `FK_responsavel_catequizando_catequizando` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`),
+  CONSTRAINT `FK_responsavel_catequizando_grau_parentesco` FOREIGN KEY (`id_grau_parentesco`) REFERENCES `grau_parentesco` (`id_grau_parentesco`),
+  CONSTRAINT `FK_responsavel_catequizando_responsavel` FOREIGN KEY (`id_responsavel`) REFERENCES `responsavel` (`id_responsavel`),
+  CONSTRAINT `FK_responsavel_catequizando_situacao_conjugal` FOREIGN KEY (`id_situacao_conjugal`) REFERENCES `situacao_conjugal` (`id_situacao_conjugal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -971,13 +963,13 @@ CREATE TABLE `sacramento_catequizando` (
   `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `cs_comprovante_batismo` char(1) DEFAULT NULL,
   PRIMARY KEY (`id_sacramento_catequizando`),
-  KEY `FK_Reference_100` (`id_sacramento`),
-  KEY `FK_Reference_101` (`id_paroquia`),
-  KEY `FK_Reference_99` (`id_catequizando`),
-  CONSTRAINT `FK_Reference_100` FOREIGN KEY (`id_sacramento`) REFERENCES `sacramento` (`id_sacramento`),
-  CONSTRAINT `FK_Reference_101` FOREIGN KEY (`id_paroquia`) REFERENCES `paroquia` (`id_paroquia`),
-  CONSTRAINT `FK_Reference_99` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  KEY `FK_sacramento_catequizando_sacramento` (`id_sacramento`),
+  KEY `FK_sacramento_catequizando_paroquia` (`id_paroquia`),
+  KEY `FK_sacramento_catequizando_catequizando` (`id_catequizando`),
+  CONSTRAINT `FK_sacramento_catequizando_catequizando` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`),
+  CONSTRAINT `FK_sacramento_catequizando_paroquia` FOREIGN KEY (`id_paroquia`) REFERENCES `paroquia` (`id_paroquia`),
+  CONSTRAINT `FK_sacramento_catequizando_sacramento` FOREIGN KEY (`id_sacramento`) REFERENCES `sacramento` (`id_sacramento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -986,7 +978,6 @@ CREATE TABLE `sacramento_catequizando` (
 
 LOCK TABLES `sacramento_catequizando` WRITE;
 /*!40000 ALTER TABLE `sacramento_catequizando` DISABLE KEYS */;
-INSERT INTO `sacramento_catequizando` VALUES (1,2,1,2,'2016-07-12 12:28:08','S'),(2,3,3,2,'2016-07-12 12:46:09','N');
 /*!40000 ALTER TABLE `sacramento_catequizando` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1002,10 +993,10 @@ CREATE TABLE `sacramento_responsavel` (
   `id_sacramento` int(11) DEFAULT NULL,
   `id_responsavel` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_sacramento_responsavel`),
-  KEY `FK_Reference_112` (`id_sacramento`),
-  KEY `FK_Reference_113` (`id_responsavel`),
-  CONSTRAINT `FK_Reference_112` FOREIGN KEY (`id_sacramento`) REFERENCES `sacramento` (`id_sacramento`),
-  CONSTRAINT `FK_Reference_113` FOREIGN KEY (`id_responsavel`) REFERENCES `responsavel` (`id_responsavel`)
+  KEY `FK_sacramento_responsavel_sacramento` (`id_sacramento`),
+  KEY `FK_sacramento_responsavel_responsavel` (`id_responsavel`),
+  CONSTRAINT `FK_sacramento_responsavel_responsavel` FOREIGN KEY (`id_responsavel`) REFERENCES `responsavel` (`id_responsavel`),
+  CONSTRAINT `FK_sacramento_responsavel_sacramento` FOREIGN KEY (`id_sacramento`) REFERENCES `sacramento` (`id_sacramento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1102,7 +1093,7 @@ CREATE TABLE `situacao_responsavel` (
   `ds_situacao_responsavel` varchar(50) DEFAULT NULL,
   `cs_pai_mae` char(1) DEFAULT NULL,
   PRIMARY KEY (`id_situacao_responsavel`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Armazena a situação do responsavel. Ex. Mora com pai, pai fa';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Armazena a situação do responsavel. Ex. Mora com pai, pai fa';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1111,7 +1102,6 @@ CREATE TABLE `situacao_responsavel` (
 
 LOCK TABLES `situacao_responsavel` WRITE;
 /*!40000 ALTER TABLE `situacao_responsavel` DISABLE KEYS */;
-INSERT INTO `situacao_responsavel` VALUES (1,'AAAAA','P'),(2,'BBBBB','M'),(3,'CCCCC','M');
 /*!40000 ALTER TABLE `situacao_responsavel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1127,10 +1117,10 @@ CREATE TABLE `situacao_responsavel_catequizando` (
   `id_catequizando` int(11) DEFAULT NULL,
   `id_situacao_responsavel` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_situacao_responsavel_catequizando`),
-  KEY `FK_Reference_121` (`id_catequizando`),
-  KEY `FK_Reference_122` (`id_situacao_responsavel`),
-  CONSTRAINT `FK_Reference_121` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`),
-  CONSTRAINT `FK_Reference_122` FOREIGN KEY (`id_situacao_responsavel`) REFERENCES `situacao_responsavel` (`id_situacao_responsavel`)
+  KEY `FK_situacao_responsavel_catequizando_catequizando` (`id_catequizando`),
+  KEY `FK_situacao_responsavel_catequizando_situacao_responsavel` (`id_situacao_responsavel`),
+  CONSTRAINT `FK_situacao_responsavel_catequizando_catequizando` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`),
+  CONSTRAINT `FK_situacao_responsavel_catequizando_situacao_responsavel` FOREIGN KEY (`id_situacao_responsavel`) REFERENCES `situacao_responsavel` (`id_situacao_responsavel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1183,10 +1173,9 @@ CREATE TABLE `telefone` (
   PRIMARY KEY (`id_telefone`),
   KEY `ix_telefones_tipo_telefone` (`id_tipo_telefone`),
   KEY `ix_telefones_situacao` (`id_situacao`),
-  CONSTRAINT `FK_Reference_24` FOREIGN KEY (`id_tipo_telefone`) REFERENCES `tipo_telefone` (`id_tipo_telefone`),
   CONSTRAINT `fk_telefones_situacao` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_telefones_tipo_telefone1` FOREIGN KEY (`id_tipo_telefone`) REFERENCES `tipo_telefone` (`id_tipo_telefone`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1195,7 +1184,7 @@ CREATE TABLE `telefone` (
 
 LOCK TABLES `telefone` WRITE;
 /*!40000 ALTER TABLE `telefone` DISABLE KEYS */;
-INSERT INTO `telefone` VALUES (1,'12','34567890',1,1),(2,'61','91613193',1,1),(3,'61','91613193',1,1),(4,'61','989898989',1,1),(5,'56','576756756',1,1),(6,'87','878778787',1,1),(7,'78','787878787',1,1),(8,'87','878787878',1,1),(9,'66','785478547',1,1),(10,'66','985474587',2,1),(11,'66','785478547',3,1),(12,'61','874574574',2,1),(13,'61','965854745',2,1),(14,'61','695484742',3,1),(15,'61','91123250',1,1),(16,'61','65656565',1,1),(17,'51','45548765',1,1);
+INSERT INTO `telefone` VALUES (1,'12','34567890',1,1),(2,'61','91613193',1,1);
 /*!40000 ALTER TABLE `telefone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1243,7 +1232,7 @@ CREATE TABLE `tipo_usuario` (
 
 LOCK TABLES `tipo_usuario` WRITE;
 /*!40000 ALTER TABLE `tipo_usuario` DISABLE KEYS */;
-INSERT INTO `tipo_usuario` VALUES (1,'Administrador'),(2,'Catequizando'),(3,'Auxiliar');
+INSERT INTO `tipo_usuario` VALUES (1,'Administrador'),(2,'Catequista'),(3,'Auxiliar');
 /*!40000 ALTER TABLE `tipo_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1260,9 +1249,9 @@ CREATE TABLE `turma` (
   `cd_turma` varchar(8) DEFAULT NULL,
   `nm_turma` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_turma`),
-  KEY `FK_Reference_123` (`id_etapa`),
-  CONSTRAINT `FK_Reference_123` FOREIGN KEY (`id_etapa`) REFERENCES `etapa` (`id_etapa`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Tabela que definirá os dados de uma turma de catequizandos';
+  KEY `FK_turma_etapa` (`id_etapa`),
+  CONSTRAINT `FK_turma_etapa` FOREIGN KEY (`id_etapa`) REFERENCES `etapa` (`id_etapa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela que definirá os dados de uma turma de catequizandos';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1271,7 +1260,6 @@ CREATE TABLE `turma` (
 
 LOCK TABLES `turma` WRITE;
 /*!40000 ALTER TABLE `turma` DISABLE KEYS */;
-INSERT INTO `turma` VALUES (2,1,'SEM','TURMA AN1'),(3,2,'EUCA','Turma Eucaristia 01'),(4,4,'SEMENduT','hdwuidhwiudhwi');
 /*!40000 ALTER TABLE `turma` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1293,15 +1281,15 @@ CREATE TABLE `turma_catequizando` (
   `ds_motivo_reprovacao` varchar(1000) DEFAULT NULL,
   `tx_observacoes` text,
   PRIMARY KEY (`id_turma_catequizando`),
-  KEY `FK_Reference_127` (`id_turma`),
-  KEY `FK_Reference_128` (`id_catequizando`),
-  KEY `FK_Reference_129` (`id_usuario`),
-  KEY `FK_Reference_132` (`id_periodo_letivo`),
-  CONSTRAINT `FK_Reference_127` FOREIGN KEY (`id_turma`) REFERENCES `turma` (`id_turma`),
-  CONSTRAINT `FK_Reference_128` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`),
-  CONSTRAINT `FK_Reference_129` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  CONSTRAINT `FK_Reference_132` FOREIGN KEY (`id_periodo_letivo`) REFERENCES `periodo_letivo` (`id_periodo_letivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COMMENT='Tabela que Armazena todos os Catequizandos por Turma';
+  KEY `FK_turma_catequizando_turma` (`id_turma`),
+  KEY `FK_turma_catequizando_catequizando` (`id_catequizando`),
+  KEY `FK_turma_catequizando_usuario` (`id_usuario`),
+  KEY `FK_turma_catequizando_periodo_letivo` (`id_periodo_letivo`),
+  CONSTRAINT `FK_turma_catequizando_catequizando` FOREIGN KEY (`id_catequizando`) REFERENCES `catequizando` (`id_catequizando`),
+  CONSTRAINT `FK_turma_catequizando_periodo_letivo` FOREIGN KEY (`id_periodo_letivo`) REFERENCES `periodo_letivo` (`id_periodo_letivo`),
+  CONSTRAINT `FK_turma_catequizando_turma` FOREIGN KEY (`id_turma`) REFERENCES `turma` (`id_turma`),
+  CONSTRAINT `FK_turma_catequizando_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela que Armazena todos os Catequizandos por Turma';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1310,7 +1298,6 @@ CREATE TABLE `turma_catequizando` (
 
 LOCK TABLES `turma_catequizando` WRITE;
 /*!40000 ALTER TABLE `turma_catequizando` DISABLE KEYS */;
-INSERT INTO `turma_catequizando` VALUES (1,2,2,1,12,'2016-07-10 19:40:46',NULL,NULL,'ewdwwd'),(2,2,2,1,12,'2016-07-10 19:40:46',NULL,NULL,'efer'),(10,2,2,1,12,'2016-07-10 19:40:06',NULL,NULL,'w2w2w2'),(11,2,2,1,12,'2016-07-10 19:42:57',NULL,NULL,'swsw'),(13,2,2,1,13,'2016-07-10 20:00:58',NULL,NULL,'dededede'),(19,2,2,1,12,'2016-07-10 20:58:56',NULL,NULL,'trhthty'),(20,2,2,1,12,'2016-07-10 21:23:41',NULL,NULL,'wss'),(21,2,2,1,15,'2016-07-10 21:33:00',NULL,NULL,'rgtgrg'),(22,2,2,1,15,'2016-07-10 21:33:05',NULL,NULL,'rgrgrgrgr'),(23,2,2,1,12,'2016-07-11 18:58:30',NULL,NULL,'333333333'),(24,2,2,1,14,'2016-07-11 19:47:46',NULL,NULL,''),(25,2,2,1,14,'2016-07-11 19:50:28',NULL,NULL,'23w2'),(26,2,2,1,14,'2016-07-11 19:50:32',NULL,NULL,'3e3e3'),(28,3,2,1,17,'2016-07-12 13:52:38',NULL,NULL,'yturfuytfuyft'),(29,3,3,1,17,'2016-07-12 13:53:01',NULL,NULL,'ugiugiu'),(30,3,4,1,17,'2016-07-12 13:53:12',NULL,NULL,'oihoihoihho'),(31,3,2,1,14,'2016-09-05 02:30:11',NULL,NULL,'zazazaza'),(32,3,4,1,14,'2016-10-08 13:55:00',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `turma_catequizando` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1325,7 +1312,7 @@ CREATE TABLE `turno` (
   `id_turno` int(11) NOT NULL AUTO_INCREMENT,
   `nm_turno` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_turno`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Armazenas os Turnos de estudo. Ex: manha, Tarde, Noite ou Di';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Armazenas os Turnos de estudo. Ex: manha, Tarde, Noite ou Di';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1334,7 +1321,7 @@ CREATE TABLE `turno` (
 
 LOCK TABLES `turno` WRITE;
 /*!40000 ALTER TABLE `turno` DISABLE KEYS */;
-INSERT INTO `turno` VALUES (1,'Matutino'),(2,'Vespertino'),(3,'Noturno'),(4,'Diurno');
+INSERT INTO `turno` VALUES (1,'Matutino'),(2,'Vespertino'),(3,'Noturno');
 /*!40000 ALTER TABLE `turno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1365,7 +1352,7 @@ CREATE TABLE `usuario` (
   CONSTRAINT `fk_usuarios_sexo` FOREIGN KEY (`id_sexo`) REFERENCES `sexo` (`id_sexo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuarios_situacao_usuario` FOREIGN KEY (`id_situacao_usuario`) REFERENCES `situacao_usuario` (`id_situacao_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuarios_telefones` FOREIGN KEY (`id_telefone`) REFERENCES `telefone` (`id_telefone`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1374,7 +1361,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Admin','Administrador',1,1,1,1,1),(2,'Alysson Vicuña de Oliveira','Administrador',1,1,1,2,2),(14,'Vanessa Coelho','Coordenadora de Curso',2,2,1,10,17);
+INSERT INTO `usuario` VALUES (1,'Admin','Administrador',1,1,1,1,1),(2,'Alysson Vicuña de Oliveira','Administrador',1,1,1,2,2);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1431,4 +1418,4 @@ USE `bdcatequese`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-22 13:57:53
+-- Dump completed on 2017-03-12 12:13:22

@@ -52,7 +52,7 @@ class CatequistaController extends AbstractCrudController
         $controller = $this->params('controller');
         $id_catequista = Cript::dec($this->getRequest()->getPost()->get('id'));
 
-        $pos = $this->getRequest()->getPost()->toArray();
+        $post = $this->getRequest()->getPost()->toArray();
         #$arrc = $this->service->buscar(Cript::dec($pos['id']))->toArray();
 
         if (isset($id_catequista) && $id_catequista) {
@@ -285,7 +285,7 @@ class CatequistaController extends AbstractCrudController
             $this->getRequest()->getPost()->set('em_email', $email['em_email']);
             $this->getRequest()->getPost()->set('nm_usuario', $usuario['nm_usuario']);
 
-            x($this->getRequest()->getPost()->set('pw_a_senha', $login['pw_senha']));
+            #x($this->getRequest()->getPost()->set('pw_a_senha', $login['pw_senha']));
 
             $this->getRequest()->getPost()->set('nm_logradouro', $endereco['nm_logradouro']);
             $this->getRequest()->getPost()->set('nm_bairro', $endereco['nm_bairro']);

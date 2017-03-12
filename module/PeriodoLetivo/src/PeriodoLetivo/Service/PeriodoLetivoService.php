@@ -143,7 +143,7 @@ class PeriodoLetivoService extends Entity
         ]);
 
         $where = [
-            'id_periodo_letivo'=>$id_periodo_letivo,
+            'id_periodo_letivo' => $id_periodo_letivo,
         ];
 
         if (!empty($filter)) {

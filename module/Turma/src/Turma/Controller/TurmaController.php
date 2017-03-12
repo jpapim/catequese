@@ -114,10 +114,11 @@ class TurmaController extends AbstractCrudController
 
         $camposFilter = [
             '0' => NULL,
-            '1' => [
+            '1' => NULL,
+            '2' => [
                 'filter' => "turma.nm_turma LIKE ?",
             ],
-            '2' => NULL,
+            '3' => NULL,
         ];
 
 
