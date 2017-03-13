@@ -24,7 +24,7 @@
                 <th class="text-center">Turma</th>
                 <th class="text-center" style="width: 15%;">Ações</th>
             <tr>
-                <th colspan="6" class="ts-pager form-horizontal">
+                <th colspan="7" class="ts-pager form-horizontal">
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
@@ -98,7 +98,6 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
-
             </div>
         </div>
     </div>
