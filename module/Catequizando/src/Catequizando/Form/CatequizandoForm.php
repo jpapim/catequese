@@ -117,10 +117,10 @@ class CatequizandoForm extends  AbstractForm{
 
         #FK- Email
         $objForm->hidden("id_email")->required(false);
-        $objForm->email("em_email")->required(true)->label("Email");
-        $objForm->email("em_email_confirm")->required(true)->label("Confirme o email")
+        $objForm->email("em_email")->required(true)->label("E-mail");
+        $objForm->email("em_email_confirm")->required(true)->label("Confirme o e-mail")
             ->setAttribute('data-match', '#em_email')
-            ->setAttribute('data-match-error', 'Email não correspondem');
+            ->setAttribute('data-match-error', 'E-mails não correspondem');
 
         ### Nome do Catequizando
         $objForm->text("nm_catequizando")->required(true)->label("Nome");
