@@ -68,12 +68,12 @@
                 foreach ($paginator as $item) {
                     ?>
                     <tr>
-                        <td><?= $item['id_periodo_letivo']?></td>
-                        <td><?= $item['dt_ano_letivo']?></td>
-                        <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_inicio'])?></td>
-                        <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_fim'])?></td>
+                        <td class="text-center"><?= $item['id_periodo_letivo']?></td>
+                        <td class="text-center"><?= $item['dt_ano_letivo']?></td>
+                        <td class="text-center"><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_inicio'])?></td>
+                        <td class="text-center"><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_fim'])?></td>
 
-                        <td class="text-center">
+                        <td style="width: 200px;" class="text-center">
                            <span class="btn-group">
                                 <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_periodo_letivo'])))) ?>
                                 <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastroperiodoletivodetalhe', 'id' => Estrutura\Helpers\Cript::enc($item['id_periodo_letivo'])))) ?>

@@ -22,13 +22,13 @@ class ResponsavelForm extends AbstractForm {
 
        $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(FALSE)->label("Sexo");
 
-     $objForm->email("em_email")->required(true)->label("Email");
-            $objForm->email("em_email_confirm")->required(true)->label("Confirme o Email")
+     $objForm->email("em_email")->required(true)->label("E-mail");
+            $objForm->email("em_email_confirm")->required(true)->label("Confirme o E-mail")
                 ->setAttribute('data-match', '#em_email')
-                ->setAttribute('data-match-error', 'Email não correspondem');
+                ->setAttribute('data-match-error', 'E-mails não correspondem');
         $objForm->combo("id_email", '\Email\Service\EmailService', 'id', 'em_email')->required(false)->label("Email");
         $objForm->combo('id_situacao','\Situacao\Service\SituacaoService','id','nm_situacao')->required(false)->label("Situação");
-      $objForm->combo("id_profissao", '\Profissao\Service\ProfissaoService', 'id', 'nm_profissao')->required(false)->label("Profissao");
+      $objForm->combo("id_profissao", '\Profissao\Service\ProfissaoService', 'id', 'nm_profissao')->required(false)->label("Profissão");
       $objForm->combo("id_movimento_pastoral", '\MovimentoPastoral\Service\MovimentoPastoralService', 'id', 'nm_movimento_pastoral')->required(false)->label("Movimento Pastoral");
      
         //#########################################################################################

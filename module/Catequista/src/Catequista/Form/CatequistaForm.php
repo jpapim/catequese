@@ -28,10 +28,10 @@ class CatequistaForm extends AbstractForm
         $objForm->combo("id_endereco", '\Endereco\Service\EnderecoService', 'id', 'nm_logradouro')->required(false)->label("Endereco");
         $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(FALSE)->label("Sexo");
 
-        $objForm->email("em_email")->required(true)->label("Email");
-        $objForm->email("em_email_confirm")->required(true)->label("Confirme o Email")
+        $objForm->email("em_email")->required(true)->label("E-mail");
+        $objForm->email("em_email_confirm")->required(true)->label("Confirme o E-mail")
             ->setAttribute('data-match', '#em_email')
-            ->setAttribute('data-match-error', 'Email não correspondem');
+            ->setAttribute('data-match-error', 'E-mails não correspondem');
         $objForm->combo("id_email", '\Email\Service\EmailService', 'id', 'em_email')->required(false)->label("Email");
         $objForm->combo('id_situacao', '\Situacao\Service\SituacaoService', 'id', 'nm_situacao')->required(false)->label("Situação");
         $objForm->combo("id_detalhe_formacao", '\DetalheFormacao\Service\DetalheFormacaoService', 'id', 'ds_detalhe_formacao')->required(false)->label("Formação Acadêmica");
@@ -103,11 +103,11 @@ class CatequistaForm extends AbstractForm
 
 
         $objForm->text("nm_catequista")->required(true)->label("Nome completo");
-        $objForm->text("nr_matricula")->required(true)->label("numero matricula");
+        $objForm->text("nr_matricula")->required(true)->label("Número matrícula");
         $objForm->date("dt_nascimento")->required(true)->label("Data de nascimento");
         $objForm->date("dt_ingresso")->required(true)->label("Data de ingresso");
-        $objForm->textarea("tx_observacao")->required(true)->label("Observacao");
-        $objForm->textarea("ds_situacao")->required(false)->label("Descricao da situacao");
+        $objForm->textarea("tx_observacao")->required(true)->label("Observação");
+        $objForm->textarea("ds_situacao")->required(false)->label("Descricao da situação");
 
         $objForm->hidden("id_perfil")->required(true)->label("perfil");
         $objForm->hidden("id_tipo_usuario")->required(true)->label("tp usuario");

@@ -40,8 +40,8 @@ class CatequizandoResponsavelForm  extends  AbstractForm{
         $objForm->text("id_telefone_celular")->required(FALSE)->label("Telefone Celular");
         $objForm->text("id_telefone_residencial")->required(FALSE)->label("Telefone Residencial");
 
-        $objForm->email("em_email")->required(true)->label("Email");
-        $objForm->email("em_email_confirm")->required(true)->label("Confirme o Email")
+        $objForm->email("em_email")->required(true)->label("E-mail");
+        $objForm->email("em_email_confirm")->required(true)->label("Confirme o E-mail")
             ->setAttribute('data-match', '#em_email')
             ->setAttribute('data-match-error', 'Email não correspondem');
         $objForm->combo("id_email", '\Email\Service\EmailService', 'id', 'em_email')->required(false)->label("Email");

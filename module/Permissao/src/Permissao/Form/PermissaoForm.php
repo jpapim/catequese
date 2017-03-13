@@ -42,7 +42,7 @@ class PermissaoForm extends AbstractForm
                     'selected' => in_array($ob_action->getId(), $options['acoes']) ? true : false,
                 ];
             }
-            $objForm->multicheckbox('id_action', $arrTodasActions, 'checkbox')->required(false)->label('Marque as açoes disponiveis ao Pefil e Módulo:');
+            $objForm->multicheckbox('id_action', $arrTodasActions, 'checkbox')->required(false)->label('Marque as ações disponíveis ao Pefil e Módulo:');
         }
         $this->formObject = $objForm;
     }

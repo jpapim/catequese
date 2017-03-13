@@ -28,7 +28,7 @@
 <div class="row" id="msg"></div>
 
 <div class="page-head">
-    <h2>Adicionar Aluno</h2>
+    <h2>Adicionar Catequizando</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
@@ -243,7 +243,7 @@
     function validaForm() {
         if (($("#em_email").val() != $("#em_email_confirm").val())) {
             $("#msg").html(
-                '<div class="alert alert-danger"><strong>Atenção!</strong> Emails não correspondem.</div>'
+                '<div class="alert alert-danger"><strong>Atenção!</strong> E-mails não correspondem.</div>'
             );
             return false;
         }
@@ -255,7 +255,7 @@
         }
         if(!is_email($("#em_email").val())){
             $("#msg").html(
-                '<div class="alert alert-danger"><strong>Atenção!</strong>Email não se encontra de acordo com o formato padrão.Ex: exemplo@exemplo.com</div>'
+                '<div class="alert alert-danger"><strong>Atenção!</strong>E-mail não se encontra de acordo com o formato padrão.Ex: exemplo@exemplo.com</div>'
             );
             return false;
         }
