@@ -397,6 +397,7 @@ class CatequistaController extends AbstractCrudController
             '5' => [
                 'filter' => "catequista.tx_observacao LIKE ?",
             ],
+            '6' => NULL,
 
         ];
 
