@@ -61,7 +61,8 @@ class SacramentoController extends AbstractCrudController
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0' => [
+            '0' => NULL,
+            '1' => [
                 'filter' => "sacramento.nm_sacramento LIKE ?",
             ],
 

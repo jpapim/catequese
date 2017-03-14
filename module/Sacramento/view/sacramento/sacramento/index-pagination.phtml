@@ -5,15 +5,17 @@
         <table class="table table-striped" id="tablesorterAtletas" >
             <thead>
                 <tr>
+                    <th class="text-center " style="width: 5%;">#</th>
                     <th class="text-center">Nome do Sacramento</th>
-                    <th class="text-center">Ações</th>
+                    <th class="text-center" style="width: 5%;">Ações</th>
                   
                 </tr>
             </thead>
             <tfoot>
                 <tr>
+                    <th class="text-center" style="width: 5%;">#</th>
                     <th class="text-center">Nome do Sacramento</th>
-                     <th class="text-center">Ações</th>
+                    <th class="text-center" style="width: 5%;">Ações</th>
                 
                 </tr>
                 <tr>
@@ -34,17 +36,16 @@
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
             if (!empty($paginator)) {
                 ?>
-                <tbody class="">
+                <tbody class="" align="center">
                     <tr role="row" class="tablesorter-filter-row">
                         <?php
                         foreach ($camposFilter as $key => $campoFilter) {
                             ?>    
-                       <td style="background-color: #e3e3e3;">
+                       <td>
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
                                   <input type="search" placeholder="" class=" col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                                    
                                 <?php
                             } else {
                                 ?>
@@ -58,13 +59,14 @@
                     ?>
                          <td>&nbsp;</td>
                         
-                </tr>                           
+                </tr>
                     </tr>
                      
                     <?php
                     foreach ($paginator as $key => $sacramento) {
                         ?>
                         <tr>
+                            <td class="text-center"><?= $sacramento['id_sacramento'] ?></td>
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramento['nm_sacramento']) ?></td>
                          </td>
                             <td class="text-center">
