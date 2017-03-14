@@ -59,7 +59,8 @@ class SituacaoConjugalController extends  AbstractCrudController{
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0' => [
+            '0' => NULL,
+            '1' => [
                 'filter' => "situacao_conjugal.ds_situacao_conjugal LIKE ?",
             ],
 

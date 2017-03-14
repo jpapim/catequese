@@ -5,6 +5,7 @@
         <table class="table table-striped" id="tablesorterAtletas" >
             <thead>
                 <tr>
+                    <th class="text-center" style="width: 5%;">#</th>
                     <th class="text-center">Nome da Situação Conjugal</th>
                     <th class="text-center">Ações</th>
                   
@@ -12,8 +13,9 @@
             </thead>
             <tfoot>
                 <tr>
+                    <th class="text-center" style="width: 5%;">#</th>
                     <th class="text-center">Nome da Situação Conjugal</th>
-                     <th class="text-center">Ações</th>
+                    <th class="text-center">Ações</th>
                 
                 </tr>
                 <tr>
@@ -39,7 +41,7 @@
                         <?php
                         foreach ($camposFilter as $key => $campoFilter) {
                             ?>    
-                       <td style="background-color: #e3e3e3;">
+                       <td>
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
@@ -65,6 +67,7 @@
                     foreach ($paginator as $key => $sacramento) {
                         ?>
                         <tr>
+                            <td class="text-center"><?= $sacramento['id_situacao_conjugal'] ?></td>
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($sacramento['ds_situacao_conjugal']) ?></td>
                          </td>
                             <td class="text-center">
