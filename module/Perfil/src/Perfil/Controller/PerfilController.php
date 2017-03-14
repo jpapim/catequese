@@ -52,6 +52,7 @@ class PerfilController extends AbstractCrudController
             '0' => [
                 'filter' => "perfil.nm_perfil LIKE ?",
             ],
+            '1' => NULL,
          
         ];
         
