@@ -6,7 +6,7 @@
             <thead>
             <tr>
                 <th class="text-center" style="width: 5%;">#</th>
-                <th class="text-center">Ano Letivo</th>◘
+                <th class="text-center">Ano Letivo</th>
                 <th class="text-center">Data Início</th>
                 <th class="text-center">Data Término</th>
                 <th class="text-center" style="width: 15%;">Ações</th>
@@ -49,7 +49,7 @@
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
-                     <td style="background-color: #e3e3e3;">
+                     <td>
                                 <input type="search" placeholder="" class=" col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                                 <?php
                             } else {
