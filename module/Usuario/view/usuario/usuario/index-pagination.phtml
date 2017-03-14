@@ -5,21 +5,23 @@
         <table class="table table-striped" id="tablesorterUsuarios">
             <thead>
             <tr>
+                <th class="text-center" style="width: 5%;">#</th>
                 <th class="text-center">Perfil</th>
                 <th class="text-center">Usuário</th>
                 <th class="text-center">Cargo/Função</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center" style="width: 5%;">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
+                <th class="text-center" style="width: 5%;">#</th>
                 <th class="text-center">Perfil</th>
                 <th class="text-center">Usuário</th>
                 <th class="text-center">Cargo/Função</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center" style="width: 5%;">Ações</th>
             </tr>
             <tr>
-                <th colspan="4" class="ts-pager form-horizontal">
+                <th colspan="5" class="ts-pager form-horizontal">
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
@@ -36,8 +38,8 @@
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
             if (!empty($paginator)) {
                 ?>
-                <tbody class="">
-                <tr role="row" class="tablesorter-filter-row">
+                <tbody class="" class="text-center">
+                <tr role="row" class="tablesorter-filter-row text-center">
                     <?php
                     foreach ($camposFilter as $key => $campoFilter) {
                         ?>
@@ -45,7 +47,7 @@
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
-                                <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>"
+                                <input type="search" placeholder="" class="col-md-12 tablesorter-filter" data-column="<?= $key ?>"
                                        value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                             <?php
                             } else {
@@ -63,9 +65,11 @@
                 foreach ($paginator as $key => $usuario) {
                     ?>
                     <tr>
+                        <td class="text-center"><?= $usuario['id_usuario']?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_perfil']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_usuario']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_funcao']) ?></td>
+
                         <td class="text-center">
                             <?php if ($usuario['id_perfil'] != TXT_CONST_PERFIL_ADMINISTRADOR) { ?>
                                 <span class="btn-group" style="width: 160px;">
@@ -101,10 +105,14 @@
         </div>
     </div>
 </div>
-<script
-    src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript">
-
-</script>
+<!--<script src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript"></script>-->
+<script src="/assets/js/moment.js" type="text/javascript"></script>
+<script src="/assets/js/validator.min.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.mask.min.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.ui.widget.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 <script type="text/javascript" language="javascript">
     $(function () {
 

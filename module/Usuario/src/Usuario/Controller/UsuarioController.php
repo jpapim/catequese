@@ -44,16 +44,17 @@ class UsuarioController extends AbstractCrudController
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0' => [
+            '0' => NULL,
+            '1' => [
                 'filter' => "equipe.nm_equipe LIKE ?",
             ],
-            '1' => [
+            '2' => [
                 'filter' => "usuario.nm_usuario LIKE ?",
             ],
-            '2' =>[
+            '3' =>[
                 'filter' => "usuario.nm_funcao LIKE ?",
             ],
-            '3' => NULL,
+            '4' => NULL,
         ];
 
 
