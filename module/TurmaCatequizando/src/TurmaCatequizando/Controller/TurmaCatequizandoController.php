@@ -110,13 +110,14 @@ class TurmaCatequizandoController extends AbstractCrudController
 
         $filter = $this->getFilterPage();
         $camposFilter = [
-            '0' => [
+            '0' => NULL,
+            '1' => [
                 'filter' => "turma.nm_turma LIKE ?",
             ],
-            '1' => [
+            '2' => [
                 'filter' => "periodo_letivo.dt_ano_letivo LIKE ?",
             ],
-            '2' => NULL,
+            '3' => NULL,
 
         ];
 
