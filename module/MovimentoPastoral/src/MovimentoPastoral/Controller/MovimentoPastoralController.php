@@ -58,10 +58,11 @@ class MovimentoPastoralController extends AbstractCrudController
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0' => [
+            '0' => NULL,
+            '1' => [
                 'filter' => "movimento_pastoral.nm_movimento_pastoral LIKE ?",
             ],
-         
+            '2' => NULL,
         ];
         
         $paginator = $this->service->getMovimentoPastoralPaginator($filter, $camposFilter);
