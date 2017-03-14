@@ -50,10 +50,11 @@ class ControllerController extends AbstractCrudController
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0' => [
+            '0' => NULL,
+            '1' => [
                 'filter' => "controller.nm_controller LIKE ?",
             ],
-            '1' => NULL,
+            '2' => NULL,
         ];
 
         $paginator = $this->service->getControllerPaginator($filter, $camposFilter);

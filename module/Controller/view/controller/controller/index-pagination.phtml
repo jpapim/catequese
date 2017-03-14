@@ -5,12 +5,14 @@
         <table class="table table-striped" id="tablesorterEstados" >
             <thead>
                 <tr>
+                    <th class="text-center" style="width: 5%;">#</th>
                     <th class="text-center">Nome do Controller</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
+                    <th class="text-center" style="width: 5%;">#</th>
                     <th class="text-center">Nome do Controller</th>
                     <th class="text-center">Ações</th>
                 </tr>
@@ -32,8 +34,8 @@
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
             if (!empty($paginator)) {
                 ?>
-                <tbody class="">
-                    <tr role="row" class="tablesorter-filter-row">
+                <tbody class="" class="text-center">
+                    <tr role="row" class="tablesorter-filter-row text-center">
                         <?php
                         foreach ($camposFilter as $key => $campoFilter) {
                             ?>    
@@ -58,6 +60,7 @@
                     foreach ($paginator as $key => $my_controller) { ?>
                         <?php #print_r($academia); die;?>
                         <tr>
+                            <td class="text-center"><?= $my_controller['id_controller'] ?></td>
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($my_controller['nm_controller']) ?></td>
                             <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
@@ -83,8 +86,14 @@
         </div>
     </div>
 </div>
-<script src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript"></script>
-
+<!--<script src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript"></script>-->
+<script src="/assets/js/moment.js" type="text/javascript"></script>
+<script src="/assets/js/validator.min.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.mask.min.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.ui.widget.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 <script type="text/javascript" language="javascript" >
     $(function () {
 
