@@ -18,7 +18,7 @@ class AuthForm extends AbstractForm {
                 'usuario', $this, $this->inputFilter
         );
 
-        $objForm->email('email')->required(true)->label('Email');
+        $objForm->email('email')->required(true)->label('E-mail');
         $objForm->password('senha')->required(true)->label('Senha');
 
 
