@@ -5,25 +5,28 @@
         <table class="table table-striped" id="tablesorterAtletas" >
             <thead>
                 <tr>
+                      <th class="text-center" style="width: 5%;">#</th>
                       <th class="text-center">Nome</th>
                       <th class="text-center">Telefone Residencial</th>
                       <th class="text-center">Telefone Celular</th>
                       <th class="text-center">E-mail</th>
                       <th class="text-center">Profissão</th>
-                     <th class="text-center">Ações</th>
+                     <th class="text-center" style="width: 15%;">Ações</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
+                    <th class="text-center" style="width: 5%;">#</th>
                     <th class="text-center">Nome</th>
                     <th class="text-center">Telefone Residencial</th>
                     <th class="text-center">Telefone Celular</th>
                     <th class="text-center">E-mail</th>
                     <th class="text-center">Profissão</th>
+                    <th class="text-center" style="width: 15%;">Ações</th>
                 
                 </tr>
                 <tr>
-                    <th colspan="6" class="ts-pager form-horizontal">
+                    <th colspan="7" class="ts-pager form-horizontal">
                         <?php
                     echo $this->paginationControl(
                                 $paginator, 'Sliding', 'partials/pagination.phtml', [
@@ -32,7 +35,7 @@
                             'divData' => '#atleta-pagination',
                                 ]
                         );
-                        ?>  
+                        ?>
                     </th>
                 </tr>
             </tfoot>
@@ -40,8 +43,8 @@
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
             if (!empty($paginator)) {
                 ?>
-                <tbody class="">
-                    <tr role="row" class="tablesorter-filter-row" align="center">
+                <tbody class="" align="center">
+                    <tr role="row" class="tablesorter-filter-row">
                         <?php
                         foreach ($camposFilter as $key => $campoFilter) {
                             ?>    
@@ -49,7 +52,7 @@
                                 <?php
                                 if (!is_null($campoFilter)) {
                                     ?>
-                                    <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                    <input type="search" placeholder="" class="col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                                     <?php
                                 } else {
                                     ?>
@@ -60,26 +63,27 @@
                             </td>
                             <?php
                         }
-                        ?>                            
+                        ?>
                     </tr>
                     <?php
                     foreach ($paginator as $key => $responsavel) {
 
                         ?>
                     <tr>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['nm_responsavel']) ?></td>
+                        <td class="text-center"><?=$responsavel['id_responsavel'] ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['nm_responsavel']) ?></td>
                         <td class="text-center"><?= $service->getTelefone($responsavel['id_telefone_residencial'])?></td>
                         <td class="text-center"><?= $service->getTelefone($responsavel['id_telefone_celular'])?></td>
                         <td class="text-center"><?= $responsavel['em_email']?></td>
-                          <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['nm_profissao']) ?></td>
-                             
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['nm_profissao']) ?></td>
+                        </td>
                             <td class="text-center">
                                 <span class="btn-group">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($responsavel['id_responsavel'])))) ?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($responsavel['id_responsavel'])))) ?>
                                 </span>
                             </td>
-                        </tr>                    
+                        </tr>
                         <?php
                     }
                     ?>

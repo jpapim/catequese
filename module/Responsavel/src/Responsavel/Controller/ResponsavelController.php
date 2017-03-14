@@ -114,21 +114,23 @@ if($resultEmail){
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0' => [
+            '0' => NULL,
+
+            '1' => [
                 'filter' => "responsavel.nm_responsavel LIKE ?",
             ],
 
-            '1' => NULL,
-
             '2' => NULL,
             
-             '3' => [
-                'filter' => "email.em_email LIKE ?",
-            ],
+            '3' => NULL,
             
-             '4' => [
-                'filter' => "profissao.nm_profissao LIKE ?",
+            '4' => [
+        'filter' => "email.em_email LIKE ?",
             ],
+            '5' => [
+        'filter' => "profissao.nm_profissao LIKE ?",
+            ],
+            '6' => NULL,
 
         ];
 
