@@ -80,8 +80,8 @@
                         <td class="text-center"><?=$service->getCatequizandoTurma($item['id_catequizando'])?></td>
 
                         <td style="width: 200px;" class="text-center">
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_catequizando'])))) ?>
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'responsavelCatequizando', 'id' => Estrutura\Helpers\Cript::enc($item['id_catequizando'])))) ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_catequizando']))),'Alterar Catequizando') ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'responsavelCatequizando', 'id' => Estrutura\Helpers\Cript::enc($item['id_catequizando']))),'Alterar Responsável') ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_catequizando'])))) ?>
 
                         </td>
@@ -97,7 +97,7 @@
         </table>
         <div class="row">
             <div class="col-md-12">
-                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Início</a>
             </div>
         </div>
     </div>
