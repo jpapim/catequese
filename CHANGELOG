@@ -1,20 +1,22 @@
 Release 1.4.0
   * Novo: Adicionando um Campo para Informar se o Evento esta ativo ou não, para que seja feito o controle se ele deverá sumir ou não da listagem.
 
-Release 1.3.0
-  * Novo: Adicionando na tela de login um controle que informa em qual Branch e revisão está o código sendo executado no momento
-
-Release 1.2.2
-  * Fix: Atualizando arquivo de configuração para habilitar os modulos de compressão de Classes e de Assets
-
-Release 1.2.1
-  * Fix: Corrigindo a Criação da TAG para incluir o arquivo do CHANGELOG
-  
-Release 1.2.0
-  * Novo: [Cadastro de Atletas] Adicionando Paginação na Listagem de Atletas utilizando o componente do Zend_Paginator
-
-Release 1.1.1
-  * Fix: Correção no cadastro de atletas.
-
-Release 1.0.0
-  * Novo: Inicialização do projeto contendo script de banco de dados.
+Release (15/03/2017 as 15:44)
+ — RESOLVIDO
+* [Realizado: Alysson] Corrigir listagem no cadastro de estado civil
+* [Realizado: Alysson] Corriggir listagem do cadastro de formaçao
+* [Realizado: Alysson] Reorganizar os itens de menu para que a navegaçao fique mais intuitiva.
+* [Realizado: Alysson] Corrigir listagem no cadastro de catequizandos
+* [Realizado: Alysson] Corrigir listagem no cadastro de catequistas
+* [Realizado: Alysson] O Cadastro de Catequistas nao esta cadastrando
+* [Realizado: Alysson] Corrigir a listagem do cadastro de turmas
+* [Realizado: Alysson] Corrigir a listagem do cadastro de paroquias
+** [Realizado: Alysson] Limpar a base de dados para que os clientes possam iniciar os testes
+** [Realizado: Alysson] Ajustar os nomes das constraints no banco de dados
+** [Realizado: Alysson] O cadastro do periodo Letivo nao esta funcionando. O sistema fica parado na tela inicial.
+** [Realizado: Alysson] No cadastro de catequizando, quando ele tenta inserir um email que ja existe no sistema ele apresenta o erro, mas redireciona o usuario para a tela inicial, assim ele perde tudo que digitou.
+* [Realizado: Alysson] - Cadastrar os membros da Catequese no Kanboard e disponobilizar acesso por email.
+** [Realizado: Alysson] - Cadastrar a Priscila Raquel para realizar testes no sistema CATEQUESE e disponobilizar acesso por email.
+** [Realizado: Alysson] Retirar o timer da Mensagem de erro. Ela devera ser exibida ate que o usuario pressione o X para remover.
+* [Realizado: Eduardo] Quando acesso o Sacramento catequizando (http://dev.catequese.com.br/sacramento_catequizando-sacramentocatequizando/cadastro) Voca nao tem permissao para acessar esta pagina. erro: sacramento_responsavel-sacramentoresponsavel/index
+** [Realizado: Eduardo] Colocar no Enturmar Catequizandos a possibilidade de selecionar o catequizando por um campo autocomplete.
