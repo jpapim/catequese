@@ -28,6 +28,11 @@
             echo $this->form()->openTag($form);
             $form->get('id_catequizando')->setValue(Estrutura\Helpers\Cript::enc($catequizando->getId()));
             echo $this->formHidden($form->get('id_catequizando'));
+
+            #Recuperando o Nome do Responsavel Pelo ID e Setando no Formulario
+            $responsavel = new \Responsavel\Service\ResponsavelService();
+            $arrResponsavel = $responsavel->getResponsavelToArray($form->get('id_responsavel')->getValue());
+            $form->setData(['id_responsavel' => $arrResponsavel['nm_responsavel']]);
             ?>
 
             <br />
@@ -146,6 +151,11 @@
 <script>
     $(document).ready(function() {
 
+        //Autocomplete Responsavel - Eduardo Ferreira
+        $("#id_responsavel").autocomplete({
+            minLength:3,
+            source:"/responsavel-responsavel/autocompleteresponsavel"
+        });
 
         //Função que faz a listagem ser paginada.
         function carregarGridPaginadaAjax(){

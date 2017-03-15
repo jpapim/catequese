@@ -3,7 +3,7 @@
     <div class="col-xs-12 col-sm-9">
         <div class="well">
             <div class="page-head">
-                <h2>Enturmar Alunos</h2>
+                <h2>Enturmar Catequizando</h2>
             </div>
 
             <?php
@@ -21,9 +21,9 @@
             $form->get('id_catequizando')->setValue(2);
 
             #Recuperando o Nome do Catequizando Pelo ID e Setando no Formulario
-            #$catequizando = new \Catequizando\Service\CatequizandoService();
-            #$arrCatequizando = $catequizando->getCatequizandoToArray($form->get('id_catequizando')->getValue());
-            #$form->setData(['id_catequizando' => $arrCatequizando['nm_catequizando']]);
+            $catequizando = new \Catequizando\Service\CatequizandoService();
+            $arrCatequizando = $catequizando->getCatequizandoToArray($form->get('id_catequizando')->getValue());
+            $form->setData(['id_catequizando' => $arrCatequizando['nm_catequizando']]);
 
             ?>
 
@@ -56,8 +56,8 @@
 
             <div class="form-group">
                 <div class="col-md-10">
-                    <a id="enturmar_aluno" class="btn btn-primary" href="#" title="Adicionar data do encontro">Enturmar
-                        Aluno</a>
+                    <a id="enturmar_catequizando" class="btn btn-primary" href="#" title="Adicionar data do encontro">Enturmar
+                        Catequizando</a>
                     <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Voltar</a>
                 </div>
             </div>
@@ -74,7 +74,13 @@
         src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
 <script type="text/javascript" language="javascript" class="init">
     $(document).ready(function () {
-        $('#enturmar_aluno').hide();
+        //Autocomplete Catequiizandos - Eduardo Ferreira
+        $("#id_catequizando").autocomplete({
+            minLength:3,
+            source:"/catequizando-catequizando/autocompletecatequizando"
+        });
+
+        $('#enturmar_catequizando').hide();
         $("#id_catequizando").val("");
         function carregaralunosTurmaAposInserir() {
             <?php
@@ -91,7 +97,7 @@
 
         //Função que faz a listagem ser paginada.
         function carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo) {
-            $('#enturmar_aluno').show();
+            $('#enturmar_catequizando').show();
 
             $.ajax({
                 type: "post",
@@ -141,7 +147,7 @@
         });
 
         //Fun��o Ajax que adiciona alunos a uma determinada turma
-        $('#enturmar_aluno').click(function () {
+        $('#enturmar_catequizando').click(function () {
             var dados = $('#turmacatequizandoform').serialize();
             $.ajax({
                 type: 'POST',
@@ -169,13 +175,6 @@
         });
 
         carregaralunosTurmaAposInserir();
-
-        /*Autocomplete Catequiizandos - Igor*/
-        $("#id_catequizando").autocomplete({
-            minLength:4,
-            source:"/catequizando-catequizando/autocomplete"
-        });
-
 
     });
 </script>

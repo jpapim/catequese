@@ -406,7 +406,7 @@ class CatequizandoController extends AbstractCrudController
             $controller = $this->params('controller');
             $post = $this->getRequest()->getPost()->toArray();
             $id = Cript::dec($post['id']);
-            xd($id);
+            #xd($id);
             $post['id'] = $id;
             $arr = $this->service->buscar($id)->toArray();
 
@@ -784,7 +784,7 @@ class CatequizandoController extends AbstractCrudController
         return $this->redirect()->toRoute('navegacao', array('controller' => $this->params('controller'), 'action' => 'responsavelCatequizando'));
     }
 
-    public function autocompleteAction()
+    public function autocompletecatequizandoAction()
     {
         $term = $_GET['term'];
         $arr = $this->service->getFiltrarCatequizandoPorNomeToArray($term);
