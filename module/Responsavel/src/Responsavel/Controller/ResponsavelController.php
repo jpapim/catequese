@@ -129,6 +129,7 @@ class ResponsavelController extends AbstractCrudController
                 'filter' => "profissao.nm_profissao LIKE ?",
             ],
             '6' => NULL,
+            '7' => NULL,
 
         ];
 
