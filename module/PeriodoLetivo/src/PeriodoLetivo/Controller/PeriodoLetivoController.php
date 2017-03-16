@@ -251,6 +251,7 @@ class PeriodoLetivoController extends AbstractCrudController
             '0' => [
                 //'filter' => "periodoletivodetalhe.nm_sacramento LIKE ?",
             ],
+            '1' => NULL,
 
         ];
 
