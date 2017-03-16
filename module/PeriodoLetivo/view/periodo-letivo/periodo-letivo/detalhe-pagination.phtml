@@ -35,7 +35,7 @@
             if (!empty($paginator)) {
                 ?>
                 <tbody class="">
-                <tr role="row" class="tablesorter-filter-row">
+                <tr role="row" class="tablesorter-filter-row text-center">
                     <?php
                     foreach ($camposFilter as $key => $campoFilter) {
                         ?>
@@ -61,7 +61,7 @@
                 foreach ($paginator as $key => $detalhe_periodo_letivo) {
                     ?>
                     <tr>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_periodo_letivo['dt_encontro']) ?></td>
+                        <td class="text-center"><?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($detalhe_periodo_letivo['dt_encontro']) ?></td>
                         </td>
                         <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">

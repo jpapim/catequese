@@ -12,8 +12,8 @@
                             <ul class="primary">
                                 <li><b>Código Período:</b> <?=$dadosPeriodoLetivo->getId()?></li>
                                 <li><b>Período Letivo:</b> <?=$dadosPeriodoLetivo->getDtAnoLetivo()?></li>
-                                <li><b>Data de Início:</b> <?=$dadosPeriodoLetivo->getDtInicio()?></li>
-                                <li><b>Data de Término:</b> <?=$dadosPeriodoLetivo->getDtFim()?></li>
+                                <li><b>Data de Início:</b> <?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($dadosPeriodoLetivo->getDtInicio())?></li>
+                                <li><b>Data de Término:</b> <?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($dadosPeriodoLetivo->getDtFim())?></li>
                             </ul>
                         </div>
                     <?php } ?>
