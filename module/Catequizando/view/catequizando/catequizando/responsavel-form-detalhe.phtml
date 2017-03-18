@@ -35,32 +35,26 @@
 
                 ?>
 
-                <div class="row">
+                <div class="form-group">
                     <div class="col-md-4">
-                        <div class="form-group">
                             <?= $this->formRow($form->get('id_responsavel')) ?>
-                        </div>
                     </div>
                     <div class="col-md-1"></div>
-                    <div class="col-md-3">
-                        <div class="form-group">
+                    <div class="col-md-2">
                             <?=$this->formRow($form->get('id_grau_parentesco'))?>
-                        </div>
                     </div>
                     <div class="col-md-1"></div>
-                    <div class="col-md-3">
-                        <div class="form-group">
+                    <div class="col-md-2">
                             <?=$this->formRow($form->get('id_situacao_conjugal'))?>
-                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                            <a style="margin-top: 25px;" class="btn btn-primary" href="#" id="adicionar" title="Adicionar Responsável">Adicionar</a>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-10">
-                            <a  class="btn btn-primary" href="#" id="adicionar" title="Adicionar Responsável">Adicionar Responsável</a>
-                        </div>
-                    </div>
+
                 </div>
                 <?= $this->form()->closeTag(); ?>
 

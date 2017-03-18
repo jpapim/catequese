@@ -296,6 +296,7 @@ class CatequizandoController extends AbstractCrudController
             $this->getRequest()->getPost()->set('cs_participa_movimento_pastoral', $arrCatequizando['cs_participa_movimento_pastoral']);
             $this->getRequest()->getPost()->set('dt_nascimento', $arrCatequizando['dt_nascimento']);
             $this->getRequest()->getPost()->set('em_email', $email['em_email']);
+            $this->getRequest()->getPost()->set('em_email_confirm', $email['em_email']);
             $this->getRequest()->getPost()->set('id_sexo', $arrCatequizando['id_sexo']);
             $this->getRequest()->getPost()->set('tx_observacao', $arrCatequizando['tx_observacao']);
             $this->getRequest()->getPost()->set('nm_logradouro', $endereco['nm_logradouro']);
@@ -305,8 +306,8 @@ class CatequizandoController extends AbstractCrudController
             $this->getRequest()->getPost()->set('nr_cep', \Estrutura\Helpers\Cep::cepMask($endereco['nr_cep']));
             $this->getRequest()->getPost()->set('nm_cidade', $cidade['nm_cidade'] . " (" . $estadoCidade['sg_estado'] . ")");
             $this->getRequest()->getPost()->set('nm_naturalidade', $naturalidade['nm_cidade'] . " (" . $estadoNat['sg_estado'] . ")");
-            $this->getRequest()->getPost()->set('telefone_residencial', \Estrutura\Helpers\Telefone::telefoneMask($telResidencial['nr_ddd_telefone'] . $telResidencial['nr_telefone']));
-            $this->getRequest()->getPost()->set('telefone_celular', ($telCelular['nr_ddd_telefone'] . $telCelular['nr_telefone']));
+            $this->getRequest()->getPost()->set('id_telefone_residencial', \Estrutura\Helpers\Telefone::telefoneMask($telResidencial['nr_ddd_telefone'] . $telResidencial['nr_telefone']));
+            $this->getRequest()->getPost()->set('id_telefone_celular', ($telCelular['nr_ddd_telefone'] . $telCelular['nr_telefone']));
 
             if (!empty($arrCatequizando['nm_necessidade_especial'])) {
                 $this->getRequest()->getPost()->set('nm_necessidade_especial', $arrCatequizando['nm_necessidade_especial']);
@@ -609,6 +610,10 @@ class CatequizandoController extends AbstractCrudController
                     $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
                 );
 
+                $post['id_telefone_celular'] = parent::gravar(
+                    $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
+                );
+
                 # REalizando Tratamento do  Telefone Celular
                 $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($post['id_telefone_celular']));
                 $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($post['id_telefone_celular']));
@@ -620,14 +625,9 @@ class CatequizandoController extends AbstractCrudController
                 $dados['id_grau_parentesco'] = $post['id_grau_parentesco'];
                 $dados['id_situacao_conjugal'] = $post['id_situacao_conjugal'];
 
-                $post['id_telefone_celular'] = parent::gravar(
-                    $this->getServiceLocator()->get('\Telefone\Service\TelefoneService'), new \Telefone\Form\TelefoneForm()
-                );
-
                 #### Retirando campos do array
                 $post = $this->unsetPersonalizadoAction($post, [
                     'id_catequizando', 'em_email', 'em_email_confirm', 'id_situacao_conjugal', 'id_situacao', 'id_grau_parentesco']);
-
 
                 #### Gravando Dados do responsavel
                 $responsavel = new \Responsavel\Service\ResponsavelService();

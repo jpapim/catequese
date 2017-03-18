@@ -62,7 +62,7 @@ class ResponsavelController extends AbstractCrudController
 
             # REalizando Tratamento do  Telefone Celular
             $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('id_telefone_residencial')));
-            $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_residencial')));
+            $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('id_telefone_Celular')));
             $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_celular']);
             $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
             $resultTelefoneResidencial = parent::gravar(

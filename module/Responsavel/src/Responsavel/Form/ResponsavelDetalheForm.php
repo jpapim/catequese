@@ -22,7 +22,7 @@ class ResponsavelDetalheForm extends AbstractForm {
 
        $objForm->hidden("id_sexo")->required(FALSE)->label("Sexo");
     # $objForm->combo("id_telefone_celular", '\TelefoneCelular\Service\TelefoneCelularService', 'id', 'nm_telefone_celular')->required(FALSE)->label("Fone Cel");
-      #$objForm->combo("id_telefone_residencial", '\TelefoneResidencial\Service\TelefoneResidencialService', 'id', 'nm_telefone_residencial')->required(FALSE)->label("Fone Cel");  
+      #$objForm->combo("id_telefone_residencial", '\TelefoneResidencial\Service\TelefoneResidencialService', 'id', 'nm_telefone_residencial')->required(FALSE)->label("Fone Cel");
      
     
        $objForm->hidden("id_email")->required(false)->label("Id");
