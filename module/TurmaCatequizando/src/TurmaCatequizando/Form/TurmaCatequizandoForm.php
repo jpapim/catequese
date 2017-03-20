@@ -32,6 +32,7 @@ class TurmaCatequizandoForm extends AbstractForm
 
         //#########################################################################################
         $objForm->textareaHtml("tx_observacoes")->required(true)->label("Observações");
+        $objForm->text("nr_sala")->required(true)->label("Número da sala");
 
        # $oTurmaCatequizando =  new \TurmaCatequizando\Service\TurmaCatequizandoService();
         #$colecaoTurmaCatequizando = $oTurmaCatequizando->fetchAll();

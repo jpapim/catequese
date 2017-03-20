@@ -8,6 +8,7 @@
                 <th class="text-center" style="width: 5%;">Código</th>
                 <th class="text-center">Turma</th>
                 <th class="text-center">Período Letivo</th>
+                <th class="text-center">Numero da Sala</th>
                 <th class="text-center">Ações</th>
 
             </tr>
@@ -17,6 +18,7 @@
                 <th class="text-center" style="width: 5%;">Código</th>
                 <th class="text-center">Turma</th>
                 <th class="text-center">Período Letivo</th>
+                <th class="text-center">Numero da Sala</th>
                 <th class="text-center">Ações</th>
 
             </tr>
@@ -68,6 +70,7 @@
                         <td class="text-center"><?= $turma_catequizando['id_turma']?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeTudoMaiusculo($turma_catequizando['nm_turma']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeTudoMaiusculo($turma_catequizando['dt_ano_letivo']) ?></td>
+                        <td class="text-center"><?= ($turma_catequizando['nr_sala']) ?></td>
                         </td>
                         <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">

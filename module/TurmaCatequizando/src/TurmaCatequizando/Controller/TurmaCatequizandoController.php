@@ -56,6 +56,7 @@ class TurmaCatequizandoController extends AbstractCrudController
         $turmaCatequizandoService->setNmTurma(trim($this->getRequest()->getPost()->get('cs_aprovado')));
         $turmaCatequizandoService->setNmTurma(trim($this->getRequest()->getPost()->get('ds_motivo_reprovacao')));
         $turmaCatequizandoService->setNmTurma(trim($this->getRequest()->getPost()->get('tx_observacoes')));
+        $turmaCatequizandoService->setNmTurma(trim($this->getRequest()->getPost()->get('nr_sala')));
 
         parent::gravar(
             $this->getServiceLocator()->get('\TurmaCatequizando\Service\TurmaCatequizandoService'), new \TurmaCatequizando\Form\TurmaCatequizandoForm()
@@ -117,7 +118,10 @@ class TurmaCatequizandoController extends AbstractCrudController
             '2' => [
                 'filter' => "periodo_letivo.dt_ano_letivo LIKE ?",
             ],
-            '3' => NULL,
+            '3' => [
+                'filter' => "turma_catequizando.nr_sala LIKE ?",
+            ],
+            '4' => NULL,
 
         ];
 
@@ -201,6 +205,7 @@ class TurmaCatequizandoController extends AbstractCrudController
         if ($this->getRequest()->isPost()) {
             $id_turma = $this->params()->fromPost('id_turma');
             $id_periodo_letivo = $this->params()->fromPost('id_periodo_letivo');
+            $nr_sala = $this->params()->fromPost('nr_sala');
             $id_catequizando = $this->params()->fromPost('id_catequizando');
 
             $cateService = new \Catequizando\Service\CatequizandoService();
@@ -221,6 +226,7 @@ class TurmaCatequizandoController extends AbstractCrudController
             $arDadosGravar = array(
                 'id_catequizando' => $id_catequizando['id_catequizando'],
                 'id_periodo_letivo' => $id_periodo_letivo,
+                'nr_sala' => $nr_sala,
                 'id_turma' => $id_turma,
                 'id_usuario' => $id_usuario,
                 'tx_observacoes' => $tx_observacoes

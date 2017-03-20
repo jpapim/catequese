@@ -17,6 +17,7 @@ class TurmaCatequizandoTable extends AbstractEstruturaTable{
         'cs_aprovado'=>'cs_aprovado',
         'ds_motivo_reprovacao'=>'ds_motivo_reprovacao',
         'tx_observacoes'=>'tx_observacoes',
+        'nr_sala'=>'nr_sala',
     ];
 
 }
