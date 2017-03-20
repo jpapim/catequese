@@ -53,7 +53,9 @@ class CatequizandoController extends AbstractCrudController
                 'filter' => "responsavel.nm_responsavel LIKE ?",
             ],
 
-            '3' => NULL,
+            '3' => [
+                'filter' => "telefone.nr_telefone LIKE ?",
+            ],
 
             '4' => [
                 'filter' => "email.em_email LIKE ?",
