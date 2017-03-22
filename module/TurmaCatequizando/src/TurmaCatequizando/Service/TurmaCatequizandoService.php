@@ -90,6 +90,7 @@ class TurmaCatequizandoService extends Entity {
         $select = $sql->select('turma_catequizando')->columns([
             'id_turma',
             'id_periodo_letivo',
+            'nr_sala',
         ])->join('turma', 'turma.id_turma = turma_catequizando.id_turma', [
             'nm_turma'
         ])->join('periodo_letivo', 'periodo_letivo.id_periodo_letivo = turma_catequizando.id_periodo_letivo', [

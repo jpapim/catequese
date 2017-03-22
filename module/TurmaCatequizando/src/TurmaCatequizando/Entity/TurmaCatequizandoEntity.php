@@ -14,6 +14,7 @@ class TurmaCatequizandoEntity extends AbstractEstruturaService{
         protected $dt_cadastro;
         protected $cs_aprovado; 
         protected $ds_motivo_reprovacao;
-        protected $tx_observacoes; 
+        protected $tx_observacoes;
+        protected $nr_sala;
 
 }

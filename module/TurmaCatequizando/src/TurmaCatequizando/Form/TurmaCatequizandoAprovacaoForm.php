@@ -27,6 +27,7 @@ class TurmaCatequizandoAprovacaoForm extends  AbstractForm
         $objForm->text('id_catequizando')->label('Catequizando');
         $objForm->text('id_turm_catequizando')->label('Turma Catequizando');
         $objForm->text('cs_aprovado')->label('cs_aprovado');
+        $objForm->text('nr_sala')->label('nr_sala');
         $this->formObject = $objForm;
     }
 

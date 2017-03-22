@@ -30,12 +30,15 @@
             <br/>
 
             <div class="form-group">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <?= $this->formRow($form->get('id_turma')) ?>
                     <div class="help-block with-errors"></div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <?= $this->formRow($form->get('id_periodo_letivo')) ?>
+                    <div class="help-block with-errors"></div>
+                </div><div class="col-md-4">
+                    <?= $this->formRow($form->get('nr_sala')) ?>
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
@@ -58,7 +61,9 @@
                 <div class="col-md-10">
                     <a id="enturmar_catequizando" class="btn btn-primary" href="#" title="Adicionar data do encontro">Enturmar
                         Catequizando</a>
-                    <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Voltar</a>
+                    <a class="btn btn-default"
+                       href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'index')) ?>"
+                       title="Adiciona um novo sacramento">Listar Turmas</a>
                 </div>
             </div>
 
