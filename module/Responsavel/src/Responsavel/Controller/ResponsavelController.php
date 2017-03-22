@@ -121,14 +121,19 @@ class ResponsavelController extends AbstractCrudController
             '1' => [
                 'filter' => "responsavel.nm_responsavel LIKE ?",
             ],
-            '2' => NULL,
+            '2' => [
+                'filter' => "telefone.nr_telefone LIKE ?",
+            ],
             '3' => [
-                'filter' => "email.em_email LIKE ?",
+                'filter' => "telefone.nr_telefone LIKE ?",
             ],
             '4' => [
+                'filter' => "email.em_email LIKE ?",
+            ],
+            '6' => [
                 'filter' => "profissao.nm_profissao LIKE ?",
             ],
-            '6' => NULL,
+            '7' => NULL,
 
         ];
 

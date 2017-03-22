@@ -113,7 +113,8 @@ class ResponsavelService extends Entity
 
         ])
             ->join('email', 'email.id_email = responsavel.id_email', ['em_email'])
-            ->join('profissao', 'profissao.id_profissao = responsavel.id_profissao', ['nm_profissao']);
+            ->join('profissao', 'profissao.id_profissao = responsavel.id_profissao', ['nm_profissao'])
+            ->join('telefone','telefone.id_telefone = responsavel.id_telefone_residencial',['nr_ddd_telefone','nr_telefone'])  ;
 
         $where = [
         ];

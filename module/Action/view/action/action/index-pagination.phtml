@@ -58,7 +58,7 @@
                     foreach ($paginator as $key => $action) { ?>
                         <?php #print_r($academia); die;?>
                         <tr>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($action['nm_action']) ?></td>
+                            <td class="text-center"><?= $action['nm_action'] ?></td>
                             <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($action['id_action'])))) ?>
