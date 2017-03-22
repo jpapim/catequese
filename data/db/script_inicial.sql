@@ -48,7 +48,7 @@ CREATE TABLE `action` (
   `id_action` int(11) NOT NULL AUTO_INCREMENT,
   `nm_action` varchar(200) DEFAULT NULL COMMENT '{"label":"Ação"}',
   PRIMARY KEY (`id_action`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,7 +57,7 @@ CREATE TABLE `action` (
 
 LOCK TABLES `action` WRITE;
 /*!40000 ALTER TABLE `action` DISABLE KEYS */;
-INSERT INTO `action` VALUES (1,'index'),(6,'cadastro'),(7,'gravar'),(8,'excluir'),(9,'upload'),(14,'dados-pessoais'),(15,'atualizar-dados'),(17,'gravar-atualizacao'),(27,'enviar-id'),(30,'ativar-id'),(35,'negar-id'),(36,'alterar-senha'),(37,'salvar-redefinicao-senha'),(51,'index-pagination'),(52,'cadastroperiodoletivodetalhe'),(53,'detalhe-pagination'),(54,'adicionarperiodoletivodetalhe'),(55,'excluirvialistagemperiodoletivo'),(56,'teste-teste'),(57,'listar-permissoes-acoes'),(58,'cadastrodetalheformacao'),(59,'adicionardetalheformacao'),(60,'excluirvialistagemdetalheformacao'),(61,'enturmar-aluno'),(62,'excluir-catequizando-turma'),(63,'gerar-relatorio-pdf'),(64,'desativar'),(65,'autocompletecidade'),(66,'frequencia'),(67,'carregar-combo-turmas-ajax'),(68,'listar-turma-catequizando');
+INSERT INTO `action` VALUES (1,'index'),(6,'cadastro'),(7,'gravar'),(8,'excluir'),(9,'upload'),(14,'dados-pessoais'),(15,'atualizar-dados'),(17,'gravar-atualizacao'),(27,'enviar-id'),(30,'ativar-id'),(35,'negar-id'),(36,'alterar-senha'),(37,'salvar-redefinicao-senha'),(51,'index-pagination'),(52,'cadastroperiodoletivodetalhe'),(53,'detalhe-pagination'),(54,'adicionarperiodoletivodetalhe'),(55,'excluirvialistagemperiodoletivo'),(56,'teste-teste'),(57,'listar-permissoes-acoes'),(58,'cadastrodetalheformacao'),(59,'adicionardetalheformacao'),(60,'excluirvialistagemdetalheformacao'),(61,'enturmar-aluno'),(62,'excluir-catequizando-turma'),(63,'gerar-relatorio-pdf'),(64,'desativar'),(65,'autocompletecidade'),(66,'frequencia'),(67,'carregar-combo-turmas-ajax'),(68,'listar-turma-catequizando'),(69,'autocompletecatequizando'),(70,'responsavelCatequizando'),(71,'responsavelFormCad'),(72,'catequizandoResponsavelPagination'),(73,'responsavelFormDetalhe'),(74,'atualizar'),(75,'addresponsavel'),(76,'addResponsavelViaCadastro'),(77,'excluirResponsavelCatequizando'),(78,'autocompleteresponsavel');
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -785,7 +785,7 @@ CREATE TABLE `perfil_controller_action` (
   CONSTRAINT `fk_perfil_controller_action_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id_action`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_controller` FOREIGN KEY (`id_controller`) REFERENCES `controller` (`id_controller`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=463 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=495 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -794,7 +794,7 @@ CREATE TABLE `perfil_controller_action` (
 
 LOCK TABLES `perfil_controller_action` WRITE;
 /*!40000 ALTER TABLE `perfil_controller_action` DISABLE KEYS */;
-INSERT INTO `perfil_controller_action` VALUES (4,4,1,1),(32,3,1,2),(33,4,1,2),(49,3,7,2),(53,3,14,2),(59,3,15,2),(82,3,36,2),(84,3,37,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(93,11,1,1),(163,25,1,1),(164,25,6,1),(165,25,7,1),(166,25,8,1),(167,25,51,1),(168,26,1,1),(169,26,6,1),(170,26,7,1),(171,26,8,1),(172,26,51,1),(173,24,1,1),(174,24,6,1),(175,24,7,1),(176,24,8,1),(177,24,51,1),(178,28,1,1),(179,28,6,1),(180,28,7,1),(181,28,8,1),(182,28,51,1),(183,29,1,1),(184,29,6,1),(185,29,7,1),(186,29,8,1),(187,29,51,1),(188,30,1,1),(189,30,6,1),(190,30,7,1),(191,30,8,1),(192,30,51,1),(193,28,52,1),(194,28,53,1),(195,28,54,1),(196,31,55,1),(197,32,55,1),(198,33,1,1),(199,33,6,1),(200,33,7,1),(201,33,8,1),(202,33,51,1),(204,24,57,1),(215,35,1,1),(247,36,1,1),(248,36,6,1),(249,36,7,1),(250,36,8,1),(251,36,51,1),(252,36,53,1),(253,36,58,1),(254,36,59,1),(255,36,60,1),(256,37,1,1),(257,37,6,1),(258,37,7,1),(259,37,8,1),(260,37,60,1),(261,38,1,1),(262,38,6,1),(263,38,7,1),(264,38,8,1),(265,38,51,1),(266,39,1,1),(267,39,6,1),(268,39,7,1),(269,39,8,1),(270,39,51,1),(297,41,1,1),(298,41,6,1),(299,41,7,1),(300,41,8,1),(301,41,51,1),(302,42,1,1),(303,42,6,1),(304,42,7,1),(305,42,8,1),(306,42,51,1),(342,40,1,1),(343,40,6,1),(344,40,7,1),(345,40,8,1),(346,40,51,1),(347,40,53,1),(348,40,61,1),(349,40,62,1),(351,44,1,1),(352,44,6,1),(353,44,7,1),(354,44,8,1),(355,44,51,1),(356,12,1,1),(357,12,6,1),(358,12,7,1),(359,12,8,1),(360,12,51,1),(361,11,1,2),(362,11,1,3),(363,11,1,4),(364,45,1,1),(365,45,6,1),(366,45,7,1),(367,45,8,1),(368,45,51,1),(369,46,1,1),(370,46,6,1),(371,46,7,1),(372,46,9,1),(373,46,51,1),(374,47,1,1),(375,47,6,1),(376,47,7,1),(377,47,8,1),(378,47,51,1),(379,49,1,1),(380,49,6,1),(381,49,7,1),(382,49,8,1),(383,49,51,1),(384,48,1,1),(385,48,6,1),(386,48,7,1),(387,48,8,1),(388,48,51,1),(389,50,1,1),(390,50,6,1),(391,50,7,1),(392,50,8,1),(393,50,9,1),(394,50,51,1),(395,51,1,1),(396,51,6,1),(397,51,7,1),(398,51,8,1),(399,51,9,1),(400,51,51,1),(401,52,1,1),(402,52,6,1),(403,52,7,1),(404,52,8,1),(405,52,9,1),(406,52,51,1),(413,34,1,1),(414,34,6,1),(415,34,7,1),(416,34,8,1),(417,34,51,1),(418,34,63,1),(419,3,1,1),(420,3,6,1),(421,3,7,1),(422,3,8,1),(423,3,14,1),(424,3,15,1),(425,3,17,1),(427,3,36,1),(428,3,37,1),(429,3,51,1),(430,3,64,1),(431,54,65,1),(432,54,65,2),(451,53,67,2),(452,53,66,2),(453,53,68,2),(454,53,6,1),(455,53,67,1),(456,53,8,1),(457,53,66,1),(458,53,7,1),(459,53,1,1),(460,53,51,1),(461,53,68,1),(462,53,9,1);
+INSERT INTO `perfil_controller_action` VALUES (4,4,1,1),(32,3,1,2),(33,4,1,2),(49,3,7,2),(53,3,14,2),(59,3,15,2),(82,3,36,2),(84,3,37,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(93,11,1,1),(163,25,1,1),(164,25,6,1),(165,25,7,1),(166,25,8,1),(167,25,51,1),(168,26,1,1),(169,26,6,1),(170,26,7,1),(171,26,8,1),(172,26,51,1),(173,24,1,1),(174,24,6,1),(175,24,7,1),(176,24,8,1),(177,24,51,1),(178,28,1,1),(179,28,6,1),(180,28,7,1),(181,28,8,1),(182,28,51,1),(183,29,1,1),(184,29,6,1),(185,29,7,1),(186,29,8,1),(187,29,51,1),(188,30,1,1),(189,30,6,1),(190,30,7,1),(191,30,8,1),(192,30,51,1),(193,28,52,1),(194,28,53,1),(195,28,54,1),(196,31,55,1),(197,32,55,1),(198,33,1,1),(199,33,6,1),(200,33,7,1),(201,33,8,1),(202,33,51,1),(204,24,57,1),(215,35,1,1),(247,36,1,1),(248,36,6,1),(249,36,7,1),(250,36,8,1),(251,36,51,1),(252,36,53,1),(253,36,58,1),(254,36,59,1),(255,36,60,1),(256,37,1,1),(257,37,6,1),(258,37,7,1),(259,37,8,1),(260,37,60,1),(261,38,1,1),(262,38,6,1),(263,38,7,1),(264,38,8,1),(265,38,51,1),(266,39,1,1),(267,39,6,1),(268,39,7,1),(269,39,8,1),(270,39,51,1),(297,41,1,1),(298,41,6,1),(299,41,7,1),(300,41,8,1),(301,41,51,1),(302,42,1,1),(303,42,6,1),(304,42,7,1),(305,42,8,1),(306,42,51,1),(342,40,1,1),(343,40,6,1),(344,40,7,1),(345,40,8,1),(346,40,51,1),(347,40,53,1),(348,40,61,1),(349,40,62,1),(351,44,1,1),(352,44,6,1),(353,44,7,1),(354,44,8,1),(355,44,51,1),(356,12,1,1),(357,12,6,1),(358,12,7,1),(359,12,8,1),(360,12,51,1),(361,11,1,2),(362,11,1,3),(363,11,1,4),(369,46,1,1),(370,46,6,1),(371,46,7,1),(372,46,9,1),(373,46,51,1),(374,47,1,1),(375,47,6,1),(376,47,7,1),(377,47,8,1),(378,47,51,1),(379,49,1,1),(380,49,6,1),(381,49,7,1),(382,49,8,1),(383,49,51,1),(384,48,1,1),(385,48,6,1),(386,48,7,1),(387,48,8,1),(388,48,51,1),(389,50,1,1),(390,50,6,1),(391,50,7,1),(392,50,8,1),(393,50,9,1),(394,50,51,1),(395,51,1,1),(396,51,6,1),(397,51,7,1),(398,51,8,1),(399,51,9,1),(400,51,51,1),(413,34,1,1),(414,34,6,1),(415,34,7,1),(416,34,8,1),(417,34,51,1),(418,34,63,1),(419,3,1,1),(420,3,6,1),(421,3,7,1),(422,3,8,1),(423,3,14,1),(424,3,15,1),(425,3,17,1),(427,3,36,1),(428,3,37,1),(429,3,51,1),(430,3,64,1),(431,54,65,1),(432,54,65,2),(451,53,67,2),(452,53,66,2),(453,53,68,2),(454,53,6,1),(455,53,67,1),(456,53,8,1),(457,53,66,1),(458,53,7,1),(459,53,1,1),(460,53,51,1),(461,53,68,1),(462,53,9,1),(463,45,75,1),(464,45,76,1),(465,45,74,1),(466,45,69,1),(467,45,6,1),(468,45,72,1),(469,45,8,1),(470,45,77,1),(471,45,7,1),(472,45,1,1),(473,45,51,1),(474,45,70,1),(475,45,71,1),(476,45,73,1),(477,45,75,2),(478,45,76,2),(479,45,74,2),(480,45,69,2),(481,45,78,2),(482,45,72,2),(483,45,77,2),(484,45,70,2),(485,45,71,2),(486,45,73,2),(487,52,78,2),(488,52,78,1),(489,52,6,1),(490,52,8,1),(491,52,7,1),(492,52,1,1),(493,52,51,1),(494,52,9,1);
 /*!40000 ALTER TABLE `perfil_controller_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1280,6 +1280,7 @@ CREATE TABLE `turma_catequizando` (
   `cs_aprovado` char(1) DEFAULT NULL,
   `ds_motivo_reprovacao` varchar(1000) DEFAULT NULL,
   `tx_observacoes` text,
+  `nr_sala` varchar(4) DEFAULT NULL,
   PRIMARY KEY (`id_turma_catequizando`),
   KEY `FK_turma_catequizando_turma` (`id_turma`),
   KEY `FK_turma_catequizando_catequizando` (`id_catequizando`),
@@ -1418,4 +1419,4 @@ USE `bdcatequese`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-12 12:13:22
+-- Dump completed on 2017-03-21 22:06:20
