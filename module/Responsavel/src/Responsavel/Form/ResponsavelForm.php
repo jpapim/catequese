@@ -42,7 +42,7 @@ class ResponsavelForm extends AbstractForm {
 ////CAMPOS DA TABELA
 
            $objForm->text("nm_responsavel")->required(true)->label("*Nome Completo");
-           $objForm->textarea("tx_observacao")->required(true)->label("Observação");
+           $objForm->textarea("tx_observacao")->required(false)->label("Observação");
 
 
         //Campo de TELEFONE RESIDENCIAL E TELEFONE CELULAR
