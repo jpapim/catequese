@@ -25,7 +25,6 @@ class CatequistaController extends AbstractCrudController
         parent::init();
     }
 
-
     public function indexAction()
     {
         return parent::index($this->service, $this->form);
@@ -222,7 +221,6 @@ class CatequistaController extends AbstractCrudController
         }
     }
 
-
     public function cadastroAction()
     {
         $id = \Estrutura\Helpers\Cript::dec($this->params('id'));
@@ -389,13 +387,13 @@ class CatequistaController extends AbstractCrudController
                 'filter' => "catequista.nr_matricula LIKE ?",
             ],
             '3' => [
-                'filter' => "catequista.dt_nascimento LIKE ?",
+                'filter' => "telefone.nr_telefone LIKE ?",
             ],
             '4' => [
-                'filter' => "catequista.dt_ingresso LIKE ?",
+                'filter' => "telefone.nr_telefone LIKE ?",
             ],
             '5' => [
-                'filter' => "catequista.tx_observacao LIKE ?",
+                'filter' => "email.em_email LIKE ?",
             ],
             '6' => NULL,
 
@@ -569,7 +567,6 @@ class CatequistaController extends AbstractCrudController
         }
     }
 
-
     public function atualizardadosAction()
     {
         $id = \Estrutura\Helpers\Cript::dec($this->params('id'));
@@ -630,6 +627,7 @@ class CatequistaController extends AbstractCrudController
 
             ############### POPULANDO O FORMULÁRIO DO CATEQUISta COM AS INFORMAÇÕES RESGATADAS ###########
             $this->getRequest()->getPost()->set('em_email', $email['em_email']);
+            $this->getRequest()->getPost()->set('em_email_confirm', $email['em_email']);
             $this->getRequest()->getPost()->set('nm_usuario', $usuario['nm_usuario']);
 
             $this->getRequest()->getPost()->set('pw_senha', $login['pw_senha']);
@@ -640,7 +638,7 @@ class CatequistaController extends AbstractCrudController
             $this->getRequest()->getPost()->set('nr_cep', \Estrutura\Helpers\Cep::cepMask($endereco['nr_cep']));
             $this->getRequest()->getPost()->set('nm_cidade', $cidade['nm_cidade'] . " (" . $estadoCidade['sg_estado'] . ")");
             $this->getRequest()->getPost()->set('nm_naturalidade', $naturalidade['nm_cidade'] . " (" . $estadoNat['sg_estado'] . ")");
-            $this->getRequest()->getPost()->set('telefone_residencial', \Estrutura\Helpers\Telefone::telefoneFilter($telResidencial['nr_ddd_telefone'] . $telResidencial['nr_telefone']));
+            $this->getRequest()->getPost()->set('telefone_residencial', \Estrutura\Helpers\Telefone::telefoneMask($telResidencial['nr_ddd_telefone'] . $telResidencial['nr_telefone']));
             $this->getRequest()->getPost()->set('telefone_celular', ($telCelular['nr_ddd_telefone'] . $telCelular['nr_telefone']));
 
             $options = array();
@@ -672,8 +670,8 @@ class CatequistaController extends AbstractCrudController
 
     public function gerarRelatorioPdfAction()
     {
-        $catequizandoService = new \Catequizando\Service\CatequizandoService();
-        $arteste = $catequizandoService->fetchAll()->toArray();
+        $catequistaService = new \Catequista\Service\CatequistaService();
+        $arteste = $catequistaService->fetchAll()->toArray();
         $pdf = new PdfModel();
         $pdf->setVariables(array(
             'caminho_imagem' => __DIR__,

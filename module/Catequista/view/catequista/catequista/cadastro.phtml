@@ -1,12 +1,14 @@
 <div class="page-head">
     <h2>Adicionar Catequista</h2>
+    <span style="color:#ff0000">Atenção! Os campos destacados com o sinal <b>*</b> são de preechimento obrigatório</span>
+
 </div>
 <div class="cl-mcont">
     <div class="row">
         <div class="block-flat">
             <div class="content">
                 <?php
-                $form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
+                $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')));
                 $form->setAttribute('class', 'form-horizontal');
                 $form->setAttribute('data-role', 'form');
                 $form->prepare();
@@ -14,216 +16,229 @@
                 $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($form->get('id')->getValue()));
                 echo $this->formHidden($form->get('id'));
                 $form->get('dt_nascimento')->setValue(Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($form->get('dt_nascimento')->getValue()));
-              
+
                 ?>
                 <!--DADOS PESSOAIS -->
                 <hr>
                 <fieldset>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form form-group">
 
+                                    <?= $this->formRow($form->get('nm_catequista')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('dt_nascimento')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('id_sexo')) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('id_detalhe_formacao')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('dt_ingresso')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('nr_matricula')) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('nm_naturalidade')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-5">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('nm_cidade')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-5">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('nm_logradouro')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('nm_bairro')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('nr_cep')) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('nm_complemento')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-1">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('nr_numero')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+
+                            <div class="col-sm-2">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('telefone_residencial')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('telefone_celular')) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('em_email')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-5">
+                                <div class="form form-group">
+                                    <?= $this->formRow($form->get('em_email_confirm')) ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset><!-- FIM DADOS PESSOAIS -->
+
+                <fieldset> <!-- INFORMAÇÃO DO CATEQUISTA-->
                     <div class="container">
 
                         <div class="row">
-                            <div class="col-md-5 col-md-push-1"><!--Lado Esquerdo -->
 
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <?= $this->formRow($form->get('nm_catequista')) ?>
-                                    </div>
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <?= $this->formRow($form->get('arrEtapa')) ?>
                                 </div>
-                                    <div class="form-group">
-                                        <div class="col-md-6">
-                                            <?= $this->formRow($form->get('id_sexo')) ?>
-                                        </div>
-                                   </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <?= $this->formRow($form->get('nm_cidade')) ?>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <?= $this->formRow($form->get('nm_bairro')) ?>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <?= $this->formRow($form->get('nm_complemento')) ?>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <?= $this->formRow($form->get('nr_numero')) ?>
-                                    </div>
-                                </div>
-                        <div class="form-group">
-                        <div class="col-md-4 col-md-push-0">
-                            <?=$this->formRow($form->get('dt_ingresso'))?>
+                            </div>
                         </div>
-                     <div class="col-md-4 col-md-push-1">
-                            <?=$this->formRow($form->get('nr_matricula'))?>
+                        <div class="row">
+
+                            <div class="form-group">
+                                <div class="col-sm-11">
+                                    <?= $this->formRow($form->get('tx_observacao')) ?>
+                                </div>
+                            </div>
                         </div>
+                        <div class="row">
+
+                            <div class="form-group">
+                                <div class="col-sm-11">
+                                    <?= $this->formRow($form->get('id_situacao')) ?>
+                                </div>
+                            </div>
                         </div>
-                          
-                                
-                               </div>
 
-                            <div class="col-md-4 col-md-push-2"> <!-- Lado Direito -->
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <?=$this->formRow($form->get('dt_nascimento'))?>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <?=$this->formRow($form->get('nm_naturalidade'))?>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <?=$this->formRow($form->get('nr_cep'))?>
-                                    </div>
-                                </div>
+                        <div class="row">
 
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <?=$this->formRow($form->get('nm_logradouro'))?>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <?= $this->formRow($form->get('telefone_residencial')) ?>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 col-md-push-1">
-                                    <div class="form-group">
-                                        <?= $this->formRow($form->get('telefone_celular')) ?>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <?=$this->formRow($form->get('em_email'))?>
-                                    </div>
-                                </div>       <div class="form-group">
-                      
-                    </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <?=$this->formRow($form->get('em_email_confirm'))?>
-                                    </div>
+                            <div class="form-group">
+                                <div class="col-sm-11">
+                                    <?= $this->formRow($form->get('cs_coordenador')) ?>
                                 </div>
 
                             </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="form-group">
+                                <div class="col-sm-11">
+                                    <?= $this->formRow($form->get('ds_situacao')) ?>
+                                </div>
                             </div>
                         </div>
-                </fieldset><!-- FIM DADOS PESSOAIS -->
-            
-                <fieldset>
-                 
-                     <div class="form-group">
-                       <div class="col-md-4 col-md-push-1">
-                            <?=  $this->formRow($form->get('id_detalhe_formacao'))?>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <?= $this->formRow($form->get('nm_usuario')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <?= $this->formRow($form->get('pw_senha')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <?= $this->formRow($form->get('pw_senha_confirm')) ?>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
-             
-               <fieldset>
-                    <div class="form-group">
-                        <div class="col-md-6 col-md-push-1">
-                            <?= $this->formRow($form->get('arrEtapa'))?>
-                        </div>
-                    </div>
-                </fieldset>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <?= $this->formRow($form->get('id_perfil')->setValue(3)) ?>
+                                <div class="help-block with-errors"></div>
+                            </div>
 
-                <fieldset class="form-group">
-                        <div class="col-md-6 col-md-push-1">
-                            <?= $this->formRow($form->get('tx_observacao'))?>
-                        </div>
-                    
-                </fieldset>
-              
-                <fieldset class="form-group">
-                        <div class="col-md-6 col-md-push-1">
-                            <?= $this->formRow($form->get('id_situacao'))?>
-                        </div>
-                
-                    
-                </fieldset>
-            
-                
-                 <div class="form-group">
-                        <div class="col-md-6 col-md-push-1">
-                            <?= $this->formRow($form->get('cs_coordenador'))?>
-                        </div>
-                    
-                 </div>
-                <div class="form-group">
-                    <div class="col-md-4 col-md-push-1">
-                            <?= $this->formRow($form->get('ds_situacao'))?>
-                    </div>
-                </div>
-                  <fieldset class="form-group">       
-                        
-                
-               
-                   <div class="col-md-3 col-md-push-1">
-                    <?= $this->formRow($form->get('nm_usuario')) ?>
-                    <div class="help-block with-errors"></div>
-                    </fieldset>
-               <fieldset class="form-group">   
-                   <div class="col-md-3 col-md-push-1">
-                    <?= $this->formRow($form->get('pw_senha')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>     
-                       <div class="col-md-3 col-md-push-1">
-                    <?= $this->formRow($form->get('pw_senha_confirm')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-                   
-                </fieldset>
-               
-             <div class="col-md-3 col-md-push-1">
-                    <?= $this->formRow($form->get('id_perfil')->setValue(3)) ?>
-                    <div class="help-block with-errors"></div>
-                </div> 
-                   <div class="col-md-3 col-md-push-1">
-                    <?= $this->formRow($form->get('id_situacao_usuario')->setValue(1)) ?>
-                    <div class="help-block with-errors"></div>
-                </div>  
-                   <div class="col-md-3 col-md-push-1">
-                    <?= $this->formRow($form->get('id_tipo_usuario')->setValue(3)) ?>
-                    <div class="help-block with-errors"></div>
-                </div>  
-              
-               </div>
+                            <div class="col-sm-3">
+                                <?= $this->formRow($form->get('id_situacao_usuario')->setValue(1)) ?>
+                                <div class="help-block with-errors"></div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <?= $this->formRow($form->get('id_tipo_usuario')->setValue(3)) ?>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                </fieldset> <!-- FIM DE INNFORMAÇÕES DO CATEQUISTA-->
                 <div class="form-group">
                     <div class="col-md-10">
                         <button type="submit" class="btn btn-primary">Salvar</button>
-                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+                        <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Voltar</a>
                     </div>
                 </div>
                 <?= $this->form()->closeTag(); ?>
             </div>
         </div>
     </div>
-<script type="text/javascript" language="javascript" class="init">
-    $(document).ready(function() {
-        $( "#dt_nascimento" ).datepicker(
-            { dateFormat: 'dd/mm/yy' }
-        );
-  $( "#dt_ingresso" ).datepicker(
-            { dateFormat: 'dd/mm/yy' }
-        );
-        $( "input#nm_cidade" ).autocomplete({
-            minLength: 4,
-            source: "/cidade-cidade/autocompletecidade"
+    <script type="text/javascript" language="javascript" class="init">
+        $(document).ready(function () {
+            $("#dt_nascimento").datepicker(
+                {dateFormat: 'dd/mm/yy'}
+            );
+            $("#dt_ingresso").datepicker(
+                {dateFormat: 'dd/mm/yy'}
+            );
+            $("input#nm_cidade").autocomplete({
+                minLength: 4,
+                source: "/cidade-cidade/autocompletecidade"
+            });
+            $("input#nm_naturalidade").autocomplete({
+                minLength: 4,
+                source: "/cidade-cidade/autocompletecidade"
+            });
         });
-        $( "input#nm_naturalidade" ).autocomplete({
-            minLength: 4,
-            source: "/cidade-cidade/autocompletecidade"
-        });
-    });
-</script>
+    </script>

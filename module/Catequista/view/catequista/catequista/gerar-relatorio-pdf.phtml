@@ -1,4 +1,6 @@
+
 <html>
+
 <body>
 <style>
     html, body {
@@ -40,11 +42,6 @@
         position: relative;
     }
 
-    .bloco_filho_centralizado {
-        margin: 0 auto;
-        width: 50%;
-    }
-
     .bloco_filho_direita {
         position: absolute;
         right: 0px;
@@ -67,14 +64,48 @@
 </style>
 <div class="conteudo">
     <div style="text-align: center">
-        <h3>ORDEM DE SERVI�O FORA DO HORARIO CONTRATADO</h3>
-        <br/>
+        <table align="center">
+            <tr>
+                <th><h1>PARÓQUIA SÃO DOMINGOS SÁVIO</h1></th>
+            </tr>
+
+            <tr>
+                <th>ARQUIDIOCESE DE BRASÍLIA</th>
+            </tr>
+            <tr>
+                <th></th>
+            </tr>
+            <tr>
+                <th>QS 02 - Lote D - Fone: (61) 3964-9312 - CEP 72001-970 - Riacho Fundo - DF</th>
+            </tr>
+            <hr>
+        </table>
+
+        <h3 align="center">Relação dos Catequistas</h3>
+
     </div>
-    <table border="1" class="table">
+    <table border="1" class="table" cellspacing=0 cellpadding=2>
+
+        <thead>
+        <tr>
+            <th class="text-center">Nome Catequista</th>
+            <th class="text-center">Nº da Matrícula</th>
+            <th class="text-center">Tel. Residencial</th>
+            <th class="text-center">Tel. Celular</th>
+            <th class="text-center">email</th>
+        </tr>
+        </thead>
+
     <?php
     $i = $this->inicio_contador;
     foreach($this->teste as $key =>$item) { ?>
-        <tr><td><h1>valor = <?= $item['nm_catequizando'] ?></h1></td></tr>
+        <tr>
+            <td><?= $item['nm_catequista'] ?></td>
+            <td align="center"><?= $item['nr_matricula'] ?></td>
+            <td align="center"><?= $item['id_telefone_residencial'] ?></td>
+            <td align="center"><?= $item['id_telefone_celular'] ?></td>
+            <td align="center"><?= $item['id_email'] ?></td>
+        </tr>
     <?php $i++;
     } ?>
     </table>
