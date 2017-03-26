@@ -73,7 +73,7 @@
                         <td class="text-center"><?=$responsavel['id_responsavel'] ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['nm_responsavel']) ?></td>
                         <td class="text-center"><?= $service->getTelefone($responsavel['id_telefone_residencial'])?></td>
-                        <td class="text-center"><?= $service->getTelefone($responsavel['id_telefone_celular'])?></td>
+                        <td class="text-center"><?= $service->getCelular($responsavel['id_telefone_celular'])?></td>
                         <td class="text-center"><?= $responsavel['em_email']?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['nm_profissao']) ?></td>
                         </td>

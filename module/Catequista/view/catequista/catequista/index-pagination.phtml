@@ -74,7 +74,7 @@
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequista['nm_catequista']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequista['nr_matricula']) ?></td>
                         <td class="text-center"><?= $service->getTelefone($catequista['id_telefone_residencial'])?></td>
-                        <td class="text-center"><?= $service->getTelefone($catequista['id_telefone_celular'])?></td>
+                        <td class="text-center"><?= $service->getCelular($catequista['id_telefone_celular'])?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequista['em_email']) ?></td>
 
                         <td class="text-center">

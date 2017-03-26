@@ -47,7 +47,7 @@ class CatequizandoForm extends  AbstractForm{
         $objForm->telefone("id_telefone_residencial")->setAttribute('class', 'telefone')->required(true)->label("*Telefone Residencial");
 
         #FK- Telefone Celular
-        $objForm->telefone("id_telefone_celular")->setAttribute('class', 'telefone')->required(false)->label("Telefone Celular");
+        $objForm->text("id_telefone_celular")->setAttribute('class', 'celular')->required(false)->label("Telefone Celular");
 
         # SACRAMENTOS #
         #Resgatando as informações da tabela sacaramento

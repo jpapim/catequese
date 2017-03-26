@@ -135,7 +135,7 @@ class ResponsavelService extends Entity
             }
         }
 
-        $select->where($where)->order(['nm_responsavel DESC']);
+        $select->where($where)->order(['id_responsavel DESC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
@@ -169,6 +169,14 @@ class ResponsavelService extends Entity
         $arr = $objTelefone->buscar($id)->toArray();
 
         return '(' . $arr['nr_ddd_telefone'] . ') ' . \Estrutura\Helpers\Telefone::telefoneMask($arr['nr_telefone']);
+    }
+
+    public function getCelular($id)
+    {
+        $objCelular = new \Telefone\Service\TelefoneService();
+        $arr = $objCelular->buscar($id)->toArray();
+
+        return '(' . $arr['nr_ddd_telefone'] . ') ' . \Estrutura\Helpers\Telefone::celularMask($arr['nr_telefone']);
     }
 
     public function getResponsavelToArray($id)

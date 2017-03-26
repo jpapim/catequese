@@ -97,7 +97,7 @@ class CatequistaController extends AbstractCrudController
         if ($resultTelefoneResidencial) {
             # REalizando Tratamento do  Telefone Celular
             $this->getRequest()->getPost()->set('nr_ddd_telefone', \Estrutura\Helpers\Telefone::getDDD($this->getRequest()->getPost()->get('telefone_celular')));
-            $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getTelefone($this->getRequest()->getPost()->get('telefone_celular')));
+            $this->getRequest()->getPost()->set('nr_telefone', \Estrutura\Helpers\Telefone::getCelular($this->getRequest()->getPost()->get('telefone_celular')));
             $this->getRequest()->getPost()->set('id_tipo_telefone', $this->getConfigList()['tipo_telefone_celular']);
             $this->getRequest()->getPost()->set('id_situacao', $this->getConfigList()['situacao_ativo']);
             $resultTelefoneCelular = parent::gravar(
@@ -125,6 +125,7 @@ class CatequistaController extends AbstractCrudController
                         $this->getRequest()->getPost()->set('id_naturalidade', $id_naturalidade['id_cidade']);
                         ###################Cadastro Usuario ainda nao implementado###################################
                         $this->getRequest()->getPost()->set('dt_nascimento', $dataNascimento);
+                        $this->getRequest()->getPost()->set('dt_ingresso', $dataIngresso);
                         $this->getRequest()->getPost()->set('nm_usuario', $this->getRequest()->getPost()->get('nm_usuario'));
                         $this->getRequest()->getPost()->set('id_email', $idEmail);
                         $this->getRequest()->getPost()->set('id_sexo', $this->getRequest()->getPost()->get('id_sexo'));
@@ -436,7 +437,7 @@ class CatequistaController extends AbstractCrudController
             $arr = $this->service->buscar($id)->toArray();
 
             ### Modificando o formato da data de nascimento para inserir no banco de dados.
-            x($post['dt_nascimento'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']));
+            $post['dt_nascimento'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_nascimento']);
             $post['dt_ingresso'] = Data:: converterDataHoraBrazil2BancoMySQL($post['dt_ingresso']);
             ### Atualizando Email;
 
@@ -497,9 +498,9 @@ class CatequistaController extends AbstractCrudController
                 ### Atualizando Telefone Celular
                 $objTelefone = new \Telefone\Service\TelefoneService();
                 $objTelefone->setId($arr['id_telefone_celular']);
-                $telefone = \Estrutura\Helpers\Telefone::telefoneMask($post['telefone_celular']);
+                $telefone = \Estrutura\Helpers\Telefone::CelularMask($post['telefone_celular']);
                 $objTelefone->setNrDddTelefone(\Estrutura\Helpers\Telefone::getDDD($telefone));
-                $objTelefone->setNrTelefone(\Estrutura\Helpers\Telefone::getTelefone($telefone));
+                $objTelefone->setNrTelefone(\Estrutura\Helpers\Telefone::getCelular($telefone));
                 $objTelefone->salvar();
 
                 ### Atualizando Endereco
@@ -639,7 +640,7 @@ class CatequistaController extends AbstractCrudController
             $this->getRequest()->getPost()->set('nm_cidade', $cidade['nm_cidade'] . " (" . $estadoCidade['sg_estado'] . ")");
             $this->getRequest()->getPost()->set('nm_naturalidade', $naturalidade['nm_cidade'] . " (" . $estadoNat['sg_estado'] . ")");
             $this->getRequest()->getPost()->set('telefone_residencial', \Estrutura\Helpers\Telefone::telefoneMask($telResidencial['nr_ddd_telefone'] . $telResidencial['nr_telefone']));
-            $this->getRequest()->getPost()->set('telefone_celular', ($telCelular['nr_ddd_telefone'] . $telCelular['nr_telefone']));
+            $this->getRequest()->getPost()->set('telefone_celular', \Estrutura\Helpers\Telefone::telefoneMask($telCelular['nr_ddd_telefone'] . $telCelular['nr_telefone']));
 
             $options = array();
 
