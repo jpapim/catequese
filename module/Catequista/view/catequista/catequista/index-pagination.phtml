@@ -2,26 +2,26 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterAtletas">
+        <table class="table table-striped" id="tablesorterCatequistas">
             <thead>
             <tr>
-                <th class="text-center" style="width: 5%;">#</th>
+                <th class="text-center" style="width: 5%;">Código</th>
                 <th class="text-center">Nome</th>
                 <th class="text-center">N° Matrícula</th>
-                <th class="text-center">Data de Nascimento</th>
-                <th class="text-center">Data de Ingresso</th>
-                <th class="text-center">Observação</th>
+                <th class="text-center">Telefone Residencial</th>
+                <th class="text-center">Telefone Celular</th>
+                <th class="text-center">Email</th>
                 <th class="text-center" style="width: 15%;">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center" style="width: 5%;">#</th>
+                <th class="text-center" style="width: 5%;">Código</th>
                 <th class="text-center">Nome</th>
                 <th class="text-center">N° Matrícula</th>
-                <th class="text-center">Data de Nascimento</th>
-                <th class="text-center">Data de Ingresso</th>
-                <th class="text-center">Observação</th>
+                <th class="text-center">Telefone Residencial</th>
+                <th class="text-center">Telefone Celular</th>
+                <th class="text-center">Email</th>
                 <th class="text-center" style="width: 15%;">Ações</th>
             </tr>
             <tr>
@@ -67,14 +67,15 @@
 
                 <?php
                 foreach ($paginator as $key => $catequista) {
+                    #xd($catequista);
                     ?>
                     <tr>
                         <td class="text-center"><?= $catequista['id_catequista'] ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequista['nm_catequista']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequista['nr_matricula']) ?></td>
-                        <td class="text-center"><?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($catequista['dt_nascimento']) ?></td>
-                        <td class="text-center"><?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($catequista['dt_ingresso']) ?></td>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequista['tx_observacao']) ?></td>
+                        <td class="text-center"><?= $service->getTelefone($catequista['id_telefone_residencial'])?></td>
+                        <td class="text-center"><?= $service->getCelular($catequista['id_telefone_celular'])?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($catequista['em_email']) ?></td>
 
                         <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
@@ -133,7 +134,7 @@
         };
 
         // call the tablesorter plugin and apply the uitheme widget
-        $("#tablesorterAtletas").tablesorter({
+        $("#tablesorterCatequistas").tablesorter({
             // this will apply the bootstrap theme if "uitheme" widget is included
             // the widgetOptions.uitheme is no longer required to be set
             theme: "bootstrap",
@@ -158,83 +159,6 @@
             headers: {
                 5: {sorter: false}
             }
-        });
-
-        $('#filtrarRelatorioSaquesPagos').click(function () {
-
-            $.ajax({
-                type: "post",
-                dataType: "text",
-                cache: false,
-                url: '/mcnetwork-relatorio/relatorio-saques-pagos',
-                async: true,
-                data: {
-                    dt_inicio: $('#dt_inicio').val(),
-                    dt_fim: $('#dt_fim').val()
-                },
-                beforeSend: function () {
-
-                    $('#modal-relatorio-body-3').html(
-                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                    );
-                },
-                success: function (data) {
-
-                    $('#modal-relatorio-body-3').html(data);
-                }
-            });
-        });
-
-
-        $('.relatorio-recusar-recibo').off('click').on('click', function () {
-
-            var idPagamento = $(this).attr('rel');
-
-            $.ajax({
-                type: "post",
-                dataType: "text",
-                cache: false,
-                url: '/pagamento-pagamento/recusar-recibo',
-                async: true,
-                beforeSend: function () {
-
-                    $('#modal-relatorio-body-3').html(
-                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                    );
-                },
-                data: {
-                    id_saque: idPagamento
-                },
-                success: function () {
-
-                    $.ajax({
-                        type: "post",
-                        dataType: "text",
-                        cache: false,
-                        url: '/mcnetwork-relatorio/relatorio-saques-pagos',
-                        async: true,
-                        data: {},
-                        success: function (data) {
-
-                            $('#modal-relatorio-body-3').html(data);
-                        }
-                    });
-                }
-            });
-        });
-
-        $("#imprimirRelatorioSaquesPagos").click(function () {
-
-            var modalPrint = $('.modalPrint');
-            modalPrint.removeClass('modal');
-            $('.form-inline').hide();
-            $('#printSection').addClass('printSection');
-            $('#printSection').html(modalPrint.html());
-            window.print();
-            modalPrint.addClass('modal');
-            $('.form-inline').show();
-            $('#printSection').removeClass('printSection');
-            $('#printSection').html('');
         });
     });
 </script>

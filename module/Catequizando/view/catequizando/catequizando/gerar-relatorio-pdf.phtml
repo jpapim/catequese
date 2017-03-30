@@ -81,18 +81,18 @@
             <hr>
         </table>
 
-        <h3 align="center">Relação dos Catequistas</h3>
+        <h3 align="center">RELAÇÃO DOS CATEQUIZANDOS</h3>
 
     </div>
     <table border="1" class="table" cellspacing=0 cellpadding=2>
 
         <thead>
         <tr>
-            <th class="text-center">Nome Catequista</th>
-            <th class="text-center">Nº da Matrícula</th>
-            <th class="text-center">Tel. Residencial</th>
-            <th class="text-center">Tel. Celular</th>
-            <th class="text-center">email</th>
+            <th class="text-center">Turma</th>
+            <th class="text-center">Sala</th>
+            <th class="text-center">Nome do Catequisando</th>
+            <th class="text-center">Responsável</th>
+            <th class="text-center">Telefone Contato</th>
         </tr>
         </thead>
 
@@ -100,11 +100,11 @@
     $i = $this->inicio_contador;
     foreach($this->teste as $key =>$item) { ?>
         <tr>
-            <td><?= $item['nm_catequista'] ?></td>
-            <td align="center"><?= $item['nr_matricula'] ?></td>
-            <td align="center"><?= $item['id_telefone_residencial'] ?></td>
-            <td align="center"><?= $item['id_telefone_celular'] ?></td>
-            <td align="center"><?= $item['id_email'] ?></td>
+            <td class="text-center"></td>
+            <td align="center"></td>
+            <td ><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_catequizando']) ?></td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
         </tr>
     <?php $i++;
     } ?>

@@ -11,6 +11,7 @@ namespace Catequizando\Controller;
 
 use Cidade\Service\CidadeService;
 use Estrutura\Controller\AbstractCrudController;
+use DOMPDFModule\View\Model\PdfModel;
 use Estrutura\Helpers\Cep;
 use Estrutura\Helpers\Cript;
 use Estrutura\Helpers\Data;
@@ -797,6 +798,25 @@ class CatequizandoController extends AbstractCrudController
         }
         $value = new JsonModel($arrFiltrado);
         return $value;
+
+    }
+
+    public function gerarRelatorioPdfAction()
+    {
+        $catequizandoService = new \Catequizando\Service\CatequizandoService();
+        $arteste = $catequizandoService->fetchAll()->toArray();
+        $pdf = new PdfModel();
+        $pdf->setVariables(array(
+            'caminho_imagem' => __DIR__,
+            'inicio_contador' => 3,
+            'teste' => $arteste,
+
+        ));
+        $pdf->setOption('filename', 'ordem_serviço_'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption("paperSize", "a4"); //Defaults to 8x11
+        $pdf->setOption("basePath", __DIR__); //Defaults to 8x11
+        #$pdf->setOption("paperOrientation", "landscape"); //Defaults to portrait
+        return $pdf;
 
     }
 

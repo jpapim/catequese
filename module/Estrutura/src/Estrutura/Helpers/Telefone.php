@@ -40,9 +40,33 @@ class Telefone
                 //6155554444
                 case 10:
                     return '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 4) . '-' . substr($telefone, 6, 4);
-                //61555544444    
+                //61555544444
                 case 11:
                     return '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 4) . '-' . substr($telefone, 6, 5);
+                default:
+                    return $telefone;
+            }
+        } else {
+            return NULL;
+        }
+    }
+
+    public static function celularMask($telefone)
+    {
+        if ($telefone) {
+            switch (strlen($telefone)) {
+                //955554444
+                case 8:
+                    return substr($telefone, 0, 1) . ' ' . substr($telefone, 1, 4) . '-' . substr($telefone, 5, 4);
+                //9555544444
+                case 9:
+                    return substr($telefone, 0, 1) . ' ' . substr($telefone, 1, 4) . '-' . substr($telefone, 5, 5);
+                //61955554444
+                case 10:
+                    return '(' . substr($telefone, 0, 2) . ') ' .substr($telefone, 0, 1) . ' ' . substr($telefone, 2,1, 4) . '-' . substr($telefone, 7, 4);
+                //619555544444
+                case 11:
+                    return '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 0, 1) . ' ' . substr($telefone, 2,1, 4) . '-' . substr($telefone, 7, 5);
                 default:
                     return $telefone;
             }
@@ -72,6 +96,24 @@ class Telefone
                 return str_replace('-', '', $telefone);
             } else {
                 return $telefone;
+            }
+        }
+    }
+
+    public static function getCelular($celularComMascara)
+    {
+        $celular = trim($celularComMascara);
+        if (!strpos($celular, ')') === false) {
+            if (!strpos($celular, '-') === false) {
+                return str_replace('-', '', substr($celular, 5, strlen($celular)));
+            } else {
+                return substr($celular, 5, 8);
+            }
+        } else {
+            if (!strpos($celular, '-') === false) {
+                return str_replace('-', '', $celular);
+            } else {
+                return $celular;
             }
         }
     }
