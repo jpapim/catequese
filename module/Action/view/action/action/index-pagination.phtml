@@ -32,8 +32,8 @@
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
             if (!empty($paginator)) {
                 ?>
-                <tbody class="">
-                    <tr role="row" class="tablesorter-filter-row text-center">
+                <tbody class="" >
+                    <tr role="row" class="tablesorter-filter-row">
                         <?php
                         foreach ($camposFilter as $key => $campoFilter) {
                             ?>    
@@ -41,7 +41,7 @@
                                 <?php
                                 if (!is_null($campoFilter)) {
                                     ?>
-                                    <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                    <input type="search" placeholder="" class="col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                                     <?php
                                 } else {
                                     ?>
