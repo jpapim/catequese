@@ -1,0 +1,116 @@
+
+<html>
+
+<body>
+<style>
+    html, body {
+        height: 100%;
+        min-height: 100%;
+    }
+
+    body {
+        font: 15px arial;
+        color: rgba(0, 0, 0, .7);
+        /*padding: ;*/
+    }
+
+    .conteudo {
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    table {
+        background-color: transparent;
+        max-width: 100%;
+    }
+
+    .table {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .tablex {
+        line-height: 1.42857;
+        padding: 10px;
+        vertical-align: top;
+    }
+
+    .bloco_pai {
+        width: 100%;
+        position: relative;
+    }
+
+    .bloco_filho_direita {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+    }
+
+    .bloco_filho_esquerda {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+    }
+
+    span.titulo {
+        font-size: 11px;
+    }
+
+    span.info {
+        font-size: 16px;
+    }
+</style>
+<div class="conteudo">
+    <div style="text-align: center">
+
+        <table align="center">
+            <tr>
+                <th><h1>PARÓQUIA SÃO DOMINGOS SÁVIO</h1></th>
+            </tr>
+
+            <tr>
+                <th>ARQUIDIOCESE DE BRASÍLIA</th>
+            </tr>
+            <tr>
+                <th></th>
+            </tr>
+            <tr>
+                <th>QS 02 - Lote D - Fone: (61) 3964-9312 - CEP 72001-970 - Riacho Fundo - DF</th>
+            </tr>
+            <hr>
+        </table>
+
+        <h3 align="center">RELAÇÃO DOS CATEQUIZANDOS</h3>
+
+    </div>
+    <table border="1" class="table" cellspacing=0 cellpadding=2>
+
+        <thead>
+        <tr>
+            <th class="text-center">Turma</th>
+            <th class="text-center">Sala</th>
+            <th class="text-center">Nome do Catequisando</th>
+            <th class="text-center">Responsável</th>
+            <th class="text-center">Telefone Contato</th>
+        </tr>
+        </thead>
+
+    <?php
+    $i = $this->inicio_contador;
+    foreach($this->teste as $key =>$item) { ?>
+        <tr>
+            <td class="text-center"></td>
+            <td align="center"></td>
+            <td ><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_catequizando']) ?></td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+        </tr>
+    <?php $i++;
+    } ?>
+    </table>
+
+</div>
+</body>
+</html>

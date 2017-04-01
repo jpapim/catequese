@@ -805,6 +805,7 @@ class CatequizandoController extends AbstractCrudController
     {
         $catequizandoService = new \Catequizando\Service\CatequizandoService();
         $arteste = $catequizandoService->fetchAll()->toArray();
+//        $this->layout(false);
         $pdf = new PdfModel();
         $pdf->setVariables(array(
             'caminho_imagem' => __DIR__,
@@ -812,10 +813,10 @@ class CatequizandoController extends AbstractCrudController
             'teste' => $arteste,
 
         ));
-        $pdf->setOption('filename', 'ordem_serviço_'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption('filename', 'Relação_de_Catequizandos'); // Triggers PDF download, automatically appends ".pdf"
         $pdf->setOption("paperSize", "a4"); //Defaults to 8x11
         $pdf->setOption("basePath", __DIR__); //Defaults to 8x11
-        #$pdf->setOption("paperOrientation", "landscape"); //Defaults to portrait
+//        $pdf->setOption("paperOrientation", "portrait"); //Defaults to portrait of landscape
         return $pdf;
 
     }
