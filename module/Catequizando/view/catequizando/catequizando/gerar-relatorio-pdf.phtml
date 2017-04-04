@@ -1,115 +1,174 @@
-
 <html>
+    <head>
+        <link rel="stylesheet" href="../../../../../public/assets/css/bootstrap.css">
+        <meta charset=utf-8"/>
+        <title>Layout de Impressão</title>
 
+        <style type="text/css">
+            @page { margin: 120px 50px 80px 50px;}
+
+            #img {
+                position: fixed;
+                left: 0%;
+                top: -8%;
+            }
+            #topo {
+                /*background-image: url("fad.jpg");*/
+                background-repeat: no-repeat;
+                font-size: 25px;
+                text-align: center;
+                height: 110px;
+                width: 100%;
+                position: fixed;
+                top: -75px;
+                left: 0;
+                right: 0;
+                margin: auto;
+            }
+            #rodape {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                text-align: right;
+                border-top: 1px solid gray;
+            }
+            .rodape .page:after{
+                content: counter(page);
+            }
+
+            #corpo {
+                width: 700px;
+                position: relative;
+                margin: auto;
+                top: 75px;
+
+
+            }
+            /*table{*/
+                /*border-collapse: collapse;*/
+                /*background-color: transparent;*/
+                /*width: 100%;*/
+                /*position: relative;*/
+            /*}*/
+            /*td{*/
+                /*padding: 3px;*/
+            /*}*/
+            .tablex {
+                line-height: 1.42857;
+                padding: 10px;
+                padding-top: 30px;
+                vertical-align: top;
+            }
+
+        </style>
+    </head>
 <body>
-<style>
-    html, body {
-        height: 100%;
-        min-height: 100%;
-    }
-
-    body {
-        font: 15px arial;
-        color: rgba(0, 0, 0, .7);
-        /*padding: ;*/
-    }
-
-    .conteudo {
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    table {
-        background-color: transparent;
-        max-width: 100%;
-    }
-
-    .table {
-        margin-bottom: 10px;
-        width: 100%;
-    }
-
-    .tablex {
-        line-height: 1.42857;
-        padding: 10px;
-        vertical-align: top;
-    }
-
-    .bloco_pai {
-        width: 100%;
-        position: relative;
-    }
-
-    .bloco_filho_direita {
-        position: absolute;
-        right: 0px;
-        top: 0px;
-    }
-
-    .bloco_filho_esquerda {
-        position: absolute;
-        left: 0px;
-        top: 0px;
-    }
-
-    span.titulo {
-        font-size: 11px;
-    }
-
-    span.info {
-        font-size: 16px;
-    }
-</style>
-<div class="conteudo">
-    <div style="text-align: center">
-        <table align="center">
-            <tr>
-                <th><h1>PARÓQUIA SÃO DOMINGOS SÁVIO</h1></th>
-            </tr>
-
-            <tr>
-                <th>ARQUIDIOCESE DE BRASÍLIA</th>
-            </tr>
-            <tr>
-                <th></th>
-            </tr>
-            <tr>
-                <th>QS 02 - Lote D - Fone: (61) 3964-9312 - CEP 72001-970 - Riacho Fundo - DF</th>
-            </tr>
+<div id="img"><img src="../../../../../public/assets/img/logo/logo_pdf.png"/></div>
+<div id="topo" class="text-center">
+    <div class="table">
+        <div>
+            <div class="td" style="font-size: 22px"><b>PARÓQUIA SÃO DOMINGOS SÁVIO</b></div>
+        </div>
+        <div>
+            <div class="td" style="font-size: 16px">ARQUIDIOCESE DE BRASÍLIA</div>
+        </div>
+        <div>
+            <div class="td" style="font-size: 14px">QS 02 - Lote D - Fone: (61) 3964-9312 - CEP 72001-970 - Riacho Fundo
+                - DF
+            </div>
+        </div>
+        <div>
             <hr>
-        </table>
-
-        <h3 align="center">RELAÇÃO DOS CATEQUIZANDOS</h3>
-
+            <p style="font-size: 20px"><b>RELAÇÃO DOS CATEQUIZANDOS</b></p>
+        </div>
     </div>
-    <table border="1" class="table" cellspacing=0 cellpadding=2>
 
-        <thead>
-        <tr>
-            <th class="text-center">Turma</th>
-            <th class="text-center">Sala</th>
-            <th class="text-center">Nome do Catequisando</th>
-            <th class="text-center">Responsável</th>
-            <th class="text-center">Telefone Contato</th>
-        </tr>
-        </thead>
-
-    <?php
-    $i = $this->inicio_contador;
-    foreach($this->teste as $key =>$item) { ?>
-        <tr>
-            <td class="text-center"></td>
-            <td align="center"></td>
-            <td ><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_catequizando']) ?></td>
-            <td class="text-center"></td>
-            <td class="text-center"></td>
-        </tr>
-    <?php $i++;
-    } ?>
-    </table>
 
 </div>
+
+    <div id="corpo">
+
+        <table border="1" class="table" cellspacing=0 cellpadding=2>
+
+
+            <tr>
+                <th class="text-center">Turma</th>
+                <th class="text-center">Sala</th>
+                <th class="text-center">Nome do Catequisando</th>
+                <th class="text-center">Responsável</th>
+                <th class="text-center">Telefone Contato</th>
+            </tr>
+
+
+            <?php
+            $i = $this->inicio_contador;
+            foreach($this->teste as $key =>$item) { ?>
+                <tr>
+                    <td class="text-center"></td>
+                    <td align="center"></td>
+                    <td ><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_catequizando']) ?></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                </tr>
+                <?php $i++;
+            } ?>
+        </table>
+
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+            <h1>Corpo</h1>
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+        <!--    <h1>Corpo</h1>-->
+    </div>
+
+<div id="rodape">
+    <div class="page" align="right"><span>Arquivo gerado em: </span>
+        <?php
+        $data = date("d/m/Y H:i");
+        #xd($data);
+        echo $data;
+        ?>
+
+    </div>
+</div>
+
 </body>
+
 </html>
