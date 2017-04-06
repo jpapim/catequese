@@ -1,67 +1,63 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="../../../../../public/assets/css/bootstrap.css">
-        <meta charset=utf-8"/>
-        <title>Layout de Impressão</title>
+<head>
+    <link rel="stylesheet" href="../../../../../public/assets/css/bootstrap.css">
+    <meta charset=utf-8"/>
+    <title>Layout de Impressão</title>
 
-        <style type="text/css">
-            @page { margin: 120px 50px 80px 50px;}
+    <style type="text/css">
+        @page {
+            margin: 120px 50px 80px 50px;
+        }
 
-            #img {
-                position: fixed;
-                left: 0%;
-                top: -8%;
-            }
-            #topo {
-                /*background-image: url("fad.jpg");*/
-                background-repeat: no-repeat;
-                font-size: 25px;
-                text-align: center;
-                height: 110px;
-                width: 100%;
-                position: fixed;
-                top: -75px;
-                left: 0;
-                right: 0;
-                margin: auto;
-            }
-            #rodape {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                text-align: right;
-                border-top: 1px solid gray;
-            }
-            .rodape .page:after{
-                content: counter(page);
-            }
+        #img {
+            position: fixed;
+            left: 0%;
+            top: -8%;
+        }
 
-            #corpo {
-                width: 700px;
-                position: relative;
-                margin: auto;
-                top: 75px;
+        #topo {
+            background-repeat: no-repeat;
+            font-size: 25px;
+            text-align: center;
+            height: 110px;
+            width: 100%;
+            position: fixed;
+            top: -75px;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
 
+        #corpo {
+            width: 700px;
+            position: relative;
+            margin: auto;
+            top: 75px;
+        }
 
-            }
-            /*table{*/
-                /*border-collapse: collapse;*/
-                /*background-color: transparent;*/
-                /*width: 100%;*/
-                /*position: relative;*/
-            /*}*/
-            /*td{*/
-                /*padding: 3px;*/
-            /*}*/
-            .tablex {
-                line-height: 1.42857;
-                padding: 10px;
-                padding-top: 30px;
-                vertical-align: top;
-            }
+        #table {
+            background-color: transparent;
+            width: 100%;
+        }
 
-        </style>
-    </head>
+        .table {
+            margin-bottom: 8px;
+            width: 100%;
+        }
+
+        #rodape {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: right;
+            border-top: 1px solid gray;
+        }
+
+        .rodape .page:after {
+            content: counter(page);
+        }
+    </style>
+</head>
 <body>
 <div id="img"><img src="../../../../../public/assets/img/logo/logo_pdf.png"/></div>
 <div id="topo" class="text-center">
@@ -82,81 +78,7 @@
             <p style="font-size: 20px"><b>RELAÇÃO DOS CATEQUIZANDOS</b></p>
         </div>
     </div>
-
-
 </div>
-
-    <div id="corpo">
-
-        <table border="1" class="table" cellspacing=0 cellpadding=2>
-
-
-            <tr>
-                <th class="text-center">Turma</th>
-                <th class="text-center">Sala</th>
-                <th class="text-center">Nome do Catequisando</th>
-                <th class="text-center">Responsável</th>
-                <th class="text-center">Telefone Contato</th>
-            </tr>
-
-
-            <?php
-            $i = $this->inicio_contador;
-            foreach($this->teste as $key =>$item) { ?>
-                <tr>
-                    <td class="text-center"></td>
-                    <td align="center"></td>
-                    <td ><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_catequizando']) ?></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                </tr>
-                <?php $i++;
-            } ?>
-        </table>
-
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-            <h1>Corpo</h1>
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-        <!--    <h1>Corpo</h1>-->
-    </div>
 
 <div id="rodape">
     <div class="page" align="right"><span>Arquivo gerado em: </span>
@@ -168,6 +90,115 @@
 
     </div>
 </div>
+<div id="corpo">
+    <br>
+    <table border="1" id="table">
+
+        <thead>
+        <tr>
+            <th class="text-center">Turma</th>
+            <th class="text-center">Sala</th>
+            <th class="text-center">Nome do Catequizando</th>
+            <th class="text-center">Responsável</th>
+            <th class="text-center">Telefone Contato</th>
+        </tr>
+        </thead>
+
+
+        <?php
+        $i = $this->inicio_contador;
+        foreach ($this->obCatequizandoEntity as $key => $item) {
+            #x($item);
+            //Buscando dados da TurmaCatequizando
+            $turmacatequizandoService = new \TurmaCatequizando\Service\TurmaCatequizandoService();
+            $turmacatequizandoService->setIdCatequizando($item->getId());
+            $obTurmaCatequizandoEntity = $turmacatequizandoService->filtrarObjeto()->current();
+            #xd($obTurmaCatequizandoEntity);
+            $nm_turma = '';
+
+                if ($obTurmaCatequizandoEntity) {
+                    $turmaService = new \Turma\Service\TurmaService();
+                    $obTurmaEntity = $turmaService->buscar($obTurmaCatequizandoEntity->getIdTurma());
+                    $nm_turma = $obTurmaEntity->getNmTurma();
+                }
+
+            //Buscando dados da Sala da turma
+            $nr_sala = $turmacatequizandoService->buscar($item->getIdTurmaCatequizando());
+            #xd($nr_sala);
+
+
+            //Buscando dados do Responsável
+            $responsavelcatequizandoService = new \ResponsavelCatequizando\Service\ResponsavelCatequizandoService();
+            $responsavelcatequizandoService->setIdCatequizando($item->getId());
+            $obResponsavelCatequizandoEntity = $responsavelcatequizandoService->filtrarObjeto()->current();
+            #xd($obResponsavelCatequizandoEntity);
+            $nm_responsavel = '';
+
+                if ($obResponsavelCatequizandoEntity) {
+                    $responsavelService = new \Responsavel\Service\ResponsavelService();
+                    $obResponsavelEntity = $responsavelService->buscar($obResponsavelCatequizandoEntity->getIdResponsavel());
+                    $nm_responsavel = $obResponsavelEntity->getNmResponsavel();
+                }
+
+
+            ?>
+            <tr style="font-size: 12px">
+                <td class="text-center"><?= $nm_turma == '' ? 'Não Enturmado' : $nm_turma ?></td>
+                <td align="center"><?= $nr_sala->getNrSala() ?></td>
+                <td><?= \Estrutura\Helpers\String::nomeMaiusculo($item->getNmCatequizando()) ?></td>
+                <td class="text-center"><?= $nm_responsavel == '' ? 'Responsável não cadastrado' : $nm_responsavel ?></td>
+                <td class="text-center"></td>
+                </td>
+            </tr>
+            <?php $i++;
+        } ?>
+    </table>
+    <?php #xd('parou'); ?>
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+<!--    <h1>Corpo</h1>-->
+
+
+</div>
+
 
 </body>
 
