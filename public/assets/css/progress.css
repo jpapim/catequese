@@ -6,7 +6,7 @@ ol.progresso[data-steps="3"] li {
 }
 ol.progresso[data-steps="4"] li {
     width: 24%;
-}
+}   
 ol.progresso[data-steps="5"] li {
     width: 19%;
 }

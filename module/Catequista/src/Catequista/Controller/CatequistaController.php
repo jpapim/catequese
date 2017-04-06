@@ -64,7 +64,7 @@ class CatequistaController extends AbstractCrudController
         $emailService->setEmEmail(trim($this->getRequest()->getPost()->get('em_email')));
 
         if ($emailService->filtrarObjeto()->count()) {
-
+            $this->setPost($post);
             $this->addErrorMessage('Email já cadastrado. Faça seu login.');
             $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
             return FALSE;
@@ -73,6 +73,7 @@ class CatequistaController extends AbstractCrudController
 
         //Verifica tamanho da senha
         if (strlen(trim($this->getRequest()->getPost()->get('pw_senha'))) < 8) {
+            $this->setPost($post);
             $this->addErrorMessage('Senha deve ter no mínimo 8 caracteres.');
             $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
             return FALSE;
@@ -80,6 +81,7 @@ class CatequistaController extends AbstractCrudController
 
         //Verifica se as novas senhas são iguais
         if (strcasecmp($this->getRequest()->getPost()->get('pw_senha'), $this->getRequest()->getPost()->get('pw_senha_confirm')) != 0) {
+            $this->setPost($post);
             $this->addErrorMessage('Senhas não correspondem.');
             $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
             return FALSE;
