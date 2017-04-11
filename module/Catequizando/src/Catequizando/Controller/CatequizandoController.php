@@ -339,7 +339,6 @@ class CatequizandoController extends AbstractCrudController
 
     }
 
-
     public function excluirAction($option = null)
     {
         #xd($option);
@@ -520,7 +519,6 @@ class CatequizandoController extends AbstractCrudController
 
     }
 
-
     public function responsavelCatequizandoAction()
     {
 
@@ -656,7 +654,6 @@ class CatequizandoController extends AbstractCrudController
 
     }
     #########################################################
-
 
     ### Paginação dos Responsáveis do catequizando
     public function catequizandoResponsavelPaginationAction()
@@ -804,13 +801,15 @@ class CatequizandoController extends AbstractCrudController
     public function gerarRelatorioPdfAction()
     {
         $catequizandoService = new \Catequizando\Service\CatequizandoService();
-        $arteste = $catequizandoService->fetchAll()->toArray();
+        #$obCatequizandoEntity = $catequizandoService->fetchAll();
+        $obCatequizandoEntity = $catequizandoService->fetchAll();
+        #xd($arteste);
 //        $this->layout(false);
         $pdf = new PdfModel();
         $pdf->setVariables(array(
             'caminho_imagem' => __DIR__,
             'inicio_contador' => 3,
-            'teste' => $arteste,
+            'obCatequizandoEntity' => $obCatequizandoEntity,
 
         ));
         $pdf->setOption('filename', 'Relação_de_Catequizandos'); // Triggers PDF download, automatically appends ".pdf"
