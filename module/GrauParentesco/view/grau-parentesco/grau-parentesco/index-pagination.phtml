@@ -5,7 +5,7 @@
         <table class="table table-striped" id="tablesorterAtletas" >
             <thead>
                 <tr>
-                    <th class="text-center" style="width: 5%;">#</th>
+                    <th class="text-center" style="width: 5%;">Código</th>
                     <th class="text-center">Nome do Grau</th>
                     <th class="text-center">Ações</th>
                   
@@ -13,7 +13,7 @@
             </thead>
             <tfoot>
                 <tr>
-                    <th class="text-center" style="width: 5%;">#</th>
+                    <th class="text-center" style="width: 5%;">Código</th>
                     <th class="text-center">Nome do Grau</th>
                     <th class="text-center" style="width: 5%;">Ações</th>
                 
@@ -72,7 +72,7 @@
                          </td>
                             <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($grau_parentesco['id_grau_parentesco'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($grau_parentesco['id_grau_parentesco']))), 'Modificar nome do Grau') ?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($grau_parentesco['id_grau_parentesco'])))) ?>
                                 </span>
                             </td>
@@ -88,7 +88,7 @@
         </table>
         <div class="row">
             <div class="col-md-12">
-                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Início</a>
                 <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adiciona um novo grau">Novo Grau de Parentesco</a>
             </div>
         </div>

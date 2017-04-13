@@ -1,9 +1,10 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-<div class="row row-offcanvas row-offcanvas-right">
-    <div class="col-xs-12 col-sm-9">
-        <div class="well">
-            <div class="page-head">
+<div class="cl-mcont">
+    <div class="row">
+        <div class="block-flat">
+            <div class="content">
                 <h2>Enturmar Catequizando</h2>
+                <span style="color:#ff0000">Atenção! Somente após preenchimento dos campos, a opção salvar será habilitada</span>
             </div>
 
             <?php
@@ -27,43 +28,49 @@
 
             ?>
 
-            <br/>
+            <hr>
+            <fieldset>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form form-group">
 
-            <div class="form-group">
-                <div class="col-md-4">
-                    <?= $this->formRow($form->get('id_turma')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-                <div class="col-md-4">
-                    <?= $this->formRow($form->get('id_periodo_letivo')) ?>
-                    <div class="help-block with-errors"></div>
-                </div><div class="col-md-4">
-                    <?= $this->formRow($form->get('nr_sala')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
+                                <?= $this->formRow($form->get('id_turma')) ?>                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-2">
+                            <div class="form form-group">
+                                <?= $this->formRow($form->get('id_periodo_letivo')) ?>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-2">
+                            <div class="form form-group">
+                                <?= $this->formRow($form->get('nr_sala')) ?>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-3">
+                            <div class="form form-group">
+                                <?= $this->formRow($form->get('id_catequizando')) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form form-group">
+                                <?= $this->formRow($form->get('tx_observacoes')) ?>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <div class="col-md-12">
-                    <?= $this->formRow($form->get('id_catequizando')) ?>
-                    <div class="help-block with-errors"></div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-12">
-                    <?= $this->formRow($form->get('tx_observacoes')) ?>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
+            </fieldset>
 
             <div class="form-group">
                 <div class="col-md-10">
-                    <a id="enturmar_catequizando" class="btn btn-primary" href="#" title="Adicionar data do encontro">Enturmar
-                        Catequizando</a>
-                    <a class="btn btn-default"
-                       href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'index')) ?>"
-                       title="Lista todas as turmas">Listar Turmas</a>
+                    <a id="enturmar_catequizando" class="btn btn-primary" href="#" title="Adicionar data do encontro">Salvar</a>
+                    <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Voltar</a>
                 </div>
             </div>
 
@@ -93,7 +100,7 @@
             id_turma = <?=$id_turma?>;
             id_periodo_letivo = <?=$id_periodo_letivo?>;
             if (id_turma && id_periodo_letivo) {
-                carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo); //Chama a Pagina��o da listagem
+                carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo); //Chama a Paginação da listagem
             }
             <?php
             }
@@ -130,7 +137,7 @@
             id_turma = $(this).val();
             id_periodo_letivo = $('#id_periodo_letivo').val();
             if (id_turma && id_periodo_letivo) {
-                carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo);//Chama a Pagina��o da listagem
+                carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo);//Chama a Paginação da listagem
             } else {
                 $('#turmacatequizando-pagination').html(
                     '<div class="row"><div class="col-md-12 text-center"></div></div>'
@@ -143,7 +150,7 @@
             id_turma = $('#id_turma').val();
             id_periodo_letivo = $(this).val();
             if (id_turma && id_periodo_letivo) {
-                carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo);//Chama a Pagina��o da listagem
+                carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo);//Chama a Paginação da listagem
             } else {
                 $('#turmacatequizando-pagination').html(
                     '<div class="row"><div class="col-md-12 text-center"></div></div>'
@@ -151,7 +158,7 @@
             }
         });
 
-        //Fun��o Ajax que adiciona alunos a uma determinada turma
+        //Função Ajax que adiciona alunos a uma determinada turma
         $('#enturmar_catequizando').click(function () {
             var dados = $('#turmacatequizandoform').serialize();
             $.ajax({
@@ -169,7 +176,7 @@
                     //Caso a insersao tenha sido realizada com sucesso
                     if (response.sucesso == true) {
                         //carrego a lista apenas com os alunos da turma
-                        carregarListaCatequizandosTurmaAjax(response.id_turma, response.id_periodo_letivo);//Chama a Pagina��o da listagem
+                        carregarListaCatequizandosTurmaAjax(response.id_turma, response.id_periodo_letivo);//Chama a Paginação da listagem
                         $("#id_turma").val(response.id_turma); //Deixo setado a turma
                         $("#id_periodo_letivo").val(response.id_periodo_letivo); //Deixo setado o periodo letivo
                     }

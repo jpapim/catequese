@@ -7,7 +7,7 @@
             <tr>
                 <th class="text-center">Turma</th>
                 <th class="text-center">Periodo</th>
-                <th class="text-center">Aluno</th>
+                <th class="text-center">Catequizando</th>
                 <th class="text-center">Ações</th>
 
             </tr>
@@ -16,7 +16,7 @@
             <tr>
                 <th class="text-center">Turma</th>
                 <th class="text-center">Periodo</th>
-                <th class="text-center">Aluno</th>
+                <th class="text-center">Catequizando</th>
                 <th class="text-center">Ações</th>
 
             </tr>
@@ -39,7 +39,7 @@
             if (!empty($paginator)) {
                 ?>
                 <tbody class="">
-                <tr role="row" class="tablesorter-filter-row">
+                <tr role="row" class="tablesorter-filter-row" align="center">
                     <?php
                     foreach ($camposFilter as $key => $campoFilter) {
                         ?>
@@ -47,7 +47,7 @@
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
-                                <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>"
+                                <input type="search" placeholder="" class="col-md-12 tablesorter-filter" data-column="<?= $key ?>"
                                        value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                                 <?php
                             } else {

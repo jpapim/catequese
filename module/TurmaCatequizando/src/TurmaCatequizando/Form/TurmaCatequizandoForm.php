@@ -28,11 +28,11 @@ class TurmaCatequizandoForm extends AbstractForm
       
 
         $objForm->hidden("id_usuario")->required(false)->label("Identificacao do Usuario");
-        $objForm->combo("id_periodo_letivo", '\PeriodoLetivo\Service\PeriodoLetivoService', 'id', 'dt_ano_letivo')->required(false)->label("Período Letivo");
+        $objForm->combo("id_periodo_letivo", '\PeriodoLetivo\Service\PeriodoLetivoService', 'id', 'dt_ano_letivo')->required(false)->label("Ano Letivo");
 
         //#########################################################################################
         $objForm->textareaHtml("tx_observacoes")->required(true)->label("Observações");
-        $objForm->text("nr_sala")->required(true)->label("Número da sala");
+        $objForm->text("nr_sala")->required(true)->label("Nº da sala");
 
        # $oTurmaCatequizando =  new \TurmaCatequizando\Service\TurmaCatequizandoService();
         #$colecaoTurmaCatequizando = $oTurmaCatequizando->fetchAll();
@@ -62,7 +62,7 @@ class TurmaCatequizandoForm extends AbstractForm
 
 $objForm->multicheckbox("cs_aprovado",['S'=>'Aprovado','N'=>'Reprovado'])
             ->setAttribute('style',' text-transform: uppercase')
-            ->required(true);
+            ->required(false);
 
         #$objForm->radio('arrTurmaCatequizando', $arrTurmaCatequizando)->required(false)->label('Aprovacao');
         

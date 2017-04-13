@@ -798,11 +798,30 @@ class CatequizandoController extends AbstractCrudController
 
     }
 
+//    public function gerarRelatorioPdfAction()
+//    {
+//        $catequizandoService = new \Catequizando\Service\CatequizandoService();
+//        $arteste = $catequizandoService->fetchAll()->toArray();
+//        $pdf = new PdfModel();
+//        $pdf->setVariables(array(
+//            'caminho_imagem' => __DIR__,
+//            'inicio_contador' => 3,
+//            'teste' => $arteste,
+//
+//        ));
+//        $pdf->setOption('filename', 'ordem_serviço_'); // Triggers PDF download, automatically appends ".pdf"
+//        $pdf->setOption("paperSize", "a4"); //Defaults to 8x11
+//        $pdf->setOption("basePath", __DIR__); //Defaults to 8x11
+//        #$pdf->setOption("paperOrientation", "landscape"); //Defaults to portrait
+//        return $pdf;
+//
+//    }
+
     public function gerarRelatorioPdfAction()
     {
         $catequizandoService = new \Catequizando\Service\CatequizandoService();
-        #$obCatequizandoEntity = $catequizandoService->fetchAll();
         $obCatequizandoEntity = $catequizandoService->fetchAll();
+        #$obCatequizandoEntity = $catequizandoService->fetchAllMyCustom();
         #xd($arteste);
 //        $this->layout(false);
         $pdf = new PdfModel();

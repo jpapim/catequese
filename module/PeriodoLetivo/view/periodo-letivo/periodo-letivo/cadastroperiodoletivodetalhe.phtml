@@ -7,13 +7,17 @@
             <div class="content">
                 <fieldset>
                     <legend>Dados do Período Letivo</legend>
-                    <?php if(isset($dadosPeriodoLetivo) && $dadosPeriodoLetivo){ ?>
+                    <?php if (isset($dadosPeriodoLetivo) && $dadosPeriodoLetivo) { ?>
                         <div class="bs-callout bs-callout-primary">
                             <ul class="primary">
-                                <li><b>Código Período:</b> <?=$dadosPeriodoLetivo->getId()?></li>
-                                <li><b>Período Letivo:</b> <?=$dadosPeriodoLetivo->getDtAnoLetivo()?></li>
-                                <li><b>Data de Início:</b> <?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($dadosPeriodoLetivo->getDtInicio())?></li>
-                                <li><b>Data de Término:</b> <?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($dadosPeriodoLetivo->getDtFim())?></li>
+                                <li><b>Código Período:</b> <?= $dadosPeriodoLetivo->getId() ?></li>
+                                <li><b>Período Letivo:</b> <?= $dadosPeriodoLetivo->getDtAnoLetivo() ?></li>
+                                <li><b>Data de
+                                        Início:</b> <?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($dadosPeriodoLetivo->getDtInicio()) ?>
+                                </li>
+                                <li><b>Data de
+                                        Término:</b> <?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($dadosPeriodoLetivo->getDtFim()) ?>
+                                </li>
                             </ul>
                         </div>
                     <?php } ?>
@@ -23,9 +27,9 @@
                 $form->setAttribute('class', 'form-horizontal');
                 $form->setAttribute('method', 'post');
                 $form->setAttribute('data-role', 'form');
-               /* echo '<pre>';
-                print_r($dadosPeriodoLetivo);
-                echo '</pre>';*/
+                /* echo '<pre>';
+                 print_r($dadosPeriodoLetivo);
+                 echo '</pre>';*/
                 $form->prepare();
                 echo $this->form()->openTag($form);
                 $form->get('id')->setValue($dadosPeriodoLetivo->getId());
@@ -33,59 +37,63 @@
                 echo $this->formHidden($form->get('id'));
                 ?>
 
-                <div class="form-group">
-                    <div class="col-md-7">
-                        <div class="input-group" id="datetimepicker">
-                            <?= $this->formRow($form->get('dt_encontro')); ?></br>
-                            <a id="adicionar" class="btn btn-default" href="#" title="Adicionar data do encontro">Adicionar Encontro</a>
-                        </div>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                </div>
+                <fieldset>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-1"></div>
 
-                <div class="form-group">
-                    <div class="col-md-10">
-<!--                        <button type="submit" class="btn btn-primary">Salvar</button>-->
-                        <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro', 'id'=>Estrutura\Helpers\Cript::enc($dadosPeriodoLetivo->getId())))?>" title="Voltar">Voltar</a>
-                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Lista de Período Letivo</a>
+                            <div class="col-sm-2">
+                                <div class="form form-group" id="datetimepicker">
+                                    <?= $this->formRow($form->get('dt_encontro')); ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2">
+                                <a style="margin-top: 25px;" id="adicionar" class="btn btn-primary" href="#"
+                                   title="Adicionar data do encontro">Adicionar Encontro</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </fieldset>
+
                 <?= $this->form()->closeTag(); ?>
             </div>
         </div>
     </div>
     <div class="row" id="periodoletivodetalhe-pagination"></div>
 </div>
-<script type="text/javascript" src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
+<script type="text/javascript"
+        src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
 <script type="text/javascript" language="javascript" class="init">
-    $(document).ready(function() {
-        $( "#dt_encontro" ).datepicker(
-            { dateFormat: 'dd/mm/yy' }
+    $(document).ready(function () {
+        $("#dt_encontro").datepicker(
+            {dateFormat: 'dd/mm/yy'}
         );
 
         //Função que faz a listagem ser paginada.
-        function carregarGridPaginadaAjax(){
-                $.ajax({
-                    type: "post",
-                    dataType: "text",
-                    cache: false,
-                    url: '/periodo_letivo-periodoletivo/detalhe-pagination',
-                    async: true,
-                    data: { id_periodo_letivo : <?=$dadosPeriodoLetivo->getId()?>},
-                    beforeSend: function () {
-                        $('#periodoletivodetalhe-pagination').html(
-                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                        );
-                    },
-                    success: function (data) {
-                        $('#periodoletivodetalhe-pagination').html(data);
-                    }
-                });
+        function carregarGridPaginadaAjax() {
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                cache: false,
+                url: '/periodo_letivo-periodoletivo/detalhe-pagination',
+                async: true,
+                data: {id_periodo_letivo: <?=$dadosPeriodoLetivo->getId()?>},
+                beforeSend: function () {
+                    $('#periodoletivodetalhe-pagination').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
+                },
+                success: function (data) {
+                    $('#periodoletivodetalhe-pagination').html(data);
+                }
+            });
         }
+
         carregarGridPaginadaAjax(); //Chama a Paginação da listagem
 
         /*Função Ajax que adiciona os encontros ao Banco de dados*/
-        $('#adicionar').click(function() {
+        $('#adicionar').click(function () {
             var dados = $('#detalheperiodoletivoform').serialize();
             $.ajax({
                 type: 'POST',
@@ -93,9 +101,9 @@
                 url: '/periodo_letivo-periodoletivo/adicionarperiodoletivodetalhe',
                 async: true,
                 data: dados,
-                success: function(response) {
+                success: function (response) {
                     $("#dt_encontro").val("");
-                    if(response.sucesso == true){
+                    if (response.sucesso == true) {
                         carregarGridPaginadaAjax();
                     }
                 }
