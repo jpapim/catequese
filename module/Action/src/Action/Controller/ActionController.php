@@ -50,10 +50,11 @@ class ActionController extends AbstractCrudController
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0' => [
+            '0' => NULL,
+            '1' => [
                 'filter' => "action.nm_action LIKE ?",
             ],
-            '1' => NULL,
+            '2' => NULL,
         ];
 
         $paginator = $this->service->getActionsPaginator($filter, $camposFilter);

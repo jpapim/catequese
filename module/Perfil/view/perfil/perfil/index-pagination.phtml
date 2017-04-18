@@ -5,6 +5,7 @@
         <table class="table table-striped" id="tablesorterAtletas" >
             <thead>
                 <tr>
+                    <th class="text-center" style="width: 5%;">#</th>
                     <th class="text-center">Nome do Perfil</th>
                     <th class="text-center">Ações</th>
                   
@@ -12,6 +13,7 @@
             </thead>
             <tfoot>
                 <tr>
+                    <th class="text-center" style="width: 5%;">#</th>
                     <th class="text-center">Nome do Perfil</th>
                      <th class="text-center">Ações</th>
                 
@@ -60,6 +62,7 @@
                     foreach ($paginator as $key => $perfil) {
                         ?>
                         <tr>
+                            <td class="text-center"><?=$perfil['id_perfil'] ?></td>
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($perfil['nm_perfil']) ?></td>
                          </td>
                             <td class="text-center">

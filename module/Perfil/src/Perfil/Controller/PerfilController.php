@@ -49,11 +49,12 @@ class PerfilController extends AbstractCrudController
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0' => [
+            '0' => NULL,
+            '1' => [
                 'filter' => "perfil.nm_perfil LIKE ?",
             ],
-            '1' => NULL,
-         
+            '2' => NULL,
+
         ];
         
         
