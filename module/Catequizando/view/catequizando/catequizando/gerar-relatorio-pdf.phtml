@@ -93,7 +93,6 @@
 <div id="corpo">
     <br>
     <table border="1" id="table">
-
         <thead>
         <tr>
             <th class="text-center">Turma</th>
@@ -147,6 +146,8 @@
                 $nm_responsavel = $obResponsavelEntity->getNmResponsavel();
             }
 
+            $telefoneService = new \Telefone\Service\TelefoneService();
+            $objTelefone = $telefoneService->buscar($item->getIdTelefoneResidencial());
 
             ?>
             <tr style="font-size: 12px">
@@ -154,7 +155,7 @@
                 <td align="center"><?= $nr_sala == '' ? ' - ' : $nr_sala ?></td>
                 <td><?= \Estrutura\Helpers\String::nomeMaiusculo($item->getNmCatequizando()) ?></td>
                 <td class="text-center"><?= $nm_responsavel == '' ? 'Responsável não cadastrado' : $nm_responsavel ?></td>
-                <td class="text-center"></td>
+                <td class="text-center"><?= $objTelefone->getNrTelefone() ?></td>
                 </td>
             </tr>
             <?php $i++;
