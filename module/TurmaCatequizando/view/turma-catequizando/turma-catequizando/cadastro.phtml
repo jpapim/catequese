@@ -29,53 +29,53 @@
             ?>
 
             <hr>
-            <fieldset>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <div class="form form-group">
+            <fieldset class="scheduler-border">
+                <div id="mensagem_enturmar"></div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form form-group">
 
-                                <?= $this->formRow($form->get('id_turma')) ?>                            </div>
-                        </div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-2">
-                            <div class="form form-group">
-                                <?= $this->formRow($form->get('id_periodo_letivo')) ?>
-                            </div>
-                        </div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-2">
-                            <div class="form form-group">
-                                <?= $this->formRow($form->get('nr_sala')) ?>
-                            </div>
-                        </div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-3">
-                            <div class="form form-group">
-                                <?= $this->formRow($form->get('id_catequizando')) ?>
-                            </div>
+                            <?= $this->formRow($form->get('id_turma')) ?>                            </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2">
+                        <div class="form form-group">
+                            <?= $this->formRow($form->get('id_periodo_letivo')) ?>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form form-group">
-                                <?= $this->formRow($form->get('tx_observacoes')) ?>
-                            </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2">
+                        <div class="form form-group">
+                            <?= $this->formRow($form->get('nr_sala')) ?>
                         </div>
                     </div>
-
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <div class="form form-group">
+                            <?= $this->formRow($form->get('id_catequizando')) ?>
+                        </div>
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form form-group">
+                            <?= $this->formRow($form->get('tx_observacoes')) ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form form-group">
+                            <a id="enturmar_catequizando" class="btn btn-primary" href="#"
+                               title="Adicionar data do encontro">Salvar</a>
+                            <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>"
+                               class="btn btn-default">Voltar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="turmacatequizando-pagination"></div>
             </fieldset>
-
-            <div class="form-group">
-                <div class="col-md-10">
-                    <a id="enturmar_catequizando" class="btn btn-primary" href="#" title="Adicionar data do encontro">Salvar</a>
-                    <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Voltar</a>
-                </div>
-            </div>
-
-            <div class="row" id="turmacatequizando-pagination"></div>
-
 
             <?= $this->form()->closeTag(); ?>
         </div>
@@ -88,12 +88,15 @@
     $(document).ready(function () {
         //Autocomplete Catequiizandos - Eduardo Ferreira
         $("#id_catequizando").autocomplete({
-            minLength:3,
-            source:"/catequizando-catequizando/autocompletecatequizando"
+            minLength: 3,
+            source: "/catequizando-catequizando/autocompletecatequizando"
         });
 
-        $('#enturmar_catequizando').hide();
+        $('#mensagem_enturmar').hide();
+//        $('#enturmar_catequizando').hide();
         $("#id_catequizando").val("");
+        $("#nr_sala").val("");
+
         function carregaralunosTurmaAposInserir() {
             <?php
             if( (isset($id_turma) && $id_turma) && (isset($id_periodo_letivo) && $id_periodo_letivo) ) { ?>
@@ -108,9 +111,8 @@
         }
 
         //Função que faz a listagem ser paginada.
-        function carregarListaCatequizandosTurmaAjax(id_turma, id_periodo_letivo) {
-            $('#enturmar_catequizando').show();
-
+        function carregarListaCatequizandosTurmaAjax() {
+//            $('#enturmar_catequizando').show();
             $.ajax({
                 type: "post",
                 dataType: "text",
@@ -131,6 +133,8 @@
                 }
             });
         }
+
+        carregaralunosTurmaAposInserir();
 
         //Realiza a chamada Ajax, caso os dois combos estejam preenchidos
         $('#id_turma').change(function () {
@@ -168,25 +172,37 @@
                 async: true,
                 data: dados,
                 success: function (response) {
-                    $("#id_turma").val("");
-                    $("#id_periodo_letivo").val("");
-                    //$("#id_catequizando").val(""); //Alysson - TODO: remover o comentario depois que o catequista estiver Implementado
+
+                    $("#nr_sala").val("");
+                    $("#id_catequizando").val("");
                     $("#tx_observacoes").val("");
 
                     //Caso a insersao tenha sido realizada com sucesso
                     if (response.sucesso == true) {
+                        $('#mensagem_enturmar').removeClass("bs-callout bs-callout-danger").addClass("bs-callout bs-callout-success");
+                        $('#mensagem_enturmar').show();
+                        $('#mensagem_enturmar').html("<p>O Catequizando foi adicionado com sucesso!</p>");
+
                         //carrego a lista apenas com os alunos da turma
-                        carregarListaCatequizandosTurmaAjax(response.id_turma, response.id_periodo_letivo);//Chama a Paginação da listagem
-                        $("#id_turma").val(response.id_turma); //Deixo setado a turma
-                        $("#id_periodo_letivo").val(response.id_periodo_letivo); //Deixo setado o periodo letivo
+                        carregarListaCatequizandosTurmaAjax();
+                        setTimeout(function () {
+                            $('#mensagem_enturmar').fadeOut('fast'); // "mensagem_professor" fechará após 3 minutos.
+                        }, 5000); // O valor é representado em milisegundos.
+                    } else {
+                        $('#mensagem_enturmar').removeClass("bs-callout bs-callout-success").addClass("bs-callout bs-callout-danger");
+                        $('#mensagem_enturmar').show();
+                        $('#mensagem_enturmar').html("<p>O catequizando já foi enturmado!</p>");
+                        setTimeout(function () {
+                            $('#mensagem_enturmar').fadeOut('fast'); // "mensagem_professor" fechará após 3 minutos.
+                        }, 3000); // O valor é representado em milisegundos.
                     }
                 }
             });
 
-            return false;
+//            return false;
         });
 
-        carregaralunosTurmaAposInserir();
-
+//Colocar o foco no Concluinte.
+        $("#nm_concluinte").focus();
     });
 </script>
