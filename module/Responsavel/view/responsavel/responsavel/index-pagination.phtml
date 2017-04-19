@@ -2,100 +2,136 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterAtletas" >
+        <table class="table table-striped" id="tablesorterAtletas">
             <thead>
-                <tr>
-                      <th class="text-center" style="width: 5%;">Código</th>
-                      <th class="text-center">Nome</th>
-                      <th class="text-center">Telefone Residencial</th>
-                      <th class="text-center">Telefone Celular</th>
-                      <th class="text-center">E-mail</th>
-                      <th class="text-center">Profissão</th>
-                     <th class="text-center" style="width: 15%;">Ações</th>
-                </tr>
+            <tr>
+                <th class="text-center" style="width: 5%;">Código</th>
+                <th class="text-center">Nome</th>
+                <th class="text-center">Telefone Residencial</th>
+                <th class="text-center">Telefone Celular</th>
+                <th class="text-center">E-mail</th>
+                <th class="text-center">Profissão</th>
+                <th class="text-center">Responsável Por</th>
+                <th class="text-center" style="width: 15%;">Ações</th>
+            </tr>
             </thead>
             <tfoot>
-                <tr>
-                    <th class="text-center" style="width: 5%;">Código</th>
-                    <th class="text-center">Nome</th>
-                    <th class="text-center">Telefone Residencial</th>
-                    <th class="text-center">Telefone Celular</th>
-                    <th class="text-center">E-mail</th>
-                    <th class="text-center">Profissão</th>
-                    <th class="text-center" style="width: 15%;">Ações</th>
-                
-                </tr>
-                <tr>
-                    <th colspan="7" class="ts-pager form-horizontal">
-                        <?php
+            <tr>
+                <th class="text-center" style="width: 5%;">Código</th>
+                <th class="text-center">Nome</th>
+                <th class="text-center">Telefone Residencial</th>
+                <th class="text-center">Telefone Celular</th>
+                <th class="text-center">E-mail</th>
+                <th class="text-center">Profissão</th>
+                <th class="text-center">Responsável Por</th>
+                <th class="text-center" style="width: 15%;">Ações</th>
+
+            </tr>
+            <tr>
+                <th colspan="8" class="ts-pager form-horizontal">
+                    <?php
                     echo $this->paginationControl(
-                                $paginator, 'Sliding', 'partials/pagination.phtml', [
+                        $paginator, 'Sliding', 'partials/pagination.phtml', [
                             'urlPagination' => '/responsavel-responsavel/index-pagination',
                             'countPerPage' => $countPerPage,
                             'divData' => '#atleta-pagination',
-                                ]
-                        );
-                        ?>
-                    </th>
-                </tr>
+                        ]
+                    );
+                    ?>
+                </th>
+            </tr>
             </tfoot>
             <?php
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
             if (!empty($paginator)) {
                 ?>
                 <tbody class="" align="center">
-                    <tr role="row" class="tablesorter-filter-row">
-                        <?php
-                        foreach ($camposFilter as $key => $campoFilter) {
-                            ?>    
-                            <td>
-                                <?php
-                                if (!is_null($campoFilter)) {
-                                    ?>
-                                    <input type="search" placeholder="" class="col-md-12 tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                                    <?php
-                                } else {
-                                    ?>
-                                    &nbsp;                                        
-                                    <?php
-                                }
-                                ?>
-                            </td>
-                            <?php
-                        }
-                        ?>
-                    </tr>
+                <tr role="row" class="tablesorter-filter-row">
                     <?php
-                    foreach ($paginator as $key => $responsavel) {
-
+                    foreach ($camposFilter as $key => $campoFilter) {
                         ?>
-                    <tr>
-                        <td class="text-center"><?=$responsavel['id_responsavel'] ?></td>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['nm_responsavel']) ?></td>
-                        <td class="text-center"><?= $service->getTelefone($responsavel['id_telefone_residencial'])?></td>
-                        <td class="text-center"><?= $service->getCelular($responsavel['id_telefone_celular'])?></td>
-                        <td class="text-center"><?= $responsavel['em_email']?></td>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['nm_profissao']) ?></td>
+                        <td>
+                            <?php
+                            if (!is_null($campoFilter)) {
+                                ?>
+                                <input type="search" placeholder="" class="col-md-12 tablesorter-filter"
+                                       data-column="<?= $key ?>"
+                                       value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                <?php
+                            } else {
+                                ?>
+                                &nbsp;
+                                <?php
+                            }
+                            ?>
                         </td>
-                            <td class="text-center">
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+                foreach ($paginator as $key => $responsavel) {
+
+                    ?>
+                    <tr>
+                        <td class="text-center"><?= $responsavel['id_responsavel'] ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['nm_responsavel']) ?></td>
+                        <td class="text-center"><?= $service->getTelefone($responsavel['id_telefone_residencial']) ?></td>
+                        <td class="text-center"><?= $service->getCelular($responsavel['id_telefone_celular']) ?></td>
+                        <td class="text-center"><?= $responsavel['em_email'] ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($responsavel['nm_profissao']) ?></td>
+                        <td class="text-center">
+                            <button class="btn btn-default" data-toggle="modal" data-target="#modalCat"
+                                    title="Verifica se é responsável por algum catequizando">Verificar
+                            </button>
+                        </td>
+                        <td class="text-center">
                                 <span class="btn-group">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($responsavel['id_responsavel'])))) ?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($responsavel['id_responsavel'])))) ?>
                                 </span>
-                            </td>
-                        </tr>
-                        <?php
-                    }
-                    ?>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
                 </tbody>
                 <?php
             }
             ?>
 
+
+            <div class="modal fade" id="modalCat" tabindex="-1" role="dialog" aria-labelledby="modalCatequizando">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modalCatequizando">Responsável pelo(s) catequizando(s):</h4>
+                        </div>
+                        <div class="modal-body">
+                            Yves Guilherme
+                            <br/>
+                            Yves Guilherme
+                            <br/>
+                            Yves Guilherme
+                            <br/>
+                            Yves Guilherme
+                            <br/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </table>
         <div class="row">
             <div class="col-md-12">
-                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Início</a>
+                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>"
+                   class="btn btn-primary" title="Retorna para a Página Principal">Início</a>
             </div>
         </div>
     </div>
@@ -108,7 +144,7 @@
 <script src="/assets/js/jquery.tablesorter.js" type="text/javascript"></script>
 <script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
 <script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
-<script type="text/javascript" language="javascript" >
+<script type="text/javascript" language="javascript">
     $(function () {
 
         // NOTE: $.tablesorter.theme.bootstrap is ALREADY INCLUDED in the jquery.tablesorter.widgets.js
@@ -150,9 +186,9 @@
                 // reset filters button
                 filter_reset: ".reset"
 
-                        // set the uitheme widget to use the bootstrap theme class names
-                        // this is no longer required, if theme is set
-                        // ,uitheme : "bootstrap"
+                // set the uitheme widget to use the bootstrap theme class names
+                // this is no longer required, if theme is set
+                // ,uitheme : "bootstrap"
 
             },
             headers: {
@@ -175,8 +211,8 @@
                 beforeSend: function () {
 
                     $('#modal-relatorio-body-3').html(
-                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                            );
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
                 },
                 success: function (data) {
 
@@ -185,9 +221,6 @@
             });
         });
 
-   
-
-     
 
         $('.relatorio-recusar-recibo').off('click').on('click', function () {
 
@@ -202,8 +235,8 @@
                 beforeSend: function () {
 
                     $('#modal-relatorio-body-3').html(
-                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                            );
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
                 },
                 data: {
                     id_saque: idPagamento
