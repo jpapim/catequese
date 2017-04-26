@@ -109,7 +109,7 @@ class CatequistaForm extends AbstractForm
         $objForm->text("nr_matricula")->required(true)->label("*Nº matrícula (até 6 digitos)");
         $objForm->date("dt_nascimento")->setAttribute('class', 'data')->required(true)->label("*Data de nascimento");
         $objForm->date("dt_ingresso")->setAttribute('class', 'data')->required(true)->label("*Data de ingresso");
-        $objForm->textarea("tx_observacao")->required(true)->label("Observação");
+        $objForm->textarea("tx_observacao")->required(false)->label("Observação");
         $objForm->textarea("ds_situacao")->required(false)->label("Descricao da situação");
 
         $objForm->hidden("id_perfil")->required(true)->label("perfil");

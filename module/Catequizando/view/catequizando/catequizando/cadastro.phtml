@@ -1,27 +1,27 @@
 <link rel="stylesheet" href="/assets/css/progress.css"/>
 
-<?php if(empty($id)): ?>
- <!--Caso não exista ID essa parte do código aparece-->
-<hr/>
-<div class="row">
-    <div class="col-md-12">
-        <ol class="progresso" data-steps="2">
-            <li class="active">
-                <span class="name">Catequizando</span>
-                <span class="step bg-info"><span>1</span></span>
-            </li>
-            <li class="">
-                <span class="name">Responsavél</span>
-                <span class="step"><span>2</span></span>
-            </li>
-<!--            <li class="">-->
-<!--                <span class="name">Fim</span>-->
-<!--                <span class="step"><span>3</span></span>-->
-<!--            </li>-->
-        </ol>
+<?php if (empty($id)): ?>
+    <!--Caso não exista ID essa parte do código aparece-->
+    <hr/>
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="progresso" data-steps="2">
+                <li class="active">
+                    <span class="name">Catequizando</span>
+                    <span class="step bg-info"><span>1</span></span>
+                </li>
+                <li class="">
+                    <span class="name">Responsavél</span>
+                    <span class="step"><span>2</span></span>
+                </li>
+                <!--            <li class="">-->
+                <!--                <span class="name">Fim</span>-->
+                <!--                <span class="step"><span>3</span></span>-->
+                <!--            </li>-->
+            </ol>
+        </div>
     </div>
-</div>
-<hr/>
+    <hr/>
 
 <?php endif; ?>
 
@@ -51,65 +51,48 @@
                 <hr>
                 <fieldset>
 
-                    <div class="container" >
+                    <div class="container">
 
-                        <div class="row" >
+                        <div class="row">
                             <div class="col-sm-5">
                                 <div class="form-group">
                                     <?= $this->formRow($form->get('nm_catequizando')) ?>
                                 </div>
                             </div>
                             <div class="col-sm-1"></div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-2">
                                 <div class="form-group">
-                                    <?=$this->formRow($form->get('dt_nascimento'))?>
+                                    <?= $this->formRow($form->get('dt_nascimento')) ?>
 
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-5">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <?= $this->formRow($form->get('id_sexo')) ?>
                                 </div>
                             </div>
-                            <div class="col-sm-1"></div>
-
-                            <div class="col-sm-5">
-                                <div class="form-group">
-                                    <?=$this->formRow($form->get('nm_naturalidade'))?>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <?= $this->formRow($form->get('nm_naturalidade')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
                             <div class="col-sm-5">
                                 <div class="form-group">
                                     <?= $this->formRow($form->get('nm_cidade')) ?>
                                 </div>
                             </div>
-                            <div class="col-sm-1"></div>
-
-                            <div class="col-sm-5">
-                                <div class="form-group">
-                                    <?=$this->formRow($form->get('nr_cep'))?>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-5">
                                 <div class="form-group">
-                                    <?= $this->formRow($form->get('nm_bairro')) ?>
+                                    <?= $this->formRow($form->get('nm_logradouro')) ?>
                                 </div>
                             </div>
                             <div class="col-sm-1"></div>
-
-                            <div class="col-sm-5">
-                                <div class="form-group">
-                                    <?=$this->formRow($form->get('nm_logradouro'))?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <?= $this->formRow($form->get('nm_complemento')) ?>
@@ -120,6 +103,20 @@
                             <div class="col-sm-1">
                                 <div class="form-group">
                                     <?= $this->formRow($form->get('nr_numero')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <?= $this->formRow($form->get('nm_bairro')) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <?= $this->formRow($form->get('nr_cep')) ?>
                                 </div>
                             </div>
                             <div class="col-sm-1"></div>
@@ -138,106 +135,106 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" >
+                        <div class="row">
                             <div class="col-sm-5">
                                 <div class="form-group">
-                                    <?=$this->formRow($form->get('em_email'))?>
+                                    <?= $this->formRow($form->get('em_email')) ?>
                                 </div>
                             </div>
                             <div class="col-sm-1"></div>
                             <div class="col-sm-5">
                                 <div class="form-group">
-                                    <?=$this->formRow($form->get('em_email_confirm'))?>
+                                    <?= $this->formRow($form->get('em_email_confirm')) ?>
                                 </div>
                             </div>
                         </div>
-                     </div>
+                    </div>
                 </fieldset><!-- FIM DADOS PESSOAIS -->
                 <hr>
                 <fieldset>
-                    <div class="row" >
+                    <div class="row">
                         <div class="col-sm-5">
                             <div class="form-group">
-                                <?=$this->formRow($form->get('cs_necessidade_especial'))?>
+                                <?= $this->formRow($form->get('cs_necessidade_especial')) ?>
                             </div>
                             <div class="form-group" id="necessidade_especial">
-                                <?=$this->formRow($form->get('nm_necessidade_especial'))?>
+                                <?= $this->formRow($form->get('nm_necessidade_especial')) ?>
                             </div>
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-5">
                             <div class="form-group">
-                                <?=$this->formRow($form->get('cs_estudante'))?>
+                                <?= $this->formRow($form->get('cs_estudante')) ?>
                             </div>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
-                    <div class="row" >
+                    <div class="row">
                         <div class="col-sm-5">
                             <div class="form-group">
-                                <?=$this->formRow($form->get('arrSacramento'))?>
+                                <?= $this->formRow($form->get('arrSacramento')) ?>
                             </div>
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-5">
                             <div class="form-group">
-                                <?= $this->formRow($form->get('cs_participa_movimento_pastoral'))?>
+                                <?= $this->formRow($form->get('cs_participa_movimento_pastoral')) ?>
                             </div>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
-                    <div class="row" >
+                    <div class="row">
                         <div class="col-sm-11">
                             <div class="form-group">
-                                <?= $this->formRow($form->get('arrEtapa'))?>
+                                <?= $this->formRow($form->get('arrEtapa')) ?>
                             </div>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
-                    <div class="row" >
+                    <div class="row">
                         <div class="col-sm-11">
                             <div class="form-group">
-                                <?= $this->formRow($form->get('tx_observacao'))?>
+                                <?= $this->formRow($form->get('tx_observacao')) ?>
                             </div>
                         </div>
                     </div>
                 </fieldset>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                       <div class="col-md-2">
-                           <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
-                       </div>
-                       <div class="col-md-1"></div>
-
-                    </div>
-                </div>
-                <?= $this->form()->closeTag(); ?>
-
-                <div class="col-md-2">
-                    <?php if(isset($id)): ?>
-                        <button class="btn btn-primary" id="update">Atualizar</button>
-                    <?php else: ?>
-                        <button class="btn btn-primary" id="next">Avançar</button>
-                    <?php endif; ?>
-                </div>
-
             </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="col-md-2">
+                        <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Voltar</a>
+                    </div>
+                    <div class="col-md-1"></div>
+
+                </div>
+            </div>
+            <?= $this->form()->closeTag(); ?>
+
+            <div class="col-md-2">
+                <?php if (isset($id)): ?>
+                    <button class="btn btn-primary" id="update">Atualizar</button>
+                <?php else: ?>
+                    <button class="btn btn-primary" id="next">Avançar</button>
+                <?php endif; ?>
+            </div>
+
         </div>
     </div>
+</div>
 <script type="text/javascript" language="javascript" class="init">
 
     /*Função que calcula a idade de um catequizando*/
-    function calcIdade(){
-        var  data = $("#dt_nascimento").val();
+    function calcIdade() {
+        var data = $("#dt_nascimento").val();
         data = data.split("/");
-        var nascimento =data[2]+"-"+data[1]+"-"+data[0];
+        var nascimento = data[2] + "-" + data[1] + "-" + data[0];
 
         var nasc = new Date(nascimento);
-        return ~~((Date.now() - nasc)/ (31557600000));
+        return ~~((Date.now() - nasc) / (31557600000));
     }
 
     /*Função para validar o formulário*/
@@ -248,79 +245,78 @@
             );
             return false;
         }
-        if(calcIdade() < 8 ){
+        if (calcIdade() < 8) {
             $("#msg").html(
                 '<div class="alert alert-danger"><strong>Atenção!</strong> Idade mínima de 8 anos para cadastrar catequizando.</div>'
             );
             return false;
         }
-        if(!is_email($("#em_email").val())){
+        if (!is_email($("#em_email").val())) {
             $("#msg").html(
                 '<div class="alert alert-danger"><strong>Atenção!</strong>E-mail não se encontra de acordo com o formato padrão.Ex: exemplo@exemplo.com</div>'
             );
             return false;
         }
-            return true;
+        return true;
     }
 
     /**/
-    function is_email(email){
+    function is_email(email) {
         er = /^[a-zA-Z0-9][a-zA-Z0-9\._-]+@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2,3}/;
-        if( !er.exec(email) )
-        {
-           return false;
+        if (!er.exec(email)) {
+            return false;
         }
         return true;
     }
 
-    $(document).ready(function() {
-        $( "#dt_nascimento" ).datepicker(
-            { dateFormat: 'dd/mm/yy' }
+    $(document).ready(function () {
+        $("#dt_nascimento").datepicker(
+            {dateFormat: 'dd/mm/yy'}
         );
 
         /*Condicional que verifica se o campo nm_necessidade_especial está preenchido ou não*/
-       if($("#nm_necessidade_especial").val() == ""){
-           $("#necessidade_especial").hide();
-       }else{
-           $("#necessidade_especial").show();
-       }
+        if ($("#nm_necessidade_especial").val() == "") {
+            $("#necessidade_especial").hide();
+        } else {
+            $("#necessidade_especial").show();
+        }
         /*Função que habilita o campo para colocar o nome da necessidade especial*/
-        $("input:radio[name=cs_necessidade_especial]").click(function(){
+        $("input:radio[name=cs_necessidade_especial]").click(function () {
 
-            if($('input:radio[name=cs_necessidade_especial]:checked').val() == "S"){
+            if ($('input:radio[name=cs_necessidade_especial]:checked').val() == "S") {
 
                 $("#necessidade_especial").show();
-            }else{
+            } else {
                 $("#necessidade_especial").hide();
             }
         });
 
         /*Função do botão Atualizar : Só funciona quando for atualizar o registro de algum catequizando*/
-        $("#update").click(function(){
+        $("#update").click(function () {
 
-            if(validaForm() == true){
-                $("#catequizandoform").attr('action',"<?= $this->url('navegacao', array('controller'=>$controller,'action' => 'atualizar')) ?>");
+            if (validaForm() == true) {
+                $("#catequizandoform").attr('action', "<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'atualizar')) ?>");
                 $("#catequizandoform").submit();
             }
 
         });
 
         /*Função do botão Avançar : Só funciona quando for cadastrar um novo catequizando*/
-        $("#next").click(function(){
-            if(validaForm() == true){
-                $("#catequizandoform").attr('action',"<?= $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')) ?>");
+        $("#next").click(function () {
+            if (validaForm() == true) {
+                $("#catequizandoform").attr('action', "<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')) ?>");
                 $("#catequizandoform").submit();
             }
         });
 
         /*Função que faz o autocomplete da cidade*/
-        $( "input#nm_cidade" ).autocomplete({
+        $("input#nm_cidade").autocomplete({
             minLength: 4,
             source: "/cidade-cidade/autocompletecidade"
         });
 
         /*Função que faz o autocomplete da Naturalidade*/
-        $( "input#nm_naturalidade" ).autocomplete({
+        $("input#nm_naturalidade").autocomplete({
             minLength: 4,
             source: "/cidade-cidade/autocompletecidade"
         });

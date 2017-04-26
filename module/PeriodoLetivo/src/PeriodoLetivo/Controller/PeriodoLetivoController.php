@@ -249,10 +249,9 @@ class PeriodoLetivoController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
-                //'filter' => "periodoletivodetalhe.nm_sacramento LIKE ?",
+                'filter' => "detalhe_periodo_letivo.dt_encontro LIKE ?",
             ],
             '1' => NULL,
-
         ];
 
         $paginator = $this->service->getPeriodoLetivoDetalhePaginator($id_periodo_letivo, $filter, $camposFilter);

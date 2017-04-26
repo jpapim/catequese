@@ -43,7 +43,7 @@
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
-                                <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>"
+                                <input ALIGN="center" type="search" placeholder="" class="col-md-12 tablesorter-filter" data-column="<?= $key ?>"
                                        value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                             <?php
                             } else {
@@ -83,10 +83,10 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>"
-                   class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                   class="btn btn-primary" title="Retorna para a Página Principal">Início</a>
                 <a class="btn btn-default"
                    href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'index')) ?>"
-                   title="Adiciona um novo sacramento">Novo Período Letivo</a>
+                   title="Adiciona um novo sacramento">Voltar</a>
             </div>
         </div>
     </div>

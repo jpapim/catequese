@@ -73,8 +73,8 @@
                         <td class="text-center"><?= $item['nm_formacao']?></td>
 
                         <td class="text-center" style="width: 150px;">
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_formacao'])))) ?>
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastrodetalheformacao', 'id' => Estrutura\Helpers\Cript::enc($item['id_formacao'])))) ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_formacao']))), 'Modificar Formação') ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastrodetalheformacao', 'id' => Estrutura\Helpers\Cript::enc($item['id_formacao']))), 'Modificar detalhe da Formação') ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_formacao'])))) ?>
                         </td>
                     </tr>
@@ -89,7 +89,7 @@
         </table>
         <div class="row">
             <div class="col-md-12">
-                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
+                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Início</a>
 
             </div>
         </div>

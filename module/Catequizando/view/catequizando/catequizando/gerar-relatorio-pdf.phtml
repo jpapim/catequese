@@ -75,7 +75,7 @@
         </div>
         <div>
             <hr>
-            <p style="font-size: 20px"><b>RELAÇÃO DOS CATEQUIZANDOS</b></p>
+            <p style="font-size: 24px"><b>RELAÇÃO DOS CATEQUIZANDOS</b></p>
         </div>
     </div>
 </div>
@@ -108,13 +108,16 @@
         <?php
         $i = $this->inicio_contador;
         foreach ($this->obCatequizandoEntity as $key => $item) {
-            #x($item);
+
+//            if($item->getId() != 1){
+//                xd($item);
+//            }
+
             //Buscando dados da TurmaCatequizando
             $turmacatequizandoService = new \TurmaCatequizando\Service\TurmaCatequizandoService();
             $turmacatequizandoService->setIdCatequizando($item->getId());
-            $obTurmaCatequizandoEntity = $turmacatequizandoService->filtrarObjeto()->current();
-            #xd($obTurmaCatequizandoEntity);
-            $nm_turma = '';
+            if($turmacatequizandoService->filtrarObjeto()->count()){
+                $obTurmaCatequizandoEntity = $turmacatequizandoService->filtrarObjeto()->current();
 
                 if ($obTurmaCatequizandoEntity) {
                     $turmaService = new \Turma\Service\TurmaService();
@@ -122,10 +125,14 @@
                     $nm_turma = $obTurmaEntity->getNmTurma();
                 }
 
-            //Buscando dados da Sala da turma
-            $nr_sala = $turmacatequizandoService->buscar($item->getIdTurmaCatequizando());
-            #xd($nr_sala);
+                //Buscando dados da Sala da turma
+                $nr_sala = $obTurmaCatequizandoEntity->getNrSala();
 
+            } else {
+                $obTurmaCatequizandoEntity = NULL;
+                $nr_sala = null;
+                $nm_turma = '';
+            }
 
             //Buscando dados do Responsável
             $responsavelcatequizandoService = new \ResponsavelCatequizando\Service\ResponsavelCatequizandoService();
@@ -134,17 +141,17 @@
             #xd($obResponsavelCatequizandoEntity);
             $nm_responsavel = '';
 
-                if ($obResponsavelCatequizandoEntity) {
-                    $responsavelService = new \Responsavel\Service\ResponsavelService();
-                    $obResponsavelEntity = $responsavelService->buscar($obResponsavelCatequizandoEntity->getIdResponsavel());
-                    $nm_responsavel = $obResponsavelEntity->getNmResponsavel();
-                }
+            if ($obResponsavelCatequizandoEntity) {
+                $responsavelService = new \Responsavel\Service\ResponsavelService();
+                $obResponsavelEntity = $responsavelService->buscar($obResponsavelCatequizandoEntity->getIdResponsavel());
+                $nm_responsavel = $obResponsavelEntity->getNmResponsavel();
+            }
 
 
             ?>
             <tr style="font-size: 12px">
                 <td class="text-center"><?= $nm_turma == '' ? 'Não Enturmado' : $nm_turma ?></td>
-                <td align="center"><?= $nr_sala->getNrSala() ?></td>
+                <td align="center"><?= $nr_sala == '' ? ' - ' : $nr_sala ?></td>
                 <td><?= \Estrutura\Helpers\String::nomeMaiusculo($item->getNmCatequizando()) ?></td>
                 <td class="text-center"><?= $nm_responsavel == '' ? 'Responsável não cadastrado' : $nm_responsavel ?></td>
                 <td class="text-center"></td>
@@ -154,52 +161,7 @@
         } ?>
     </table>
     <?php #xd('parou'); ?>
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-<!--    <h1>Corpo</h1>-->
-
-
 </div>
-
-
 </body>
 
 </html>

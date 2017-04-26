@@ -233,4 +233,12 @@ class CatequizandoService extends  Entity{
 
         return $arrResp->getNmResponsavel();
     }
+
+    public function fetchAllMyCustom() {
+
+        $select = $this->getTable()->select();
+        $select->order('nm_catequizando ASC');
+
+        return  $this->fetchAllCustom($select);
+    }
 } 

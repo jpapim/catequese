@@ -27,7 +27,7 @@ class CatequizandoForm extends  AbstractForm{
         $objForm->hidden("id")->required(false)->label("Id");
         ##### Endereço ######
         $objForm->hidden("id_endereco")->required(false);
-        $objForm->text("nm_logradouro")->required(true)->label("*Logradouro");
+        $objForm->text("nm_logradouro")->required(true)->label("*Endereço");
         $objForm->text("nr_numero")->required(false)->label("Número");
         $objForm->text("nm_complemento")->required(false)->label("Complemento");
         $objForm->text("nm_bairro")->required(true)->label("*Bairro");
@@ -35,10 +35,10 @@ class CatequizandoForm extends  AbstractForm{
 
         #FK - Naturalidade
         $objForm->hidden("id_naturalidade")->required(false);
-        $objForm->text("nm_naturalidade")->required(false)->label("*Naturalidade");
+        $objForm->text("nm_naturalidade")->required(false)->label("*Cidade de Origem");
 
         #FK - Cidades
-        $objForm->text("nm_cidade")->required(true)->label("*Cidade onde Reside");
+        $objForm->text("nm_cidade")->required(true)->label("*Cidade atual");
 
         #FK - Sexo
         $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(true)->label("*Sexo");
