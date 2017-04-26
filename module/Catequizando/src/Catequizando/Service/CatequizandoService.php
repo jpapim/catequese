@@ -31,8 +31,8 @@ class CatequizandoService extends  Entity{
 
 
         ])
-        ->join('email','catequizando.id_email = email.id_email',['em_email'])
-        ->join('telefone','telefone.id_telefone = catequizando.id_telefone_residencial',['nr_ddd_telefone','nr_telefone'])  ;
+        ->join('email','catequizando.id_email = email.id_email',['em_email'], 'left')
+        ->join('telefone','telefone.id_telefone = catequizando.id_telefone_residencial',['nr_ddd_telefone','nr_telefone'], 'left')  ;
         $where = [
         ];
 
