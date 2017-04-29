@@ -164,18 +164,30 @@ class ResponsavelController extends AbstractCrudController
         return $viewModel->setTerminal(TRUE);
     }
 
-    public function autocompleteresponsavelAction()
+    public function recuperarCatequizandoAction()
     {
-        $term = $_GET['term'];
-        $arr = $this->service->getFiltrarResponsavelPorNomeToArray($term);
-        $arrFiltrado = [];
+        #$post = $this->params()->fromPost();
+        $id_responsavel = $this->params()->fromPost('id_responsavel');
 
-        foreach ($arr as $cate) {
-            $arrFiltrado[] = $cate['nm_responsavel'];
+        $responsavelcatequizandoService = new \ResponsavelCatequizando\Service\ResponsavelCatequizandoService();
+        $responsavelcatequizandoService->setIdResponsavel($id_responsavel);
+        $obResponsavelCatequizandoEntity = $responsavelcatequizandoService->filtrarObjeto();
+
+        if(count($obResponsavelCatequizandoEntity) > 0){
+            $catequizandoService = new \Catequizando\Service\CatequizandoService();
+            foreach($obResponsavelCatequizandoEntity as $obResponsavelCatequizando){
+                $catequizandoEntity = $catequizandoService->buscar($obResponsavelCatequizando->getIdCatequizando());
+                $arNome[] = $catequizandoEntity->getNmCatequizando();
+            }
         }
-        $value = new JsonModel($arrFiltrado);
-        return $value;
+        #Até aqui esta certo.
 
+
+
+
+
+        $valuesJson = new JsonModel(array('arNomes' => $arNome));
+        return $valuesJson;
     }
 
 }
