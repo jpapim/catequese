@@ -1,6 +1,6 @@
 CREATE TABLE importacao(nm_catequizando varchar(100),dt_nascimento varchar(20),dt_referencial varchar(20),idade_2016 int,etapa_turma varchar(100),nm_endereco varchar(100),tel_fixo varchar(50),tel_celular varchar(50),email varchar(100),naturalidade varchar(100),estado varchar(100), sexo varchar(100), B VARCHAR(1), E VARCHAR(1), C VARCHAR(1), M VARCHAR(1),comp varchar(5),estado_civil varchar(100),necessidade_especial varchar(100),responsavel varchar(100),nm_responsavel varchar(180), tel_responsavel varchar(116),email_responsavel varchar(180),situacao_pais varchar(140),contribuicao decimal(10,2),nm_pai varchar(180),tel_pai varchar(116),religiao_pai varchar(130),B_pai VARCHAR(1),E_pai VARCHAR(1),C_pai VARCHAR(1),M_pai VARCHAR(1),dizimo_pai varchar(30),nm_mae varchar(180),tel_mae varchar(116),religiao_mae varchar(30),B_mae VARCHAR(1),E_mae VARCHAR(1),C_mae VARCHAR(1),M_mae VARCHAR(1),dizimo_mae varchar(30), observacao varchar(1000),id_importacao int AUTO_INCREMENT PRIMARY key, flag int default 0);
 
-LOAD DATA LOCAL INFILE 'C:/assejus/catequese_2017.csv' INTO TABLE importacao
+LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/catequese/data/db/raimundo/catequese_2017.csv' INTO TABLE importacao
 CHARACTER SET UTF8
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"' 

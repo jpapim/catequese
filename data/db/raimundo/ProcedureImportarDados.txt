@@ -7,39 +7,39 @@ begin
 
 
 DECLARE id_importacao int DEFAULT 0;
-DECLARE nm_endereco varchar(50);
-DECLARE nm_cidade varchar(50);
-DECLARE nm_estado varchar(50);
+DECLARE nm_endereco varchar(100);
+DECLARE nm_cidade varchar(100);
+DECLARE nm_estado varchar(100);
 DECLARE id_estado int;
 DECLARE id_cidade int;
-DECLARE tell_fixo varchar(15);
-DECLARE tell_celular varchar(15);
-DECLARE email varchar(40);
+DECLARE tell_fixo varchar(100);
+DECLARE tell_celular varchar(100);
+DECLARE email varchar(100);
 declare a int;
 DECLARE etapa_turma varchar(100);
 DECLARE nm_etapa varchar(100);
 DECLARE id_periodo int;
 
-DECLARE nm_catequizando varchar(60);
+DECLARE nm_catequizando varchar(100);
 DECLARE id_catequizando int;
-DECLARE dt_nascimento varchar(20);
-DECLARE dt_cadastro varchar(20);
-DECLARE sexo varchar(15);
-DECLARE cs_necessidade varchar(3);
+DECLARE dt_nascimento varchar(100);
+DECLARE dt_cadastro varchar(100);
+DECLARE sexo varchar(100);
+DECLARE cs_necessidade varchar(100);
 DECLARE observacao text;
 
 DECLARE sac_B varchar(1);
 DECLARE id_sacramento int;
 
-DECLARE responsavel varchar(50);
+DECLARE responsavel varchar(100);
 DECLARE id_responsavel int;
 DECLARE id_grau_parentesco int;
-DECLARE nm_responsavel varchar(80);
-DECLARE situacaoconjugal varchar(25);
-DECLARE ds_situacao varchar(15);
+DECLARE nm_responsavel varchar(100);
+DECLARE situacaoconjugal varchar(100);
+DECLARE ds_situacao varchar(100);
 DECLARE id_situacao_responsavel int;
-declare situacao_dizimo varchar(4);
-
+declare situacao_dizimo varchar(20);
+declare id_situacao int default 1;
 
 
 
@@ -90,9 +90,11 @@ set email = (SELECT importacao.email from importacao WHERE importacao.id_importa
 set nm_catequizando = (SELECT importacao.nm_catequizando from importacao WHERE importacao.id_importacao = id_importacao);
 set dt_nascimento = (SELECT importacao.dt_nascimento FROM importacao WHERE importacao.id_importacao = id_importacao);
 set dt_cadastro = (SELECT importacao.dt_referencial FROM importacao WHERE importacao.id_importacao = id_importacao);
-
+if dt_nascimento like "%/%" then
 set dt_nascimento = (concat(substring(dt_nascimento, 7, 10), "-", substring(dt_nascimento, 4, 2), '-', substring(dt_nascimento, 1, 2)));
-
+else 
+set dt_nascimento = "0000-00-00";
+end if;
 set dt_cadastro = (concat(substring(dt_cadastro, 7, 10), "-", substring(dt_cadastro, 4, 2), '-', substring(dt_cadastro, 1, 2)));
 
 
@@ -108,6 +110,13 @@ if;
 
 set sexo = (SELECT sexo.id_sexo from sexo WHERE sexo.nm_sexo like sexo);
 set cs_necessidade = (SELECT importacao.necessidade_especial FROM importacao WHERE importacao.id_importacao = id_importacao);
+if cs_necessidade like "%sim%" then
+set cs_necessidade ="s";
+else
+set cs_necessidade="n"; 
+
+end if;
+
 set observacao = (SELECT importacao.observacao FROM importacao WHERE importacao.id_importacao = id_importacao);
 
 
@@ -116,7 +125,7 @@ THEN
 insert into email(em_email, id_situacao) VALUES(email, 1);
 set email = (SELECT max(email.id_email) FROM email);
 
-insert into catequizando(nm_catequizando, dt_nascimento, dt_ingresso, id_sexo, cs_necessidade_especial, id_endereco, id_telefone_residencial, id_telefone_celular, tx_observacao, id_email, id_naturalidade) VALUES(nm_catequizando, dt_nascimento, dt_cadastro, sexo, cs_necessidade, nm_estado, tell_fixo, tell_celular, observacao, email, id_cidade);
+insert into catequizando(nm_catequizando, dt_nascimento, dt_ingresso, id_sexo, cs_necessidade_especial, id_endereco, id_telefone_residencial, id_telefone_celular, tx_observacao, id_email, id_naturalidade,id_situacao) VALUES(nm_catequizando, dt_nascimento, dt_cadastro, sexo, cs_necessidade, nm_estado, tell_fixo, tell_celular, observacao, email, id_cidade,id_situacao);
 
 ELSE
 
@@ -349,10 +358,11 @@ INSERT into sacramento_catequizando(id_catequizando, id_sacramento, dt_cadastro)
 END
 if;
 
-
+set id_responsavel = (SELECT importacao.idade_2016 FROM importacao WHERE importacao.id_importacao = id_importacao);
 set responsavel = (SELECT importacao.responsavel FROM importacao WHERE importacao.id_importacao = id_importacao);
+if id_responsavel < 19 then
 
-if responsavel is not null THEN
+
 
 set nm_responsavel = (SELECT importacao.nm_responsavel FROM importacao WHERE importacao.id_importacao = id_importacao);
 
@@ -388,12 +398,18 @@ INSERT into responsavel(nm_responsavel, id_sexo, id_telefone_residencial) VALUES
 
 end
 if;
+set situacaoconjugal = (select importacao.estado_civil from importacao where importacao.id_importacao=id_importacao);
+set ds_situacao = (select situacao_conjugal.id_situacao_conjugal from situacao_conjugal where situacao_conjugal.ds_situacao_conjugal like situacaoconjugal  limit 1);
+if ds_situacao is null then
+insert into situacao_conjugal(situacao_conjugal.ds_situacao_conjugal) values(situacaoconjugal) ;
+set ds_situacao = (select max(situacao_conjugal.id_situacao_conjugal) from situacao_conjugal);
 
+end if;
 
 set id_responsavel = (SELECT max(responsavel.id_responsavel) from responsavel);
 set id_grau_parentesco = (SELECT grau_parentesco.id_grau_parentesco from grau_parentesco WHERE grau_parentesco.nm_grau_parentesco LIKE responsavel);
 
-INSERT into responsavel_catequizando(id_responsavel, id_catequizando, id_grau_parentesco) VALUES(id_responsavel, id_catequizando, id_grau_parentesco);
+INSERT into responsavel_catequizando(id_responsavel, id_catequizando, id_grau_parentesco,id_situacao_conjugal) VALUES(id_responsavel, id_catequizando, id_grau_parentesco,ds_situacao);
 
 set nm_responsavel = (SELECT importacao.nm_pai FROM importacao WHERE importacao.id_importacao = id_importacao);
 set situacao_dizimo = (SELECT importacao.dizimo_pai FROM importacao WHERE importacao.id_importacao = id_importacao);
@@ -466,10 +482,11 @@ INSERT into sacramento_responsavel(id_responsavel, id_sacramento) VALUES(id_resp
 END
 if;
 
-set situacaoconjugal = (select importacao.situacao_pais from importacao WHERE importacao.id_importacao = id_importacao);
-set ds_situacao = (select situacao_responsavel.ds_situacao_responsavel from situacao_responsavel WHERE situacao_responsavel.ds_situacao_responsavel like situacaoconjugal);
+set situacaoconjugal= (select importacao.situacao_pais from importacao where importacao.id_importacao = id_importacao);
+set id_situacao_responsavel =(select situacao_responsavel.id_situacao_responsavel from situacao_responsavel 
+WHERE situacao_responsavel.ds_situacao_responsavel like situacaoconjugal);
 
-if ds_situacao is null THEN INSERT into situacao_responsavel(ds_situacao_responsavel) VALUES(situacaoconjugal);
+if id_situacao_responsavel is null THEN INSERT into situacao_responsavel(ds_situacao_responsavel) VALUES(situacaoconjugal);
 set id_situacao_responsavel = (SELECT max(id_situacao_responsavel) from situacao_responsavel);
 end
 if;
