@@ -86,12 +86,51 @@ class ResponsavelController extends AbstractCrudController
                     $this->getRequest()->getPost()->set('id_telefone_residencial', $resultTelefoneResidencial);
                     $this->getRequest()->getPost()->set('id_telefone_celular', $resultTelefoneCelular);
 
-                    parent::gravar(
+                    $resultResponsavel = parent::gravar(
                         $this->getServiceLocator()->get('\Responsavel\Service\ResponsavelService'), new \Responsavel\Form\ResponsavelForm()
                     );
 
-                    $this->addSuccessMessage('Registro Inserido/Alterado com sucesso');
-                    $this->redirect()->toRoute('navegacao', array('controller' => 'responsavel-responsavel', 'action' => 'index'));
+                    #Se cadastro realizado com sucesso, dispara um email para o usuario
+                    if ($resultResponsavel) {
+
+
+                        $contaEmail = 'no-reply';
+
+                        $message = new \Zend\Mail\Message();
+                        $message->addFrom($contaEmail . '@acthosti.com.br', 'Nao responda.')
+                            ->addTo(trim($this->getRequest()->getPost()->get('em_email'))) #Envia para o Email que cadastrou
+                            ->addBcc('alysson.vicuna@gmail.com')
+                            ->setSubject('Confirmação de cadastro no sistema Catequese');
+
+                        $applicationService = new \Application\Service\ApplicationService();
+                        $transport = $applicationService->getSmtpTranport($contaEmail);
+
+                        $htmlMessage = $applicationService->tratarModelo(
+                            [
+                                'BASE_URL' => BASE_URL,
+                                'nomeResponsavel' => trim($this->getRequest()->getPost()->get('nm_usuario')),
+                                #'txIdentificacao' => base64_encode(\Estrutura\Helpers\Bcrypt::hash('12345678')),
+                                'email' => trim($this->getRequest()->getPost()->get('em_email')),
+                            ], $applicationService->getModelo('cadastro-responsavel'));
+
+                        $html = new \Zend\Mime\Part($htmlMessage);
+                        $html->type = "text/html";
+
+                        $body = new \Zend\Mime\Message();
+                        $body->addPart($html);
+
+                        $message->setBody($body);
+                        $transport->send($message);
+
+                        $this->addSuccessMessage('Registro salvo com sucesso!');
+                        $this->redirect()->toRoute('navegacao', array('controller' => 'responsavel-responsavel', 'action' => 'index'));
+
+                    } else {
+                        $this->addErrorMessage('Erro ao cadastrar responsável!');
+                        $this->redirect()->toRoute('navegacao', array('controller' => 'responsavel-responsavel', 'action' => 'index'));
+                    }
+                    #Fim do cadastro de responsavel
+
                 }
 
             }
@@ -134,6 +173,7 @@ class ResponsavelController extends AbstractCrudController
                 'filter' => "profissao.nm_profissao LIKE ?",
             ],
             '7' => NULL,
+            '8' => NULL,
 
         ];
 
@@ -163,18 +203,30 @@ class ResponsavelController extends AbstractCrudController
         return $viewModel->setTerminal(TRUE);
     }
 
-    public function autocompleteresponsavelAction()
+    public function recuperarCatequizandoAction()
     {
-        $term = $_GET['term'];
-        $arr = $this->service->getFiltrarResponsavelPorNomeToArray($term);
-        $arrFiltrado = [];
+        #$post = $this->params()->fromPost();
+        $id_responsavel = $this->params()->fromPost('id_responsavel');
 
-        foreach ($arr as $cate) {
-            $arrFiltrado[] = $cate['nm_responsavel'];
+        $responsavelcatequizandoService = new \ResponsavelCatequizando\Service\ResponsavelCatequizandoService();
+        $responsavelcatequizandoService->setIdResponsavel($id_responsavel);
+        $obResponsavelCatequizandoEntity = $responsavelcatequizandoService->filtrarObjeto();
+
+        if(count($obResponsavelCatequizandoEntity) > 0){
+            $catequizandoService = new \Catequizando\Service\CatequizandoService();
+            foreach($obResponsavelCatequizandoEntity as $obResponsavelCatequizando){
+                $catequizandoEntity = $catequizandoService->buscar($obResponsavelCatequizando->getIdCatequizando());
+                $arNome[] = $catequizandoEntity->getNmCatequizando();
+            }
         }
-        $value = new JsonModel($arrFiltrado);
-        return $value;
+        #Até aqui esta certo.
 
+
+
+
+
+        $valuesJson = new JsonModel(array('arNomes' => $arNome));
+        return $valuesJson;
     }
 
 }

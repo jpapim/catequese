@@ -21,7 +21,6 @@ class TurmaCatequizandoController extends AbstractCrudController
         parent::init();
     }
 
-
     public function indexAction()
     {
         return parent::index($this->service, $this->form);
@@ -100,8 +99,8 @@ class TurmaCatequizandoController extends AbstractCrudController
     {
         return parent::excluir($this->service, $this->form);
     }
-    
-      public function aprovacaoAction()
+
+    public function aprovacaoAction()
     {
         return parent::cadastro($this->service, $this->form);
     }
@@ -145,7 +144,6 @@ class TurmaCatequizandoController extends AbstractCrudController
         ]);
         return $viewModel->setTerminal(TRUE);
     }
-
 
     public function detalhePaginationAction()
     {
@@ -218,7 +216,7 @@ class TurmaCatequizandoController extends AbstractCrudController
 
             $obj_turma_catequizando = new \TurmaCatequizando\Service\TurmaCatequizandoService();
             $obj_turma_catequizando->setIdCatequizando($id_catequizando['id_catequizando']);
-            if($obj_turma_catequizando->filtrarObjeto()->count() > 0){
+            if ($obj_turma_catequizando->filtrarObjeto()->count() > 0) {
                 $this->addInfoMessage('Catequizando já está enturmado');
                 return false;
             }
@@ -264,7 +262,7 @@ class TurmaCatequizandoController extends AbstractCrudController
 
             $this->service->excluir();
             $this->addSuccessMessage('Registro excluido com sucesso');
-            return $this->redirect()->toRoute('turma_catequizando', array('controller' => 'turma_catequizando-turmacatequizando', 'action' => 'cadastro', 'id_turma' => \Estrutura\Helpers\Cript::enc($id_turma), 'id_periodo_letivo' => \Estrutura\Helpers\Cript::enc($id_periodo_letivo) ));
+            return $this->redirect()->toRoute('turma_catequizando', array('controller' => 'turma_catequizando-turmacatequizando', 'action' => 'cadastro', 'id_turma' => \Estrutura\Helpers\Cript::enc($id_turma), 'id_periodo_letivo' => \Estrutura\Helpers\Cript::enc($id_periodo_letivo)));
         } catch (\Exception $e) {
             if (strstr($e->getMessage(), '1451')) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
                 $this->addErrorMessage('Para excluir este registro, apague todos os filhos deste registro primeiro!');
@@ -277,7 +275,7 @@ class TurmaCatequizandoController extends AbstractCrudController
 
         return parent::excluir($this->service, $this->form);
     }
-    
+
     public function aprovacaoPaginationAction()
     {
         $filter = $this->getFilterPage();
@@ -289,8 +287,7 @@ class TurmaCatequizandoController extends AbstractCrudController
             '0' => [
                 'filter' => "catequizando.nm_catequizando LIKE ?",
             ],
-            
-            
+
 
         ];
 
@@ -321,69 +318,69 @@ class TurmaCatequizandoController extends AbstractCrudController
         ]);
 
         return $viewModel->setTerminal(TRUE);
-} 
-public function listarAprovadoAction(){
-     return parent::cadastro($this->service, $this->form);
-     
-        }
-        
-          public function gravarAprovacaoAction(){
-        if($this->getRequest()->isPost()){
-            try{
-                $value=null;
+    }
+
+    public function listarAprovadoAction()
+    {
+        return parent::cadastro($this->service, $this->form);
+
+    }
+
+    public function gravarAprovacaoAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            try {
+                $value = null;
                 $post = $this->params()->fromPost('form');
 
-                if(empty($post)){
-                   $value = new JsonModel(['sucesso'=>false, 'msg'=>'Não foi possível gravar a lista de presença (lista vazia).']);
+                if (empty($post)) {
+                    $value = new JsonModel(['sucesso' => false, 'msg' => 'Não foi possível gravar a lista de presença (lista vazia).']);
                     return $value;
                 }
 
-                $cate_faltas=[];
-                foreach($post as $key => $p):
-                    $p = explode('_',$p);
-                    $cate_faltas[$key]=[
-                        'id_turma_catequizando'=>$p[0],
+                $cate_faltas = [];
+                foreach ($post as $key => $p):
+                    $p = explode('_', $p);
+                    $cate_faltas[$key] = [
+                        'id_turma_catequizando' => $p[0],
                         #'id_catequizando'=>$p[1],
-                        'cs_aprovado'=>$p[1]
+                        'cs_aprovado' => $p[1]
                     ];
                 endforeach;
 
-                $bool =[];
-                foreach($cate_faltas as $freq){
-                  $this->getRequest()->getPost()->set('id',$freq['id_turma_catequizando']);
-                 $this->getRequest()->getPost()->set('id_turma_catequizando',$freq['id_turma_catequizando']);
-                   #$this->getRequest()->getPost()->set('id_catequizando',$freq['id_catequizando']);
-                    $this->getRequest()->getPost()->set('cs_aprovado',$freq['cs_aprovado']);
+                $bool = [];
+                foreach ($cate_faltas as $freq) {
+                    $this->getRequest()->getPost()->set('id', $freq['id_turma_catequizando']);
+                    $this->getRequest()->getPost()->set('id_turma_catequizando', $freq['id_turma_catequizando']);
+                    #$this->getRequest()->getPost()->set('id_catequizando',$freq['id_catequizando']);
+                    $this->getRequest()->getPost()->set('cs_aprovado', $freq['cs_aprovado']);
 
-                 $bool[]=   parent::gravar(
-                       $this->getServiceLocator()->get('\TurmaCatequizando\Service\TurmaCatequizandoService'),new \TurmaCatequizando\Form\TurmaCatequizandoAprovacaoForm()
+                    $bool[] = parent::gravar(
+                        $this->getServiceLocator()->get('\TurmaCatequizando\Service\TurmaCatequizandoService'), new \TurmaCatequizando\Form\TurmaCatequizandoAprovacaoForm()
                     );
-                    }
-                    
-                    
+                }
 
-                if($bool){
+
+                if ($bool) {
                     $value = new JsonModel([
-                    'sucesso'=>TRUE,
-                   
-                ]);
+                        'sucesso' => TRUE,
+
+                    ]);
 
 
                 }
-            }catch (\Exception $e){
+            } catch (\Exception $e) {
                 $value = new JsonModel([
-                    'sucesso'=>false,
-                    'msg'=>'Não foi possível gravar a lista de presença:'.$e->getMessage()
+                    'sucesso' => false,
+                    'msg' => 'Não foi possível gravar a lista de presença:' . $e->getMessage()
                 ]);
 
             }
             return $value;
         }
     }
-        
-    
-   
-    
+
+
 }
     
     
