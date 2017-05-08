@@ -98,7 +98,7 @@ class ResponsavelController extends AbstractCrudController
 
                         $message = new \Zend\Mail\Message();
                         $message->addFrom($contaEmail . '@acthosti.com.br', 'Nao responda.')
-                            ->addTo(trim($this->getRequest()->getPost()->get('em_email'))) #Envia para o Email que cadastrou
+                            ->addTo(trim($this->getRequest()->getPost()->get('em_email')))#Envia para o Email que cadastrou
                             ->addBcc('alysson.vicuna@gmail.com')
                             ->setSubject('Confirmação de cadastro no sistema Catequese');
 
@@ -212,17 +212,16 @@ class ResponsavelController extends AbstractCrudController
         $responsavelcatequizandoService->setIdResponsavel($id_responsavel);
         $obResponsavelCatequizandoEntity = $responsavelcatequizandoService->filtrarObjeto();
 
-        if(count($obResponsavelCatequizandoEntity) > 0){
+        if (count($obResponsavelCatequizandoEntity) > 0) {
             $catequizandoService = new \Catequizando\Service\CatequizandoService();
-            foreach($obResponsavelCatequizandoEntity as $obResponsavelCatequizando){
+            foreach ($obResponsavelCatequizandoEntity as $obResponsavelCatequizando) {
                 $catequizandoEntity = $catequizandoService->buscar($obResponsavelCatequizando->getIdCatequizando());
                 $arNome[] = $catequizandoEntity->getNmCatequizando();
             }
+        } else {
+            $arNome[] = "<p><h3>Não é responsável por nenhum catequizando.</h3></p>";
         }
         #Até aqui esta certo.
-
-
-
 
 
         $valuesJson = new JsonModel(array('arNomes' => $arNome));
