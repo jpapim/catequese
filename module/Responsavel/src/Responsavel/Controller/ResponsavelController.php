@@ -86,6 +86,14 @@ class ResponsavelController extends AbstractCrudController
                     $this->getRequest()->getPost()->set('id_telefone_residencial', $resultTelefoneResidencial);
                     $this->getRequest()->getPost()->set('id_telefone_celular', $resultTelefoneCelular);
 
+                    if(!$this->getRequest()->getPost()->get('id_profissao')) {
+                        $this->getRequest()->getPost()->set('id_profissao', $this->getConfigList()['profissao_nao_informada']);
+                    }
+
+                    if(!$this->getRequest()->getPost()->get('id_movimento_pastoral')) {
+                        $this->getRequest()->getPost()->set('id_movimento_pastoral', $this->getConfigList()['movimento_pastoral_nao_informado']);
+                    }
+
                     $resultResponsavel = parent::gravar(
                         $this->getServiceLocator()->get('\Responsavel\Service\ResponsavelService'), new \Responsavel\Form\ResponsavelForm()
                     );
@@ -98,7 +106,7 @@ class ResponsavelController extends AbstractCrudController
 
                         $message = new \Zend\Mail\Message();
                         $message->addFrom($contaEmail . '@acthosti.com.br', 'Nao responda.')
-                            ->addTo(trim($this->getRequest()->getPost()->get('em_email'))) #Envia para o Email que cadastrou
+                            ->addTo(trim($this->getRequest()->getPost()->get('em_email')))#Envia para o Email que cadastrou
                             ->addBcc('alysson.vicuna@gmail.com')
                             ->setSubject('Confirmação de cadastro no sistema Catequese');
 
@@ -212,17 +220,14 @@ class ResponsavelController extends AbstractCrudController
         $responsavelcatequizandoService->setIdResponsavel($id_responsavel);
         $obResponsavelCatequizandoEntity = $responsavelcatequizandoService->filtrarObjeto();
 
-        if(count($obResponsavelCatequizandoEntity) > 0){
+        if (count($obResponsavelCatequizandoEntity) > 0) {
             $catequizandoService = new \Catequizando\Service\CatequizandoService();
-            foreach($obResponsavelCatequizandoEntity as $obResponsavelCatequizando){
+            foreach ($obResponsavelCatequizandoEntity as $obResponsavelCatequizando) {
                 $catequizandoEntity = $catequizandoService->buscar($obResponsavelCatequizando->getIdCatequizando());
                 $arNome[] = $catequizandoEntity->getNmCatequizando();
             }
         }
         #Até aqui esta certo.
-
-
-
 
 
         $valuesJson = new JsonModel(array('arNomes' => $arNome));
