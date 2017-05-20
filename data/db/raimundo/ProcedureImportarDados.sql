@@ -441,7 +441,7 @@ set email = (SELECT max(email.id_email) FROM email);
 
 if id_responsavel is null then
 
-INSERT into responsavel(nm_responsavel, id_sexo, id_telefone_residencial, id_email) VALUES(nm_responsavel, sexo, tell_fixo, email);
+INSERT into responsavel(nm_responsavel, id_sexo, id_telefone_residencial, id_email,id_telefone_celular) VALUES(nm_responsavel, sexo, tell_fixo, email,3);
 set id_responsavel = (SELECT max(responsavel.id_responsavel) from responsavel);
 end if;
 
@@ -450,7 +450,7 @@ end if;
 ELSE
 
 if id_responsavel is null then
-INSERT into responsavel(nm_responsavel, id_sexo, id_telefone_residencial) VALUES(nm_responsavel, sexo, tell_fixo);
+INSERT into responsavel(nm_responsavel, id_sexo, id_telefone_residencial,id_telefone_celular) VALUES(nm_responsavel, sexo, tell_fixo,3);
 set id_responsavel = (SELECT max(responsavel.id_responsavel) from responsavel);
 end if;
 end if;
@@ -506,7 +506,7 @@ set sexo = 1;
 
 
 if id_responsavel is null then
-INSERT into responsavel(responsavel.nm_responsavel, responsavel.id_sexo, responsavel.id_telefone_residencial, responsavel.st_dizimo) VALUES(nm_responsavel, sexo, tell_fixo, situacao_dizimo);
+INSERT into responsavel(responsavel.nm_responsavel, responsavel.id_sexo, responsavel.id_telefone_residencial, responsavel.st_dizimo,responsavel.id_telefone_celular) VALUES(nm_responsavel, sexo, tell_fixo, situacao_dizimo,3);
 set id_responsavel = (SELECT max(responsavel.id_responsavel) from responsavel);
 end if;
 
@@ -610,7 +610,7 @@ end if;
 set id_grau_parentesco = (SELECT grau_parentesco.id_grau_parentesco from grau_parentesco WHERE grau_parentesco.nm_grau_parentesco LIKE "%Mae%");
 set sexo = 2;
 if id_responsavel is null then
-INSERT into responsavel(responsavel.nm_responsavel, responsavel.id_sexo, responsavel.id_telefone_residencial, responsavel.st_dizimo) VALUES(nm_responsavel, sexo, tell_fixo, situacao_dizimo);
+INSERT into responsavel(responsavel.nm_responsavel, responsavel.id_sexo, responsavel.id_telefone_residencial, responsavel.st_dizimo,responsavel.id_telefone_celular) VALUES(nm_responsavel, sexo, tell_fixo, situacao_dizimo,3);
 set id_responsavel = (SELECT max(responsavel.id_responsavel) from responsavel);
 end if;
 INSERT into responsavel_catequizando(id_responsavel, id_catequizando, id_grau_parentesco) VALUES(id_responsavel, id_catequizando, id_grau_parentesco);
