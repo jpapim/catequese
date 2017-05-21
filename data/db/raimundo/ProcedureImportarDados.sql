@@ -203,7 +203,7 @@ if;
 
 
 
-if substring(etapa_turma, 1, 7) LIKE "%CRISMA"
+if substring(etapa_turma, 1, 7) LIKE "%CRISMA%"
 THEN
 
 set nm_etapa = (SELECT etapa.id_etapa FROM etapa WHERE etapa.nm_etapa LIKE "%CRISMA I");
@@ -259,7 +259,7 @@ if;
 
 if substring(etapa_turma, 1, 4) LIKE "%PERS"
 THEN
-set nm_etapa = (SELECT etapa.id_etapa FROM etapa WHERE etapa.nm_etapa LIKE "%Perseverança ");
+set nm_etapa = (SELECT etapa.id_etapa FROM etapa WHERE etapa.nm_etapa LIKE "%Perseverança%");
 
 
 
