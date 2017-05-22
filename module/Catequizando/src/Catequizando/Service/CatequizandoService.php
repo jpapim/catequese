@@ -28,7 +28,7 @@ class CatequizandoService extends  Entity{
             'id_telefone_residencial',
             'id_telefone_celular',
             'nm_catequizando',
-
+            'nr_matricula'
 
         ])
         ->join('email','catequizando.id_email = email.id_email',['em_email'], 'left')
@@ -44,14 +44,14 @@ class CatequizandoService extends  Entity{
                 if ($value) {
 
                     if(isset($filter[1]) && !empty($filter[1])){
-                        $select->join('responsavel_catequizando','responsavel_catequizando.id_catequizando = catequizando.id_catequizando',['id_responsavel'])
-                            ->join('responsavel','responsavel.id_responsavel = responsavel_catequizando.id_responsavel',['nm_responsavel']);
+                        $select->join('responsavel_catequizando','responsavel_catequizando.id_catequizando = catequizando.id_catequizando',['id_responsavel'], 'left')
+                            ->join('responsavel','responsavel.id_responsavel = responsavel_catequizando.id_responsavel',['nm_responsavel'], 'left');
                         $where[$camposFilter[1]['filter']]= '%' . $value . '%';
 
                     }
 
                     if(isset($filter[4]) && !empty($filter[4])){
-                        $select->join('turma_catequizando','turma_catequizando.id_catequizando = catequizando.id_catequizando',['id_turma'])
+                        $select->join('turma_catequizando','turma_catequizando.id_catequizando = catequizando.id_catequizando',['id_turma'], 'left')
                             ->join('turma','turma.id_turma = turma_catequizando.id_turma',['nm_turma']);
                         $where[$camposFilter[4]['filter']]= '%' . $value . '%';
 
@@ -69,8 +69,9 @@ class CatequizandoService extends  Entity{
 
         }
 
-        $select->where($where)->order(['id_catequizando DESC']);
+        $select->where($where)->order(['nm_catequizando']);
 
+        #xd($select->getSqlString($this->getAdapter()->getPlatform()));
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
 
@@ -113,6 +114,7 @@ class CatequizandoService extends  Entity{
                 'catequizando.id_catequizando'=> $id
             ]);
 
+        #xd($select->getSqlString($this->getAdapter()->getPlatform()));
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
@@ -126,23 +128,25 @@ class CatequizandoService extends  Entity{
                     "catequizando.nm_catequizando LIKE ?" => '%' . $nm_catequizando . '%',
                 ]);
 
+        #xd($select->getSqlString($this->getAdapter()->getPlatform()));
         return $sql->prepareStatementForSqlObject($select)->execute();
     }
 
     public function  getCatequizandoTurma($id){
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
+        #xd('ejbdih');
         $select = $sql->select('turma_catequizando')->columns([
             'id_turma'
         ])
-        ->where(['turma_catequizando.id_catequizando = ? '=>$id]);
+        ->where(['turma_catequizando.id_catequizando = ? '=>(int)$id]);
 
         $id_turma = $sql->prepareStatementForSqlObject($select)->execute()->current();
 
         $select = $sql->select('turma')->columns([
             'nm_turma'
         ])
-            ->where(['turma.id_turma = ? '=> $id_turma]);
+            ->where(['turma.id_turma = ? '=> (int)$id_turma]);
 
         $result = $sql->prepareStatementForSqlObject($select)->execute()->current();
 
@@ -205,6 +209,7 @@ class CatequizandoService extends  Entity{
 
         $select->where($where)->order(['id_responsavel DESC']);
 
+        #xd($select->getSqlString($this->getAdapter()->getPlatform()));
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
 

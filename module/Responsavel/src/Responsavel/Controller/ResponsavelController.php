@@ -86,6 +86,14 @@ class ResponsavelController extends AbstractCrudController
                     $this->getRequest()->getPost()->set('id_telefone_residencial', $resultTelefoneResidencial);
                     $this->getRequest()->getPost()->set('id_telefone_celular', $resultTelefoneCelular);
 
+                    if(!$this->getRequest()->getPost()->get('id_profissao')) {
+                        $this->getRequest()->getPost()->set('id_profissao', $this->getConfigList()['profissao_nao_informada']);
+                    }
+
+                    if(!$this->getRequest()->getPost()->get('id_movimento_pastoral')) {
+                        $this->getRequest()->getPost()->set('id_movimento_pastoral', $this->getConfigList()['movimento_pastoral_nao_informado']);
+                    }
+
                     $resultResponsavel = parent::gravar(
                         $this->getServiceLocator()->get('\Responsavel\Service\ResponsavelService'), new \Responsavel\Form\ResponsavelForm()
                     );
