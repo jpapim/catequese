@@ -226,6 +226,8 @@ class ResponsavelController extends AbstractCrudController
                 $catequizandoEntity = $catequizandoService->buscar($obResponsavelCatequizando->getIdCatequizando());
                 $arNome[] = $catequizandoEntity->getNmCatequizando();
             }
+        } else {
+            $arNome[] = "<p><h3>Não é responsável por nenhum catequizando.</h3></p>";
         }
         #Até aqui esta certo.
 

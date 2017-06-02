@@ -29,7 +29,7 @@ class UsuarioForm extends AbstractForm {
                 ->setAttribute('data-match', '#em_email')
                 ->setAttribute('data-match-error', 'Email não correspondem');
         $objForm->combo("id_email", '\Email\Service\EmailService', 'id', 'em_email')->required(false)->label("Email");
-        $objForm->telefone("nr_telefone")->required(true)->label("Telefone");
+        $objForm->telefone("nr_telefone")->setAttribute('class','telefone')->required(true)->label("Telefone");
         $objForm->telefone("id_telefone", '\Telefone\Service\TelefoneService', 'id', 'nr_telefone')->required(true)->label("Telefone");
 
         $objForm->password("pw_senha")->required(true)->label("Senha");
