@@ -135,7 +135,7 @@ class ResponsavelService extends Entity
             }
         }
 
-        $select->where($where)->order(['id_responsavel DESC']);
+        $select->where($where)->order(['nm_responsavel ASC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
