@@ -93,7 +93,6 @@
         $("#avancar").click(function () {
             if (checarDatas() == true) {
                 var url = "<?= $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')) ?>";
-                alert(url);
                 $("#periodoletivoform").attr('action', "<?= $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')) ?>");
                 $("#periodoletivoform").submit();
             }
