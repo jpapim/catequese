@@ -69,6 +69,14 @@ class CatequistaController extends AbstractCrudController
             $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
             return FALSE;
         }
+        
+        //Verifica tamanho da matricula
+        if (strlen(trim($this->getRequest()->getPost()->get('nr_matricula'))) > 6) {
+            $this->setPost($post);
+            $this->addErrorMessage('matricula deve ter no máximo 6 caracteres.');
+            $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
+            return FALSE;
+        }
 
 
         //Verifica tamanho da senha
