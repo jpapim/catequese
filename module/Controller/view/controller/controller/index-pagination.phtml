@@ -63,7 +63,7 @@
                             <td class="text-center"><?= $my_controller['id_controller'] ?></td>
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($my_controller['nm_controller']) ?></td>
                             <td class="text-center">
-                                <span class="btn-group" style="width: 100px;">
+                                <span class="btn-group">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($my_controller['id_controller'])))) ?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($my_controller['id_controller'])))) ?>
                                 </span>
@@ -81,7 +81,6 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
-                <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adiciona um novo atleta">Nova Cidade</a>
             </div>
         </div>
     </div>

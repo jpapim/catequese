@@ -1,3 +1,8 @@
+use bdcatequese;
+INSERT INTO `bdcatequese`.`tipo_telefone` (`nm_tipo_telefone`) VALUES ('Não informado');
+INSERT INTO `bdcatequese`.`telefone` (`nr_ddd_telefone`, `nr_telefone`, `id_tipo_telefone`, `id_situacao`) VALUES ('00', '00000000', '4', '2');
+
+
 
 delimiter |
 
@@ -71,18 +76,42 @@ if;
 set nm_estado = (select max(endereco.id_endereco) from endereco);
 
 set tell_fixo = (SELECT importacao.tel_fixo FROM importacao WHERE importacao.id_importacao = id_importacao);
+set id_cidade = (select telefone.id_telefone from telefone where telefone.nr_telefone like tell_fixo);
+if tell_fixo is not null then 
 
-if tell_fixo is not null then set tell_celular = (SELECT importacao.tel_celular FROM importacao WHERE importacao.id_importacao = id_importacao);
-INSERT INTO telefone(telefone.nr_telefone, telefone.id_tipo_telefone, telefone.id_situacao) VALUES(tell_fixo, 1, 1);
-set tell_fixo = (SELECT max(telefone.id_telefone) FROM telefone);
-end
-if;
+if length(tell_fixo)>=8 then
 
+if id_cidade is null then
+INSERT INTO telefone(telefone.nr_telefone, telefone.id_tipo_telefone, telefone.id_situacao,telefone.nr_ddd_telefone) VALUES(tell_fixo, 1, 1,61);
+set tell_fixo = (SELECT telefone.id_telefone FROM telefone where telefone.nr_telefone like tell_fixo limit 1);
+else
+set tell_fixo=id_cidade;
 
-if tell_celular is not null then INSERT INTO telefone(telefone.nr_telefone, telefone.id_tipo_telefone, telefone.id_situacao) VALUES(tell_celular, 3, 1);
-set tell_celular = (SELECT max(telefone.id_telefone) FROM telefone);
-end
-if;
+end if;
+
+else
+set tell_fixo = 3;
+end if;
+end if;
+
+set tell_celular = (SELECT importacao.tel_celular FROM importacao WHERE importacao.id_importacao = id_importacao);
+set id_cidade = (select telefone.id_telefone from telefone where telefone.nr_telefone like tell_celular);
+if tell_celular is not null then 
+
+if length(tell_celular)>=8 then
+if id_cidade is null then
+
+INSERT INTO telefone(telefone.nr_telefone, telefone.id_tipo_telefone, telefone.id_situacao,telefone.nr_ddd_telefone) VALUES(tell_celular, 3, 1,61);
+set tell_celular = (SELECT telefone.id_telefone FROM telefone where telefone.nr_telefone like tell_celular limit 1);
+else
+set tell_celular=id_cidade;
+end if;
+
+else
+set tell_celular = 3;
+
+end if;
+end if;
 set email = (SELECT importacao.email from importacao WHERE importacao.id_importacao = id_importacao);
 
 
@@ -174,7 +203,7 @@ if;
 
 
 
-if substring(etapa_turma, 1, 7) LIKE "%CRISMA"
+if substring(etapa_turma, 1, 7) LIKE "%CRISMA%"
 THEN
 
 set nm_etapa = (SELECT etapa.id_etapa FROM etapa WHERE etapa.nm_etapa LIKE "%CRISMA I");
@@ -230,7 +259,7 @@ if;
 
 if substring(etapa_turma, 1, 4) LIKE "%PERS"
 THEN
-set nm_etapa = (SELECT etapa.id_etapa FROM etapa WHERE etapa.nm_etapa LIKE "%Perseverança ");
+set nm_etapa = (SELECT etapa.id_etapa FROM etapa WHERE etapa.nm_etapa LIKE "%Perseverança%");
 
 
 
@@ -309,7 +338,8 @@ INSERT INTO turma_catequizando(id_turma, id_catequizando, id_usuario, id_periodo
 
 set sac_B = (SELECT importacao.B from importacao WHERE importacao.id_importacao = id_importacao);
 if sac_B is not null THEN set id_sacramento = (SELECT sacramento.id_sacramento FROM sacramento WHERE sacramento.nm_sacramento LIKE "%Batismo%");
-if id_sacramento is null THEN INSERT into sacramento(nm_sacramento) VALUES("Batismo");
+if id_sacramento is null THEN 
+INSERT into sacramento(nm_sacramento) VALUES("Batismo");
 end
 if;
 
@@ -359,19 +389,31 @@ END
 if;
 
 set id_responsavel = (SELECT importacao.idade_2016 FROM importacao WHERE importacao.id_importacao = id_importacao);
-set responsavel = (SELECT importacao.responsavel FROM importacao WHERE importacao.id_importacao = id_importacao);
+
 if id_responsavel < 19 then
 
 
 
 set nm_responsavel = (SELECT importacao.nm_responsavel FROM importacao WHERE importacao.id_importacao = id_importacao);
+set id_responsavel=(select responsavel.id_responsavel from responsavel where responsavel.nm_responsavel like nm_responsavel);
 
-
+if length(nm_responsavel)>3 then
 set tell_fixo = (SELECT importacao.tel_responsavel FROM importacao WHERE importacao.id_importacao = id_importacao);
-if tell_fixo is not null then INSERT INTO telefone(telefone.nr_telefone, telefone.id_tipo_telefone, telefone.id_situacao) VALUES(tell_fixo, 1, 1);
-set tell_fixo = (SELECT max(telefone.id_telefone) FROM telefone);
-end
-if;
+set id_cidade = (select telefone.id_telefone from telefone where telefone.nr_telefone like tell_fixo);
+if tell_fixo is not null then
+ 
+if length(tell_fixo)>=8 then
+
+if id_cidade is null then
+INSERT INTO telefone(telefone.nr_telefone, telefone.id_tipo_telefone, telefone.id_situacao,telefone.nr_ddd_telefone) VALUES(tell_fixo, 1, 1,61);
+set tell_fixo = (SELECT telefone.id_telefone FROM telefone where telefone.nr_telefone like tell_fixo limit 1);
+else
+set tell_fixo=id_cidade;
+end if;
+
+else set tell_fixo=3;
+end if;
+end if;
 
 set email = (SELECT importacao.email_responsavel from importacao WHERE importacao.id_importacao = id_importacao);
 
@@ -391,13 +433,32 @@ IF email LIKE "%@%"
 THEN
 insert into email(em_email, id_situacao) VALUES(email, 1);
 set email = (SELECT max(email.id_email) FROM email);
+#set id_responsavel = (select responsavel.id_responsavel from responsavel where responsavel.nm_responsavel like nm_responsavel);
 
-INSERT into responsavel(nm_responsavel, id_sexo, id_telefone_residencial, id_email) VALUES(nm_responsavel, sexo, tell_fixo, email);
+
+
+
+
+if id_responsavel is null then
+
+INSERT into responsavel(nm_responsavel, id_sexo, id_telefone_residencial, id_email,id_telefone_celular) VALUES(nm_responsavel, sexo, tell_fixo, email,3);
+set id_responsavel = (SELECT max(responsavel.id_responsavel) from responsavel);
+end if;
+
+
+
 ELSE
-INSERT into responsavel(nm_responsavel, id_sexo, id_telefone_residencial) VALUES(nm_responsavel, sexo, tell_fixo);
 
-end
-if;
+if id_responsavel is null then
+INSERT into responsavel(nm_responsavel, id_sexo, id_telefone_residencial,id_telefone_celular) VALUES(nm_responsavel, sexo, tell_fixo,3);
+set id_responsavel = (SELECT max(responsavel.id_responsavel) from responsavel);
+end if;
+end if;
+
+
+
+
+
 set situacaoconjugal = (select importacao.estado_civil from importacao where importacao.id_importacao=id_importacao);
 set ds_situacao = (select situacao_conjugal.id_situacao_conjugal from situacao_conjugal where situacao_conjugal.ds_situacao_conjugal like situacaoconjugal  limit 1);
 if ds_situacao is null then
@@ -406,12 +467,15 @@ set ds_situacao = (select max(situacao_conjugal.id_situacao_conjugal) from situa
 
 end if;
 
-set id_responsavel = (SELECT max(responsavel.id_responsavel) from responsavel);
 set id_grau_parentesco = (SELECT grau_parentesco.id_grau_parentesco from grau_parentesco WHERE grau_parentesco.nm_grau_parentesco LIKE responsavel);
 
 INSERT into responsavel_catequizando(id_responsavel, id_catequizando, id_grau_parentesco,id_situacao_conjugal) VALUES(id_responsavel, id_catequizando, id_grau_parentesco,ds_situacao);
-
+end if;
 set nm_responsavel = (SELECT importacao.nm_pai FROM importacao WHERE importacao.id_importacao = id_importacao);
+set id_responsavel = (select responsavel.id_responsavel from responsavel where responsavel.nm_responsavel like nm_responsavel);
+
+if length(nm_responsavel)>3 then
+
 set situacao_dizimo = (SELECT importacao.dizimo_pai FROM importacao WHERE importacao.id_importacao = id_importacao);
 if situacao_dizimo like "%sim%"
 THEN
@@ -421,14 +485,31 @@ end
 if;
 
 set tell_fixo = (SELECT importacao.tel_pai FROM importacao WHERE importacao.id_importacao = id_importacao);
-if tell_fixo is not null then INSERT INTO telefone(nr_telefone, id_tipo_telefone, id_situacao) VALUES(tell_fixo, 1, 1);
-set tell_fixo = (SELECT max(telefone.id_telefone) FROM telefone);
+set id_cidade = (select telefone.id_telefone from telefone where telefone.nr_telefone like tell_fixo);
+if tell_fixo is not null then 
+
+####################
+if length(tell_fixo)>=8 then
+
+if id_cidade is null then
+INSERT INTO telefone(nr_telefone, id_tipo_telefone, id_situacao,telefone.nr_ddd_telefone) VALUES(tell_fixo, 1, 1,61);
+set tell_fixo = (SELECT telefone.id_telefone FROM telefone where telefone.nr_telefone like tell_fixo limit 1);
+else set tell_fixo=id_cidade;
 end
 if;
+
+else set tell_fixo=3;
+end if;
+end if;
 set id_grau_parentesco = (SELECT grau_parentesco.id_grau_parentesco from grau_parentesco WHERE grau_parentesco.nm_grau_parentesco LIKE "%Pai%");
 set sexo = 1;
-INSERT into responsavel(responsavel.nm_responsavel, responsavel.id_sexo, responsavel.id_telefone_residencial, responsavel.st_dizimo) VALUES(nm_responsavel, sexo, tell_fixo, situacao_dizimo);
+
+
+if id_responsavel is null then
+INSERT into responsavel(responsavel.nm_responsavel, responsavel.id_sexo, responsavel.id_telefone_residencial, responsavel.st_dizimo,responsavel.id_telefone_celular) VALUES(nm_responsavel, sexo, tell_fixo, situacao_dizimo,3);
 set id_responsavel = (SELECT max(responsavel.id_responsavel) from responsavel);
+end if;
+
 INSERT into responsavel_catequizando(id_responsavel, id_catequizando, id_grau_parentesco) VALUES(id_responsavel, id_catequizando, id_grau_parentesco);
 
 set sac_B = (SELECT importacao.B_pai from importacao WHERE importacao.id_importacao = id_importacao);
@@ -491,7 +572,15 @@ set id_situacao_responsavel = (SELECT max(id_situacao_responsavel) from situacao
 end
 if;
 insert into situacao_responsavel_catequizando(id_catequizando, id_responsavel, id_situacao_responsavel) VALUES(id_catequizando, id_responsavel, id_situacao_responsavel);
+end if;
+
+
+
 set nm_responsavel = (SELECT importacao.nm_mae FROM importacao WHERE importacao.id_importacao = id_importacao);
+
+set id_responsavel = (select responsavel.id_responsavel from responsavel where responsavel.nm_responsavel like nm_responsavel);
+
+if length(nm_responsavel)>3 then
 
 set situacao_dizimo = (SELECT importacao.dizimo_mae FROM importacao WHERE importacao.id_importacao = id_importacao);
 if situacao_dizimo like "%sim%"
@@ -504,16 +593,26 @@ if;
 
 
 set tell_fixo = (SELECT importacao.tel_mae FROM importacao WHERE importacao.id_importacao = id_importacao);
-if tell_fixo is not null then INSERT INTO telefone(nr_telefone, id_tipo_telefone, id_situacao) VALUES(tell_fixo, 1, 1);
-set tell_fixo = (SELECT max(telefone.id_telefone) FROM telefone);
-end
-if;
+set id_cidade = (select telefone.id_telefone from telefone where telefone.nr_telefone like tell_fixo);
+if tell_fixo is not null then 
+
+if length(tell_fixo)>=8 then
+if id_cidade is null then
+INSERT INTO telefone(nr_telefone, id_tipo_telefone, id_situacao) VALUES(tell_fixo, 1, 1);
+set tell_fixo = (SELECT telefone.id_telefone FROM telefone where telefone.nr_telefone like tell_fixo limit 1);
+else set tell_fixo = id_cidade;
+end if;
+
+else set tell_fixo=3;
+end if;
+end if;
 
 set id_grau_parentesco = (SELECT grau_parentesco.id_grau_parentesco from grau_parentesco WHERE grau_parentesco.nm_grau_parentesco LIKE "%Mae%");
 set sexo = 2;
-INSERT into responsavel(responsavel.nm_responsavel, responsavel.id_sexo, responsavel.id_telefone_residencial, responsavel.st_dizimo) VALUES(nm_responsavel, sexo, tell_fixo, situacao_dizimo);
+if id_responsavel is null then
+INSERT into responsavel(responsavel.nm_responsavel, responsavel.id_sexo, responsavel.id_telefone_residencial, responsavel.st_dizimo,responsavel.id_telefone_celular) VALUES(nm_responsavel, sexo, tell_fixo, situacao_dizimo,3);
 set id_responsavel = (SELECT max(responsavel.id_responsavel) from responsavel);
-
+end if;
 INSERT into responsavel_catequizando(id_responsavel, id_catequizando, id_grau_parentesco) VALUES(id_responsavel, id_catequizando, id_grau_parentesco);
 
 set sac_B = (SELECT importacao.B_mae from importacao WHERE importacao.id_importacao = id_importacao);
@@ -572,6 +671,8 @@ insert into situacao_responsavel_catequizando(id_catequizando, id_responsavel, i
 
 end
 if;
+end if;
+
 
 UPDATE importacao set importacao.flag = 1 WHERE importacao.id_importacao = id_importacao;
 

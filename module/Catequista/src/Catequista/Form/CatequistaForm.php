@@ -33,7 +33,7 @@ class CatequistaForm extends AbstractForm
             ->setAttribute('data-match', '#em_email')
             ->setAttribute('data-match-error', 'E-mails não correspondem');
         $objForm->combo("id_email", '\Email\Service\EmailService', 'id', 'em_email')->required(false)->label("*Email");
-        $objForm->combo('id_situacao', '\Situacao\Service\SituacaoService', 'id', 'nm_situacao')->required(false)->label("*Situação");
+        $objForm->combo('id_situacao', '\Situacao\Service\SituacaoService', 'id', 'nm_situacao')->value (1)->required(false)->label("*Situação");
         $objForm->combo("id_detalhe_formacao", '\DetalheFormacao\Service\DetalheFormacaoService', 'id', 'ds_detalhe_formacao')->required(false)->label("*Formação Acadêmica");
         ##### Endereço ######
         $objForm->hidden("id_endereco")->required(false);
@@ -106,11 +106,11 @@ class CatequistaForm extends AbstractForm
 
 
         $objForm->text("nm_catequista")->required(true)->label("*Nome completo");
-        $objForm->text("nr_matricula")->required(true)->label("*Nº matrícula (até 6 digitos)");
+        $objForm->text("nr_matricula")->maxLength(6)->required(true)->label("*Nº matrícula (até 6 digitos)");
         $objForm->date("dt_nascimento")->setAttribute('class', 'data')->required(true)->label("*Data de nascimento");
         $objForm->date("dt_ingresso")->setAttribute('class', 'data')->required(true)->label("*Data de ingresso");
         $objForm->textarea("tx_observacao")->required(false)->label("Observação");
-        $objForm->textarea("ds_situacao")->required(false)->label("Descricao da situação");
+        $objForm->textarea("ds_situacao")-> required(false)->label("Descricao da situação");
 
         $objForm->hidden("id_perfil")->required(true)->label("perfil");
         $objForm->hidden("id_tipo_usuario")->required(true)->label("tp usuario");
