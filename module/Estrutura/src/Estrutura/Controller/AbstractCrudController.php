@@ -148,7 +148,7 @@ abstract class AbstractCrudController extends AbstractEstruturaController
             return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
         } catch (\Exception $e) {
             if( strstr($e->getMessage(), '1451') ) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
-                $this->addErrorMessage('Para excluir a academia voce deve excluir todos os atletas da academia. Verifique!');
+                $this->addErrorMessage('Para excluir este ítem voce deve excluir todos os subítens ligados a ele. Verifique!');
             }else {
                 $this->addErrorMessage($e->getMessage());
             }

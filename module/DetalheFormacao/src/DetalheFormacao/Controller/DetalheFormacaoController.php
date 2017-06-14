@@ -117,7 +117,7 @@ class DetalheFormacaoController  extends  AbstractCrudController{
             return $this->redirect()->toRoute('navegacao',array('controller'=>'formacao-formacao','action'=>'cadastrodetalheformacao', 'id'=>$id_detalhe_formacao));
         } catch (\Exception $e) {
             if( strstr($e->getMessage(), '1451') ) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
-                $this->addErrorMessage('Para excluir a academia voce deve excluir todos os atletas da academia. Verifique!');
+                $this->addErrorMessage('Para excluir a formacao academica voce deve excluir todos os detalhes da formacao. Verifique!');
             }else {
                 $this->addErrorMessage($e->getMessage());
             }
