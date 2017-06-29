@@ -42,7 +42,7 @@ class CatequizandoResponsavelForm extends AbstractForm
 
         //Campo de TELEFONE RESIDENCIAL E TELEFONE CELULAR
         $objForm->telefone("id_telefone_residencial")->setAttribute('class', 'telefone')->required(true)->label("Telefone Residencial");
-        $objForm->telefone("id_telefone_celular")->setAttribute('class', 'telefone')->required(true)->label("Telefone Celular");
+        $objForm->telefone("id_telefone_celular")->setAttribute('class', 'celular')->required(true)->label("Telefone Celular");
 
         $objForm->email("em_email")->required(true)->label("E-mail");
         $objForm->email("em_email_confirm")->required(true)->label("Confirme o E-mail")
