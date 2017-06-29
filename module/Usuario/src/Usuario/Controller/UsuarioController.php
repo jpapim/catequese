@@ -46,7 +46,7 @@ class UsuarioController extends AbstractCrudController
         $camposFilter = [
             '0' => NULL,
             '1' => [
-                'filter' => "equipe.nm_equipe LIKE ?",
+                'filter' => "perfil.nm_perfil LIKE ?",
             ],
             '2' => [
                 'filter' => "usuario.nm_usuario LIKE ?",
