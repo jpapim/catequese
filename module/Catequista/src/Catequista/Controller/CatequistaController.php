@@ -690,7 +690,7 @@ class CatequistaController extends AbstractCrudController
             'teste' => $arteste,
 
         ));
-        $pdf->setOption('filename', 'ordem_serviço_'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption('filename', 'Controle_de_Catequistas'); // Triggers PDF download, automatically appends ".pdf"
         $pdf->setOption("paperSize", "a4"); //Defaults to 8x11
         $pdf->setOption("basePath", __DIR__); //Defaults to 8x11
         #$pdf->setOption("paperOrientation", "landscape"); //Defaults to portrait

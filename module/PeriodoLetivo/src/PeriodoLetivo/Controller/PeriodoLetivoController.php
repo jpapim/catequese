@@ -56,7 +56,6 @@ class PeriodoLetivoController extends AbstractCrudController
             '3' => [
                 'filter' => "periodo_letivo.dt_ano_letivo  LIKE ?"
             ],
-            '4' => NULL,
 
         ];
 
