@@ -35,20 +35,15 @@
                 <div class="form-group">
                     <div class="col-md-7">
                         <div class="input-group">
-                            <?= $this->formRow($form->get('ds_detalhe_formacao')); ?></br>
-                            <a id="adicionar" class="btn btn-default" href="#" title="Adicionar detalhe formacao">Adicionar Detalhe Formação</a>
+                            <?= $this->formRow($form->get('ds_detalhe_formacao')); ?>
                         </div>
-                        <div class="help-block with-errors"></div>
+                        <div class="help-block with-errors">
+                            <a id="adicionar" class="btn btn-default" href="#" title="Adicionar detalhe formação">Adicionar Detalhe Formação</a>
+                            <a class="btn btn-primary" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro', 'id'=>Estrutura\Helpers\Cript::enc($dadosFormacao->getId())))?>" title="Voltar">Voltar</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-md-10">
-<!--                        <button type="submit" class="btn btn-primary">Salvar</button>-->
-                        <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro', 'id'=>Estrutura\Helpers\Cript::enc($dadosFormacao->getId())))?>" title="Voltar">Voltar</a>
-                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Lista Formação</a>
-                    </div>
-                </div>
                 <?= $this->form()->closeTag(); ?>
             </div>
         </div>

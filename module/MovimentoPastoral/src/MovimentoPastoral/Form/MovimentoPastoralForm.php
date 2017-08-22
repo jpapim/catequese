@@ -13,7 +13,7 @@ class MovimentoPastoralForm extends AbstractForm{
         $this->inputFilter = new InputFilter();
         $objForm = new FormObject('movimentopastoralform',$this,$this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");  
-        $objForm->text("nm_movimento_pastoral")->required(true)->label("Movimentos Pastorais");
+        $objForm->text("nm_movimento_pastoral")->required(true)->label("Movimento Pastoral");
 
         $this->formObject = $objForm;
     }

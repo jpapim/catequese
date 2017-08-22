@@ -27,13 +27,13 @@ class CatequistaDetalheForm extends AbstractForm {
        $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(FALSE)->label("Sexo");
       
        
-        $objForm->combo('id_situacao','\Situacao\Service\SituacaoService','id','nm_situacao')->required(false)->label("Situacao");      
+        $objForm->combo('id_situacao','\Situacao\Service\SituacaoService','id','nm_situacao')->required(false)->label("Situação");
        $objForm->combo("id_detalhe_formacao", '\DetalheFormacao\Service\DetalheFormacaoService', 'id', 'id_detalhe_formacao')->required(false)->label("Formação Acadêmica");
        
 #FK- Email
         $objForm->hidden("id_email")->required(false);
-        $objForm->text("em_email")->required(true)->label("*Email");
-        $objForm->text("em_email_confirm")->required(false)->label("*Confirme o email");
+        $objForm->text("em_email")->required(true)->label("*E-mail");
+        $objForm->text("em_email_confirm")->required(false)->label("*Confirme o e-mail");
            
 ##### Endereço ######
    
@@ -92,20 +92,20 @@ class CatequistaDetalheForm extends AbstractForm {
 ////CAMPOS DA TABELA
           
            $objForm->text("nm_catequista")->required(true)->label("*Nome completo");
-           $objForm->text("nr_matricula")->required(true)->label("*Nº matrícula (até 6 digitos)");
+           $objForm->text("nr_matricula")->required(true)->label("*Nº Matrícula (até 6 digitos)");
            $objForm->date("dt_nascimento")->setAttribute('class', 'data')->required(true)->label("*Data de nascimento");
            $objForm->date("dt_ingresso")->setAttribute('class', 'data')->required(true)->label("*Data de ingresso");
-           $objForm->textarea("tx_observacao")->required(false)->label("observacao");
-           $objForm->textarea("ds_situacao")->required(false)->label("Descricao da situacao");
+           $objForm->textarea("tx_observacao")->required(false)->label("Observação");
+           $objForm->textarea("ds_situacao")->required(false)->label("Descrição da situação");
           
            $objForm->hidden("id_perfil" )->required(true)->label("perfil");
            $objForm->hidden("id_tipo_usuario")->required(true)->label("tp usuario");
            $objForm->hidden("id_situacao_usuario")->required(true)->label("situa usuario");
-           $objForm->text("nm_usuario")->required(false)->label("*Usuário (seu email)");
+           $objForm->text("nm_usuario")->required(false)->label("*Usuário (seu e-mail)");
            $objForm->password("pw_a_senha")->required(false)->label("*Senha Atual");
            $objForm->password("pw_senha")->required(false)->label("*Nova Senha (Mínimo 8 digitos)");
            
-           $objForm->password("pw_senha_confirm")->required(false)->label("*Confirmar senha")
+           $objForm->password("pw_senha_confirm")->required(false)->label("*Confirme a senha")
                 ->setAttribute('data-match', '#pw_senha')
                 ->setAttribute('data-match-error', 'Senhas não correspondem');
        

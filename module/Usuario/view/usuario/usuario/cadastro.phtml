@@ -72,7 +72,7 @@
 
 <!--            <div class="form-group">-->
 <!--                <div class="col-md-7">-->
-<!--                    --><?//= $this->formRow($form->get('id_situacao_usuario')) ?>
+<!--                    --//= $this->formRow($form->get('id_situacao_usuario')) ?>
 <!--                    <div class="help-block with-errors"></div>-->
 <!--                </div>-->
 <!--            </div>-->
@@ -81,7 +81,7 @@
             <div class="form-group">
                 <div class="col-md-10">
                     <button type="submit" class="btn btn-primary">Salvar</button>
-                    <a href="<?= $this->url('navegacao', ['controller' => 'auth', 'action' => 'login']) ?>" class="btn btn-default">Voltar</a>                    
+                    <a href="<?= $this->url('navegacao', array('controller' => 'usuario-usuario', 'action' => 'index')) ?>" class="btn btn-default">Voltar</a>
                 </div>
             </div>
             <?= $this->form()->closeTag(); ?>

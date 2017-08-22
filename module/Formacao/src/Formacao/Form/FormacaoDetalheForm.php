@@ -24,9 +24,9 @@ class PeriodoLetivoDetalheForm extends  AbstractForm{
         $this->inputFilter = new InputFilter();
         $objForm = new FormObject('formacaodetalheform',$this,$this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");
-        $objForm->hidden("id_formacao")->required(false)->label("ID FORMACAO");
+        $objForm->hidden("id_formacao")->required(false)->label("ID FORMAÇÃO");
 
-        $objForm->text("ds_detalhe_formacao")->required(true)->label("Detalhe Formacao");
+        $objForm->text("ds_detalhe_formacao")->required(true)->label("Detalhe Formação");
 
         $this->formObject = $objForm;
 }

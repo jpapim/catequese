@@ -46,9 +46,7 @@ class PeriodoLetivoController extends AbstractCrudController
         $filter = $this->getFilterPage();
 
         $camposFilter = [
-            '0' => [
-                'filter' => "periodo_letivo.id_periodo_letivo  LIKE ?"
-            ],
+            '0' => NULL,
             '1' => [
                 'filter' => "periodo_letivo.dt_inicio  LIKE ?"
             ],
@@ -58,7 +56,6 @@ class PeriodoLetivoController extends AbstractCrudController
             '3' => [
                 'filter' => "periodo_letivo.dt_ano_letivo  LIKE ?"
             ],
-            '4' => NULL,
 
         ];
 

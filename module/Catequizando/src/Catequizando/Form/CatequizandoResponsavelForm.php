@@ -42,7 +42,7 @@ class CatequizandoResponsavelForm extends AbstractForm
 
         //Campo de TELEFONE RESIDENCIAL E TELEFONE CELULAR
         $objForm->telefone("id_telefone_residencial")->setAttribute('class', 'telefone')->required(true)->label("Telefone Residencial");
-        $objForm->telefone("id_telefone_celular")->setAttribute('class', 'telefone')->required(true)->label("Telefone Celular");
+        $objForm->telefone("id_telefone_celular")->setAttribute('class', 'celular')->required(true)->label("Telefone Celular");
 
         $objForm->email("em_email")->required(true)->label("E-mail");
         $objForm->email("em_email_confirm")->required(true)->label("Confirme o E-mail")
@@ -52,7 +52,7 @@ class CatequizandoResponsavelForm extends AbstractForm
         $objForm->combo('id_situacao', '\Situacao\Service\SituacaoService', 'id', 'nm_situacao')->required(false)->label("Situação");
         # $objForm->combo("id_profissao", '\Profissao\Service\ProfissaoService', 'id', 'nm_profissao')->required(false)->label("Profissao");
         $objForm->combo("id_movimento_pastoral", '\MovimentoPastoral\Service\MovimentoPastoralService', 'id', 'nm_movimento_pastoral')->required(false)->label("Movimento Pastoral");
-        $objForm->combo("id_profissao", '\Profissao\Service\ProfissaoService', 'id', 'nm_profissao')->required(false)->label("Profissao");
+        $objForm->combo("id_profissao", '\Profissao\Service\ProfissaoService', 'id', 'nm_profissao')->required(false)->label("Profissão");
 
         //#########################################################################################
 

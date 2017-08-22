@@ -2,7 +2,7 @@
 <head>
     <link rel="stylesheet" href="../../../../../public/assets/css/bootstrap.css">
     <meta charset=utf-8"/>
-    <title>Layout de Impressão</title>
+    <title>Relação de Catequizandos</title>
 
     <style type="text/css">
         @page {
@@ -153,7 +153,7 @@
             <tr style="font-size: 12px">
                 <td class="text-center"><?= $nm_turma == '' ? 'Não Enturmado' : $nm_turma ?></td>
                 <td align="center"><?= $nr_sala == '' ? ' - ' : $nr_sala ?></td>
-                <td><?= \Estrutura\Helpers\String::nomeMaiusculo($item->getNmCatequizando()) ?></td>
+                <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item->getNmCatequizando()) ?></td>
                 <td class="text-center"><?= $nm_responsavel == '' ? 'Responsável não cadastrado' : $nm_responsavel ?></td>
                 <td class="text-center"><?= $objTelefone->getNrTelefone() ?></td>
                 </td>

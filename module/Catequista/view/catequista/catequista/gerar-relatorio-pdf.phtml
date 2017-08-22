@@ -2,7 +2,7 @@
 <head>
     <link rel="stylesheet" href="../../../../../public/assets/css/bootstrap.css">
     <meta charset=utf-8"/>
-    <title>Layout de Impressão</title>
+    <title>Controle de Catequistas</title>
 
     <style type="text/css">
         @page {
@@ -100,7 +100,7 @@
             <th class="text-center">Nº da Matrícula</th>
             <th class="text-center">Tel. Residencial</th>
             <th class="text-center">Tel. Celular</th>
-            <th class="text-center">email</th>
+            <th class="text-center">E-mail</th>
         </tr>
         </thead>
 
@@ -108,7 +108,7 @@
         $i = $this->inicio_contador;
         foreach ($this->teste as $key => $item) { ?>
             <tr>
-                <td><?= $item['nm_catequista'] ?></td>
+                <td class="text-center"><?= $item['nm_catequista'] ?></td>
                 <td align="center"><?= $item['nr_matricula'] ?></td>
                 <td align="center"><?= $item['id_telefone_residencial'] ?></td>
                 <td align="center"><?= $item['id_telefone_celular'] ?></td>

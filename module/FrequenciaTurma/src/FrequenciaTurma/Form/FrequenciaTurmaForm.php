@@ -17,8 +17,8 @@ class FrequenciaTurmaForm extends AbstractForm
 
         $objForm = new FormObject('frequenciaturmaform', $this, $this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");
-        $objForm->combo("id_turma_catequizando", '\TurmaCatequizando\Service\TurmaCatequizandoService', 'id','tx_observacoes')->required(false)->label("Id Turma Catequizando");
-        $objForm->combo("id_detalhe_periodo_letivo", '\DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService', 'id', 'dt_encontro')->required(false)->label("Id Detalhe do Período Letivo");
+        $objForm->combo("id_turma_catequizando", '\TurmaCatequizando\Service\TurmaCatequizandoService', 'id','tx_observacoes')->required(false)->label("Número da Turma Catequizando");
+        $objForm->combo("id_detalhe_periodo_letivo", '\DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService', 'id', 'dt_encontro')->required(false)->label("Número do Detalhe do Período Letivo");
 
         $this->formObject = $objForm;
     }

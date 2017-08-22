@@ -69,6 +69,14 @@ class CatequistaController extends AbstractCrudController
             $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
             return FALSE;
         }
+        
+        //Verifica tamanho da matricula
+        if (strlen(trim($this->getRequest()->getPost()->get('nr_matricula'))) > 6) {
+            $this->setPost($post);
+            $this->addErrorMessage('matricula deve ter no máximo 6 caracteres.');
+            $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
+            return FALSE;
+        }
 
 
         //Verifica tamanho da senha
@@ -682,7 +690,7 @@ class CatequistaController extends AbstractCrudController
             'teste' => $arteste,
 
         ));
-        $pdf->setOption('filename', 'ordem_serviço_'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption('filename', 'Controle_de_Catequistas'); // Triggers PDF download, automatically appends ".pdf"
         $pdf->setOption("paperSize", "a4"); //Defaults to 8x11
         $pdf->setOption("basePath", __DIR__); //Defaults to 8x11
         #$pdf->setOption("paperOrientation", "landscape"); //Defaults to portrait
