@@ -22,8 +22,8 @@ class TurmaForm extends AbstractForm
 
 
         $objForm->combo("id_etapa", '\Etapa\Service\EtapaService', 'id', 'nm_etapa')->required(true)->label("Etapa");
-        $objForm->text("cd_turma")->required(true)->label("Código da Turma");
-        $objForm->text("nm_turma")->required(true)->label("Nome da Turma");
+        $objForm->text("cd_turma")->maxLength(8)->required(true)->label("Código da Turma");
+        $objForm->text("nm_turma")->maxLength(50)->required(true)->label("Nome da Turma");
 
 
         $this->formObject = $objForm;
