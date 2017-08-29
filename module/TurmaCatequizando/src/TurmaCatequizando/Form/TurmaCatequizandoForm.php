@@ -24,15 +24,15 @@ class TurmaCatequizandoForm extends AbstractForm
        #TODO: MODULO CATEQUIZANDO AINDA NAO IMPLEMENTADO ->
         # TODO: $objForm->combo("id_catequizando", '\Catequizando\Service\CatequizandoService', 'id', 'nm_catequizando')->required(false)->label("catequizando");
         #$objForm->hidden("id_catequizando")->required(false)->label("Catequizando");
-        $objForm->text("id_catequizando")->required(true)->label("Catequizando");
+        $objForm->text("id_catequizando")->maxLength(11)->required(true)->label("Catequizando");
       
 
         $objForm->hidden("id_usuario")->required(false)->label("Identificacao do Usuario");
         $objForm->combo("id_periodo_letivo", '\PeriodoLetivo\Service\PeriodoLetivoService', 'id', 'dt_ano_letivo')->required(false)->label("Ano Letivo");
 
         //#########################################################################################
-        $objForm->textareaHtml("tx_observacoes")->required(true)->label("Observações");
-        $objForm->text("nr_sala")->required(true)->label("Nº da sala");
+        $objForm->textareaHtml("tx_observacoes")->maxLength(250)->required(true)->label("Observações");
+        $objForm->text("nr_sala")->maxLength(4)->required(true)->label("Nº da sala");
 
        # $oTurmaCatequizando =  new \TurmaCatequizando\Service\TurmaCatequizandoService();
         #$colecaoTurmaCatequizando = $oTurmaCatequizando->fetchAll();
