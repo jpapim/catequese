@@ -27,18 +27,18 @@ class CatequizandoForm extends  AbstractForm{
         $objForm->hidden("id")->required(false)->label("Id");
         ##### Endereço ######
         $objForm->hidden("id_endereco")->required(false);
-        $objForm->text("nm_logradouro")->required(true)->label("*Endereço");
-        $objForm->text("nr_numero")->required(false)->label("Número");
-        $objForm->text("nm_complemento")->required(false)->label("Complemento");
+        $objForm->text("nm_logradouro")->maxLength(200)->required(true)->label("*Endereço");
+        $objForm->text("nr_numero")->maxLength(45)->required(false)->label("Número");
+        $objForm->text("nm_complemento")->maxLength(200)->required(false)->label("Complemento");
         $objForm->text("nm_bairro")->required(true)->label("*Bairro");
         $objForm->cep("nr_cep")->setAttribute('class', 'cep')->required(false)->label("*Cep");
 
         #FK - Naturalidade
         $objForm->hidden("id_naturalidade")->required(false);
-        $objForm->text("nm_naturalidade")->required(false)->label("*Cidade de Origem");
+        $objForm->text("nm_naturalidade")->maxLength(30)->required(false)->label("*Cidade de Origem");
 
         #FK - Cidades
-        $objForm->text("nm_cidade")->required(true)->label("*Cidade atual");
+        $objForm->text("nm_cidade")->maxLength(30)->required(true)->label("*Cidade atual");
 
         #FK - Sexo
         $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(true)->label("*Sexo");
@@ -117,13 +117,13 @@ class CatequizandoForm extends  AbstractForm{
 
         #FK- Email
         $objForm->hidden("id_email")->required(false);
-        $objForm->email("em_email")->required(true)->label("*E-mail");
-        $objForm->email("em_email_confirm")->required(true)->label("*Confirme o e-mail")
+        $objForm->email("em_email")->maxLength(200)->required(true)->label("*E-mail");
+        $objForm->email("em_email_confirm")->maxLength(200)->required(true)->label("*Confirme o e-mail")
             ->setAttribute('data-match', '#em_email')
             ->setAttribute('data-match-error', 'E-mails não correspondem');
 
         ### Nome do Catequizando
-        $objForm->text("nm_catequizando")->required(true)->label("*Nome");
+        $objForm->text("nm_catequizando")->maxLength(150)->required(true)->label("*Nome");
         ### Data de Nascimento
         $objForm->date("dt_nascimento")->required(true)->setAttribute('class', 'data')->label("*Data de nascimento");
 
@@ -139,7 +139,7 @@ class CatequizandoForm extends  AbstractForm{
 
         ### Observação
         $objForm->textarea("tx_observacao")
-            ->required(false)
+            ->maxLength(250)->required(false)
             ->label("Observações");
 
         # ID SITUACAO
