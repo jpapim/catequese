@@ -69,7 +69,7 @@ class CatequistaController extends AbstractCrudController
             $this->redirect()->toRoute('navegacao', array('controller' => 'catequista-catequista', 'action' => 'cadastro'));
             return FALSE;
         }
-        
+
         //Verifica tamanho da matricula
         if (strlen(trim($this->getRequest()->getPost()->get('nr_matricula'))) > 6) {
             $this->setPost($post);
@@ -251,7 +251,7 @@ class CatequistaController extends AbstractCrudController
 
 
             $obLogin = new \Login\Service\LoginService();
-            $login = $obLogin->getLoginToArray($arrCatequista['id_usuario']);
+            $login = $obLogin->getLoginToArray($arrCatequista['id_usuario'])->toArray();
 
 
             ## Recuperando Endereco
@@ -700,6 +700,3 @@ class CatequistaController extends AbstractCrudController
 
 
 }
-
-
-

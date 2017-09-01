@@ -111,7 +111,7 @@ class FormacaoController extends  AbstractCrudController {
                 return false;
             }
             $service->exchangeArray($form->getData());
-            $this->addSuccessMessage('Registro Alterado com sucesso');
+            $this->addSuccessMessage('Cadastro Realizado com sucesso');
             $id_formacao = $service->salvar();
 
             //Define o redirecionamento
@@ -219,4 +219,4 @@ class FormacaoController extends  AbstractCrudController {
     }
 
 
-} 
+}
