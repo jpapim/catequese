@@ -141,7 +141,6 @@
 <script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 <script type="text/javascript" language="javascript">
     $(function () {
-
         $("button[name='btn_verificar']").click(function () {
             $('#lista_catequizando').html("<h3>Carregando...</h3>");
             $.ajax({
@@ -154,12 +153,20 @@
                     id_responsavel: $(this).val()
                 },
                 success: function (data) {
-                    var nomes_catequizandos = "<br>";
+                    var nomes_catequizandos = "";
                     $.each(data , function(i, val) {
                         nomes_catequizandos += val;
                     });
+                    teste = nomes_catequizandos.split(',');
+                    texto = "";
 
-                    $('#lista_catequizando').html(nomes_catequizandos);
+                    for(i=0; i < teste.length; i++){
+                        texto += '<h4>' + "- " + teste[i] + '</h4>';
+                        texto += "<br>";
+                    }
+
+                    $('#lista_catequizando').html(texto);
+                    //$('#lista_catequizando').html(nomes_catequizandos);
                 }
             });
 

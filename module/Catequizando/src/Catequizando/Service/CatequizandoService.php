@@ -235,7 +235,6 @@ class CatequizandoService extends  Entity{
         $resp = new \Responsavel\Service\ResponsavelService();
 
         $arrResp = $resp->buscar($id);
-
         return $arrResp->getNmResponsavel();
     }
 

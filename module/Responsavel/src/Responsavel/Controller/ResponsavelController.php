@@ -231,7 +231,6 @@ class ResponsavelController extends AbstractCrudController
         }
         #Até aqui esta certo.
 
-
         $valuesJson = new JsonModel(array('arNomes' => $arNome));
         return $valuesJson;
     }
