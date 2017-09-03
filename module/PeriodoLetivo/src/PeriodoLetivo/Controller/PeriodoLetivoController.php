@@ -123,7 +123,7 @@ class PeriodoLetivoController extends AbstractCrudController
                 return false;
             }
             $service->exchangeArray($form->getData());
-            $this->addSuccessMessage('Registro Alterado com sucesso');
+            $this->addSuccessMessage('Registro cadastrado/alterado com sucesso');
             $id_periodo_letivo = $service->salvar();
 
             //Define o redirecionamento
