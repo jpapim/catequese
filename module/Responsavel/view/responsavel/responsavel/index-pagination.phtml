@@ -157,11 +157,11 @@
                     $.each(data , function(i, val) {
                         nomes_catequizandos += val;
                     });
-                    teste = nomes_catequizandos.split(',');
+                    nomes = nomes_catequizandos.split(',');
                     texto = "";
 
-                    for(i=0; i < teste.length; i++){
-                        texto += '<h4>' + "- " + teste[i] + '</h4>';
+                    for(i=0; i < nomes.length; i++){
+                        texto += '<h4>' + "- " + nomes[i] + '</h4>';
                         texto += "<br>";
                     }
 
