@@ -37,7 +37,7 @@ class SituacaoConjugalController extends  AbstractCrudController{
     {
 
         $controller = $this->params('controller');
-        $this->addSuccessMessage('Cadastro realizado com sucesso');
+        $this->addSuccessMessage('Registro cadastrado/alterado com sucesso');
         $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
         return parent::gravar($this->service, $this->form);
     }
