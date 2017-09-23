@@ -13,8 +13,9 @@
             </dl>
 
             <dl>
-                <dt>E-mail:</dt>
+                <dt>E-mail atual:</dt>
                 <dd><?= $form->get('em_email')->getValue(); ?></dd>
+                <a href="/usuario-usuario/alterar-email/<?= Estrutura\Helpers\Cript::enc($form->get('id')->getValue())?>">Clique aqui para alterar o e-mail</a>
             </dl>
 
             <dl>

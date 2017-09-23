@@ -1,0 +1,79 @@
+<link rel="stylesheet" type="text/css" href="/assets/css/selectize.bootstrap2.css" />
+<div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-xs-12 col-sm-9">
+        <div class="well">
+            <div class="page-head">
+                <h2>Alterar e-mail</h2>
+            </div>
+            <?php
+            $form->setAttribute('action', $this->url('navegacao', array('controller' => 'usuario-usuario', 'action' => 'salvar-redefinicao-email')));
+            $form->setAttribute('method', 'post');
+            $form->setAttribute('class', 'form-horizontal');
+            $form->setAttribute('data-toggle', 'validator');
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($id_usuario));
+            echo $this->formHidden($form->get('id'));
+
+            ?>
+<?php
+#So mostra este item se o usuario nao for o administrador do sistema
+if($this->Auth()->id_perfil != TXT_CONST_PERFIL_ADMINISTRADOR) {
+    ?>
+    <div class="form-group">
+        <div class="col-md-12">
+            <?= $this->formRow($form->get('em_email')) ?>
+            <div class="help-block with-errors"></div>
+        </div>
+    </div>
+    <?php
+}
+?>
+<div class="form-group">
+    <div class="col-md-12">
+        <?= $this->formRow($form->get('em_novo_email')) ?>
+        <div class="help-block with-errors"></div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-12">
+        <?= $this->formRow($form->get('em_novo_email_confirm')) ?>
+        <div class="help-block with-errors"></div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-primary">Redefinir e-mail</button>
+        <a href="<?= $this->url('navegacao', ['controller' => 'usuario-usuario', 'action' => 'atualizar-dados', 'id'=>Estrutura\Helpers\Cript::enc($id_usuario)]) ?>" class="btn btn-default">Voltar</a>
+    </div>
+</div>
+
+<?php
+echo $this->form()->closeTag();
+?>
+</div>
+</div>
+
+<?php
+//Invoca um Template
+/*
+echo $this->partial('partials/menu-left', [
+    'auth' => $auth,
+    'contratoEntity' => array(),
+    'configList' => array(),
+    'meusGanhosList' => array(),
+]);
+*/
+?>
+</div>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+        $(document).tooltip();
+        $(".cep").mask("99.999-999");
+        $(".data").mask("99/99/9999");
+        $(".datatime").mask("99/99/9999 99:99:99");
+        $(".hora").mask("99:99:99");
+        $(".telefone").mask("(99) 9999-9999");
+    });
+</script>

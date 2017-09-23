@@ -516,4 +516,122 @@ class UsuarioController extends AbstractCrudController
         return FALSE;
     }
 
+    /**
+     * Exibe a tela para alteração de e-mail
+     *
+     * @return ViewModel
+     */
+    public function alterarEmailAction(){
+
+        $auth = $this->getServiceLocator()->get('AuthService')->getStorage()->read();
+        $id = $this->params()->fromRoute('id');  // From RouteMatch
+        $id = Cript::dec($id);  // From RouteMatch);
+
+        $usuarioService = new \Usuario\Service\UsuarioService();
+        if($auth->id_perfil == TXT_CONST_PERFIL_ADMINISTRADOR){
+            $usuarioEntity = $usuarioService->buscar($id);
+        } else {
+            $usuarioEntity = $usuarioService->buscar($auth->id_usuario);
+        }
+
+        return new ViewModel([
+            'configList' => $this->getConfigList(),
+            'form' => new \Auth\Form\RedefinirEmailForm(),
+            'controller' => $this->params('controller'),
+            'usuarioEntity' => $usuarioEntity,
+            'auth' => $auth,
+            'id_usuario' => $id, //Passa o Id_usuario para a view
+
+        ]);
+    }
+
+    /**
+     * Método que realiza a gravação da alteração do e-mail na base de dados
+     *
+     * @return bool
+     */
+
+    public function salvarRedefinicaoEmailAction(){
+
+        $auth = $this->getServiceLocator()->get('AuthService')->getStorage()->read();
+        $request = $this->getRequest();
+
+        if (!$request->isPost()) {
+            throw new \Exception('Dados Inválidos');
+        }
+
+
+        $post= \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
+
+        $id_usuario = Cript::dec($post['id']);
+        $post['id'] = $id_usuario; //Recebe o ID já Descriptografado.
+
+        $loginService = new \Login\Service\LoginService();
+        $loginService->setIdUsuario($id_usuario);
+        $loginEntity = $loginService->filtrarObjeto()->current();
+
+
+
+        if (!$loginEntity) {
+            $this->addErrorMessage('Usuário inválido.');
+            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-email', 'id'=>Cript::enc($id_usuario)]);
+            return FALSE;
+        }
+
+
+
+        #so faz esta validacao se for o usuario diferente do Administrador
+        if($auth->id_perfil != TXT_CONST_PERFIL_ADMINISTRADOR) {
+            //Verifica se a e-mail atual é válida
+            if (strcasecmp($this->getRequest()->getPost()->get('em_email'), $loginEntity->getIdEmail()) != 0) {
+                $this->addErrorMessage('E-mail atual inválido.');
+                $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-email',
+                    'id' => Cript::enc($id_usuario)]);
+                return FALSE;
+            }
+        }
+
+
+        //Verifica se os novos e-mails são iguais
+        if (strcasecmp($this->getRequest()->getPost()->get('em_novo_email_confirm'), $this->getRequest()->getPost()
+                ->get('em_novo_email')) != 0) {
+
+            $this->addErrorMessage('E-mails não correspondem.');
+            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-email',
+                'id'=>Cript::enc($id_usuario)]);
+            return FALSE;
+        }
+
+        //Verifica se o e-mail atual é igual ao e-mail antigo
+        if (strcasecmp($this->getRequest()->getPost()->get('em_email'), $this->getRequest()->getPost()->get('em_novo_email')) == 0) {
+
+            $this->addErrorMessage('Novo e-mail igual o e-mail atual.');
+            $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'alterar-email',
+                'id'=>Cript::enc($id_usuario)]);
+            return FALSE;
+        }
+
+        #Recupera os dados do usuario logado e captura o id_email dele
+        $usuarioService = new \Usuario\Service\UsuarioService();
+        $usuarioService->setId($id_usuario); #Id do email a ser alterado
+        $arrUsuarioEntity = $usuarioService->filtrarObjeto()->current()->toArray();
+
+        #Atualiza o email com o id recuperado nas linhas anteriores
+        $emailService = new \Email\Service\EmailService();
+        $emailService->setId($arrUsuarioEntity['id_email']); #Id do email a ser alterado
+        $emailService->setIdSituacao(true); #Id do email a ser alterado
+        $emailService->setEmEmail($this->getRequest()->getPost()->get('em_novo_email')); #Id do email a ser alterado
+        $emailService->salvar();
+        ##################################################################
+
+
+        #xd('35');
+
+        $this->addSuccessMessage('E-mail alterado com sucesso.');
+        $this->redirect()->toRoute('navegacao', ['controller' => 'usuario-usuario', 'action' => 'atualizar-dados',
+            'id'=>Cript::enc($id_usuario)]);
+        return FALSE;
+    }
+
+
 }
