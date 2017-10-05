@@ -36,15 +36,18 @@ class GrauParentescoController extends AbstractCrudController
     }
     
     public function gravarAction(){
-        
+
+        $controller = $this->params('controller');
+        $this->addSuccessMessage('Grau de parentesco cadastrado com sucesso');
+        $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+        return parent::gravar($this->service, $this->form);
+
+        /*
+
         $controller =  $this->params('controller');
-     
 
         $pos = $this->getRequest()->getPost()->toArray();
-       
 
-        
-        
             $Grau = $this->getServiceLocator()->get('\GrauParentesco\Service\GrauParentescoService');
             $Grau->setNmGrauParentesco(trim($this->getRequest()->getPost()->get('nm_grau_parentesco')));
             if ($Grau->filtrarObjeto()->count()) {
@@ -63,7 +66,7 @@ class GrauParentescoController extends AbstractCrudController
                    ); 
                     $this->addSuccessMessage(' Grau Parentesco cadastrada com sucesso.');
                     $this->redirect()->toRoute('navegacao', array('controller' => 'grau_parentesco-grauparentesco', 'action' => 'index'));
-      
+          */
     }
 
     public function cadastroAction()
