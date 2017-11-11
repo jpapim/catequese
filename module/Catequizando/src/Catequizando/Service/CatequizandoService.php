@@ -32,7 +32,9 @@ class CatequizandoService extends  Entity{
 
         ])
         ->join('email','catequizando.id_email = email.id_email',['em_email'], 'left')
-        ->join('telefone','telefone.id_telefone = catequizando.id_telefone_residencial',['nr_ddd_telefone','nr_telefone'], 'left')  ;
+        ->join('telefone','telefone.id_telefone = catequizando.id_telefone_residencial',['nr_ddd_telefone','nr_telefone'], 'left')
+        ->join('responsavel_catequizando','responsavel_catequizando.id_catequizando = catequizando.id_catequizando',['id_responsavel'], 'left')
+        ->join('responsavel','responsavel.id_responsavel = responsavel_catequizando.id_responsavel',['nm_responsavel'], 'left');
         $where = [
         ];
 
@@ -45,21 +47,22 @@ class CatequizandoService extends  Entity{
 
                     if(isset($filter[1]) && !empty($filter[1])){
                         $select->join('responsavel_catequizando','responsavel_catequizando.id_catequizando = catequizando.id_catequizando',['id_responsavel'], 'left')
-                            ->join('responsavel','responsavel.id_responsavel = responsavel_catequizando.id_responsavel',['nm_responsavel'], 'left');
+                           ->join('responsavel','responsavel.id_responsavel = responsavel_catequizando.id_responsavel',['nm_responsavel'], 'left');
                         $where[$camposFilter[1]['filter']]= '%' . $value . '%';
-
+         #               #xd($select->getSqlString($this->getAdapter()->getPlatform()));
                     }
 
                     if(isset($filter[4]) && !empty($filter[4])){
                         $select->join('turma_catequizando','turma_catequizando.id_catequizando = catequizando.id_catequizando',['id_turma'], 'left')
                             ->join('turma','turma.id_turma = turma_catequizando.id_turma',['nm_turma']);
                         $where[$camposFilter[4]['filter']]= '%' . $value . '%';
-
+          #              #xd($select->getSqlString($this->getAdapter()->getPlatform()));
                     }
 
                     if (isset($camposFilter[$key]['mascara'])) {
 
                         eval("\$value = " . $camposFilter[$key]['mascara'] . ";");
+           #             #xd($select->getSqlString($this->getAdapter()->getPlatform()));
                     }
 
                     $where[$camposFilter[$key]['filter']] = '%' . $value . '%';
@@ -69,9 +72,10 @@ class CatequizandoService extends  Entity{
 
         }
 
+        $select->quantifier('DISTINCT');
         $select->where($where)->order(['nm_catequizando']);
 
-        #xd($select->getSqlString($this->getAdapter()->getPlatform()));
+       # #x($select->getSqlString($this->getAdapter()->getPlatform()));
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
 
