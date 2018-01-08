@@ -66,8 +66,7 @@
                     <tr>
                         <td class="text-center"><?= $turma['id_turma'] ?></td>
                         <td class="text-center"><?= $turma['cd_turma'] ?></td>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($turma['nm_turma']) ?></td>
-                        </td>
+                        <td class="text-center"><?= $turma['nm_turma'] ?></td>
                         <td class="text-center">
                                 <span class="btn-group">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($turma['id_turma'])))) ?>
