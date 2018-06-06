@@ -1,16 +1,11 @@
 {
-    "name": "zendframework/skeleton-application",
-    "description": "Skeleton Application for ZF2",
-    "license": "BSD-3-Clause",
-    "keywords": [
-        "framework",
-        "zf2"
-    ],
-    "homepage": "http://framework.zend.com/",
+    "name": "uniprojecao/catequese",
+    "description": "Aplicação Catequese",
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.*",
         "dino/dompdf-module": "dev-master",
-        "jotjunior/boletophp-zf2": "dev-master"
+        "jotjunior/boletophp-zf2": "dev-master",
+        "evandotpro/edp-superluminal":"dev-master"
     }
 }
